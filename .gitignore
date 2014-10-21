@@ -16,3 +16,10 @@ manifest.mf
 *.jar
 *.war
 *.ear
+
+# Eclipse
+.project
+.settings
+.classpath
+.metadata
+bin/
