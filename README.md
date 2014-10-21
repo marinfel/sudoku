@@ -1,3 +1,3 @@
 # Sudoku
 
-Serverless sudoku puzzles sharing app
+Serverless sudoku puzzles sharing apps
