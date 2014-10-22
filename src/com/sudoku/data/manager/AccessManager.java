@@ -28,6 +28,9 @@ public class AccessManager {
     }
     
     public static AccessManager getInstance(){
+        if(instance == null){
+            instance = new AccessManager();
+        }
         return instance;
     }
 
