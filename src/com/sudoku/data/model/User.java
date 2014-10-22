@@ -5,7 +5,9 @@
  */
 package com.sudoku.data.model;
 
-public class User {
+import java.util.List;
+
+public class User implements Ruleable {
 
     private int id;
     private String pseudo;
@@ -15,6 +17,7 @@ public class User {
     private String createDate;
     private String updateDate;
     private String ipAdress;
+    private List<ContactCategory> contactCategories;
     
     /**
      * @return the id
@@ -126,5 +129,29 @@ public class User {
      */
     public void setIpAdress(String ipAdress) {
         this.ipAdress = ipAdress;
+    }
+
+    /**
+     * @return the contactCategories
+     */
+    public List<ContactCategory> getContactCategories() {
+        return contactCategories;
+    }
+
+    /**
+     * @param contactCategories the contactCategories to set
+     */
+    public void setContactCategories(List<ContactCategory> contactCategories) {
+        this.contactCategories = contactCategories;
+    }
+
+    @Override
+    public Boolean hasUser(User user) {
+        return this.equals(user);
+    }
+    
+    @Override
+    public Boolean isUser(){
+        return true;
     }
 }

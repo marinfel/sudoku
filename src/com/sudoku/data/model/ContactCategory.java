@@ -7,7 +7,7 @@ package com.sudoku.data.model;
 
 import java.util.List;
 
-public class ContactCategory {
+public class ContactCategory implements Ruleable {
     
     private String name;
     private List<User> contacts;
@@ -51,7 +51,13 @@ public class ContactCategory {
         this.contacts.remove(user);
     }
     
+    @Override
     public Boolean hasUser(User user){
         return this.contacts.contains(user);
+    }   
+    
+    @Override
+    public Boolean isUser(){
+        return false;
     }
 }
