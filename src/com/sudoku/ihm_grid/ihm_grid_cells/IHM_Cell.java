@@ -1,8 +1,8 @@
 package com.sudoku.ihm_grid.ihm_grid_cells;
 import javafx.scene.layout.GridPane;
 /**
- * this is a class abstract 
- * @author Administrator
+ * this is an abstract class 
+ * @author Yi FENG / Marc-Antoine MARTI
  */
 public abstract class IHM_Cell extends GridPane
 {

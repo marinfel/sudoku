@@ -30,7 +30,6 @@ public class IHM_CellView extends IHM_Cell
         if(checkValue(value))
             //set the value
             valueView.setText(String.valueOf(value));
-        
     }
     
 }
