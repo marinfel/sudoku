@@ -1,3 +1,5 @@
+package com.sudoku.data.model;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,17 +19,17 @@ public class Comment {
     /**Méthode de la classe  Comment
      * 
      */
-    public void Comment(){
+    public Comment(){
         comment="";
     }
-    public void Comment(String comment){
+    public Comment(String comment){
         this.comment=comment;
     }
     
-    public void Comment(Integer grade){
+    public Comment(Integer grade){
         this.grade=grade;
     }
-    public void Comment(String comment,Integer grade){
+    public Comment(String comment,Integer grade){
         this.comment=comment;
         this.grade=grade;
     }
