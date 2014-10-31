@@ -42,35 +42,37 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.avro</groupId>
-                <artifactId>avro-maven-plugin</artifactId>
-                <version>${avro.version}</version>
-                <executions>
-                    <execution>
-                        <id>schemas</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>schema</goal>
-                            <goal>protocol</goal>
-                            <goal>idl-protocol</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/com/sudoku/comm/</outputDirectory>
-                            <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
-                            <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+	        <plugins>
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-compiler-plugin</artifactId>
+	                <version>${compiler-plugin.version}</version>
+	            </plugin>
+	            <plugin>
+	                <groupId>org.apache.avro</groupId>
+	                <artifactId>avro-maven-plugin</artifactId>
+	                <version>${avro.version}</version>
+	                <executions>
+	                    <execution>
+	                        <id>schemas</id>
+	                        <phase>generate-sources</phase>
+	                        <goals>
+	                            <goal>schema</goal>
+	                            <goal>protocol</goal>
+	                            <goal>idl-protocol</goal>
+	                        </goals>
+	                        <configuration>
+	                            <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
+	                            <outputDirectory>${project.basedir}/src/com/sudoku/comm/</outputDirectory>
+	                            <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
+	                            <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
+	                        </configuration>
+	                    </execution>
+	                </executions>
+	            </plugin>
+	        </plugins>
+	    </pluginManagement>
     </build>
 
 </project>
