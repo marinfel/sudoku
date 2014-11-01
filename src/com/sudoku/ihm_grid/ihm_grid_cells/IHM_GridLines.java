@@ -37,11 +37,11 @@ public class IHM_GridLines extends GridPane {
         //Init the side attribute
         this.side = side;
         //Calc number of simple lines on one side
-        int nb_slines = ((cellNumberPerSide / cellNumberPerSubside) - 1) * cellNumberPerSubside;
+        int nbSLines = ((cellNumberPerSide / cellNumberPerSubside) - 1) * cellNumberPerSubside;
         //Calc number of double lines on on side 
-        int nb_dlines = cellNumberPerSide - nb_slines - 1;
+        int nbDLines = cellNumberPerSide - nbSLines - 1;
         //Calc the side of one cell = side - sum_slines_sizes - sum_dlines_sizes
-        cellSide = (int)((side - (nb_slines * simpleLinesSide) - (nb_dlines * doubleLinesSide)) / (double)cellNumberPerSide);
+        cellSide = (int)((side - (nbSLines * simpleLinesSide) - (nbDLines * doubleLinesSide)) / (double)cellNumberPerSide);
         int gridSide = (cellNumberPerSide - 1) + cellNumberPerSide;
         int gridSize = (int)Math.pow(gridSide, 2);
         //Draw Lines with empty spaces instead of cells
