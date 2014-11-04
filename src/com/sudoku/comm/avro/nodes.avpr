@@ -1,0 +1,5 @@
+{
+  "namespace": "com.sudoku.comm",
+  "protocol": "nodes",
+  "doc": "Service de découverte des noeuds"
+}
