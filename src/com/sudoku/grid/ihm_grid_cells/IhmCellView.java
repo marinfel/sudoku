@@ -1,4 +1,4 @@
-package com.sudoku.ihm_grid.ihm_grid_cells;
+package com.sudoku.grid.ihm_grid_cells;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
