@@ -11,7 +11,11 @@
 package com.sudoku.data.model;
 
 public class Cell {
+    protected int x;
+    protected int y;
     
-    public Cell(){}
-    
+    protected Cell(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 }
