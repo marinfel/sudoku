@@ -17,14 +17,14 @@ import javafx.scene.text.Text;
  *
  * @author Mélie
  */
-abstract class IHM_Grid_Layout {
+abstract class IhmGridLayout {
     protected Group root;
     protected Scene layout;
     protected Label title;
     protected final int sceneHeight = 200;
     protected final int sceneLength = 200;
     //Grid grille;
-    public IHM_Grid_Layout(String ttl){
+    public IhmGridLayout (String ttl){
         root = new Group();
         layout = new Scene(root, 200, 200);
         title = new Label(ttl);

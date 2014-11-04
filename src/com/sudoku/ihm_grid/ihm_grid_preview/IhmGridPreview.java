@@ -5,7 +5,7 @@
  */
 package com.sudoku.ihm_grid.ihm_grid_preview;
 
-import com.sudoku.ihm_grid.ihm_grid_preview.IHM_Grid_Layout;
+import com.sudoku.ihm_grid.ihm_grid_preview.IhmGridLayout;
 import java.util.Vector;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -15,12 +15,12 @@ import javafx.scene.text.Text;
  *
  * @author Mélie
  */
-public class IHM_Grid_Preview extends IHM_Grid_Layout {
+public class IhmGridPreview extends IhmGridLayout {
 
   Text authorName;
   Vector<StarView> grades;
 
-  public IHM_Grid_Preview(String ttl, double numberOfStars) {
+  public IhmGridPreview(String ttl, double numberOfStars) {
     super(ttl);
     int i;
     grades = new Vector();
