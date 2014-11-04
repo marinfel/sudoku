@@ -11,7 +11,7 @@ package com.sudoku.data.model;
 
 public class EmptyCell extends Cell {
     
-    public EmptyCell(int x, int y){
+    public EmptyCell(byte x, byte y) throws IllegalArgumentException {
         super(x, y);
     }
     

@@ -11,16 +11,56 @@ public class Grid {
 	private boolean published;
 	private List<Comment> comments;
 	private List<Tag> tags;
+        private Cell[][] grid;
 	private User createUser;
 	private Timestamp createDate;
 	private Timestamp updateDate;
 	
 
 	public Grid(){
-		comments = new ArrayList<Comment>();
-		tags = new ArrayList<Tag>();
+            comments = new ArrayList<>();
+            tags = new ArrayList<>();
+
+            grid = new Cell[9][9];
+            for(byte i = 0; i < 9; i++){
+                for(byte j = 0; j < 9; j++){
+                    grid[i][j] = new EmptyCell(i, j);
+                }
+            }
 	}
 	
+        public void setEmptyCell(byte x, byte y) throws IllegalArgumentException{
+            if(x < 0 || x > 0 || y < 0 || y > 9){
+                throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
+            }
+            
+            grid[x][y] = new EmptyCell(x, y);
+        }
+        
+        public void setFixedCell(byte x, byte y, byte value) throws IllegalArgumentException {
+            if(value < 1 || value > 9){
+                throw new IllegalArgumentException(Cell.Errors.Cell_illegal_value);
+            }
+            
+            if(x < 0 || x > 0 || y < 0 || y > 9){
+                throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
+            }
+            
+            if(grid[x][y] instanceof FixedCell){
+                ((FixedCell) grid[x][y]).setValue(value);
+            }
+            else{
+                grid[x][y] = new FixedCell(x, y, value);
+            }           
+        }
+        
+        public Cell getCell(int x, int y) throws IllegalArgumentException {
+            if(x < 0 || x >= 9 || y < 0 || y >= 9){
+                throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
+            }
+            return grid[x][y];
+        } 
+        
 	public int getId() {
 		return id;
 	}
