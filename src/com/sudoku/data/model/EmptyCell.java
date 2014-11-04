@@ -7,11 +7,10 @@
  *
  * @author xuncao
  */
-
 package com.sudoku.data.model;
 
-public class Cell {
+public class EmptyCell extends Cell {
     
-    public Cell(){}
+    public EmptyCell(){}
     
 }

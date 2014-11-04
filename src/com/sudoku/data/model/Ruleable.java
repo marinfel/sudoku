@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- *
- * @author xuncao
- */
-
 package com.sudoku.data.model;
 
-public class Cell {
-    
-    public Cell(){}
-    
+/**
+ *
+ * @author JE
+ */
+public interface Ruleable {
+    Boolean hasUser(User user);
+    Boolean isUser();
 }

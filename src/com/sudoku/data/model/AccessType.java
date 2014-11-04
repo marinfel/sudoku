@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- *
- * @author xuncao
- */
-
 package com.sudoku.data.model;
 
-public class Cell {
+/**
+ *
+ * @author JE
+ */
+public enum AccessType {
+    granted(0),
+    revoked(1);
     
-    public Cell(){}
+    private int accessNum;
     
+    AccessType(int accessNum){
+        this.accessNum = accessNum;
+    }
 }
