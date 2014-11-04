@@ -18,21 +18,20 @@ public class IhmCellView extends IhmCell {
     /**
      * @explain: this is constraction function of class IHM_ClleView
      */
-    public IhmCellView(int value, int valueFontSize, int width, int height) {
-        this.setMaxSize(width, height);
+    public IhmCellView(int side) {
+        this.setMaxSize(side, side);
 
         // Init hidden attribut at false
         hidden = false;
 
         /*init valueView attribut and add it to the layout*/
         valueView = new Label();
-        valueView.setStyle("-fx-font-size: " + valueFontSize + "pt;");
+        valueView.setMinSize(side, side);
+        valueView.setMaxSize(side, side);
+        valueView.setStyle("-fx-font-size: " + (0.7 * (double)side) + "px;");
         valueView.setAlignment(Pos.CENTER);
         setConstraints(valueView, 0, 0);
         getChildren().add(valueView);
-        System.out.println("IHM_CellView()");
-
-        setValue(value);
     }
 
     /**
@@ -41,7 +40,7 @@ public class IhmCellView extends IhmCell {
      * @param value type int, this is a value need to be displayed
      */
     @Override
-    public void setValue(int value) {
+    public final void setValue(int value) {
         //first check the value
         if (checkValue(value)) { //set the value
             valueView.setText(String.valueOf(value));

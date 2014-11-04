@@ -5,11 +5,13 @@
  */
 package com.sudoku.grid.ihm_grid_cells;
 
+import com.sudoku.data.model.Cell;
 import com.sudoku.data.model.Grid;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -27,6 +29,12 @@ public class IhmGridLines extends GridPane {
 
     protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
     protected IhmCell cells[] = new IhmCell[cellNumberPerSide * cellNumberPerSide];
+    
+    public static enum CellStatus {
+      FIT_GRID,
+      ALL_VIEW,
+      ALL_EDITABLE
+    };
 
     /**
      * IHM_GridLines constructor
@@ -35,7 +43,7 @@ public class IhmGridLines extends GridPane {
      * (TODO: @param grid is a grid which contains information about cells
      * (fixed, editables, values, etc.)
      */
-    public IhmGridLines(Grid grid, int side) {
+    public IhmGridLines(Grid grid, int side, CellStatus cellStatus) {
         //Init the side attribute
         this.side = side;
         //Calc number of simple lines on one side
@@ -53,9 +61,21 @@ public class IhmGridLines extends GridPane {
 
             if (X % 2 == 0 && Y % 2 == 0) {
                 // Add a cell half a time
-                //TODO: utiliser <grid> pour former la grid en fonction des cellules quelle contient
-                IhmCellView cell = new IhmCellView(8, 20, cellSide, cellSide);
-                add(cell, X, Y);
+                IhmCell ihm_cell = null;
+                //TODO: to activate
+                /*Cell cell = grid.getCell(X >> 1, Y >> 1);
+                if((cell.isFixed() && cellStatus == FIT_GRID) || cellStatus == ALL_VIEW)
+                    ihm_cell = new IhmCellView(cellSide);
+                else
+                    ihm_cell = new IhmCellEditable(cellSide)
+                
+                ihm_cell.setValue(cell.getValue());*/
+                
+                //remove the 2 next lines and uncomment to previous lines
+                ihm_cell = new IhmCellEditable(cellSide);
+                ihm_cell.setValue(8);
+               
+                add(ihm_cell, X, Y);
 
             } else if (X % 2 == 1 && Y % 2 == 0) {
                 // Add a VLine

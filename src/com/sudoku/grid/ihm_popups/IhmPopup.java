@@ -47,26 +47,36 @@ public class IhmPopup extends GridPane {
      * @param delay is the showing delay, after this delay, the popup is removed
      * from the list
      */
-    public IhmPopup(String title, int titleFontSize, String text, int textFontSize, int delay) {
+    public IhmPopup(double popupWidth, double popupHeight, String title, int titleFontSize, String text, int textFontSize, int delay) {
+        //fix size
+        this.setMaxSize(popupWidth, popupHeight);
+
         //Initialize the delay
         this.delay = delay;
 
         //Initilialize the title and add it to the layout
         this.title.setText(title);
-        this.title.setStyle("-fx-font-size: " + titleFontSize + "pt; -fx-font-weight: bold; -fx-underline: true; -fx-text-alignment: center;");
-        //this.title.setAlignment(Pos.CENTER);
+        this.title.setMaxWidth(popupWidth);
+        this.title.setMinWidth(popupWidth);
+        this.title.setMinSize(USE_PREF_SIZE, USE_PREF_SIZE);
+        this.title.setStyle("-fx-font-size: " + titleFontSize + "pt; -fx-font-weight: bold; -fx-underline: true;");
+        this.title.setAlignment(Pos.CENTER);
         this.add(this.title, 0, 0);
 
         //Initilialize the body text and add it to the layout
         this.text.setText(text);
+        this.text.setMaxWidth(popupWidth);
+        this.text.setMinWidth(popupWidth);
         this.text.setStyle("-fx-font-size: " + textFontSize + "pt;");
-        //this.text.setAlignment(Pos.TOP_LEFT);
+        this.text.setAlignment(Pos.TOP_LEFT);
         this.add(this.text, 0, 1);
 
         //Initilialize the delay text and add it to the layout
         this.delayText.setText(String.valueOf(delay) + " sec remaining before auto-closing");
-        this.delayText.setStyle("-fx-font-size: " + textFontSize + "pt; -fx-font-style: italic; -fx-text-alignment: right;");
-        //this.delayText.setAlignment(Pos.BOTTOM_RIGHT);
+        this.delayText.setMaxWidth(popupWidth);
+        this.delayText.setMinWidth(popupWidth);
+        this.delayText.setStyle("-fx-font-size: " + textFontSize + "pt; -fx-font-style: italic;");
+        this.delayText.setAlignment(Pos.BOTTOM_RIGHT);
         this.add(this.delayText, 0, 2);
 
         //Set the listener when the user click on the pop-up (here it's calling a method wich handles the behavior

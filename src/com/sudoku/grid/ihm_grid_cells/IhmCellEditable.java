@@ -28,8 +28,8 @@ public class IhmCellEditable extends IhmCell {
 
     protected final static int addlesMaxNumbers = 3;
 
-    protected int addlesFontSize = 10;
-    protected int valueFontSize = 20;
+    protected double addlesFontSize = 10;
+    protected double valueFontSize = 20;
 
     protected double addlesSizeX;
     protected double addlesSizeY;
@@ -44,21 +44,20 @@ public class IhmCellEditable extends IhmCell {
     /**
      * IHM_CellEditable constructor
      *
-     * @param width taken by the node
-     * @param height taken by the node
+     * @param side taken by the node (width, height)
      * @param addlesFontSize defines the font size in addles TextField
      * @param valueFontSize defines the font size in value's TextField
      */
-    public IhmCellEditable(double width, double height, int addlesFontSize, int valueFontSize) {
-        setMaxSize(width, height);
-
-        this.addlesFontSize = addlesFontSize;
-        this.valueFontSize = valueFontSize;
+    public IhmCellEditable(double side) {
+        setMaxSize(side, side);
 
         valueSizeX = getMaxWidth();
         valueSizeY = getMaxHeight() * (1 - 1 / addlesMaxNumbers);
         addlesSizeX = getMaxWidth() / addlesMaxNumbers;
         addlesSizeY = getMaxHeight() / addlesMaxNumbers;
+        
+        addlesFontSize = addlesSizeX * 0.7;
+        valueFontSize = valueSizeY * 0.5;
 
         // When mouse enters the cell, we show the add button
         setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -88,14 +87,14 @@ public class IhmCellEditable extends IhmCell {
         //Create a space and add it in the addles layout to fix the height when there is no addles
         Rectangle space = new Rectangle();
         space.setWidth(0);
-        space.setHeight(addlesSizeY + 1);
+        space.setHeight(addlesSizeY + 4);
         space.setStroke(Color.TRANSPARENT);
         space.setFill(Color.TRANSPARENT);
         addlesLayout.getChildren().add(space);
 
         /*init the addles add-button and add it on the layout next to the addles list*/
         addlesAddButton.setText("+");
-        addlesAddButton.setStyle("-fx-font-size: " + addlesFontSize + "pt;");
+        addlesAddButton.setStyle("-fx-font-size: " + addlesFontSize + "px;");
         addlesAddButton.setAlignment(Pos.CENTER);
         addlesAddButton.setMaxSize(addlesSizeX, addlesSizeY);
         addlesAddButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -126,8 +125,8 @@ public class IhmCellEditable extends IhmCell {
 
         /*init valueEdit attribut and add it to the bottom of the layout*/
         valueEdit.setMaxSize(valueSizeX, valueSizeY);
+        valueEdit.setStyle("-fx-font-size: " + valueFontSize + "px;");
         valueEdit.setAlignment(Pos.CENTER);
-        valueEdit.setStyle("-fx-font-size: " + valueFontSize + "pt;");
         valueEdit.textProperty().addListener(new ChangeListener<String>() {
 
             @Override
