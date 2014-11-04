@@ -3,22 +3,29 @@
 package com.sudoku.data.model;
 
 public class FixedCell extends Cell{
-    private int value;
+    private byte value;
 
+    public FixedCell(byte x, byte y) throws IllegalArgumentException{
+        super(x, y);
+    }
+
+    public FixedCell(byte x, byte y, byte value) throws IllegalArgumentException {
+        super(x, y);
+
+        if(value < 1 || value > 9){
+            throw new IllegalArgumentException(Cell.Errors.Cell_illegal_value);
+        }
+        this.value = value;
+    }
+    
     public int getValue() {
             return value;
     }
 
-    public void setValue(int value) {
-            this.value = value;
-    }
-
-    public FixedCell(int x, int y){
-        super(x, y);
-    }
-
-    public FixedCell(int x, int y, int value) {
-            super(x, y);
-            this.value = value;
+    public void setValue(byte value) {
+        if(value < 1 || value > 9){
+            throw new IllegalArgumentException(Cell.Errors.Cell_illegal_value);
+        }
+        this.value = value;
     }
 }
