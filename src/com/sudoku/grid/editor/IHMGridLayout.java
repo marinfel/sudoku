@@ -1,5 +1,12 @@
-package com.sudoku.ihm_grid.ihm_grid_cells;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+package com.sudoku.grid.editor;
+
+import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -8,12 +15,12 @@ import javafx.scene.text.Text;
  *
  * @author groudame
  */
-abstract class IHM_Grid_Layout {
+abstract class IHMGridLayout {
     private Group root;
     private Scene layout;
     private Text title;
     //Grid grille;
-    public IHM_Grid_Layout(String ttl){
+    public IHMGridLayout(String ttl){
         root = new Group();
         layout = new Scene(getRoot(), 300, 250);
         title = new Text(30,20,ttl);

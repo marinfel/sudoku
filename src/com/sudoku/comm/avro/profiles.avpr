@@ -1,0 +1,5 @@
+{
+  "namespace": "com.sudoku.comm",
+  "protocol": "profiles",
+  "doc": "Service des profils"
+}
