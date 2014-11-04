@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.ihm_grid.ihm_grid_cells;
+package com.sudoku.grid.ihm_grid_cells;
 
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
