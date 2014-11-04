@@ -6,15 +6,14 @@
 package com.sudoku.data.sample;
 import com.sudoku.data.model.*;
 import java.util.List;
-import java.lang.Integer;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.LinkedList;
 /**
  *
  * @author Jonathan
  */
 public class DataSample {
+    // User et grid sont accesibles directement, servez-vous
     public User a,b;
     public Grid g1,g2,g3;
     
@@ -89,13 +88,18 @@ public class DataSample {
        g3.setTags(tags);
         
        g3.setCreateDate(new Timestamp(2014,11,4,14,48,0,0));
-       g3.setCreateUser(a);
+       g3.setCreateUser(b);
        g3.setDifficulty(4);
        g3.setDescription("This is the awesome grid n°2");
        g3.setId(2);
        
     }
-
+     public List<User> getUserList(){
+        List<User> users= new LinkedList<User>();
+        users.add(a);
+        users.add(b);
+        return users;
+    }
     
 }
 
