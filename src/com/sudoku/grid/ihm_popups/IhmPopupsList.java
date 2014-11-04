@@ -13,50 +13,52 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
 /**
- * @class IHM_PopupsList is a graphical object which is unique.
- * The design pattern singleton is used on this object.
+ * @class IHM_PopupsList is a graphical object which is unique. The design
+ * pattern singleton is used on this object.
  * @author Marc-Antoine
  */
-public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseRequestEvent>{
+public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseRequestEvent> {
+
     private static IhmPopupsList instance = null;
-    
+
     protected static final int titleFontSize = 12;
     protected static final int textFontSize = 10;
     protected double popupHeight;
     protected double popupWidth;
     protected int nbMaxPopups;
     protected ArrayList<IhmPopup> popups = new ArrayList<>();
-    
+
     /**
-     * @class IHM_PopupsList constructor
-     * Use IHM_PopupsList.getInstance() instead.
+     * @class IHM_PopupsList constructor Use IHM_PopupsList.getInstance()
+     * instead.
      */
-    private IhmPopupsList(double width, double height, int nbMaxPopus){
+    private IhmPopupsList(double width, double height, int nbMaxPopus) {
         //set the maximum number of pop-ups that the list can hold
         this.nbMaxPopups = nbMaxPopus;
-        
+
         //define the height of each pop-up. -1 is here because we add a line of one pixel above each pop-up as separator
-        popupHeight = height / (double)nbMaxPopus - 1;
-        
+        popupHeight = height / (double) nbMaxPopus - 1;
+
         //define the width of each pop-up which is the same as the width defined by the user for the entire list
         popupWidth = width;
-        
+
         //set max size of the graphical object list
         setMaxSize(width, height);
     }
-    
+
     /**
-     * Finalize the list by killing timers of its popups
- Needed to be call when the application is quit 
- (ie: Stage.setOnCloseRequest(handler which calls IhmPopupsList.finalize())
+     * Finalize the list by killing timers of its popups Needed to be call when
+     * the application is quit (ie: Stage.setOnCloseRequest(handler which calls
+     * IhmPopupsList.finalize())
      */
     @Override
-    public void finalize(){
+    public void finalize() {
         try {
-            for(IhmPopup popup : popups)
-                //Kill the timer otherwise there will continue to run
-                //Can't use the requestToClose() function because it will modify the list that we are using
+            for (IhmPopup popup : popups) //Kill the timer otherwise there will continue to run
+            //Can't use the requestToClose() function because it will modify the list that we are using
+            {
                 popup.finalize();
+            }
         } finally {
             try {
                 super.finalize();
@@ -65,89 +67,93 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
             }
         }
     }
-    
+
     /**
-     * @class IHM_PopupsList constructor
-     * This list is a graphic object which is unique that why you can't instantiate an instance by this way.
-     * Use IHM_PopupsList.getInstance() instead.
-     * 
+     * @class IHM_PopupsList constructor This list is a graphic object which is
+     * unique that why you can't instantiate an instance by this way. Use
+     * IHM_PopupsList.getInstance() instead.
+     *
      * @param height is the max height of this graphical object
      * @param width is the max width of this graphical object
-     * @param nbMaxPopus is the max number of popup shown in the list. It will determine the height of each pop-ups
-     * @return an instance of IhmPopupsList. If this is the first call of getInstance, the instance will be create and returned.
+     * @param nbMaxPopus is the max number of popup shown in the list. It will
+     * determine the height of each pop-ups
+     * @return an instance of IhmPopupsList. If this is the first call of
+     * getInstance, the instance will be create and returned.
      */
-    public static IhmPopupsList getInstance(double width, double height, int nbMaxPopus){
+    public static IhmPopupsList getInstance(double width, double height, int nbMaxPopus) {
         //If the instance doesn't exist, we create it
-        if(instance == null)
+        if (instance == null) {
             instance = new IhmPopupsList(width, height, nbMaxPopus);
-        
+        }
+
         //return the instance created
         return instance;
     }
-    
+
     /**
-     * Used to create a new popups with parameters given and return it to the user.
-     * The popup is automatically added to the list.
+     * Used to create a new popups with parameters given and return it to the
+     * user. The popup is automatically added to the list.
      *
      * @param title is the pop-up's title
      * @param text is the pop-up's body text
      * @param delay is the pop-up's showing delay
      * @return the instance of the popup created
      */
-    public IhmPopup addPopup(String title, String text, int delay){
+    public IhmPopup addPopup(String title, String text, int delay) {
         //Create a new pop-up
-        IhmPopup popup = new IhmPopup(title, titleFontSize, text, textFontSize, delay);
-        
-        //fix max size of the pop-up created
-        popup.setMaxSize(popupWidth, popupHeight);
-        
+        IhmPopup popup = new IhmPopup(popupWidth, popupHeight, title, titleFontSize, text, textFontSize, delay);
+
         //set this list as a listener of a close request event on the pop-up
         popup.addEventHandler(IhmPopupCloseRequestEvent.POPUP_CLOSEREQUEST, this);
-        
+
         //add the popup to the pop-ups list
         popups.add(popup);
-        
+
         //If there is no enough room, the oldest popup
-        if((getChildren().size() >> 1) >= nbMaxPopups)
-            ((IhmPopup)getChildren().get(getChildren().size() - 2)).requestToClose();
-        
+        if ((getChildren().size() >> 1) >= nbMaxPopups) {
+            ((IhmPopup) getChildren().get(getChildren().size() - 2)).requestToClose();
+        }
+
         //create a line as a separator between 2 pop-up in the list
         Line line = new Line(0, 0, popupWidth, 0);
-        
+
         //add the pop-up and the line-separator to the layout on the top of the list 
         getChildren().add(0, popup);
         getChildren().add(1, line);
-        
+
         return popup;
     }
-    
+
     /**
-     * Cannot be called directly from this class.
-     * Should call requestToClose() method of IhmPopup object instead.
+     * Cannot be called directly from this class. Should call requestToClose()
+     * method of IhmPopup object instead.
+     *
      * @param popup is the popup which will be deleted from the list
      */
-    private void deletePopup(IhmPopup popup){
+    private void deletePopup(IhmPopup popup) {
         //get the index of the popup in the layout
         int index = getChildren().indexOf(popup);
-        
+
         //remove the popup and it's above line-separator from the layout
         getChildren().remove(index, index + 2);
-        
+
         //remove popup from the list
         popups.remove(popup);
     }
 
     /**
-     * Method which handle a IhmPopupCloseRequestEvent event.
-     * When received, it calls the method to remove the popup attached.
+     * Method which handle a IhmPopupCloseRequestEvent event. When received, it
+     * calls the method to remove the popup attached.
+     *
      * @param t is the event wich holds the popup to remove
      */
     @Override
     public void handle(IhmPopupCloseRequestEvent t) {
-        if(t.isConsumed())
+        if (t.isConsumed()) {
             return;
-        
-        if(t.getEventType() == IhmPopupCloseRequestEvent.POPUP_CLOSEREQUEST){
+        }
+
+        if (t.getEventType() == IhmPopupCloseRequestEvent.POPUP_CLOSEREQUEST) {
             t.consume();
             deletePopup(t.popup);
         }
