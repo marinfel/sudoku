@@ -38,6 +38,7 @@ public abstract class IHMGridView extends IHMGridLayout {
         VBox leftVBox = new VBox();
         VBox bottomHBox = new VBox();
         VBox rightVBox = new VBox();
+        VBox centerVBox = new VBox();
         
         // center a faire
         
@@ -45,6 +46,7 @@ public abstract class IHMGridView extends IHMGridLayout {
         border.setLeft(leftVBox);
         border.setBottom(bottomHBox);
         border.setRight(rightVBox);
+        border.setCenter(centerVBox);
 
         //border.setCenter();
        // 
@@ -54,6 +56,6 @@ public abstract class IHMGridView extends IHMGridLayout {
     public BorderPane getBorder() {
         return border;
     }
+   
     
-
 }
