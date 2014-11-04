@@ -24,23 +24,23 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Marc-Antoine
  */
-public class IHM_CellEditable extends IHM_Cell {
+public class IhmCellEditable extends IhmCell {
 
     protected final static int addlesMaxNumbers = 3;
-    
+
     protected int addlesFontSize = 10;
     protected int valueFontSize = 20;
-    
+
     protected double addlesSizeX;
     protected double addlesSizeY;
     protected double valueSizeX;
     protected double valueSizeY;
-    
+
     protected HBox addlesLayout = new HBox();
     protected ArrayList<TextField> addlesEditList = new ArrayList<TextField>();
     protected Hyperlink addlesAddButton = new Hyperlink();
     protected TextField valueEdit = new TextField();
-    
+
     /**
      * IHM_CellEditable constructor
      *
@@ -49,41 +49,42 @@ public class IHM_CellEditable extends IHM_Cell {
      * @param addlesFontSize defines the font size in addles TextField
      * @param valueFontSize defines the font size in value's TextField
      */
-    public IHM_CellEditable(double width, double height, int addlesFontSize, int valueFontSize){
+    public IhmCellEditable(double width, double height, int addlesFontSize, int valueFontSize) {
         setMaxSize(width, height);
-        
+
         this.addlesFontSize = addlesFontSize;
         this.valueFontSize = valueFontSize;
-        
+
         valueSizeX = getMaxWidth();
         valueSizeY = getMaxHeight() * (1 - 1 / addlesMaxNumbers);
         addlesSizeX = getMaxWidth() / addlesMaxNumbers;
         addlesSizeY = getMaxHeight() / addlesMaxNumbers;
-        
+
         // When mouse enters the cell, we show the add button
-        setOnMouseEntered(new EventHandler<MouseEvent>(){
+        setOnMouseEntered(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent t) {
-                if(addlesEditList.size() < addlesMaxNumbers)
+                if (addlesEditList.size() < addlesMaxNumbers) {
                     setAddlesAddButtonVisible(true);
+                }
             }
-            
+
         });
-        
+
         // When mouse exits the cell, we hide the add button
-        setOnMouseExited(new EventHandler<MouseEvent>(){
+        setOnMouseExited(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent t) {
                 setAddlesAddButtonVisible(false);
             }
-            
+
         });
-        
+
         /*init the addles layout attribut and add it to the top of the layout*/
         this.add(addlesLayout, 0, 0);
-        
+
         //Create a space and add it in the addles layout to fix the height when there is no addles
         Rectangle space = new Rectangle();
         space.setWidth(0);
@@ -91,13 +92,13 @@ public class IHM_CellEditable extends IHM_Cell {
         space.setStroke(Color.TRANSPARENT);
         space.setFill(Color.TRANSPARENT);
         addlesLayout.getChildren().add(space);
-        
+
         /*init the addles add-button and add it on the layout next to the addles list*/
         addlesAddButton.setText("+");
         addlesAddButton.setStyle("-fx-font-size: " + addlesFontSize + "pt;");
         addlesAddButton.setAlignment(Pos.CENTER);
         addlesAddButton.setMaxSize(addlesSizeX, addlesSizeY);
-        addlesAddButton.setOnAction(new EventHandler<ActionEvent>(){
+        addlesAddButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent t) {
@@ -105,31 +106,30 @@ public class IHM_CellEditable extends IHM_Cell {
                 System.out.println("Event handled: [" + t.getClass().toString() + "] " + t.getEventType());
 
                 // Check if the handler has already been consumed
-                if(t.isConsumed())
+                if (t.isConsumed()) {
                     return; //then quit the handle function
-
+                }
                 // Check if we handled the event from the addles add-button
-                if(t.getSource() == addlesAddButton)
+                if (t.getSource() == addlesAddButton) {
                     addlesAddButtonHandler(t);
-
-                // Otherwise
-                else
+                } // Otherwise
+                else {
                     return; //Quit the function without consume the event
-
+                }
                 // Consume the event to not handle it once more
                 t.consume();
             }
-            
+
         });
         addlesLayout.getChildren().add(addlesAddButton);
         setAddlesAddButtonVisible(false);
-        
+
         /*init valueEdit attribut and add it to the bottom of the layout*/
         valueEdit.setMaxSize(valueSizeX, valueSizeY);
         valueEdit.setAlignment(Pos.CENTER);
         valueEdit.setStyle("-fx-font-size: " + valueFontSize + "pt;");
-        valueEdit.textProperty().addListener(new ChangeListener<String>(){
-            
+        valueEdit.textProperty().addListener(new ChangeListener<String>() {
+
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
                 // Handle any change on the textField
@@ -139,12 +139,13 @@ public class IHM_CellEditable extends IHM_Cell {
         });
         this.add(valueEdit, 0, 1);
     }
-    
+
     /**
-     * Override method of IHM_Cell used to set the main value
+     * Override method of IhmCell used to set the main value
      *
-     * <p>This method will check wether the value is correct or not
-     * see boolean IHM_Cell.checkValue(int value)</p>
+     * <p>
+ This method will check wether the value is correct or not see boolean
+ IhmCell.checkValue(int value)</p>
      *
      * @param value is an integer which has to be between [1,9]
      * @return Nothing
@@ -152,12 +153,13 @@ public class IHM_CellEditable extends IHM_Cell {
      */
     @Override
     public void setValue(int value) {
-         //first check the value
-        if(checkValue(value))
-            //set the value
+        //first check the value
+        if (checkValue(value)) //set the value
+        {
             valueEdit.setText(String.valueOf(value));
+        }
     }
-    
+
     /**
      * Set the addles add-button visibility
      *
@@ -165,81 +167,89 @@ public class IHM_CellEditable extends IHM_Cell {
      * @return Nothing
      * @throws Nothing
      */
-    private void setAddlesAddButtonVisible(boolean visible){
+    private void setAddlesAddButtonVisible(boolean visible) {
         addlesAddButton.setVisible(visible);// Use to show/hide it
         addlesAddButton.setManaged(visible);// Use to fix/unfix it on the layout
     }
-    
+
     /**
      * Is called when the user clicks on the addles add-button.
      *
-     * <p>It will add a new addle if there is enough room</p>
+     * <p>
+     * It will add a new addle if there is enough room</p>
      *
      * @param t an ActionEvent
      * @return Nothing
      * @throws Nothing
      */
-    protected void addlesAddButtonHandler(ActionEvent t){
+    protected void addlesAddButtonHandler(ActionEvent t) {
         System.out.println("addlesAddButtonHandler(): " + addlesEditList.size() + " ?<? " + addlesMaxNumbers);
         // Check if there is enough rooms on the top of the  layout
-        if(addlesEditList.size() < addlesMaxNumbers){
+        if (addlesEditList.size() < addlesMaxNumbers) {
             // Add a new addles to the list and to the addlesLayout
             final TextField addle = new TextField();
             addle.setMaxSize(addlesSizeX, addlesSizeY);
             addle.setAlignment(Pos.CENTER);
             addle.setStyle("-fx-font-size: " + addlesFontSize + "pt;");
-            addle.textProperty().addListener(new ChangeListener<String>(){
+            addle.textProperty().addListener(new ChangeListener<String>() {
 
                 @Override
                 public void changed(ObservableValue<? extends String> ov, String t, String t1) {
                     // Handle any change on the textField
                     textFieldHandler(addle, t, t1);
-                    
+
                     // Delete it if the user cleared it
-                    if(t1.isEmpty() && !t.isEmpty())
+                    if (t1.isEmpty() && !t.isEmpty()) {
                         deleteAddle(addle);
+                    }
                 }
             });
-            
-            addle.setOnKeyTyped(new EventHandler<KeyEvent>(){
+
+            addle.setOnKeyTyped(new EventHandler<KeyEvent>() {
 
                 @Override
                 public void handle(KeyEvent t) {
                     // Doesn't Work on mac, to test on Windows
-                    
+
                     // Handles a key typed
                     System.out.println("onKeyTyped(" + t.getCode().toString() + ")");
-                    if(t.isConsumed())
+                    if (t.isConsumed()) {
                         return;
-                    
-                    //Handle a cell-suppress request 
-                    if(t.getCode() == KeyCode.DELETE)
-                        //delete cell  
+                    }
+
+                    //Handle a cell-suppress request
+                    if (t.getCode() == KeyCode.DELETE) //delete cell
+                    {
                         deleteAddle(addle);
-                    else if(t.getCode() == KeyCode.BACK_SPACE && addle.getText().isEmpty())
-                        if(deleteAddle(addle))
+                    } else if (t.getCode() == KeyCode.BACK_SPACE && addle.getText().isEmpty()) {
+                        if (deleteAddle(addle)) {
                             t.consume();
+                        }
+                    }
                 }
-                
+
             });
-            
+
             addlesEditList.add(addle);
             //Add it to the before-the-last position (which is the addles add-button)
             addlesLayout.getChildren().add(addlesLayout.getChildren().size() - 1, addle);
-            
+
             // Hide the addles add-button if there is no more rooms after adding the new one
-            if(addlesEditList.size() == addlesMaxNumbers)
+            if (addlesEditList.size() == addlesMaxNumbers) {
                 setAddlesAddButtonVisible(false);
-            
+            }
+
             // Set Focus on the addles created
             addle.requestFocus();
         }
     }
-    
+
     /**
      * Called when the user change a TextField content
      *
-     * <p>Will check what thre user enter in the TextField and apply or not a correction on it</p>
+     * <p>
+     * Will check what thre user enter in the TextField and apply or not a
+     * correction on it</p>
      *
      * @param tf a TextField that trigged the event
      * @param t a string which was in the TextField before the event
@@ -247,59 +257,66 @@ public class IHM_CellEditable extends IHM_Cell {
      * @return Nothing
      * @throws Nothing
      */
-    protected void textFieldHandler(TextField tf, String t, String t1){
+    protected void textFieldHandler(TextField tf, String t, String t1) {
         //Try to parse the input
         String text = t1;
-        
+
         // Limit the size of TextField
-        if(text.length() > 1){
+        if (text.length() > 1) {
             tf.setText(t1.substring(t1.length() - 1)); //récupère le dernier caractère
             return;
         }
-        
+
         int val = 0;
-        try{
+        try {
             val = Integer.parseInt(text);
         } catch (NumberFormatException ex) {
             System.err.println("textFieldHandler(\"" + t1 + "\"): " + ex.getMessage());
         }
 
         // Check if the input value is correct
-        if(!checkValue(val))
+        if (!checkValue(val)) {
             tf.clear(); //if not then clear it
+        }
     }
-    
+
     /**
      * Use to delete an addle and set the focus on another addle
      *
-     * <p>Delete the addle and pass the focus to the previous or to the next addle or to the add-button</p>
+     * <p>
+     * Delete the addle and pass the focus to the previous or to the next addle
+     * or to the add-button</p>
      *
      * @param addle is the addle to delete
      * @return Nothing
      * @throws Nothing (TODO: throw a NullPointerException)
      */
-    private boolean deleteAddle(TextField addle){
+    private boolean deleteAddle(TextField addle) {
         int index = addlesEditList.indexOf(addle);
-                        
+
         //delete the addle and check if it succeeds
-        if(index >= 0 && addlesLayout.getChildren().remove(addle) && (addlesEditList.remove(index) == addle)){
+        if (index >= 0 && addlesLayout.getChildren().remove(addle) && (addlesEditList.remove(index) == addle)) {
             // Hide the addles add-button if there is no more rooms after adding the new one
-            if(addlesEditList.size() < addlesMaxNumbers)
+            if (addlesEditList.size() < addlesMaxNumbers) {
                 setAddlesAddButtonVisible(true);
+            }
 
             // Set focus on the previous addle if possible or the next addle if possible otherwise on the button
-            if(addlesEditList.size() > 0){
-                if(index - 1 >= 0 && index - 1 < addlesEditList.size())
-                    // Focus on the previous addle
+            if (addlesEditList.size() > 0) {
+                if (index - 1 >= 0 && index - 1 < addlesEditList.size()) // Focus on the previous addle
+                {
                     addlesEditList.get(index - 1).requestFocus();
-                else if(index < addlesEditList.size())
-                    // Focus on the next addle
+                } else if (index < addlesEditList.size()) // Focus on the next addle
+                {
                     addlesEditList.get(index).requestFocus();
-            } else
-                //Focus on the button
+                }
+            } else //Focus on the button
+            {
                 addlesAddButton.requestFocus();
-        } else
+            }
+        } else {
             return false;
+        }
         return true;
     }
 }
