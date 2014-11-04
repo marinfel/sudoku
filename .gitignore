@@ -23,3 +23,7 @@ manifest.mf
 .classpath
 .metadata
 bin/
+
+# intelliJ
+.idea
+*.iml
