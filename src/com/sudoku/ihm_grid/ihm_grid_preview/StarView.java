@@ -6,7 +6,7 @@
 
 package com.sudoku.ihm_grid.ihm_grid_preview;
 
-import ihm_grid.*;
+//import ihm_grid.*;
 import javafx.scene.Group;
  import javafx.scene.image.Image;
  import javafx.scene.image.ImageView;

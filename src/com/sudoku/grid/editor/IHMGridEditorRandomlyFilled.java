@@ -18,7 +18,7 @@ public class IHMGridEditorRandomlyFilled extends IHMGridEditor {
     private Button deleteCells;
     private TextField deleteCellsField;
     
-    IHMGridEditorRandomlyFilled(String title){
+    public IHMGridEditorRandomlyFilled(String title){
         super(title);
         
         deleteCells = new Button("Delete Cells");

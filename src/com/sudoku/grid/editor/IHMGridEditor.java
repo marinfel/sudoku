@@ -5,16 +5,20 @@
  */
 package com.sudoku.grid.editor;
 
+import com.sudoku.data.model.Tag;
+import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import static javafx.geometry.Pos.BOTTOM_CENTER;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -22,7 +26,7 @@ import javafx.scene.layout.VBox;
  *
  * @author celine
  */
-public class IHMGridEditor extends IHMGridView{
+public abstract class IHMGridEditor extends IHMGridView{
     private TextField editTitle;
     // gestion des ajouts de tags
     private Button validBtn;
@@ -40,6 +44,7 @@ public class IHMGridEditor extends IHMGridView{
     // layout du haut
         HBox topLayout = (HBox)super.getBorder().getTop();
         topLayout.getChildren().addAll(editTitle, validBtn);
+        topLayout.setPrefHeight(100);
 
     // layout du bas : ajout de tags   
         VBox bottomLayout = (VBox)super.getBorder().getBottom();
@@ -50,6 +55,7 @@ public class IHMGridEditor extends IHMGridView{
         tagsList.setItems(tagsListValues);
         tagsList.setOrientation(Orientation.HORIZONTAL);
         firstHbox.getChildren().add(tagsList);
+        bottomLayout.setPrefHeight(100);
         // enter a tag
         HBox secondHbox = new HBox();
         final TextField tagField = new TextField();
@@ -62,18 +68,36 @@ public class IHMGridEditor extends IHMGridView{
                
         tagsList.setMaxHeight(75.0); //Sinon le tagsList cache les boutons du leftPane
         // handlers
+        
+        editTitle.textProperty().addListener(new ChangeListener<String>() {
+
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                    String oldDesc, String newDesc) {
+                    // Handle any change on the textField
+                    getGrid().setDescription(newDesc);
+                    System.out.println(getGrid().getDescription());
+                }
+            });
+        
+        /*
         editTitle.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                // ecrire_en_dur_ou_en_memoire(editTitle.getText());
-                
+                getGrid().setDescription(editTitle.getText());
+                System.out.println(getGrid().getDescription());
             }
         });
+        */
         
         validBtn.setOnAction(new EventHandler<ActionEvent>() {    
             @Override
             public void handle(ActionEvent event) {
                 //envoyer le fichier de données à IHM-Main
-                System.out.println("tags récupérés : " + tagsListValues.toString());
+                ArrayList<Tag> tmpList = new ArrayList<Tag>();
+                for(String str : tagsListValues){
+                    tmpList.add(new Tag(str));
+                }
+                getGrid().setTags(tmpList);
             }
         });
         
@@ -100,6 +124,11 @@ public class IHMGridEditor extends IHMGridView{
     });
     }
     
+    public Button getValidBtn(){
+        return validBtn;
+    }
+    
+   
     
     
     
