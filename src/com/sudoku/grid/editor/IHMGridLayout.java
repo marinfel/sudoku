@@ -6,7 +6,7 @@
 
 package com.sudoku.grid.editor;
 
-import javafx.application.Application;
+import com.sudoku.data.model.Grid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -19,13 +19,13 @@ abstract class IHMGridLayout {
     private Group root;
     private Scene layout;
     private Text title;
-    //Grid grille;
+    protected Grid grid;
     public IHMGridLayout(String ttl){
         root = new Group();
         layout = new Scene(getRoot(), 300, 250);
         title = new Text(30,20,ttl);
         root.getChildren().add(title);
-        
+        grid = new Grid();
     }
 
     /**
@@ -35,6 +35,9 @@ abstract class IHMGridLayout {
         return root;
     }
 
+    public Grid getGrid(){
+        return grid;
+    }
     /**
      * @return the layout
      */

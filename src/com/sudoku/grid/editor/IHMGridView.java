@@ -5,16 +5,13 @@
  */
 package com.sudoku.grid.editor;
 
-import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import static com.sudoku.grid.ihm_grid_cells.IhmGridLines.CellStatus.FIT_GRID;
+import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 /**
  *
@@ -28,7 +25,7 @@ public abstract class IHMGridView extends IHMGridLayout {
         Edit
     }
     
-    private final BorderPane border;
+    protected final BorderPane border;
    
     
     public IHMGridView(String title){
@@ -47,6 +44,15 @@ public abstract class IHMGridView extends IHMGridLayout {
         border.setBottom(bottomHBox);
         border.setRight(rightVBox);
         border.setCenter(centerVBox);
+        
+        IhmGridLines sudokuGrid = new IhmGridLines(getGrid(), 500, FIT_GRID);
+        //VBox centerLayout = (VBox)border.getCenter();
+        //centerLayout.getChildren().addAll(sudokuGrid);
+        centerVBox.getChildren().addAll(sudokuGrid);
+        
+        IhmPopupsList popupList = null;
+        popupList.getInstance(100, 500, 2);
+        //rightVBox.getChildren().addAll(popupList);
 
         //border.setCenter();
        // 
