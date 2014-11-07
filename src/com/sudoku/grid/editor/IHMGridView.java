@@ -47,12 +47,24 @@ public abstract class IHMGridView extends IHMGridLayout {
         
         IhmGridLines sudokuGrid = new IhmGridLines(getGrid(), 500, FIT_GRID);
         //VBox centerLayout = (VBox)border.getCenter();
-        //centerLayout.getChildren().addAll(sudokuGrid);
-        centerVBox.getChildren().addAll(sudokuGrid);
+        //centerLayout.getChildren().add(sudokuGrid);
         
-        IhmPopupsList popupList = null;
-        popupList.getInstance(100, 500, 2);
-        //rightVBox.getChildren().addAll(popupList);
+        centerVBox.getChildren().add(sudokuGrid);
+        
+        final IhmPopupsList popupList = IhmPopupsList.getInstance(100, 500, 2);
+        /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+
+            @Override
+            public void handle(WindowEvent t) {
+                if(t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST){
+                    popupList.finalize();
+                }
+            }
+            
+        });
+        */
+        rightVBox.getChildren().add(popupList);
 
         //border.setCenter();
        // 
