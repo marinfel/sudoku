@@ -5,6 +5,7 @@
  */
 package com.sudoku.ihm_grid.ihm_grid_preview;
 
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.ihm_grid.ihm_grid_preview.IhmGridLayout;
 import java.util.Vector;
 import javafx.geometry.Pos;
@@ -22,6 +23,10 @@ public class IhmGridPreview extends IhmGridLayout {
 
   public IhmGridPreview(String ttl, double numberOfStars) {
     super(ttl);
+    
+    IhmGridLines ihmGridLines = new IhmGridLines(null, 100, IhmGridLines.CellStatus.ALL_VIEW); 
+    root.getChildren().add(ihmGridLines);
+    
     int i;
     grades = new Vector();
     int num = (int) Math.floor(numberOfStars);
