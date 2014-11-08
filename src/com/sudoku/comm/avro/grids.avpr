@@ -2,4 +2,64 @@
   "namespace": "com.sudoku.comm",
   "protocol": "grids",
   "doc": "Service des grilles"
+
+  "types": [
+    {
+      "name": "intArray", "type": "array",
+      "items": "integer"
+    },
+    {
+      "name": "cell", "type": "record",
+      "fields": [
+        { "name": "value", "type": "integer" },
+        { "name": "fixed", "type": "boolean" },
+        { "name": "indice", "type": "intArray" }
+      ]
+    },
+    {
+      "name": "cellArray", "type": "array",
+      "items": "cell"
+    },
+    {
+      "name": "cellDoubleArray", "type": "array",
+      "items": "cellArray"
+    },
+    {
+      "name": "Comment", "type": "record",
+      "fields": [
+        { "name": "title", "type": "string" },
+        { "name": "date", "type": "integer" },
+        { "name": "text", "type": "string" },
+        { "name": "author", "type": "string" } //TODO: mettre le bon type de "author"
+      ]
+    },
+    {
+      "name": "grid", "type": "record",
+      "fields":[
+        { "name": "id", "type": "integer" },
+        { "name": "name", "type": "string" },
+        { "name": "namcreationDate", "type": "integer" },
+        { "name": "matrix", "type": "cellDoubleArray" },
+        { "name": "gradesSum", "type": "integer" },
+        { "name": "gradesCount", "type": "integer" },
+        { "name": "modifiedDate", "type": "integer" },
+        { "name": "tags", "type": "string" },
+//pas sur
+        { "name": "comment", "type": "Comment" }
+      ]
+    },
+    {
+      "name": "gridList", "type": "array",
+      "items": "grid"
+    },
+    { "name": "user", "type": "string" }
+  ],
+
+  "messages": {
+    "getGrids": {
+      "doc": "get all the grids from a specific user",
+      "request": [{ "name": "getAllGrids", "type": "user" }],
+      "response": "gridList"
+    }
+  }
 }
