@@ -40,6 +40,8 @@ public class IhmCellEditable extends IhmCell {
     protected ArrayList<TextField> addlesEditList = new ArrayList<TextField>();
     protected Hyperlink addlesAddButton = new Hyperlink();
     protected TextField valueEdit = new TextField();
+    
+    private final IhmCellEditedEvent ihmCellEditedEvent;
 
     /**
      * IHM_CellEditable constructor
@@ -137,14 +139,15 @@ public class IhmCellEditable extends IhmCell {
 
         });
         this.add(valueEdit, 0, 1);
+        
+        ihmCellEditedEvent = new IhmCellEditedEvent(this);
     }
 
     /**
      * Override method of IhmCell used to set the main value
      *
-     * <p>
- This method will check wether the value is correct or not see boolean
- IhmCell.checkValue(int value)</p>
+     *  <p>This method will check wether the value is correct or not see boolean
+     *   IhmCell.checkValue(int value)</p>
      *
      * @param value is an integer which has to be between [1,9]
      * @return Nothing
@@ -152,10 +155,25 @@ public class IhmCellEditable extends IhmCell {
      */
     @Override
     public void setValue(int value) {
+        System.out.println("setValue(" + value + "): " + checkValue(value));
         //first check the value
-        if (checkValue(value)) //set the value
-        {
+        if (checkValue(value)){ 
+            //set the value
             valueEdit.setText(String.valueOf(value));
+            //fire an event that the value has been changed
+            
+            //##### Disable to test #######
+            //fireEvent(ihmCellEditedEvent);
+        }
+    }
+    
+    public int getValue(){
+        try{
+            //if integer found return it
+            return Integer.parseInt(valueEdit.getText());
+        } catch(NumberFormatException e){
+            //if no integer found, return 0, impossible value
+            return 0;
         }
     }
 
@@ -270,13 +288,17 @@ public class IhmCellEditable extends IhmCell {
         try {
             val = Integer.parseInt(text);
         } catch (NumberFormatException ex) {
-            System.err.println("textFieldHandler(\"" + t1 + "\"): " + ex.getMessage());
+            //do nothing
+            val = 0; //just to be sure
+            //System.err.println("textFieldHandler(\"" + t1 + "\"): " + ex.getMessage());
         }
 
         // Check if the input value is correct
-        if (!checkValue(val)) {
+        if (!checkValue(val))
             tf.clear(); //if not then clear it
-        }
+        else
+            //fire an event that the value has been changed
+            fireEvent(ihmCellEditedEvent);
     }
 
     /**

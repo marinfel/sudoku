@@ -46,4 +46,12 @@ public class IhmCellView extends IhmCell {
             valueView.setText(String.valueOf(value));
         }
     }
+    
+    public int getValue(){
+        try{
+            return Integer.parseInt(valueView.getText());
+        } catch(NumberFormatException e){
+            return 0;
+        }
+    }
 }

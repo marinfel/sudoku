@@ -37,5 +37,5 @@ public abstract class IhmCell extends GridPane {
     }
 
     public abstract void setValue(int value);
-
+    public abstract int getValue();
 }
