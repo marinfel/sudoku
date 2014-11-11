@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.editor.ihm_grid_player;
+package com.sudoku.grid.ihm_grid_player;
 
 
 import com.sudoku.data.model.Comment;
