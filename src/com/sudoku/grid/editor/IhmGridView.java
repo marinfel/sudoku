@@ -31,6 +31,7 @@ public abstract class IhmGridView extends IhmGridLayout {
     public IhmGridView(String title){
         super(title);
         border = new BorderPane();
+        getChildren().add(border);
         HBox topHBox = new HBox();
         VBox leftVBox = new VBox();
         VBox bottomHBox = new VBox();
@@ -71,10 +72,6 @@ public abstract class IhmGridView extends IhmGridLayout {
         //border.setCenter();
        // 
         
-    }
-    
-    public BorderPane getBorder(){
-        return border;
     }
        
 }
