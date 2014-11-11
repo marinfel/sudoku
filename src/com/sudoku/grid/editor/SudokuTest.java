@@ -22,7 +22,7 @@ public class SudokuTest extends Application {
         IhmGridEditorRandomlyFilled ihm_test;
         ihm_test = new IhmGridEditorRandomlyFilled("test");
         
-        Scene scene = new Scene(ihm_test.getBorder(), 800, 1000);
+        Scene scene = new Scene(ihm_test, 800, 1000);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);

@@ -11,40 +11,33 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-
+import com.sudoku.data.model.Grid;
 /**
  *
  * @author Mélie
  */
-public abstract class IhmGridLayout {
+public abstract class IhmGridLayout extends StackPane{
 
-  protected Group root;
   protected Label title;
   protected final int sceneHeight = 200;
   protected final int sceneLength = 200;
+  protected Grid grid;
 
   //Grid grille;
 
   public IhmGridLayout(String ttl) {
-    root = new Group();
     title = new Label(ttl);
-    root.getChildren().add(title);
+    getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
-  }
-
-  /**
-   * @return the root
-   */
-  public Group getRoot() {
-    return root;
+    grid = new Grid();
   }
 
   /**
    * @return the title
    */
-  public Label getTitle() {
-    return title;
+  public String getTitle() {
+    return title.getText();
   }
 }
