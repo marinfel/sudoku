@@ -13,23 +13,21 @@ import javafx.scene.layout.VBox;
  *
  * @author mecton08
  */
-public class IHMGridEditorManuallyFilled extends IHMGridEditor{
-    
-    public IHMGridEditorManuallyFilled(String title){
-        super(title);
-        
-        super.getValidBtn().setOnAction(new EventHandler<ActionEvent>() {    
-            @Override
-            public void handle(ActionEvent event) {                
-                VBox gridLines = (VBox)border.getCenter();
-                for(int i = 0; i < 81; i++){
+public class IHMGridEditorManuallyFilled extends IHMGridEditor {
+
+  public IHMGridEditorManuallyFilled(String title) {
+    super(title);
+
+    super.getValidBtn().setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        VBox gridLines = (VBox) border.getCenter();
+        for (int i = 0; i < 81; i++) {
                     //Fonction getCells a implementer, renvoie le tableau de IhmCellEditable
-                    //grid.setFixedCell( i/9, i%9, gridLines.getCells()[i].getValue() );
-                }
-            }
-        });
-    }
-    
-    
- 
+          //grid.setFixedCell( i/9, i%9, gridLines.getCells()[i].getValue() );
+        }
+      }
+    });
+  }
+
 }

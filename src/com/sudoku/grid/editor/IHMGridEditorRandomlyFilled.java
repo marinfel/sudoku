@@ -15,19 +15,19 @@ import javafx.scene.layout.VBox;
  * @author mecton08
  */
 public class IHMGridEditorRandomlyFilled extends IHMGridEditor {
-    private Button deleteCells;
-    private TextField deleteCellsField;
-    
-    public IHMGridEditorRandomlyFilled(String title){
-        super(title);
-        
-        deleteCells = new Button("Delete Cells");
-        deleteCellsField = new TextField("0");
-        
-        VBox leftLayout = (VBox)super.getBorder().getLeft();
-        leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
 
-    }
-    
-    
+  private Button deleteCells;
+  private TextField deleteCellsField;
+
+  public IHMGridEditorRandomlyFilled(String title) {
+    super(title);
+
+    deleteCells = new Button("Delete Cells");
+    deleteCellsField = new TextField("0");
+
+    VBox leftLayout = (VBox) super.getBorder().getLeft();
+    leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
+
+  }
+
 }

@@ -15,24 +15,25 @@ import javafx.stage.Stage;
  * @author mecton08
  */
 public class SudokuTest extends Application {
-    
-    @Override
+
+  @Override
   public void start(Stage primaryStage) {
-       
-        IHMGridEditorRandomlyFilled ihm_test;
-        ihm_test = new IHMGridEditorRandomlyFilled("test");
-        
-        Scene scene = new Scene(ihm_test.getBorder(), 800, 1000);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
+
+    IHMGridEditorRandomlyFilled ihm_test;
+    ihm_test = new IHMGridEditorRandomlyFilled("test");
+
+    Scene scene = new Scene(ihm_test.getBorder(), 800, 1000);
+
+    primaryStage.setTitle("Hello World!");
+    primaryStage.setScene(scene);
+    primaryStage.show();
+  }
+
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+
 }
