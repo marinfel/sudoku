@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
  *
  * @author groudame
  */
-class StarView {
+public class StarView {
 
   ImageView star;
 
