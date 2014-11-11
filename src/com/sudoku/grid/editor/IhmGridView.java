@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
  *
  * @author mecton08
  */
-public abstract class IHMGridView extends IHMGridLayout {
+public abstract class IhmGridView extends IhmGridLayout {
     //protected textItemInput textInput;
     //protected textItemView textView;
     protected enum mode {
@@ -28,7 +28,7 @@ public abstract class IHMGridView extends IHMGridLayout {
     protected final BorderPane border;
    
     
-    public IHMGridView(String title){
+    public IhmGridView(String title){
         super(title);
         border = new BorderPane();
         HBox topHBox = new HBox();
@@ -51,7 +51,10 @@ public abstract class IHMGridView extends IHMGridLayout {
         
         centerVBox.getChildren().add(sudokuGrid);
         
-        final IhmPopupsList popupList = IhmPopupsList.getInstance(100, 500, 2);
+        IhmPopupsList.init(150.0, 500.0, 2);
+        final IhmPopupsList popupList = IhmPopupsList.getInstance();
+        rightVBox.getChildren().add(popupList);
+        
         /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
 
@@ -64,7 +67,6 @@ public abstract class IHMGridView extends IHMGridLayout {
             
         });
         */
-        rightVBox.getChildren().add(popupList);
 
         //border.setCenter();
        // 

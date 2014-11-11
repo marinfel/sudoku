@@ -15,12 +15,12 @@ import javafx.scene.text.Text;
  *
  * @author groudame
  */
-abstract class IHMGridLayout {
+abstract class IhmGridLayout {
     private Group root;
     private Scene layout;
     private Text title;
     protected Grid grid;
-    public IHMGridLayout(String ttl){
+    public IhmGridLayout(String ttl){
         root = new Group();
         layout = new Scene(getRoot(), 300, 250);
         title = new Text(30,20,ttl);

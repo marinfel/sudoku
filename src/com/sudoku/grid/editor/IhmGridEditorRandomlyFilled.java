@@ -14,11 +14,11 @@ import javafx.scene.layout.VBox;
  *
  * @author mecton08
  */
-public class IHMGridEditorRandomlyFilled extends IHMGridEditor {
+public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
     private Button deleteCells;
     private TextField deleteCellsField;
     
-    public IHMGridEditorRandomlyFilled(String title){
+    public IhmGridEditorRandomlyFilled(String title){
         super(title);
         
         deleteCells = new Button("Delete Cells");
