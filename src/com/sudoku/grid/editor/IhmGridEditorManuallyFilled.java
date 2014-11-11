@@ -13,9 +13,9 @@ import javafx.scene.layout.VBox;
  *
  * @author mecton08
  */
-public class IHMGridEditorManuallyFilled extends IHMGridEditor{
+public class IhmGridEditorManuallyFilled extends IhmGridEditor{
     
-    public IHMGridEditorManuallyFilled(String title){
+    public IhmGridEditorManuallyFilled(String title){
         super(title);
         
         super.getValidBtn().setOnAction(new EventHandler<ActionEvent>() {    

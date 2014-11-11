@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
  *
  * @author mecton08
  */
-public abstract class IHMGridView extends IHMGridLayout {
+public abstract class IhmGridView extends IhmGridLayout {
     //protected textItemInput textInput;
     //protected textItemView textView;
     protected enum mode {
@@ -28,7 +28,7 @@ public abstract class IHMGridView extends IHMGridLayout {
     protected final BorderPane border;
    
     
-    public IHMGridView(String title){
+    public IhmGridView(String title){
         super(title);
         border = new BorderPane();
         HBox topHBox = new HBox();
