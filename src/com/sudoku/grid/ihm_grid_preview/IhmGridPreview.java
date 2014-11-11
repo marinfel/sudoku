@@ -25,7 +25,7 @@ public class IhmGridPreview extends IhmGridLayout {
     super(ttl);
 
     IhmGridLines ihmGridLines = new IhmGridLines(null, 100, IhmGridLines.CellStatus.ALL_VIEW);
-    root.getChildren().add(ihmGridLines);
+    getChildren().add(ihmGridLines);
 
     int i;
     grades = new Vector();
@@ -46,7 +46,7 @@ public class IhmGridPreview extends IhmGridLayout {
       box.getChildren().add(grades.get(i).getStar());
     }
 
-    root.getChildren().add(box);
+    getChildren().add(box);
   }
 
 }
