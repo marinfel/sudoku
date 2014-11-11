@@ -34,7 +34,7 @@ public class IhmPopup extends GridPane {
 
     private final Timer timer = new Timer();
     private final TimeoutTimerTask timeoutTimerTask;
-    private final IhmPopupCloseRequestEvent ihm_PopupCloseRequestEvent;
+    private final IhmPopupCloseRequestEvent ihmPopupCloseRequestEvent;
 
     /**
      * @class IHM_Popup constructor This constructor shouldn't be called by the
@@ -90,7 +90,7 @@ public class IhmPopup extends GridPane {
         });
 
         //Initialize the event fired when the popup need to be removed
-        ihm_PopupCloseRequestEvent = new IhmPopupCloseRequestEvent(this);
+        ihmPopupCloseRequestEvent = new IhmPopupCloseRequestEvent(this);
 
         //initialise the timer which decrease the showing time with a 1sec period
         timeoutTimerTask = new TimeoutTimerTask();
@@ -133,7 +133,7 @@ public class IhmPopup extends GridPane {
      */
     public void requestToClose() {
         killTimer();
-        fireEvent(ihm_PopupCloseRequestEvent);
+        fireEvent(ihmPopupCloseRequestEvent);
     }
 
     /**

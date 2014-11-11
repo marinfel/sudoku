@@ -69,24 +69,32 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
     }
 
     /**
-     * @class IHM_PopupsList constructor This list is a graphic object which is
-     * unique that why you can't instantiate an instance by this way. Use
-     * IHM_PopupsList.getInstance() instead.
+     * @class IHM_PopupsList initializer, you must call it
+     * before calling getInstance();
      *
      * @param height is the max height of this graphical object
      * @param width is the max width of this graphical object
      * @param nbMaxPopus is the max number of popup shown in the list. It will
      * determine the height of each pop-ups
-     * @return an instance of IhmPopupsList. If this is the first call of
-     * getInstance, the instance will be create and returned.
      */
-    public static IhmPopupsList getInstance(double width, double height, int nbMaxPopus) {
+    public static void init(double width, double height, int nbMaxPopus) {
         //If the instance doesn't exist, we create it
-        if (instance == null) {
+        if(instance == null)
             instance = new IhmPopupsList(width, height, nbMaxPopus);
-        }
-
-        //return the instance created
+    }
+    
+    /**
+     * @class IHM_PopupsList getter, you must call init() before.
+     *
+     * @param height is the max height of this graphical object
+     * @param width is the max width of this graphical object
+     * @param nbMaxPopus is the max number of popup shown in the list. It will
+     * determine the height of each pop-ups
+     * @return an instance of IhmPopupsList. 
+     * If the instance hasn't been instanciated, return null;
+     */
+    public static IhmPopupsList getInstance() {
+        //return the instance created (if not created, return null)
         return instance;
     }
 
