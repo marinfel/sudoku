@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -42,12 +41,13 @@ public abstract class IhmGridEditor extends IhmGridView{
         cancelBtn = new Button("Annuler");
         
     // layout du haut
-        HBox topLayout = (HBox)super.getBorder().getTop();
+        HBox topLayout = (HBox)border.getTop();
+
         topLayout.getChildren().addAll(editTitle, validBtn);
         topLayout.setPrefHeight(100);
 
     // layout du bas : ajout de tags   
-        VBox bottomLayout = (VBox)super.getBorder().getBottom();
+        VBox bottomLayout = (VBox)border.getBottom();
         // list of entered tags
         HBox firstHbox = new HBox();
         final ListView<String> tagsList = new ListView<String>();
@@ -75,8 +75,8 @@ public abstract class IhmGridEditor extends IhmGridView{
                 public void changed(ObservableValue<? extends String> observable,
                     String oldDesc, String newDesc) {
                     // Handle any change on the textField
-                    getGrid().setDescription(newDesc);
-                    System.out.println(getGrid().getDescription());
+                    grid.setDescription(newDesc);
+                    System.out.println(grid.getDescription());
                 }
             });
         
@@ -97,7 +97,7 @@ public abstract class IhmGridEditor extends IhmGridView{
                 for(String str : tagsListValues){
                     tmpList.add(new Tag(str));
                 }
-                getGrid().setTags(tmpList);
+                grid.setTags(tmpList);
             }
         });
         
