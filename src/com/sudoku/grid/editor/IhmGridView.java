@@ -51,7 +51,7 @@ public abstract class IhmGridView extends IhmGridLayout {
         
         centerVBox.getChildren().add(sudokuGrid);
         
-        IhmPopupsList.init(150.0, 500.0, 2);
+        IhmPopupsList.init(150.0, 500.0, 10);
         final IhmPopupsList popupList = IhmPopupsList.getInstance();
         rightVBox.getChildren().add(popupList);
         
