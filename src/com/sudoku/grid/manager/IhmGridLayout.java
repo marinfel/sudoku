@@ -21,7 +21,6 @@ import javafx.scene.text.Text;
 public abstract class IhmGridLayout {
 
   protected Group root;
-  protected Scene layout;
   protected Label title;
   protected final int sceneHeight = 200;
   protected final int sceneLength = 200;
@@ -30,7 +29,6 @@ public abstract class IhmGridLayout {
 
   public IhmGridLayout(String ttl) {
     root = new Group();
-    layout = new Scene(root, 200, 200);
     title = new Label(ttl);
     root.getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
@@ -41,13 +39,6 @@ public abstract class IhmGridLayout {
    */
   public Group getRoot() {
     return root;
-  }
-
-  /**
-   * @return the layout
-   */
-  public Scene getLayout() {
-    return layout;
   }
 
   /**
