@@ -15,8 +15,8 @@ import javafx.stage.Stage;
  * @author mecton08
  */
 public class SudokuTest extends Application {
-    
-    @Override
+
+  @Override
   public void start(Stage primaryStage) {
        
         IhmGridEditorRandomlyFilled ihm_test;

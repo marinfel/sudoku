@@ -14,21 +14,23 @@ import javafx.event.EventType;
  * @author Marc-Antoine
  */
 public class IhmCellEditedEvent extends Event {
-    //CELL_EDITED a public constant to help to recognize this kind of event
-    public static final EventType<IhmCellEditedEvent> CELL_EDITED = new EventType("CELL_EDITED");
 
-    //An attribut to access to the cell which fired the event 
-    public final IhmCellEditable cell;
+  //CELL_EDITED a public constant to help to recognize this kind of event
 
-    /**
-     * IhmCellEditedEvent constructor
-     *
-     * @param cell is the cell which fired the event
-     */
-    public IhmCellEditedEvent(IhmCellEditable cell) {
-        super(CELL_EDITED);
+  public static final EventType<IhmCellEditedEvent> CELL_EDITED = new EventType("CELL_EDITED");
 
-        //set the cell holds by the event
-        this.cell = cell;
-    }
+  //An attribut to access to the cell which fired the event 
+  public final IhmCellEditable cell;
+
+  /**
+   * IhmCellEditedEvent constructor
+   *
+   * @param cell is the cell which fired the event
+   */
+  public IhmCellEditedEvent(IhmCellEditable cell) {
+    super(CELL_EDITED);
+
+    //set the cell holds by the event
+    this.cell = cell;
+  }
 }
