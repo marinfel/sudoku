@@ -49,7 +49,7 @@ public class IhmGridPlayer extends IhmGridView {
     //commentaires
     
       gridComments = playGrid.getComments();
-      final VBox commBox = (VBox)super.getBorder().getBottom();
+      final VBox commBox = (VBox)border.getBottom();
         // list of comm
       for (int i =1; i<nbComm; i++){
         Comment comm = gridComments.get(gridComments.size()-i);
@@ -77,7 +77,7 @@ public class IhmGridPlayer extends IhmGridView {
     
     //la note
     grades = getStars(2/*playGrid.getGrade()*/);
-    HBox gradeBox = (HBox)super.getBorder().getBottom();
+    HBox gradeBox = (HBox)border.getBottom();
     int i;
     for (i = 0; i< 5; i++)
       gradeBox.getChildren().add(grades.elementAt(i).getStar());
@@ -86,7 +86,7 @@ public class IhmGridPlayer extends IhmGridView {
     
     //auteur
     
-    VBox authorBox = (VBox)super.getBorder().getLeft();
+    VBox authorBox = (VBox)border.getLeft();
     Label authorName =  new Label(author.getPseudo());
     Image iAuthorPicture = new Image(author.getProfilePicturePath(),true);
     ImageView authorPict = new ImageView();
