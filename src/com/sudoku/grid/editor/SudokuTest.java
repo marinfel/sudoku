@@ -5,7 +5,7 @@
  */
 package com.sudoku.grid.editor;
 
-import com.sudoku.grid.editor.IHMGridEditorRandomlyFilled;
+import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,22 +18,21 @@ public class SudokuTest extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-
-    IHMGridEditorRandomlyFilled ihm_test;
-    ihm_test = new IHMGridEditorRandomlyFilled("test");
-
-    Scene scene = new Scene(ihm_test.getBorder(), 800, 1000);
-
-    primaryStage.setTitle("Hello World!");
-    primaryStage.setScene(scene);
-    primaryStage.show();
-  }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-
+       
+        IhmGridEditorRandomlyFilled ihm_test;
+        ihm_test = new IhmGridEditorRandomlyFilled("test");
+        
+        Scene scene = new Scene(ihm_test.getBorder(), 800, 1000);
+        
+        primaryStage.setTitle("Hello World!");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
 }

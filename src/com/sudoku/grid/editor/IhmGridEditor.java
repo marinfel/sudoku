@@ -26,13 +26,13 @@ import javafx.scene.layout.VBox;
  *
  * @author celine
  */
-public abstract class IHMGridEditor extends IHMGridView{
+public abstract class IhmGridEditor extends IhmGridView{
     private TextField editTitle;
     // gestion des ajouts de tags
     private Button validBtn;
     private Button cancelBtn;
     
-    public IHMGridEditor(String t) {
+    public IhmGridEditor(String t) {
         super(t);
         
         // bouton d'enregistrement de la grille
