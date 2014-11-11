@@ -29,23 +29,9 @@ public abstract class IhmGridLayout extends StackPane{
 
   public IhmGridLayout(String ttl) {
     title = new Label(ttl);
-    root.getChildren().add(title);
+    getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
     grid = new Grid();
-  }
-
-  /**
-   * @return the root
-   */
-  public Group getRoot() {
-    return root;
-  }
-
-  /**
-   * @return the layout
-   */
-  public Scene getLayout() {
-    return layout;
   }
 
   /**
