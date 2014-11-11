@@ -51,7 +51,10 @@ public abstract class IHMGridView extends IHMGridLayout {
         
         centerVBox.getChildren().add(sudokuGrid);
         
-        final IhmPopupsList popupList = IhmPopupsList.getInstance(100, 500, 2);
+        IhmPopupsList.init(150.0, 500.0, 2);
+        final IhmPopupsList popupList = IhmPopupsList.getInstance();
+        rightVBox.getChildren().add(popupList);
+        
         /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
 
@@ -64,7 +67,6 @@ public abstract class IHMGridView extends IHMGridLayout {
             
         });
         */
-        rightVBox.getChildren().add(popupList);
 
         //border.setCenter();
        // 
