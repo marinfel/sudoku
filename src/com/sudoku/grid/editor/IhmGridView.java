@@ -9,6 +9,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import static com.sudoku.grid.ihm_grid_cells.IhmGridLines.CellStatus.FIT_GRID;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
