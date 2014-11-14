@@ -47,4 +47,10 @@ public class PlayedGrid {
 		super();
 		this.grid = grid;
 	}
+	
+	public PlayedGrid(Grid grid, User player) {
+		super();
+		this.grid = grid;
+		this.player = player;
+	}
 }
