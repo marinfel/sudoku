@@ -69,8 +69,8 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
     }
 
     /**
-     * @class IHM_PopupsList initializer, you must call it
-     * before calling getInstance();
+     * @class IHM_PopupsList initializer, you must call it before calling
+     * getInstance();
      *
      * @param height is the max height of this graphical object
      * @param width is the max width of this graphical object
@@ -79,10 +79,11 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
      */
     public static void init(double width, double height, int nbMaxPopus) {
         //If the instance doesn't exist, we create it
-        if(instance == null)
+        if (instance == null) {
             instance = new IhmPopupsList(width, height, nbMaxPopus);
+        }
     }
-    
+
     /**
      * @class IHM_PopupsList getter, you must call init() before.
      *
@@ -90,11 +91,16 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
      * @param width is the max width of this graphical object
      * @param nbMaxPopus is the max number of popup shown in the list. It will
      * determine the height of each pop-ups
-     * @return an instance of IhmPopupsList. 
-     * If the instance hasn't been instanciated, return null;
+     * @return an instance of IhmPopupsList. If the instance hasn't been
+     * instanciated, return null;
+     *
+     * @throws NullPointerException if the list hasn't been initialised
      */
     public static IhmPopupsList getInstance() {
         //return the instance created (if not created, return null)
+        if (instance == null) {
+            throw new NullPointerException();
+        }
         return instance;
     }
 
