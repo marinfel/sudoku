@@ -26,7 +26,8 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         
         VBox leftLayout = (VBox)border.getLeft();
         leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
-
+        
+        // handler de deleteCells
     }
     
     
