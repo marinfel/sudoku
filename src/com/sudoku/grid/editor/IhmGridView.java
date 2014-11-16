@@ -6,7 +6,6 @@
 package com.sudoku.grid.editor;
 
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import static com.sudoku.grid.ihm_grid_cells.IhmGridLines.CellStatus.FIT_GRID;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.BorderPane;
@@ -18,17 +17,18 @@ import javafx.scene.layout.VBox;
  * @author mecton08
  */
 public abstract class IhmGridView extends IhmGridLayout {
+
     //protected textItemInput textInput;
     //protected textItemView textView;
     protected enum mode {
-        Play, 
+
+        Play,
         Edit
     }
-    
+
     protected final BorderPane border;
-   
-    
-    public IhmGridView(String title){
+
+    public IhmGridView(String title) {
         super(title);
         border = new BorderPane();
         getChildren().add(border);
@@ -37,41 +37,38 @@ public abstract class IhmGridView extends IhmGridLayout {
         VBox bottomHBox = new VBox();
         VBox rightVBox = new VBox();
         VBox centerVBox = new VBox();
-        
+
         // center a faire
-        
         border.setTop(topHBox);
         border.setLeft(leftVBox);
         border.setBottom(bottomHBox);
         border.setRight(rightVBox);
         border.setCenter(centerVBox);
-        
-        IhmGridLines sudokuGrid = new IhmGridLines(grid, 500, FIT_GRID);
+
+        IhmGridLines sudokuGrid = new IhmGridLines(grid, 500, IhmGridLines.FIT_GRID);
         //VBox centerLayout = (VBox)border.getCenter();
         //centerLayout.getChildren().add(sudokuGrid);
-        
+
         centerVBox.getChildren().add(sudokuGrid);
-        
+
         IhmPopupsList.init(150.0, 500.0, 10);
         final IhmPopupsList popupList = IhmPopupsList.getInstance();
         rightVBox.getChildren().add(popupList);
-        
+
         /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
 
-            @Override
-            public void handle(WindowEvent t) {
-                if(t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST){
-                    popupList.finalize();
-                }
-            }
+         @Override
+         public void handle(WindowEvent t) {
+         if(t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST){
+         popupList.finalize();
+         }
+         }
             
-        });
-        */
-
+         });
+         */
         //border.setCenter();
-       // 
-        
+        // 
     }
-       
+
 }

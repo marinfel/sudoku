@@ -33,14 +33,12 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     protected int side;
 
     protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
-    protected IhmCell cells[] = new IhmCell[cellNumberPerSide * cellNumberPerSide];
+    protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
 
-    public static enum CellStatus {
-
-        FIT_GRID,
-        ALL_VIEW,
-        ALL_EDITABLE
-    };
+    public static int FIT_GRID = 0x1;
+    public static int FIXED_HIDABLE = 0x2;
+    public static int ALL_VIEW = 0x4;
+    public static int ALL_EDITABLE = 0x8;
 
     /**
      * IHM_GridLines constructor
@@ -49,9 +47,11 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
      * @param side is only on side in pixel of the grid which will be square
      * (TODO: @param grid is a grid which contains information about cells
      * (fixed, editables, values, etc.)
-     * @param cellStatus: How cells will be shown in the graphical interface
+     * @param cellsFlag: How cells will be shown in the graphical interface
+     * @throws NullPointerException if grid is null or an error occure when
+     * parsing grid
      */
-    public IhmGridLines(Grid grid, int side, CellStatus cellStatus) {
+    public IhmGridLines(Grid grid, int side, int cellsFlag) {
         //if grid is null
         if (grid == null) {
             throw new NullPointerException();
@@ -59,14 +59,18 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
         //Init the side attribute
         this.side = side;
+
         //Calc number of simple lines on one side
         int nbSLines = ((cellNumberPerSide / cellNumberPerSubside) - 1) * cellNumberPerSubside;
-        //Calc number of double lines on on side 
+
+        //Calc number of double lines on on side
         int nbDLines = cellNumberPerSide - nbSLines - 1;
+
         //Calc the side of one cell = side - sum_slines_sizes - sum_dlines_sizes
         cellSide = (int) ((side - (nbSLines * simpleLinesSide) - (nbDLines * doubleLinesSide)) / (double) cellNumberPerSide);
         int gridSide = (cellNumberPerSide - 1) + cellNumberPerSide;
         int gridSize = (int) Math.pow(gridSide, 2);
+
         //Draw Lines with empty spaces instead of cells
         for (int i = 0; i < gridSize; i++) {
             int X = getColIndexFromArrayIndex(i, gridSide);
@@ -74,27 +78,41 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
             if (X % 2 == 0 && Y % 2 == 0) {
                 // Add a cell half a time
-                IhmCell ihm_cell = null;
+                IhmCell ihmCell = null;
 
                 //*
                 Cell cell = grid.getCell(X >> 1, Y >> 1);
-                if ((cell instanceof FixedCell && cellStatus == CellStatus.FIT_GRID) || cellStatus == CellStatus.ALL_VIEW) {
-                    ihm_cell = new IhmCellView(cellSide);
-                    ihm_cell.setValue(((FixedCell) cell).getValue());
-                } else {
-                    ihm_cell = new IhmCellEditable(cellSide);
+                if (cell == null) {
+                    throw new NullPointerException();
                 }
-         //*/
+
+                if ((cell instanceof FixedCell && (cellsFlag & FIT_GRID) > 0) || (cellsFlag & ALL_VIEW) > 0) {
+                    ihmCell = new IhmCellView(cellSide);
+                    ihmCell.setValue(((FixedCell) cell).getValue());
+                    if ((cellsFlag & FIXED_HIDABLE) > 0) {
+                        ((IhmCellView) ihmCell).setHidable(true);
+                    }
+                } else {
+                    ihmCell = new IhmCellEditable(cellSide);
+                }
+                //*/
+                if (ihmCell == null) {
+                    throw new NullPointerException();
+                }
 
                 //remove the 2 next lines and uncomment to previous lines
                 //ihm_cell = new IhmCellEditable(cellSide);
                 //ihm_cell.setValue(8);
-                if (ihm_cell instanceof IhmCellEditable) //set this list as a listener of a close request event on the pop-up
-                {
-                    ihm_cell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
+                //set this list as a listener of a close request event on the pop-up
+                if (ihmCell instanceof IhmCellEditable) {
+                    ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
                 }
 
-                add(ihm_cell, X, Y);
+                ihmCell.setX(X >> 1);
+                ihmCell.setY(Y >> 1);
+
+                add(ihmCell, X, Y);
+                cells[X >> 1][Y >> 1] = ihmCell;
 
             } else if (X % 2 == 1 && Y % 2 == 0) {
                 // Add a VLine
@@ -140,6 +158,10 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
                 add(intersectionRect, X, Y);
             }
         }
+    }
+
+    public IhmCell[][] getCells() {
+        return cells;
     }
 
     @Override
