@@ -8,15 +8,15 @@ package com.sudoku.comm;
 @SuppressWarnings("all")
 /** Service de découverte des noeuds */
 @org.apache.avro.specific.AvroGenerated
-public interface nodes {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"nodes\",\"namespace\":\"com.sudoku.comm\",\"doc\":\"Service de découverte des noeuds\",\"types\":[],\"messages\":{\"ping\":{\"doc\":\"Pings a distant server\",\"request\":[{\"name\":\"test\",\"type\":\"string\"}],\"response\":\"boolean\"}}}");
+public interface Nodes {
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"Nodes\",\"namespace\":\"com.sudoku.comm\",\"doc\":\"Service de découverte des noeuds\",\"types\":[],\"messages\":{\"ping\":{\"doc\":\"Pings a distant server\",\"request\":[{\"name\":\"test\",\"type\":\"string\"}],\"response\":\"boolean\"}}}");
   /** Pings a distant server */
   boolean ping(java.lang.CharSequence test) throws org.apache.avro.AvroRemoteException;
 
   @SuppressWarnings("all")
   /** Service de découverte des noeuds */
-  public interface Callback extends nodes {
-    public static final org.apache.avro.Protocol PROTOCOL = com.sudoku.comm.nodes.PROTOCOL;
+  public interface Callback extends Nodes {
+    public static final org.apache.avro.Protocol PROTOCOL = com.sudoku.comm.Nodes.PROTOCOL;
     /** Pings a distant server */
     void ping(java.lang.CharSequence test, org.apache.avro.ipc.Callback<java.lang.Boolean> callback) throws java.io.IOException;
   }

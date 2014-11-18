@@ -1,6 +1,6 @@
 {
   "namespace": "com.sudoku.comm",
-  "protocol": "nodes",
+  "protocol": "Nodes",
   "doc": "Service de découverte des noeuds",
 
   "messages": {
