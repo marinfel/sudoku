@@ -75,7 +75,7 @@
 	                    </goals>
 	                    <configuration>
 	                        <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
-	                        <outputDirectory>${project.basedir}/src/com/sudoku/comm/</outputDirectory>
+	                        <outputDirectory>${project.basedir}/src/</outputDirectory>
 	                        <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
 	                        <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
 	                    </configuration>
