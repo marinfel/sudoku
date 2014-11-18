@@ -37,8 +37,9 @@ public final class CommunicationManager {
 		return null;
 	}
 
-	// public pushGradeAndSync(Comment newComment, Grid gridToSync) {
-	// 	return null;
-	// }
-	
+/* Useless now, grade = comment
+	public pushGradeAndSync(Comment newComment, Grid gridToSync) {
+		return null;
+	}
+	*/
 }
