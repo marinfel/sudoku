@@ -14,7 +14,7 @@ public class Comment {
     /** Champs de la classe Comment
      * *
      */
-	private String author;
+    private String author;
     private String comment;
     private Integer grade;
     /**Méthode de la classe  Comment
@@ -37,11 +37,11 @@ public class Comment {
     }
     
     public String getAuthor(){
-    	return author;
+        return author;
     }
     
     public void setAuthor(String author){
-    	this.author=author;
+        this.author=author;
     }
     public String getComment(){
         
