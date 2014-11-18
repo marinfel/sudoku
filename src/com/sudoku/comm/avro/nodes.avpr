@@ -6,7 +6,7 @@
   "messages": {
     "ping": {
       "doc": "Pings a distant server",
-      "request": [{ }],
+      "request": [{ "name": "test", "type": "string" }],
       "response": "boolean"
     }
   }
