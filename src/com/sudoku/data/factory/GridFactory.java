@@ -19,7 +19,7 @@ import java.util.Random;
 public class GridFactory {
     
     public static Grid generateRandomGrid(){
-        return generateRandomGrid(50);
+        return generateRandomGrid(0);
     }
     
     public static Grid generateRandomGrid(int nbEmptyCells){        
@@ -72,7 +72,7 @@ public class GridFactory {
             done = valid;
         }
         
-        for(int i = 0; i < nbEmptyCells; i++){
+        for(int i = 0; i < Math.min(nbEmptyCells, 81); i++){
             g.setEmptyCell((byte)r.nextInt(9), (byte)r.nextInt(9));
         }
         

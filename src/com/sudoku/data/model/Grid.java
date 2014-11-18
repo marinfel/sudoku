@@ -17,7 +17,10 @@ public class Grid {
     private Timestamp createDate;
     private Timestamp updateDate;
     
-
+    public class errors{
+        public static final String Grid_invalid_grid_array = "The grid must be a 9x9 cell array";
+    }
+    
     public Grid(){
             comments = new ArrayList<>();
             tags = new ArrayList<>();
@@ -61,7 +64,19 @@ public class Grid {
             }
             return grid[x][y];
         } 
-        
+     
+    public void setGrid(Cell[][] grid) throws IllegalArgumentException {
+        if(grid.length != 9 || grid[0].length != 9){
+            throw new IllegalArgumentException(Grid.errors.Grid_invalid_grid_array);
+        }
+                
+        this.grid = grid;
+    }    
+    
+    public Cell[][] getGrid(){
+        return this.grid;
+    }
+    
     public String getTitle(){
         return title;
     }
