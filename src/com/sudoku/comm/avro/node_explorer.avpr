@@ -1,0 +1,55 @@
+{
+  "namespace": "com.sudoku.comm.generated",
+  "protocol": "NodeExplorer",
+  "doc": "Node discovery service",
+
+  "types": [
+    {
+      "name": "Message",
+      "type": "record",
+      "fields": [
+        {
+          "name": "uuid",
+          "type": "string"
+        },
+        {
+          "name": "login",
+          "type": "string"
+        },
+        {
+          "name": "listIps",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "messages": {
+    "discoverNode": {
+      "doc": "Discover a distant node",
+      "request": [
+        {
+          "name": "sentMessage",
+          "type": "Message"
+        }
+      ],
+      "response": "Message"
+    },
+    "disconnect": {
+      "doc": "Send a disconnect message",
+      "request": [
+        {
+          "name": "ip",
+          "type": "string"
+        }
+      ],
+      "response": "null"
+    }
+  }
+}
