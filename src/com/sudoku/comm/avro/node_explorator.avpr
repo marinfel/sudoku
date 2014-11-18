@@ -1,0 +1,13 @@
+{
+  "namespace": "com.sudoku.comm.generated",
+  "protocol": "NodeExplorator",
+  "doc": "Service de découverte des noeuds",
+
+  "messages": {
+    "ping": {
+      "doc": "Pings a distant server",
+      "request": [{ "name": "test", "type": "string" }],
+      "response": "boolean"
+    }
+  }
+}
