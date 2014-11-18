@@ -51,8 +51,8 @@ public class GridManager {
 	}
 	
 	public boolean updateGridList(List<String> keywords){
-		// BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouvé 
-		// son existence dans le diag de séquence
+		// BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouv
+		// son existence dans le diag de squence
 		return false;
 	}
 	
