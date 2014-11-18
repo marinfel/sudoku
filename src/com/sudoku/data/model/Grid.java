@@ -31,7 +31,7 @@ public class Grid {
 	}
 	
         public void setEmptyCell(byte x, byte y) throws IllegalArgumentException{
-            if(x < 0 || x > 0 || y < 0 || y > 9){
+            if(x < 0 || x > 9 || y < 0 || y > 9){
                 throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
             }
             
@@ -43,7 +43,7 @@ public class Grid {
                 throw new IllegalArgumentException(Cell.Errors.Cell_illegal_value);
             }
             
-            if(x < 0 || x > 0 || y < 0 || y > 9){
+            if(x < 0 || x > 9 || y < 0 || y > 9){
                 throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
             }
             
