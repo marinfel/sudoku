@@ -13,14 +13,14 @@ public final class CommunicationManager {
   }
 
   public final static CommunicationManager getInstance() {
-    if (CommunicationManager.instance == null) {
+    if (instance == null) {
       synchronized(CommunicationManager.class) {
-        if (CommunicationManager.instance == null){
-          CommunicationManager.instance = new CommunicationManager();
+        if (instance == null){
+          instance = new CommunicationManager();
         }
       }
     }
-    return CommunicationManager.instance;
+    return instance;
   }
 
   public ArrayList<Grid> getAllGrids() {
