@@ -5,7 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
-import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
+import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,7 +21,7 @@ public class SudokuTest extends Application {
   public void start(Stage primaryStage) {
        
         IhmGridEditorRandomlyFilled ihm_test;
-        ihm_test = new IhmGridEditorRandomlyFilled("test");
+        ihm_test = new IhmGridEditorRandomlyFilled("test", IhmGridLines.ALL_VIEW, new Grid());
         
         Scene scene = new Scene(ihm_test, 800, 1000);
         

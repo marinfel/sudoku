@@ -5,7 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
-import static javafx.geometry.Pos.CENTER_LEFT;
+import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -18,15 +19,16 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
     private Button deleteCells;
     private TextField deleteCellsField;
     
-    public IhmGridEditorRandomlyFilled(String title){
-        super(title);
+    public IhmGridEditorRandomlyFilled(String title, Flags flagStatus, Grid gr){
+        super(title, flagStatus, gr);
         
         deleteCells = new Button("Delete Cells");
         deleteCellsField = new TextField("0");
         
         VBox leftLayout = (VBox)border.getLeft();
         leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
-
+        
+        // handler de deleteCells
     }
     
     
