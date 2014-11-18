@@ -5,7 +5,9 @@
  */
 package com.sudoku.grid.editor;
 
+import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.Tag;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,8 +33,8 @@ public abstract class IhmGridEditor extends IhmGridView{
     private Button validBtn;
     private Button cancelBtn;
     
-    public IhmGridEditor(String t) {
-        super(t);
+    public IhmGridEditor(String ttl, Flags flagStatus, Grid gr) {
+        super(ttl, flagStatus, gr);
         
         // bouton d'enregistrement de la grille
         editTitle = new TextField();
