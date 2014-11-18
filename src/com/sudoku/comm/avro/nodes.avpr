@@ -1,5 +1,13 @@
 {
   "namespace": "com.sudoku.comm",
   "protocol": "nodes",
-  "doc": "Service de découverte des noeuds"
+  "doc": "Service de découverte des noeuds",
+
+  "messages": {
+    "ping": {
+      "doc": "Pings a distant server",
+      "request": [{ }],
+      "response": "boolean"
+    }
+  }
 }

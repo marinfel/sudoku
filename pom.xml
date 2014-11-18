@@ -18,6 +18,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javafx</artifactId>
+            <version>2.2.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
@@ -42,12 +49,17 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
         <pluginManagement>
 	        <plugins>
 	            <plugin>
 	                <groupId>org.apache.maven.plugins</groupId>
 	                <artifactId>maven-compiler-plugin</artifactId>
 	                <version>${compiler-plugin.version}</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                    </configuration>
 	            </plugin>
 	            <plugin>
 	                <groupId>org.apache.avro</groupId>

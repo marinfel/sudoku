@@ -6,12 +6,13 @@ import java.util.List;
 
 public class Grid {
 	private int id;
+	private String title;
 	private String description;
 	private int difficulty;
 	private boolean published;
 	private List<Comment> comments;
 	private List<Tag> tags;
-        private Cell[][] grid;
+    private Cell[][] grid;
 	private User createUser;
 	private Timestamp createDate;
 	private Timestamp updateDate;
@@ -61,9 +62,28 @@ public class Grid {
             return grid[x][y];
         } 
         
-	public int getId() {
+	public String getTitle(){
+		return title;
+	}
+	
+	public void setTitle(String titre){
+		this.title=titre;
+	}
+        
+	public int getMeanGrades(){
+		int i=0,result=0;
+		for(Comment comment:comments){
+			result+=comment.getGrade();
+			i++;
+		}
+		
+		return result/i;
+	}
+    public int getId() {
 		return id;
 	}
+	
+	
 	public void setId(int id) {
 		this.id = id;
 	}
