@@ -7,13 +7,11 @@
 package com.sudoku.grid.manager;
 
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import javafx.scene.text.Font;
 /**
  *
@@ -26,10 +24,13 @@ public abstract class IhmGridLayout extends StackPane{
   protected final int sceneLength = 200;
   protected final int sizeTitle = 25;
   protected Grid grid;
+  protected IhmGridLines gridLines;
 
   //Grid grille;
 
-  public IhmGridLayout(String ttl) {
+  public IhmGridLayout(String ttl, Flags flagStatus, Grid gr) {
+    grid = gr;
+    gridLines = new IhmGridLines(grid, 500, flagStatus);
     title = new Label(ttl);
     title.setFont(Font.font ("Verdana", sizeTitle));
     getChildren().add(title);

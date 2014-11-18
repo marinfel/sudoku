@@ -5,7 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.BorderPane;
@@ -28,8 +29,8 @@ public abstract class IhmGridView extends IhmGridLayout {
 
     protected final BorderPane border;
 
-    public IhmGridView(String title) {
-        super(title);
+    public IhmGridView(String title, Flags flagStatus, Grid gr) {
+        super(title, flagStatus, gr);
         border = new BorderPane();
         getChildren().add(border);
         HBox topHBox = new HBox();
@@ -45,11 +46,11 @@ public abstract class IhmGridView extends IhmGridLayout {
         border.setRight(rightVBox);
         border.setCenter(centerVBox);
 
-        IhmGridLines sudokuGrid = new IhmGridLines(grid, 500, IhmGridLines.FIT_GRID);
+        
         //VBox centerLayout = (VBox)border.getCenter();
         //centerLayout.getChildren().add(sudokuGrid);
 
-        centerVBox.getChildren().add(sudokuGrid);
+        centerVBox.getChildren().add(gridLines);
 
         IhmPopupsList.init(150.0, 500.0, 10);
         final IhmPopupsList popupList = IhmPopupsList.getInstance();
