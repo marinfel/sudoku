@@ -35,10 +35,47 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
     protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
 
-    public static int FIT_GRID = 0x1;
-    public static int FIXED_HIDABLE = 0x2;
-    public static int ALL_VIEW = 0x4;
-    public static int ALL_EDITABLE = 0x8;
+    public static class Flags {
+
+        private static long autoFlagValue = 0x1;
+        private long flagValue = 0x0;
+
+        private Flags(long flag) {
+            this.flagValue = flag;
+        }
+
+        public static Flags getFlag(long flagValue) {
+            return new Flags(flagValue);
+        }
+
+        public static Flags getAutoNextFlag() {
+            Flags f = getFlag(autoFlagValue);
+            autoFlagValue <<= 0x1;
+            return f;
+        }
+
+        public static Flags resetAutoFlag() {
+            return resetAutoFlag(0x1);
+        }
+
+        public static Flags resetAutoFlag(int flag) {
+            autoFlagValue = flag;
+            return getAutoNextFlag();
+        }
+
+        public Flags add(Flags flag) {
+            return new Flags(flagValue | flag.flagValue);
+        }
+
+        public boolean contains(Flags flag) {
+            return ((flagValue & flag.flagValue) > 0);
+        }
+    };
+
+    public static Flags FIT_GRID = Flags.resetAutoFlag();
+    public static Flags FIXED_HIDABLE = Flags.getAutoNextFlag();
+    public static Flags ALL_VIEW = Flags.getAutoNextFlag();
+    public static Flags ALL_EDITABLE = Flags.getAutoNextFlag();
 
     /**
      * IHM_GridLines constructor
@@ -51,7 +88,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
      * @throws NullPointerException if grid is null or an error occure when
      * parsing grid
      */
-    public IhmGridLines(Grid grid, int side, int cellsFlag) {
+    public IhmGridLines(Grid grid, int side, Flags cellsFlag) {
         //if grid is null
         if (grid == null) {
             throw new NullPointerException();
@@ -86,10 +123,10 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
                     throw new NullPointerException();
                 }
 
-                if ((cell instanceof FixedCell && (cellsFlag & FIT_GRID) > 0) || (cellsFlag & ALL_VIEW) > 0) {
+                if ((cell instanceof FixedCell && cellsFlag.contains(FIT_GRID)) || cellsFlag.contains(ALL_VIEW)) {
                     ihmCell = new IhmCellView(cellSide);
                     ihmCell.setValue(((FixedCell) cell).getValue());
-                    if ((cellsFlag & FIXED_HIDABLE) > 0) {
+                    if (cellsFlag.contains(FIXED_HIDABLE)) {
                         ((IhmCellView) ihmCell).setHidable(true);
                     }
                 } else {
