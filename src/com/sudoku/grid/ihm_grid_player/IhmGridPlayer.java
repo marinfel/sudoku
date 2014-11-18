@@ -48,15 +48,16 @@ public class IhmGridPlayer extends IhmGridView {
     
     //commentaires
     
-      gridComments = playGrid.getComments();
+      //gridComments = playGrid.getComments();
       final VBox commBox = (VBox)border.getBottom();
+      
         // list of comm
       for (int i =1; i<nbComm; i++){
-        Comment comm = gridComments.get(gridComments.size()-i);
+        //Comment comm = gridComments.get(gridComments.size()-i);
         VBox oneCommBox = new VBox();
-        Label commTitle = new Label(/*comm.getTitle()*/);
-        Label commAuthorAndDate = new Label(/*comm.getAuthor()+" - "+comm.getCreateDate()*/);
-        Text commText = new Text(comm.getComment());
+        Label commTitle = new Label("premier com"/*comm.getTitle()*/);
+        Label commAuthorAndDate = new Label("author"/*comm.getAuthor()+" - "+comm.getCreateDate()*/);
+        Text commText = new Text("com ..."/*comm.getComment()*/);
         oneCommBox.getChildren().addAll(commTitle,commAuthorAndDate,commText);
         commBox.getChildren().addAll(oneCommBox);
       }
@@ -77,7 +78,11 @@ public class IhmGridPlayer extends IhmGridView {
     
     //la note
     grades = getStars(2/*playGrid.getGrade()*/);
-    HBox gradeBox = (HBox)border.getBottom();
+    
+    //HBox gradeBox = new HBox();
+    
+    HBox gradeBox = (HBox)border.getTop();
+    
     int i;
     for (i = 0; i< 5; i++)
       gradeBox.getChildren().add(grades.elementAt(i).getStar());
@@ -87,10 +92,10 @@ public class IhmGridPlayer extends IhmGridView {
     //auteur
     
     VBox authorBox = (VBox)border.getLeft();
-    Label authorName =  new Label(author.getPseudo());
-    Image iAuthorPicture = new Image(author.getProfilePicturePath(),true);
+    Label authorName =  new Label("auth"/*author.getPseudo()*/);
+    //Image iAuthorPicture = new Image(author.getProfilePicturePath(),true);
     ImageView authorPict = new ImageView();
-    authorPict.setImage(iAuthorPicture);
+    //authorPict.setImage(iAuthorPicture);
     authorBox.getChildren().addAll(authorName,authorPict);
    
      
@@ -107,16 +112,16 @@ public class IhmGridPlayer extends IhmGridView {
               ajout de l'auteur :
               newComm.setAuthor(getCurrentPlayer());
               */
-              playGrid.addComment(newComm);
+              /*playGrid.addComment(newComm);
               commField.clear();
               titleField.clear();
               commBox.getChildren().remove(nbComm-1);
               VBox oneCommBox = new VBox();
-              Label commTitle = new Label(/*newComm.getTitle()*/);
-              Label commAuthorAndDate = new Label(/*newComm.getAuthor()+" - "+newComm.getCreateDate()*/);
-              Text commText = new Text(newComm.getComment());
+              //Label commTitle = new Label(/*newComm.getTitle());
+              //Label commAuthorAndDate = new Label(/*newComm.getAuthor()+" - "+newComm.getCreateDate());
+              /*Text commText = new Text(newComm.getComment());
               oneCommBox.getChildren().addAll(commTitle,commAuthorAndDate,commText);
-              commBox.getChildren().add(1,oneCommBox);
+              commBox.getChildren().add(1,oneCommBox);*/
           }     
         });
   }
