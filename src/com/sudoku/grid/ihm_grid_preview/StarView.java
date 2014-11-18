@@ -22,13 +22,16 @@ public class StarView {
     Image iStar;
     switch (typeOfStars) {
       case 1: //yellow
-        iStar = new Image("yellowStar.png", true);
+        iStar = new Image(getClass().getResource("yellowStar.png").toExternalForm());
+        //iStar = new Image("yellowStar.png", true);
         break;
       case 2: //white and yellow
-        iStar = new Image("yellowWhiteStar.png");
+        iStar = new Image(getClass().getResource("yellowWhiteStar.png").toExternalForm());
+        //iStar = new Image("yellowWhiteStar.png");
         break;
       default: //white
-        iStar = new Image("whiteStar.png");
+        iStar = new Image(getClass().getResource("whiteStar.png").toExternalForm());
+        //iStar = new Image("whiteStar.png");
         break;
     }
     star = new ImageView();
