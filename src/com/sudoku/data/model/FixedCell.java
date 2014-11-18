@@ -28,4 +28,9 @@ public class FixedCell extends Cell{
         }
         this.value = value;
     }
+    
+    @Override
+    public String toString(){
+        return value + " ";
+    }
 }
