@@ -29,6 +29,7 @@ public class GridFactory {
         
         boolean done = false;
         Grid g = null;
+        Random r = new Random(System.currentTimeMillis());
         
         while(!done){
             g = new Grid();
@@ -54,12 +55,11 @@ public class GridFactory {
                     ArrayList<Integer> avNumbers = ListUtils.inter(avLinesNum[i], avColsNum[j]);
                     avNumbers = ListUtils.inter(avNumbers, avGridsNum[k]);
 
-                    Collections.shuffle(avNumbers);
-
                     valid = avNumbers.size() > 0;
 
                     if(valid){
-                        Integer pickedNumber = avNumbers.get(0);
+                        int idx = r.nextInt(avNumbers.size());                        
+                        Integer pickedNumber = avNumbers.get(idx);
 
                         g.setFixedCell(i, j, pickedNumber.byteValue());
 
@@ -72,7 +72,6 @@ public class GridFactory {
             done = valid;
         }
         
-        Random r = new Random(System.currentTimeMillis());
         for(int i = 0; i < nbEmptyCells; i++){
             g.setEmptyCell((byte)r.nextInt(9), (byte)r.nextInt(9));
         }
