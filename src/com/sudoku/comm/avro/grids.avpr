@@ -34,25 +34,38 @@
       ]
     },
     {
-      "name": "grid", "type": "record",
+      "name": "Comments", "type": "array",
+      "items": "Comment"
+    },
+    {
+      "name": "Grid", "type": "record",
       "fields":[
         { "name": "id", "type": "integer" },
-        { "name": "name", "type": "string" },
-        { "name": "namcreationDate", "type": "integer" },
-        { "name": "matrix", "type": "cellDoubleArray" },
-        { "name": "gradesSum", "type": "integer" },
-        { "name": "gradesCount", "type": "integer" },
-        { "name": "modifiedDate", "type": "integer" },
-        { "name": "tags", "type": "string" },
-//pas sur
-        { "name": "comment", "type": "Comment" }
+        { "name": "description", "type": "string" },
+        { "name": "difficulty", "type": "integer" },
+        { "name": "published", "type": "boolean" },
+        { "name": "commentList", "type": "Comments" },
+        { "name": "tagList", "type": "Tags" },
+        { "name": "grid", "type": "CellDoubleArray" },
+        { "name": "owner", "type": "user" },
+        { "name": "creationDate", "type": "integer" },
+        { "name": "updateDate", "type": "integer" }
+        // deprcated ? { "name": "name", "type": "string" },
       ]
     },
     {
       "name": "gridList", "type": "array",
       "items": "grid"
     },
-    { "name": "user", "type": "string" }
+    {
+      "name": "user", "type": "record" 
+      "fields": [
+        { "name": "id", "type": "integer" },
+        { "name": "pseudo", "type": "string" },
+        { "name": "salt", "type": "string" },
+        { "name": "birthdate", "type": "string" },
+        { "name": "createDate", "type": "string" },
+    }
   ],
 
   "messages": {
