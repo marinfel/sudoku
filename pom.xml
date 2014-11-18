@@ -18,13 +18,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>javafx</artifactId>
-            <version>2.2.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
@@ -50,39 +43,47 @@
 
     <build>
         <sourceDirectory>${project.basedir}/src/</sourceDirectory>
-	    <plugins>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-compiler-plugin</artifactId>
-	            <version>${compiler-plugin.version}</version>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-	        </plugin>
-	        <plugin>
-	            <groupId>org.apache.avro</groupId>
-	            <artifactId>avro-maven-plugin</artifactId>
-	            <version>${avro.version}</version>
-	            <executions>
-	                <execution>
-	                    <id>schemas</id>
-	                    <phase>generate-sources</phase>
-	                    <goals>
-	                        <goal>schema</goal>
-	                        <goal>protocol</goal>
-	                        <goal>idl-protocol</goal>
-	                    </goals>
-	                    <configuration>
-	                        <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
-	                        <outputDirectory>${project.basedir}/src/</outputDirectory>
-	                        <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
-	                        <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
-	                    </configuration>
-	                </execution>
-	            </executions>
-	        </plugin>
-	    </plugins>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <mainClass></mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <id>schemas</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/</outputDirectory>
+                            <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
+                            <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
