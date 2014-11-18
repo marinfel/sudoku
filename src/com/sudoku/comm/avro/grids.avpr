@@ -34,18 +34,20 @@
       ]
     },
     {
+      "name": "Comments", "type": "array",
+      "items": "Comment"
+    },
+    {
       "name": "grid", "type": "record",
       "fields":[
         { "name": "id", "type": "integer" },
-        { "name": "name", "type": "string" },
+        { "name": "description", "type": "string" },
+        { "name": "difficulty", "type": "integer" },
+        { "name": "published", "type": "boolean" },
         { "name": "namcreationDate", "type": "integer" },
-        { "name": "matrix", "type": "cellDoubleArray" },
-        { "name": "gradesSum", "type": "integer" },
-        { "name": "gradesCount", "type": "integer" },
-        { "name": "modifiedDate", "type": "integer" },
-        { "name": "tags", "type": "string" },
-//pas sur
-        { "name": "comment", "type": "Comment" }
+        { "name": "commentList", "type": "Comments" }
+        { "name": taglist
+        // deprcated ? { "name": "name", "type": "string" },
       ]
     },
     {
