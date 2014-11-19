@@ -22,7 +22,7 @@ public class IhmGridPreview extends IhmGridLayout {
     Vector<StarView> grades;
 
     public IhmGridPreview(String ttl, double numberOfStars) {
-        super(ttl);
+        //super(ttl);
 
         IhmGridLines ihmGridLines = new IhmGridLines(null, 100, IhmGridLines.ALL_VIEW);
         getChildren().add(ihmGridLines);
