@@ -42,7 +42,7 @@ public class IhmGridPlayer extends IhmGridView {
   private Grid playGrid;
   
   public IhmGridPlayer(String t){
-    super(t);
+    //super(t);
     
     //mettre la grille
     
