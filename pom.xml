@@ -42,7 +42,6 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -75,9 +74,9 @@
                             <goal>idl-protocol</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/com/sudoku/comm/avro/</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/</outputDirectory>
-                            <testSourceDirectory>${project.basedir}/src/test/avro/</testSourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/java/com/sudoku/comm/avro/</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                            <testSourceDirectory>${project.basedir}/src/test/java/com/sudoku/comm/avro/</testSourceDirectory>
                             <testOutputDirectory>${project.basedir}/src/test/java/</testOutputDirectory>
                         </configuration>
                     </execution>
