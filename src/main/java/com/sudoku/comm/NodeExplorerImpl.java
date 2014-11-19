@@ -7,10 +7,7 @@ import org.apache.avro.AvroRemoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
+import java.net.*;
 import java.util.Enumeration;
 
 /**
@@ -29,22 +26,46 @@ public class NodeExplorerImpl implements NodeExplorer {
     return null;
   }
 
-  public void getInetAddressOfLocalhost() {
+  public InetAddress getInetAddressOfLocalhost() throws UnknownHostException {
     try {
-      Enumeration<NetworkInterface> networkInterfaces =
-          NetworkInterface.getNetworkInterfaces();
-      while(networkInterfaces.hasMoreElements()) {
+      InetAddress candidateAddress = null;
+
+      for (Enumeration<NetworkInterface> networkInterfaces =
+               NetworkInterface.getNetworkInterfaces();
+           networkInterfaces.hasMoreElements();) {
+
         NetworkInterface networkInterface =
             (NetworkInterface) networkInterfaces.nextElement();
-        Enumeration<InetAddress> inetAddresses =
-            networkInterface.getInetAddresses();
-        while (inetAddresses.hasMoreElements()) {
+        for (Enumeration<InetAddress> inetAddresses =
+                 networkInterface.getInetAddresses();
+            inetAddresses.hasMoreElements();) {
+
           InetAddress inetAddress = (InetAddress) inetAddresses.nextElement();
-          System.out.println(inetAddress.getHostAddress());
+          if (!inetAddress.isLoopbackAddress()) {
+            if (inetAddress.isSiteLocalAddress()) {
+              return inetAddress;
+            } else if (candidateAddress == null) {
+              candidateAddress = inetAddress;
+            }
+          }
         }
       }
-    } catch (SocketException ex) {
+
+      if (candidateAddress != null) {
+        return candidateAddress;
+      }
+
+      InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
+      if(jdkSuppliedAddress == null) {
+        throw new UnknownHostException("InetAddress.getLocalHost() is null.");
+      }
+      return jdkSuppliedAddress;
+    } catch (Exception ex) {
       logger.error(ex.toString());
+      UnknownHostException unknownHostException =
+          new UnknownHostException("Failed to determine IP: " + ex);
+      unknownHostException.initCause(ex);
+      throw unknownHostException;
     }
   }
 }
