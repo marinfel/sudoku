@@ -17,6 +17,9 @@ manifest.mf
 *.war
 *.ear
 
+# Compile sources #
+target/
+
 # Eclipse
 .project
 .settings
