@@ -5,10 +5,11 @@
  */
 package com.sudoku.grid.ihm_grid_preview;
 
+import com.sudoku.data.model.Grid;
 import com.sudoku.grid.manager.IhmGridLayout;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import java.util.Vector;
-import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -18,35 +19,35 @@ import javafx.scene.text.Text;
  */
 public class IhmGridPreview extends IhmGridLayout {
 
-    Text authorName;
-    Vector<StarView> grades;
+  Text authorName;
+  Vector<StarView> grades;
 
-    public IhmGridPreview(String ttl, double numberOfStars) {
-        super(ttl);
+  public IhmGridPreview(String ttl, double numberOfStars, Grid gr) {
+    super(ttl, IhmGridLines.ALL_VIEW, gr);
 
-        IhmGridLines ihmGridLines = new IhmGridLines(null, 100, IhmGridLines.ALL_VIEW);
-        getChildren().add(ihmGridLines);
+    IhmGridLines ihmGridLines = new IhmGridLines(null, 100, IhmGridLines.ALL_VIEW);
+    getChildren().add(ihmGridLines);
 
-        int i;
-        grades = new Vector();
-        int num = (int) Math.floor(numberOfStars);
-        for (i = 0; i <= num; i++) {
-            grades.add(new StarView(1));
-        }
-        if (Math.round(numberOfStars * 2) % 2 != 0) {
-            grades.add(new StarView(2));
-        }
-        for (i = grades.size(); i < 6; i++) {
-            grades.add(new StarView(3));
-        }
-        HBox box = new HBox();
-        box.setLayoutX(5);
-        box.setLayoutY(sceneHeight - 30);
-        for (i = 1; i < 6; i++) {
-            box.getChildren().add(grades.get(i).getStar());
-        }
-
-        getChildren().add(box);
+    int i;
+    grades = new Vector();
+    int num = (int) Math.floor(numberOfStars);
+    for (i = 0; i <= num; i++) {
+      grades.add(new StarView(1));
     }
+    if (Math.round(numberOfStars * 2) % 2 != 0) {
+      grades.add(new StarView(2));
+    }
+    for (i = grades.size(); i < 6; i++) {
+      grades.add(new StarView(3));
+    }
+    HBox box = new HBox();
+    box.setLayoutX(5);
+    box.setLayoutY(sceneHeight - 30);
+    for (i = 1; i < 6; i++) {
+      box.getChildren().add(grades.get(i).getStar());
+    }
+
+    getChildren().add(box);
+  }
 
 }
