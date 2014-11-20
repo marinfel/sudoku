@@ -3,10 +3,17 @@ package com.sudoku.comm;
 import com.sudoku.data.model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class CommunicationManager {
   
   private static volatile CommunicationManager instance = null;
+  private static ArrayList<String> connectedIps =
+      new ArrayList<>(Arrays.asList(
+          "127.0.0.1"
+      ));
+  public static final String UUID = "uuid";
+  public static final String LOGIN = "login";
 
   private CommunicationManager() {
     super();
@@ -21,6 +28,14 @@ public final class CommunicationManager {
       }
     }
     return instance;
+  }
+
+  public static ArrayList<String> getConnectedIps() {
+    return connectedIps;
+  }
+
+  public static void setConnectedIps(ArrayList<String> connectedIps) {
+    CommunicationManager.connectedIps = connectedIps;
   }
 
   public ArrayList<Grid> getAllGrids() {
