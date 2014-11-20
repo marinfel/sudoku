@@ -7,11 +7,11 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Message extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Message\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"uuid\",\"type\":\"string\"},{\"name\":\"login\",\"type\":\"string\"},{\"name\":\"listIps\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"string\"}]}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Message\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"uuid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"login\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"listIps\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  @Deprecated public java.lang.CharSequence uuid;
-  @Deprecated public java.lang.CharSequence login;
-  @Deprecated public java.util.List<java.lang.CharSequence> listIps;
+  @Deprecated public java.lang.String uuid;
+  @Deprecated public java.lang.String login;
+  @Deprecated public java.util.List<java.lang.String> listIps;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -23,7 +23,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * All-args constructor.
    */
-  public Message(java.lang.CharSequence uuid, java.lang.CharSequence login, java.util.List<java.lang.CharSequence> listIps) {
+  public Message(java.lang.String uuid, java.lang.String login, java.util.List<java.lang.String> listIps) {
     this.uuid = uuid;
     this.login = login;
     this.listIps = listIps;
@@ -43,9 +43,9 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: uuid = (java.lang.CharSequence)value$; break;
-    case 1: login = (java.lang.CharSequence)value$; break;
-    case 2: listIps = (java.util.List<java.lang.CharSequence>)value$; break;
+    case 0: uuid = (java.lang.String)value$; break;
+    case 1: login = (java.lang.String)value$; break;
+    case 2: listIps = (java.util.List<java.lang.String>)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -53,7 +53,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Gets the value of the 'uuid' field.
    */
-  public java.lang.CharSequence getUuid() {
+  public java.lang.String getUuid() {
     return uuid;
   }
 
@@ -61,14 +61,14 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'uuid' field.
    * @param value the value to set.
    */
-  public void setUuid(java.lang.CharSequence value) {
+  public void setUuid(java.lang.String value) {
     this.uuid = value;
   }
 
   /**
    * Gets the value of the 'login' field.
    */
-  public java.lang.CharSequence getLogin() {
+  public java.lang.String getLogin() {
     return login;
   }
 
@@ -76,14 +76,14 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'login' field.
    * @param value the value to set.
    */
-  public void setLogin(java.lang.CharSequence value) {
+  public void setLogin(java.lang.String value) {
     this.login = value;
   }
 
   /**
    * Gets the value of the 'listIps' field.
    */
-  public java.util.List<java.lang.CharSequence> getListIps() {
+  public java.util.List<java.lang.String> getListIps() {
     return listIps;
   }
 
@@ -91,7 +91,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'listIps' field.
    * @param value the value to set.
    */
-  public void setListIps(java.util.List<java.lang.CharSequence> value) {
+  public void setListIps(java.util.List<java.lang.String> value) {
     this.listIps = value;
   }
 
@@ -116,9 +116,9 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Message>
     implements org.apache.avro.data.RecordBuilder<Message> {
 
-    private java.lang.CharSequence uuid;
-    private java.lang.CharSequence login;
-    private java.util.List<java.lang.CharSequence> listIps;
+    private java.lang.String uuid;
+    private java.lang.String login;
+    private java.util.List<java.lang.String> listIps;
 
     /** Creates a new Builder */
     private Builder() {
@@ -160,12 +160,12 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /** Gets the value of the 'uuid' field */
-    public java.lang.CharSequence getUuid() {
+    public java.lang.String getUuid() {
       return uuid;
     }
     
     /** Sets the value of the 'uuid' field */
-    public com.sudoku.comm.generated.Message.Builder setUuid(java.lang.CharSequence value) {
+    public com.sudoku.comm.generated.Message.Builder setUuid(java.lang.String value) {
       validate(fields()[0], value);
       this.uuid = value;
       fieldSetFlags()[0] = true;
@@ -185,12 +185,12 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /** Gets the value of the 'login' field */
-    public java.lang.CharSequence getLogin() {
+    public java.lang.String getLogin() {
       return login;
     }
     
     /** Sets the value of the 'login' field */
-    public com.sudoku.comm.generated.Message.Builder setLogin(java.lang.CharSequence value) {
+    public com.sudoku.comm.generated.Message.Builder setLogin(java.lang.String value) {
       validate(fields()[1], value);
       this.login = value;
       fieldSetFlags()[1] = true;
@@ -210,12 +210,12 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /** Gets the value of the 'listIps' field */
-    public java.util.List<java.lang.CharSequence> getListIps() {
+    public java.util.List<java.lang.String> getListIps() {
       return listIps;
     }
     
     /** Sets the value of the 'listIps' field */
-    public com.sudoku.comm.generated.Message.Builder setListIps(java.util.List<java.lang.CharSequence> value) {
+    public com.sudoku.comm.generated.Message.Builder setListIps(java.util.List<java.lang.String> value) {
       validate(fields()[2], value);
       this.listIps = value;
       fieldSetFlags()[2] = true;
@@ -238,9 +238,9 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
     public Message build() {
       try {
         Message record = new Message();
-        record.uuid = fieldSetFlags()[0] ? this.uuid : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.login = fieldSetFlags()[1] ? this.login : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.listIps = fieldSetFlags()[2] ? this.listIps : (java.util.List<java.lang.CharSequence>) defaultValue(fields()[2]);
+        record.uuid = fieldSetFlags()[0] ? this.uuid : (java.lang.String) defaultValue(fields()[0]);
+        record.login = fieldSetFlags()[1] ? this.login : (java.lang.String) defaultValue(fields()[1]);
+        record.listIps = fieldSetFlags()[2] ? this.listIps : (java.util.List<java.lang.String>) defaultValue(fields()[2]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

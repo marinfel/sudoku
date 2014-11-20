@@ -9,11 +9,11 @@ package com.sudoku.comm.generated;
 /** Node discovery service */
 @org.apache.avro.specific.AvroGenerated
 public interface NodeExplorer {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"NodeExplorer\",\"namespace\":\"com.sudoku.comm.generated\",\"doc\":\"Node discovery service\",\"types\":[{\"type\":\"record\",\"name\":\"Message\",\"fields\":[{\"name\":\"uuid\",\"type\":\"string\"},{\"name\":\"login\",\"type\":\"string\"},{\"name\":\"listIps\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"string\"}]}]}],\"messages\":{\"discoverNode\":{\"doc\":\"Discover a distant node\",\"request\":[{\"name\":\"sentMessage\",\"type\":\"Message\"}],\"response\":\"Message\"},\"disconnect\":{\"doc\":\"Send a disconnect message\",\"request\":[{\"name\":\"ip\",\"type\":\"string\"}],\"response\":\"null\"}}}");
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"NodeExplorer\",\"namespace\":\"com.sudoku.comm.generated\",\"doc\":\"Node discovery service\",\"types\":[{\"type\":\"record\",\"name\":\"Message\",\"fields\":[{\"name\":\"uuid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"login\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"listIps\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}]}],\"messages\":{\"discoverNode\":{\"doc\":\"Discover a distant node\",\"request\":[{\"name\":\"sentMessage\",\"type\":\"Message\"}],\"response\":\"Message\"},\"disconnect\":{\"doc\":\"Send a disconnect message\",\"request\":[{\"name\":\"ip\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}],\"response\":\"null\"}}}");
   /** Discover a distant node */
   com.sudoku.comm.generated.Message discoverNode(com.sudoku.comm.generated.Message sentMessage) throws org.apache.avro.AvroRemoteException;
   /** Send a disconnect message */
-  java.lang.Void disconnect(java.lang.CharSequence ip) throws org.apache.avro.AvroRemoteException;
+  java.lang.Void disconnect(java.lang.String ip) throws org.apache.avro.AvroRemoteException;
 
   @SuppressWarnings("all")
   /** Node discovery service */
@@ -22,6 +22,6 @@ public interface NodeExplorer {
     /** Discover a distant node */
     void discoverNode(com.sudoku.comm.generated.Message sentMessage, org.apache.avro.ipc.Callback<com.sudoku.comm.generated.Message> callback) throws java.io.IOException;
     /** Send a disconnect message */
-    void disconnect(java.lang.CharSequence ip, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    void disconnect(java.lang.String ip, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
   }
 }
