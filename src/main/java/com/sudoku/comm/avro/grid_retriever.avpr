@@ -2,4 +2,79 @@
   "namespace": "com.sudoku.comm.generated",
   "protocol": "GridRetriever",
   "doc": "Service des grilles"
+
+  "types": [
+    {
+      "name": "User",
+      "type": "record",
+      "fields": [
+        { "name": "id", "type": "int" },
+        { "name": "pseudo", "type": "string" },
+        { "name": "salt", "type": "string" },
+        { "name": "birthdate", "type": "string" },
+        { "name": "profilePicturePath", "type": "string" },
+        { "name": "createDate", "type": "string" },
+        { "name": "updateDate", "type": "string" },
+        { "name": "ipAddress", "type": "string" }
+      ]
+    },
+    {
+      "name": "Comment",
+      "type": "record",
+      "fields": [
+        { "name": "author", "type": "string" },
+        { "name": "comment", "type": "string" },
+        { "name": "grade", "type": "int" }
+      ]
+    },
+    {
+      "name": "Tag",
+      "type": "string"
+    },
+
+    {
+      "name": "Grid",
+      "type": "record",
+      "fields": [
+        { "name": "id", "type": "int" },
+        { "name": "title", "type": "string" },
+        { "name": "description", "type": "string" },
+        { "name": "difficulty", "type": "int" },
+        { "name": "published", "type": "boolean" },
+        { "name": "commentsList", "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "Comment"
+            }
+          ]
+        },
+        { "name": "tagsList", "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "Tag"
+            } 
+          ]
+        },
+        { "name": "matrix", "type": [
+            "null",
+            {
+              "type": "array",
+              "items": [
+                "null",
+                {
+                  "type": "array",
+                  "items": "cellule"
+                }
+              ]
+            }
+          ]
+        },
+        { "name": "createUser", "type": "User" },
+        { "name": "createDate", "type": "int" },
+        { "name": "updateDate", "type": "int" }
+      ]
+    }
+
 }
