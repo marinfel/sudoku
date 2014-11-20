@@ -6,10 +6,9 @@
 package com.sudoku.data.factory;
 
 import com.sudoku.data.model.Grid;
-import com.sudoku.utils.ListUtils;
+import com.sudoku.util.CollectionUtil;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -52,8 +51,8 @@ public class GridFactory {
 
                     int k = getSubGridNumber(i,j);
 
-                    ArrayList<Integer> avNumbers = ListUtils.inter(avLinesNum[i], avColsNum[j]);
-                    avNumbers = ListUtils.inter(avNumbers, avGridsNum[k]);
+                    ArrayList<Integer> avNumbers = CollectionUtil.inter(avLinesNum[i], avColsNum[j]);
+                    avNumbers = CollectionUtil.inter(avNumbers, avGridsNum[k]);
 
                     valid = avNumbers.size() > 0;
 
