@@ -8,7 +8,7 @@ public class CommMain {
     NodeExplorerImpl nodeExplorer = new NodeExplorerImpl();
     try {
       System.out.println(
-          nodeExplorer.getInetAddressOfLocalhost().getHostAddress());
+          nodeExplorer.getLocalInetAddress().getHostAddress());
     } catch(Exception ex) {
 
     }
