@@ -3,6 +3,7 @@ package com.sudoku.comm;
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
 
+import com.sudoku.util.CollectionUtil;
 import org.apache.avro.AvroRemoteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +19,30 @@ public class NodeExplorerImpl implements NodeExplorer {
 
   @Override
   public Message discoverNode(Message sentMessage) throws AvroRemoteException {
-    return null;
+    String localIp = null;
+    try {
+      localIp = getLocalInetAddress().getHostAddress();
+    } catch (UnknownHostException ex) {
+      logger.error(ex.toString());
+    }
+
+    CommunicationManager.setConnectedIps(CollectionUtil.union(
+        CommunicationManager.getConnectedIps(), sentMessage.getListIps()));
+    CommunicationManager.getConnectedIps().remove(localIp);
+    return Message.newBuilder()
+        .setListIps(CommunicationManager.getConnectedIps())
+        .setLogin(CommunicationManager.LOGIN)
+        .setUuid(CommunicationManager.UUID)
+        .build();
   }
 
   @Override
-  public Void disconnect(CharSequence ip) throws AvroRemoteException {
+  public Void disconnect(String ip) throws AvroRemoteException {
+    CommunicationManager.getConnectedIps().remove(ip);
     return null;
   }
 
-  public InetAddress getInetAddressOfLocalhost() throws UnknownHostException {
+  public InetAddress getLocalInetAddress() throws UnknownHostException {
     try {
       InetAddress candidateAddress = null;
 
