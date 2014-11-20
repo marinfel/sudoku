@@ -28,6 +28,8 @@ public abstract class IhmGridLayout extends StackPane{
 
   //Grid grille;
 
+  public IhmGridLayout() {}
+
   public IhmGridLayout(String ttl, Flags flagStatus, Grid gr) {
     grid = gr;
     gridLines = new IhmGridLines(grid, 500, flagStatus);

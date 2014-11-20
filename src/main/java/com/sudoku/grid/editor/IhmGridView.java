@@ -27,7 +27,9 @@ public abstract class IhmGridView extends IhmGridLayout {
         Edit
     }
 
-    protected final BorderPane border;
+    protected BorderPane border;
+
+  public IhmGridView() {}
 
     public IhmGridView(String title, Flags flagStatus, Grid gr) {
         super(title, flagStatus, gr);
