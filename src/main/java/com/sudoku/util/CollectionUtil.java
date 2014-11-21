@@ -28,4 +28,11 @@ public class CollectionUtil {
     s.addAll(l2);
     return new ArrayList<>(s);
   }
+
+  public static <T> ArrayList<T> merge(Collection<T> l1, Collection<T> l2,
+                                       T toRemove) {
+    ArrayList<T> al = union(l1, l2);
+    al.remove(toRemove);
+    return al;
+  }
 }
