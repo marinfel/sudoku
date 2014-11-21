@@ -17,6 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler-plugin.version>2.3.2</compiler-plugin.version>
         <avro.version>1.7.7</avro.version>
+        <javafx.version>2.2.3</javafx.version>
     </properties>
 
     <dependencies>
@@ -45,9 +46,9 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
-            <version>2.2.3</version>
+            <version>${javafx.version}</version>
+            <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
         </dependency>
     </dependencies>
 
