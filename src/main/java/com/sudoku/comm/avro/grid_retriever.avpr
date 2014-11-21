@@ -1,7 +1,7 @@
 {
   "namespace": "com.sudoku.comm.generated",
   "protocol": "GridRetriever",
-  "doc": "Service des grilles"
+  "doc": "Service des grilles",
 
   "types": [
     {
@@ -28,11 +28,6 @@
       ]
     },
     {
-      "name": "Tag",
-      "type": "string"
-    },
-
-    {
       "name": "Grid",
       "type": "record",
       "fields": [
@@ -53,11 +48,13 @@
             "null",
             {
               "type": "array",
-              "items": "Tag"
+              "items": "string"
             } 
           ]
         },
-        { "name": "matrix", "type": [
+        {
+          "name": "matrix",
+          "type": [
             "null",
             {
               "type": "array",
@@ -65,7 +62,7 @@
                 "null",
                 {
                   "type": "array",
-                  "items": "cellule"
+                  "items": "int"
                 }
               ]
             }
@@ -76,5 +73,5 @@
         { "name": "updateDate", "type": "int" }
       ]
     }
-
+  ]
 }
