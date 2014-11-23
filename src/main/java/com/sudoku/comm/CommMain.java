@@ -1,8 +1,34 @@
 package com.sudoku.comm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 /**
  * Created by ben on 19/11/14.
  */
 public class CommMain {
-  public static void main(String[] args) { }
+  private static Logger logger =
+      LoggerFactory.getLogger(CommMain.class);
+
+  public static void main(String[] args) {
+    String uuid = "uuid";
+    String login = "login";
+    ArrayList<String> connectedIps = new ArrayList<>();
+    connectedIps.add("127.0.0.1");
+    CommunicationManager commManager = CommunicationManager.getInstance();
+    commManager.init(uuid, login, connectedIps);
+    try {
+      commManager.discoverNodes();
+      Thread.sleep(5000);
+      for (String ip : commManager.getConnectedIps()) {
+        System.out.println(ip);
+      }
+      commManager.disconnect();
+    } catch (Exception ex) {
+      logger.error(ex.toString());
+    }
+  }
 }
