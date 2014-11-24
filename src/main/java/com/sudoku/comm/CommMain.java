@@ -17,9 +17,10 @@ public class CommMain {
     String uuid = "uuid";
     String login = "login";
     ArrayList<String> connectedIps = new ArrayList<>();
-    connectedIps.add("127.0.0.1");
+    connectedIps.add("172.22.9.11");
     CommunicationManager commManager = CommunicationManager.getInstance();
     commManager.init(uuid, login, connectedIps);
+    System.out.println("ip: " + commManager.getLocalIp());
     try {
       commManager.discoverNodes();
       Thread.sleep(5000);
