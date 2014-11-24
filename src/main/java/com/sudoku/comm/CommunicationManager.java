@@ -65,7 +65,7 @@ public final class CommunicationManager {
   private void startServer() {
     server = new NettyServer(
         new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
-        new InetSocketAddress(PORT)
+        new InetSocketAddress(localIp, PORT)
     );
     server.start();
   }
