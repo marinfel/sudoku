@@ -23,21 +23,6 @@ public class Comment {
      * 
      */
     
-    public Comment(){
-        comment="";
-    }
-    public Comment(String comment){
-        this.comment=comment;
-    }
-    
-    public Comment(Integer grade){
-        this.grade=grade;
-        this.comment="";
-    }
-    public Comment(String comment,Integer grade){
-        this.comment=comment;
-        this.grade=grade;
-    }
     public Comment(String comment,Integer grade, User u){
         this.comment=comment;
         this.grade=grade;
@@ -47,23 +32,18 @@ public class Comment {
     public String getAuthor(){
         return author;
     }
-    
-    public void setAuthor(String author){
-        this.author=author;
-    }
     public String getComment(){
-        
         return comment;
     }
     public void setComment(String comment){
         this.comment=comment;
     }
+    public void setGrade(Integer grade){
+        this.grade=grade;
+    }
     public Integer getGrade(){
         return grade;
     }
-    public void setGrade(Integer grade){
-        this.grade=grade;
-            
-    }
 
 }
+
