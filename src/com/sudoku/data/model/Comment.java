@@ -32,9 +32,6 @@ public class Comment {
     public String getAuthor(){
         return author;
     }
-    public String getPseudo(){ // Return the pseudo of the commenter as a string
-        return pseudo;
-    }
     public String getComment(){
         return comment;
     }
