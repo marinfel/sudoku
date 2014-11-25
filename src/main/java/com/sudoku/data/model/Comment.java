@@ -9,12 +9,14 @@ package com.sudoku.data.model;
  *  
  * @author jonathan
  */
+import com.sudoku.data.model.User;
 
 public class Comment {
     /** Champs de la classe Comment
      * *
      */
-    private String author;
+    private User author;
+    private String pseudo;
     private String comment;
     private Integer grade;
     /**Méthode de la classe  Comment
@@ -30,12 +32,18 @@ public class Comment {
     
     public Comment(Integer grade){
         this.grade=grade;
+        this.comment="";
     }
     public Comment(String comment,Integer grade){
         this.comment=comment;
         this.grade=grade;
     }
-    
+    public Comment(String comment,Integer grade, User u){
+        this.comment=comment;
+        this.grade=grade;
+        this.author=u;
+        this.pseudo=u.getPseudo();
+    }
     public String getAuthor(){
         return author;
     }
