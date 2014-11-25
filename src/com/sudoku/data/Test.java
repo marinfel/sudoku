@@ -16,7 +16,7 @@ import com.sudoku.data.model.Grid;
 public class Test {
     public static void main(String[] args){
         for(int i = 0; i < 500; i++){
-            Grid c = GridFactory.generateRandomGrid(30);
+            Grid c = GridFactory.generateRandomGrid();
             System.out.println(c);
         }
     }
