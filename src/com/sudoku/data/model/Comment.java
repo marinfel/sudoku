@@ -29,7 +29,7 @@ public class Comment {
         this.author=u;
         this.pseudo=u.getPseudo();
     }
-    public String getAuthor(){
+    public User getAuthor(){
         return author;
     }
     public String getComment(){
