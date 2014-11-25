@@ -7,34 +7,24 @@ package com.sudoku.data.sample;
 import com.sudoku.data.model.*;
 import java.util.List;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  *
  * @author Jonathan
  */
 public class DataSample {
     // User et grid sont accesibles directement, servez-vous
-    public User a,b;
+    public User a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
+    public User b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
     public Grid g1,g2,g3;
     
     
     DataSample(){
-       //création du fake user a 
-       a.setBirthdate("01/01/2001");
-       a.setId(1);
-       a.setCreateDate("04/11/2014");
-       a.setIpAdress("192.168.0.27");
-       a.setPseudo("User1");
-       a.setProfilePicturePath("");
       
-       
-       //création du fake user b 
-       b.setBirthdate("02/02/2002");
-       b.setId(1);
-       b.setCreateDate("04/11/2014");
-       b.setIpAdress("192.168.0.28");
-       b.setPseudo("User2");
-       b.setProfilePicturePath("");
      
        //création de Grid g1
        List<Comment> comments = new LinkedList<Comment>();
