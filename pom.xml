@@ -50,6 +50,11 @@
             <systemPath>${java.home}/lib/jfxrt.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        <dependency>
+            <groupId>choco</groupId>
+            <artifactId>choco-solver</artifactId>
+            <version>3.2.2</version>
+        </dependency>
     </dependencies>
 
     <build>
