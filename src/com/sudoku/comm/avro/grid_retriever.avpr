@@ -27,6 +27,17 @@
         { "name": "grade", "type": "int" }
       ]
     },
+
+    {
+      "name": "gridList",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "Grid"
+        }
+      ]
+    },
     {
       "name": "Grid",
       "type": "record",
@@ -73,5 +84,18 @@
         { "name": "updateDate", "type": "int" }
       ]
     }
-  ]
+  ],
+
+  "messages": {
+    "getAllUserGrids": {
+      "doc": "Retrive all the grids from a specified user",
+      "request": [
+        {
+          "name": "getGrids",
+          "type": "User"
+        }
+      ],
+      "response": "gridList"
+    }
+  } 
 }
