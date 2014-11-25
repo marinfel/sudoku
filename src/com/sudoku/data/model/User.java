@@ -6,31 +6,25 @@
 package com.sudoku.data.model;
 
 import java.util.List;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class User implements Ruleable {
 
-    private int id;
     private String pseudo;
     private String salt;
-    private String birthdate;
+    private String password;
+    private Date birthdate;
     private String profilePicturePath;
-    private String createDate;
-    private String updateDate;
+    private Date createDate;
+    private Date updateDate;
     private String ipAdress;
     private List<ContactCategory> contactCategories;
     
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
+    public User(String pseudo, String brutPassword, Date birthdate, String profilePicturePath){
+        
+        
     }
 
     /**
@@ -40,12 +34,6 @@ public class User implements Ruleable {
         return pseudo;
     }
 
-    /**
-     * @param pseudo the pseudo to set
-     */
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
 
     /**
      * @return the salt
@@ -53,26 +41,26 @@ public class User implements Ruleable {
     public String getSalt() {
         return salt;
     }
-
     /**
-     * @param salt the salt to set
+     * @return the hash of the password
      */
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public String getPassword() {
+        return password;
     }
 
     /**
      * @return the birthdate
      */
-    public String getBirthdate() {
+    Date getBirthdate() {
         return birthdate;
     }
 
     /**
      * @param birthdate the birthdate to set
      */
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+        this.UpdateDate();
     }
 
     /**
@@ -87,34 +75,29 @@ public class User implements Ruleable {
      */
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath;
+        this.UpdateDate();
     }
 
     /**
      * @return the createDate
      */
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
-    }
-
-    /**
-     * @param createDate the createDate to set
-     */
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
     }
 
     /**
      * @return the updateDate
      */
-    public String getUpdateDate() {
+    public Date getUpdateDate() {
         return updateDate;
     }
 
     /**
-     * @param updateDate the updateDate to set
+     * Update The UpdateDate
      */
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
+    private void UpdateDate() {
+        Calendar cal = new GregorianCalendar();
+        this.updateDate = cal.getTime ();
     }
 
     /**
@@ -129,6 +112,7 @@ public class User implements Ruleable {
      */
     public void setIpAdress(String ipAdress) {
         this.ipAdress = ipAdress;
+        this.UpdateDate();
     }
 
     /**
@@ -143,6 +127,7 @@ public class User implements Ruleable {
      */
     public void setContactCategories(List<ContactCategory> contactCategories) {
         this.contactCategories = contactCategories;
+        this.UpdateDate();
     }
 
     @Override
@@ -154,4 +139,5 @@ public class User implements Ruleable {
     public Boolean isUser(){
         return true;
     }
+
 }
