@@ -5,10 +5,18 @@
  */
 package com.sudoku.data.model;
 
-import java.util.List;
-import java.util.Date;
+import java.io.UnsupportedEncodingException;
+import org.springframework.security.crypto.codec.Base64;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class User implements Ruleable {
 
@@ -22,8 +30,25 @@ public class User implements Ruleable {
     private String ipAdress;
     private List<ContactCategory> contactCategories;
     
-    public User(String pseudo, String brutPassword, Date birthdate, String profilePicturePath){
+    private String randomSalt() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
+  }
+    
+    public User(String pseudo, String brutPassword, Date birthdate, String profilePicturePath) throws NoSuchAlgorithmException, UnsupportedEncodingException, UnknownHostException{
+        MessageDigest mdigest = MessageDigest.getInstance("SHA-256");
+        Calendar cal = new GregorianCalendar();
         
+        this.pseudo = pseudo;
+        this.salt = this.randomSalt();
+        String toBeHashed = password+this.salt;
+        this.password = new String(Base64.encode(mdigest.digest(toBeHashed.getBytes("UTF-8")))); // hash of pwd+salt
+        this.birthdate = birthdate;
+        this.profilePicturePath = profilePicturePath;
+        this.createDate = cal.getTime ();
+        this.updateDate = this.createDate;
+        this.ipAdress = InetAddress.getLocalHost().getHostAddress();
+        contactCategories=null;
         
     }
 
