@@ -2,12 +2,13 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
+import com.sudoku.comm.SudokuServer;
+import com.sudoku.comm.AvroServer;
 import com.sudoku.data.model.*;
 
 import com.sudoku.util.CollectionUtil;
 import org.apache.avro.ipc.NettyServer;
 import org.apache.avro.ipc.NettyTransceiver;
-import org.apache.avro.ipc.Server;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 import org.apache.avro.ipc.specific.SpecificResponder;
 
@@ -32,11 +33,12 @@ public final class CommunicationManager {
   private String uuid;
   private String login;
   private ArrayList<String> connectedIps;
-  private Server server;
+  private SudokuServer server;
   private final int PORT = 11023;
 
   private CommunicationManager() {
     super();
+    server = new AvroServer();
   }
 
   public final static CommunicationManager getInstance() {
@@ -54,20 +56,12 @@ public final class CommunicationManager {
     this.uuid = uuid;
     this.login = login;
     this.connectedIps = connectedIps;
-    try {
-      this.localIp = getLocalInetAddress().getHostAddress();
-    } catch (UnknownHostException ex) {
-      logger.error(ex.toString());
-    }
+    this.localIp = server.getServerInetAddresses();
     startServer();
   }
 
   private void startServer() {
-    server = new NettyServer(
-        new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
-        new InetSocketAddress(localIp, PORT)
-    );
-    server.start();
+    server.startServer();
   }
 
   public void discoverNodes() throws IOException {
@@ -101,7 +95,7 @@ public final class CommunicationManager {
         client.close();
       }
     }
-    server.close();
+    server.stopServer();
   }
 
   public ArrayList<Grid> getAllGrids() {
@@ -117,49 +111,6 @@ public final class CommunicationManager {
   }
 
   public void pushCommentAndSync(Comment newComment, Grid gridToSync) { }
-
-  private InetAddress getLocalInetAddress() throws UnknownHostException {
-    try {
-      InetAddress candidateAddress = null;
-
-      for (Enumeration<NetworkInterface> networkInterfaces =
-               NetworkInterface.getNetworkInterfaces();
-           networkInterfaces.hasMoreElements();) {
-
-        NetworkInterface networkInterface =
-            (NetworkInterface) networkInterfaces.nextElement();
-        for (Enumeration<InetAddress> inetAddresses =
-                 networkInterface.getInetAddresses();
-             inetAddresses.hasMoreElements();) {
-
-          InetAddress inetAddress = (InetAddress) inetAddresses.nextElement();
-          if (!inetAddress.isLoopbackAddress()) {
-            if (inetAddress.isSiteLocalAddress()) {
-              return inetAddress;
-            } else if (candidateAddress == null) {
-              candidateAddress = inetAddress;
-            }
-          }
-        }
-      }
-
-      if (candidateAddress != null) {
-        return candidateAddress;
-      }
-
-      InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
-      if(jdkSuppliedAddress == null) {
-        throw new UnknownHostException("InetAddress.getLocalHost() is null.");
-      }
-      return jdkSuppliedAddress;
-    } catch (Exception ex) {
-      logger.error(ex.toString());
-      UnknownHostException unknownHostException =
-          new UnknownHostException("Failed to determine IP: " + ex);
-      unknownHostException.initCause(ex);
-      throw unknownHostException;
-    }
-  }
 
   public ArrayList<String> getConnectedIps() {
     return connectedIps;
