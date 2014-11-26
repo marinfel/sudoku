@@ -27,17 +27,6 @@
         { "name": "grade", "type": "int" }
       ]
     },
-
-    {
-      "name": "gridList",
-      "type": [
-        "null",
-        {
-          "type": "array",
-          "items": "Grid"
-        }
-      ]
-    },
     {
       "name": "Grid",
       "type": "record",
@@ -82,6 +71,16 @@
         { "name": "createUser", "type": "User" },
         { "name": "createDate", "type": "int" },
         { "name": "updateDate", "type": "int" }
+      ]
+    },
+    {
+      "name": "gridList",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "Grid"
+        }
       ]
     }
   ],
