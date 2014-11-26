@@ -9,11 +9,8 @@ import com.sudoku.data.model.Comment;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridView;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_grid_preview.StarView;
-import java.util.List;
-import java.util.Vector;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -23,6 +20,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  *

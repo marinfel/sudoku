@@ -6,11 +6,12 @@
 package com.sudoku.grid.ihm_grid_preview;
 
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.manager.IhmGridLayout;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import java.util.Vector;
+import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+
+import java.util.Vector;
 
 /**
  *

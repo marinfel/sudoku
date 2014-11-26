@@ -1,12 +1,11 @@
 package com.sudoku.data.manager;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GridManager {
 	private List<Grid> availableGrids;

@@ -2,27 +2,18 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
-import com.sudoku.comm.SudokuServer;
-import com.sudoku.comm.AvroServer;
-import com.sudoku.data.model.*;
-
+import com.sudoku.data.model.Comment;
+import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.User;
 import com.sudoku.util.CollectionUtil;
-import org.apache.avro.ipc.NettyServer;
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
-import org.apache.avro.ipc.specific.SpecificResponder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 public final class CommunicationManager {
   private Logger logger = LoggerFactory.getLogger(CommunicationManager.class);

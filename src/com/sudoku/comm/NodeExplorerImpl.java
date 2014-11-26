@@ -2,14 +2,8 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
-
 import com.sudoku.util.CollectionUtil;
 import org.apache.avro.AvroRemoteException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.*;
-import java.util.Enumeration;
 
 /**
  * Created by ben on 19/11/14.

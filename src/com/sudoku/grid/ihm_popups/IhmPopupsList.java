@@ -5,12 +5,13 @@
  */
 package com.sudoku.grid.ihm_popups;
 
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @class IHM_PopupsList is a graphical object which is unique. The design

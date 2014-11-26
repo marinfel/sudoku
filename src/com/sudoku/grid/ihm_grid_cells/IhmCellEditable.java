@@ -5,7 +5,6 @@
  */
 package com.sudoku.grid.ihm_grid_cells;
 
-import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 
 /**
  *

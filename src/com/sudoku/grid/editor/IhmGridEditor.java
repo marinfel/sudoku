@@ -8,7 +8,6 @@ package com.sudoku.grid.editor;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.Tag;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
-import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 /**
  *
