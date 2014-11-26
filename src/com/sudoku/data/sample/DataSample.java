@@ -7,40 +7,35 @@ package com.sudoku.data.sample;
 import com.sudoku.data.model.*;
 import java.util.List;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  *
  * @author Jonathan
  */
 public class DataSample {
     // User et grid sont accesibles directement, servez-vous
-    public User a,b;
+    public User a;
+    public User b;
     public Grid g1,g2,g3;
     
     
     DataSample(){
-       //création du fake user a 
-       a.setBirthdate("01/01/2001");
-       a.setId(1);
-       a.setCreateDate("04/11/2014");
-       a.setIpAdress("192.168.0.27");
-       a.setPseudo("User1");
-       a.setProfilePicturePath("");
-      
-       
-       //création du fake user b 
-       b.setBirthdate("02/02/2002");
-       b.setId(1);
-       b.setCreateDate("04/11/2014");
-       b.setIpAdress("192.168.0.28");
-       b.setPseudo("User2");
-       b.setProfilePicturePath("");
+      try {
+        a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
+        b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
+      } catch (Exception ex) {
+        // to be handled
+      }
      
        //création de Grid g1
        List<Comment> comments = new LinkedList<Comment>();
        //Ajout de commentaires
-       comments.add(new Comment("texte du commentaire 1".toString(),1));
-       comments.add(new Comment("texte du commentaire 1".toString(),2));
+       comments.add(new Comment("texte du commentaire 1".toString(),1, a));
+       comments.add(new Comment("texte du commentaire 1".toString(),2, a));
        g1.setComments(comments);
        //Ajout de tags
        List<Tag> tags= new LinkedList<Tag>();
@@ -58,8 +53,8 @@ public class DataSample {
        //Création de Grid g2
        List<Comment> comments2 = new LinkedList<>();
        //Ajout de commentaires
-       comments2.add(new Comment("texte du commentaire 1".toString(),1));
-       comments2.add(new Comment("texte du commentaire 2".toString(),2));
+       comments2.add(new Comment("texte du commentaire 1".toString(),1, a));
+       comments2.add(new Comment("texte du commentaire 2".toString(),2, a));
        g2.setComments(comments2);
        //Ajout de tags
        List<Tag> tags2= new LinkedList<Tag>();
@@ -77,8 +72,8 @@ public class DataSample {
        //Création de Grid g3
        List<Comment> comments3 = new LinkedList<>();
        //Ajout de commentaires
-       comments3.add(new Comment("texte du commentaire 1".toString(),1));
-       comments3.add(new Comment("texte du commentaire 2".toString(),2));
+       comments3.add(new Comment("texte du commentaire 1".toString(),1, a));
+       comments3.add(new Comment("texte du commentaire 2".toString(),2, a));
        g3.setComments(comments3);
        //Ajout de tags
        List<Tag> tags3= new LinkedList<Tag>();
@@ -100,6 +95,4 @@ public class DataSample {
         users.add(b);
         return users;
     }
-    
 }
-

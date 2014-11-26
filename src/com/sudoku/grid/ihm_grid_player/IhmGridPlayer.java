@@ -91,7 +91,7 @@ public class IhmGridPlayer extends IhmGridView {
     submit.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        Comment newComm = new Comment();
+        Comment newComm = new Comment("", 1, author);
         /*
          ajout du titre : 
          newComm.setTitle(textField.getText());

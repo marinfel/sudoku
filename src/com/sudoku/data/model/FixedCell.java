@@ -18,7 +18,7 @@ public class FixedCell extends Cell{
         this.value = value;
     }
     
-    public int getValue() {
+    public byte getValue() {
             return value;
     }
 
