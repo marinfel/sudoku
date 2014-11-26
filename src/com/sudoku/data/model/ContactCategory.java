@@ -8,56 +8,59 @@ package com.sudoku.data.model;
 import java.util.List;
 
 public class ContactCategory implements Ruleable {
-    
-    private String name;
-    private List<User> contacts;
-    
-    public ContactCategory(){}
-    public ContactCategory(String name){}
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+  private String name;
+  private List<User> contacts;
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+  public ContactCategory() {
+  }
 
-    /**
-     * @return the contacts
-     */
-    public List<User> getContacts() {
-        return contacts;
-    }
+  public ContactCategory(String name) {
+  }
 
-    /**
-     * @param contacts the contacts to set
-     */
-    public void setContacts(List<User> contacts) {
-        this.contacts = contacts;
-    }
-    
-    public void addContact(User user){
-        this.contacts.add(user);
-    }
-    
-    public void removeContact(User user){
-        this.contacts.remove(user);
-    }
-    
-    @Override
-    public Boolean hasUser(User user){
-        return this.contacts.contains(user);
-    }   
-    
-    @Override
-    public Boolean isUser(){
-        return false;
-    }
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * @param name the name to set
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * @return the contacts
+   */
+  public List<User> getContacts() {
+    return contacts;
+  }
+
+  /**
+   * @param contacts the contacts to set
+   */
+  public void setContacts(List<User> contacts) {
+    this.contacts = contacts;
+  }
+
+  public void addContact(User user) {
+    this.contacts.add(user);
+  }
+
+  public void removeContact(User user) {
+    this.contacts.remove(user);
+  }
+
+  @Override
+  public Boolean hasUser(User user) {
+    return this.contacts.contains(user);
+  }
+
+  @Override
+  public Boolean isUser() {
+    return false;
+  }
 }

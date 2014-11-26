@@ -9,9 +9,8 @@ import javafx.event.Event;
 import javafx.event.EventType;
 
 /**
- * @class IhmCellEditedEvent is an event fired when a cell is edited
- *
  * @author Marc-Antoine
+ * @class IhmCellEditedEvent is an event fired when a cell is edited
  */
 public class IhmCellEditedEvent extends Event {
 

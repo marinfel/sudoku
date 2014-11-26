@@ -6,10 +6,10 @@
 package com.sudoku.data.model;
 
 /**
- *
  * @author JE
  */
 public interface Ruleable {
-    Boolean hasUser(User user);
-    Boolean isUser();
+  Boolean hasUser(User user);
+
+  Boolean isUser();
 }

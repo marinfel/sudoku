@@ -16,16 +16,14 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 
 public final class CommunicationManager {
-  private Logger logger = LoggerFactory.getLogger(CommunicationManager.class);
-  
   private static volatile CommunicationManager instance = null;
-
+  private final int PORT = 11023;
+  private Logger logger = LoggerFactory.getLogger(CommunicationManager.class);
   private String localIp;
   private String uuid;
   private String login;
   private ArrayList<String> connectedIps;
   private SudokuServer server;
-  private final int PORT = 11023;
 
   private CommunicationManager() {
     super();
@@ -34,8 +32,8 @@ public final class CommunicationManager {
 
   public final static CommunicationManager getInstance() {
     if (instance == null) {
-      synchronized(CommunicationManager.class) {
-        if (instance == null){
+      synchronized (CommunicationManager.class) {
+        if (instance == null) {
           instance = new CommunicationManager();
         }
       }
@@ -101,7 +99,8 @@ public final class CommunicationManager {
     return null;
   }
 
-  public void pushCommentAndSync(Comment newComment, Grid gridToSync) { }
+  public void pushCommentAndSync(Comment newComment, Grid gridToSync) {
+  }
 
   public ArrayList<String> getConnectedIps() {
     return connectedIps;

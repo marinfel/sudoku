@@ -6,11 +6,10 @@
 package com.sudoku.data.model;
 
 /**
- *
  * @author JE
  */
 public enum AccessAction {
-    play,
-    display,
-    comment
+  play,
+  display,
+  comment
 }

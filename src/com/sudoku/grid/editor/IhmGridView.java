@@ -14,49 +14,41 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * @author mecton08
  */
 public abstract class IhmGridView extends IhmGridLayout {
 
-    //protected textItemInput textInput;
-    //protected textItemView textView;
-    protected enum mode {
+  protected BorderPane border;
 
-        Play,
-        Edit
-    }
+  public IhmGridView() {
+  }
 
-    protected BorderPane border;
+  public IhmGridView(String title, Flags flagStatus, Grid gr) {
+    super(title, flagStatus, gr);
+    border = new BorderPane();
+    getChildren().add(border);
+    HBox topHBox = new HBox();
+    VBox leftVBox = new VBox();
+    VBox bottomHBox = new VBox();
+    VBox rightVBox = new VBox();
+    VBox centerVBox = new VBox();
 
-  public IhmGridView() {}
+    // center a faire
+    border.setTop(topHBox);
+    border.setLeft(leftVBox);
+    border.setBottom(bottomHBox);
+    border.setRight(rightVBox);
+    border.setCenter(centerVBox);
 
-    public IhmGridView(String title, Flags flagStatus, Grid gr) {
-        super(title, flagStatus, gr);
-        border = new BorderPane();
-        getChildren().add(border);
-        HBox topHBox = new HBox();
-        VBox leftVBox = new VBox();
-        VBox bottomHBox = new VBox();
-        VBox rightVBox = new VBox();
-        VBox centerVBox = new VBox();
 
-        // center a faire
-        border.setTop(topHBox);
-        border.setLeft(leftVBox);
-        border.setBottom(bottomHBox);
-        border.setRight(rightVBox);
-        border.setCenter(centerVBox);
+    //VBox centerLayout = (VBox)border.getCenter();
+    //centerLayout.getChildren().add(sudokuGrid);
 
-        
-        //VBox centerLayout = (VBox)border.getCenter();
-        //centerLayout.getChildren().add(sudokuGrid);
+    centerVBox.getChildren().add(gridLines);
 
-        centerVBox.getChildren().add(gridLines);
-
-        IhmPopupsList.init(150.0, 500.0, 10);
-        final IhmPopupsList popupList = IhmPopupsList.getInstance();
-        rightVBox.getChildren().add(popupList);
+    IhmPopupsList.init(150.0, 500.0, 10);
+    final IhmPopupsList popupList = IhmPopupsList.getInstance();
+    rightVBox.getChildren().add(popupList);
 
         /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
          primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
@@ -67,11 +59,19 @@ public abstract class IhmGridView extends IhmGridLayout {
          popupList.finalize();
          }
          }
-            
+
          });
          */
-        //border.setCenter();
-        // 
-    }
+    //border.setCenter();
+    //
+  }
+
+  //protected textItemInput textInput;
+  //protected textItemView textView;
+  protected enum mode {
+
+    Play,
+    Edit
+  }
 
 }

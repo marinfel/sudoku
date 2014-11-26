@@ -9,28 +9,27 @@ import javafx.event.Event;
 import javafx.event.EventType;
 
 /**
+ * @author Marc-Antoine
  * @class IHM_PopupCloseRequestEvent is an event fired when a popup request to
  * be closed
- *
- * @author Marc-Antoine
  */
 public class IhmPopupCloseRequestEvent extends Event {
 
-    //POPUP_CLOSEREQUEST a public constant to help to recognize this kind of event
-    public static final EventType<IhmPopupCloseRequestEvent> POPUP_CLOSEREQUEST = new EventType("POPUP_CLOSEREQUEST");
+  //POPUP_CLOSEREQUEST a public constant to help to recognize this kind of event
+  public static final EventType<IhmPopupCloseRequestEvent> POPUP_CLOSEREQUEST = new EventType("POPUP_CLOSEREQUEST");
 
-    //An attribut to access to the pop-up which fired the event 
-    public final IhmPopup popup;
+  //An attribut to access to the pop-up which fired the event
+  public final IhmPopup popup;
 
-    /**
-     * IHM_PopupCloseRequestEvent constructor
-     *
-     * @param popup is the popup which fired the event
-     */
-    public IhmPopupCloseRequestEvent(IhmPopup popup) {
-        super(POPUP_CLOSEREQUEST);
+  /**
+   * IHM_PopupCloseRequestEvent constructor
+   *
+   * @param popup is the popup which fired the event
+   */
+  public IhmPopupCloseRequestEvent(IhmPopup popup) {
+    super(POPUP_CLOSEREQUEST);
 
-        //set the popup holds by the event
-        this.popup = popup;
-    }
+    //set the popup holds by the event
+    this.popup = popup;
+  }
 }

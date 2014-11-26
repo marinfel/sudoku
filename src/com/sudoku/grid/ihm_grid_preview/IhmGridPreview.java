@@ -14,7 +14,6 @@ import javafx.scene.text.Text;
 import java.util.Vector;
 
 /**
- *
  * @author Mélie
  */
 public class IhmGridPreview extends IhmGridLayout {

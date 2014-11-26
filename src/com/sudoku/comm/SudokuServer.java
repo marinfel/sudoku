@@ -20,10 +20,11 @@ public abstract class SudokuServer {
       logger.error(ex.toString());
     }
   }
-  
+
   public abstract void startServer();
+
   public abstract void stopServer();
-  
+
   public String getServerInetAddresses() {
     return this.localIp;
   }
@@ -34,13 +35,13 @@ public abstract class SudokuServer {
 
       for (Enumeration<NetworkInterface> networkInterfaces =
                NetworkInterface.getNetworkInterfaces();
-           networkInterfaces.hasMoreElements();) {
+           networkInterfaces.hasMoreElements(); ) {
 
         NetworkInterface networkInterface =
             (NetworkInterface) networkInterfaces.nextElement();
         for (Enumeration<InetAddress> inetAddresses =
                  networkInterface.getInetAddresses();
-             inetAddresses.hasMoreElements();) {
+             inetAddresses.hasMoreElements(); ) {
 
           InetAddress inetAddress = (InetAddress) inetAddresses.nextElement();
           if (!inetAddress.isLoopbackAddress()) {
@@ -58,7 +59,7 @@ public abstract class SudokuServer {
       }
 
       InetAddress jdkSuppliedAddress = InetAddress.getLocalHost();
-      if(jdkSuppliedAddress == null) {
+      if (jdkSuppliedAddress == null) {
         throw new UnknownHostException("InetAddress.getLocalHost() is null.");
       }
       return jdkSuppliedAddress;

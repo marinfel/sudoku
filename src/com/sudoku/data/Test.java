@@ -9,14 +9,13 @@ import com.sudoku.data.factory.GridFactory;
 import com.sudoku.data.model.Grid;
 
 /**
- *
  * @author JE
  */
 public class Test {
-    public static void main(String[] args){
-        for(int i = 0; i < 500; i++){
-            Grid c = GridFactory.generateRandomGrid();
-            System.out.println(c);
-        }
+  public static void main(String[] args) {
+    for (int i = 0; i < 500; i++) {
+      Grid c = GridFactory.generateRandomGrid();
+      System.out.println(c);
     }
+  }
 }

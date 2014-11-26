@@ -9,9 +9,11 @@ import java.net.InetSocketAddress;
 
 public class AvroServer extends SudokuServer {
   private static Server server;
+
   public AvroServer() {
     super();
   }
+
   public void startServer() {
     server = new NettyServer(
         new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),

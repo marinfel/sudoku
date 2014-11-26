@@ -12,24 +12,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * @author mecton08
  */
 public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
-    private Button deleteCells;
-    private TextField deleteCellsField;
-    
-    public IhmGridEditorRandomlyFilled(String title, Flags flagStatus, Grid gr){
-        super(title, flagStatus, gr);
-        
-        deleteCells = new Button("Delete Cells");
-        deleteCellsField = new TextField("0");
-        
-        VBox leftLayout = (VBox)border.getLeft();
-        leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
-        
-        // handler de deleteCells
-    }
-    
-    
+  private Button deleteCells;
+  private TextField deleteCellsField;
+
+  public IhmGridEditorRandomlyFilled(String title, Flags flagStatus, Grid gr) {
+    super(title, flagStatus, gr);
+
+    deleteCells = new Button("Delete Cells");
+    deleteCellsField = new TextField("0");
+
+    VBox leftLayout = (VBox) border.getLeft();
+    leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
+
+    // handler de deleteCells
+  }
+
+
 }

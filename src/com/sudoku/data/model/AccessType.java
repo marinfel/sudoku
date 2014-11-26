@@ -6,16 +6,15 @@
 package com.sudoku.data.model;
 
 /**
- *
  * @author JE
  */
 public enum AccessType {
-    granted(0),
-    revoked(1);
-    
-    private int accessNum;
-    
-    AccessType(int accessNum){
-        this.accessNum = accessNum;
-    }
+  granted(0),
+  revoked(1);
+
+  private int accessNum;
+
+  AccessType(int accessNum) {
+    this.accessNum = accessNum;
+  }
 }

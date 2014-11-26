@@ -9,34 +9,34 @@ import javafx.scene.layout.GridPane;
  */
 public abstract class IhmCell extends GridPane {
 
-    protected int x = -1;
-    protected int y = -1;
+  protected int x = -1;
+  protected int y = -1;
 
-    /**
-     * TODO
-     */
-    protected boolean checkValue(int value) {
-        //check the value
-        return (value > 0 && value < 10);
-    }
+  /**
+   * TODO
+   */
+  protected boolean checkValue(int value) {
+    //check the value
+    return (value > 0 && value < 10);
+  }
 
-    public void setX(int x) {
-        this.x = x;
-    }
+  public int getX() {
+    return x;
+  }
 
-    public void setY(int y) {
-        this.y = y;
-    }
+  public void setX(int x) {
+    this.x = x;
+  }
 
-    public int getX() {
-        return x;
-    }
+  public int getY() {
+    return y;
+  }
 
-    public int getY() {
-        return y;
-    }
+  public void setY(int y) {
+    this.y = y;
+  }
 
-    public abstract void setValue(int value);
+  public abstract int getValue();
 
-    public abstract int getValue();
+  public abstract void setValue(int value);
 }

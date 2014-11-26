@@ -11,144 +11,135 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- *
  * @author JE
  */
 public class AccessManager {
-    
-    private static AccessManager instance;
-    private HashMap<Grid, ArrayList<AccessRule>> rules;
-    
-    private AccessManager(){
-        this.rules = new HashMap<>();
+
+  private static AccessManager instance;
+  private HashMap<Grid, ArrayList<AccessRule>> rules;
+
+  private AccessManager() {
+    this.rules = new HashMap<>();
+  }
+
+  public static AccessManager getInstance() {
+    if (instance == null) {
+      instance = new AccessManager();
     }
-    
-    public static AccessManager getInstance(){
-        if(instance == null){
-            instance = new AccessManager();
-        }
-        return instance;
+    return instance;
+  }
+
+  /**
+   * @return the rules
+   */
+  public HashMap<Grid, ArrayList<AccessRule>> getAllAccessRules() {
+    return rules;
+  }
+
+  public ArrayList<AccessRule> getAllAccessRulesForGrid(Grid grid) {
+    return this.rules.get(grid);
+  }
+
+  private AccessRule getAccessRule(Grid grid, AccessAction accessAction, Ruleable appliedTo) {
+
+    ArrayList<AccessRule> rulesList = this.rules.get(grid);
+    if (rulesList == null) {
+      return null;
     }
 
-    /**
-     * @return the rules
-     */
-    public HashMap<Grid, ArrayList<AccessRule>> getAllAccessRules() {
-        return rules;
+    for (AccessRule ar : rulesList) {
+      if (ar.getAccessAction() == accessAction && ar.getAppliedTo().equals(appliedTo)) {
+        return ar;
+      }
     }
-    
-    public ArrayList<AccessRule> getAllAccessRulesForGrid(Grid grid){
-        return this.rules.get(grid);
+    return null;
+  }
+
+  /**
+   * @param rules the rules to set
+   */
+  public void setRules(HashMap<Grid, ArrayList<AccessRule>> rules) {
+    this.rules = rules;
+  }
+
+  public void setAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo) {
+    AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
+    if (oldAccessRule == null) {
+      this.addAccessRule(grid, accessType, accessAction, appliedTo);
+    } else {
+      oldAccessRule.setAccessType(accessType);
     }
-    
-    private AccessRule getAccessRule(Grid grid, AccessAction accessAction, Ruleable appliedTo){
-        
-        ArrayList<AccessRule> rulesList = this.rules.get(grid);
-        if(rulesList == null){
-            return null;
-        }
-        
-        for(AccessRule ar : rulesList){
-            if(ar.getAccessAction() == accessAction && ar.getAppliedTo().equals(appliedTo)){
-                return ar;
-            }
-        }
-        return null;
+  }
+
+  public void setAccessRule(Grid grid, AccessRule accessRule) {
+    setAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
+  }
+
+  public void addAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo) {
+    if (this.rules.containsKey(grid)) {
+      AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
+      if (oldAccessRule != null) {
+        oldAccessRule.setAccessType(accessType);
+      } else {
+        this.rules.get(grid).add(new AccessRule(accessType, accessAction, appliedTo));
+      }
+    } else {
+      ArrayList<AccessRule> newRuleList = new ArrayList<>();
+      newRuleList.add(new AccessRule(accessType, accessAction, appliedTo));
+      this.rules.put(grid, newRuleList);
     }
-    
-    /**
-     * @param rules the rules to set
-     */
-    public void setRules(HashMap<Grid, ArrayList<AccessRule>> rules) {
-        this.rules = rules;
+  }
+
+  public void addAccessRule(Grid grid, AccessRule accessRule) {
+    addAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
+  }
+
+  public void removeAllAccessRules() {
+    this.rules.clear();
+  }
+
+  public void removeAllAccessRulesForGrid(Grid grid) {
+    ArrayList<AccessRule> rulesList = this.rules.get(grid);
+    if (rulesList != null) {
+      rulesList.clear();
     }
-    
-    public void setAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo){
-        AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
-        if(oldAccessRule == null){
-            this.addAccessRule(grid, accessType, accessAction, appliedTo);
-        }
-        else
-        {
-            oldAccessRule.setAccessType(accessType);
-        }
+  }
+
+  public AccessType verifyAccess(User user, Grid grid, AccessAction accessAction) {
+
+    // Retrouve les regles d'access pour la grille de Sudoku donnee
+    ArrayList<AccessRule> rulesList = this.rules.get(grid);
+
+    // Pas de regle pour cette grille: L'acces est permit
+    if (rulesList == null) {
+      return AccessType.granted;
     }
-    
-    public void setAccessRule(Grid grid, AccessRule accessRule){
-        setAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
+
+    AccessType userLevelAccessType = null;
+    AccessType groupLevelAccessType = null;
+
+    for (AccessRule ar : rulesList) {
+      // On recupere les droits d'access au niveau utilisateur et groupe
+      if (ar.getAccessAction() == accessAction && ar.getAppliedTo().hasUser(user)) {
+        if (ar.getAppliedTo().isUser()) {
+          userLevelAccessType = ar.getAccessType();
+        } else {
+          groupLevelAccessType = ar.getAccessType();
+        }
+      }
     }
-    
-    public void addAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo){
-        if(this.rules.containsKey(grid)){
-            AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
-            if(oldAccessRule != null){
-                oldAccessRule.setAccessType(accessType);
-            }
-            else
-            {
-                this.rules.get(grid).add(new AccessRule(accessType, accessAction, appliedTo));
-            }
-        }
-        else
-        {
-            ArrayList<AccessRule> newRuleList = new ArrayList<>();
-            newRuleList.add(new AccessRule(accessType, accessAction, appliedTo));
-            this.rules.put(grid, newRuleList);
-        }
+
+    // Pas de regle indiquee pour cet utilisateur: L'acces est permit
+    if (userLevelAccessType == null && groupLevelAccessType == null) {
+      return AccessType.granted;
     }
-    
-    public void addAccessRule(Grid grid, AccessRule accessRule){
-        addAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
+
+    // Si pas de regle au niveau de l'utilisateur, on utilise la regle s'appliquant a son groupe
+    if (userLevelAccessType == null) {
+      return groupLevelAccessType;
     }
-    
-    public void removeAllAccessRules(){
-        this.rules.clear();
-    }
-    
-    public void removeAllAccessRulesForGrid(Grid grid){
-        ArrayList<AccessRule> rulesList = this.rules.get(grid);
-        if(rulesList != null){
-            rulesList.clear();
-        }
-    }
-   
-    public AccessType verifyAccess(User user, Grid grid, AccessAction accessAction){
-        
-        // Retrouve les regles d'access pour la grille de Sudoku donnee
-        ArrayList<AccessRule> rulesList = this.rules.get(grid);
-        
-        // Pas de regle pour cette grille: L'acces est permit
-        if(rulesList == null){
-            return AccessType.granted;
-        }
-        
-        AccessType userLevelAccessType = null;
-        AccessType groupLevelAccessType = null;
-        
-        for(AccessRule ar : rulesList){
-            // On recupere les droits d'access au niveau utilisateur et groupe
-            if(ar.getAccessAction() == accessAction && ar.getAppliedTo().hasUser(user)){
-                if(ar.getAppliedTo().isUser()){
-                    userLevelAccessType = ar.getAccessType();
-                }
-                else
-                {
-                    groupLevelAccessType = ar.getAccessType();
-                }
-            }
-        }
-        
-        // Pas de regle indiquee pour cet utilisateur: L'acces est permit
-        if(userLevelAccessType == null && groupLevelAccessType == null){
-            return AccessType.granted;
-        }
-        
-        // Si pas de regle au niveau de l'utilisateur, on utilise la regle s'appliquant a son groupe
-        if(userLevelAccessType == null){
-            return groupLevelAccessType;
-        }
-        
-        // Sinon, la regle indiquee au niveau de l'utilisateur est prioritaire
-        return userLevelAccessType;
-    }
+
+    // Sinon, la regle indiquee au niveau de l'utilisateur est prioritaire
+    return userLevelAccessType;
+  }
 }

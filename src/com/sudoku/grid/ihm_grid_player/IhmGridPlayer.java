@@ -25,15 +25,14 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- *
  * @author Laetitia
  */
 public class IhmGridPlayer extends IhmGridView {
 
+  private final int nbComm = 2;
   private Vector<StarView> grades;
   private User author;
   private List<Comment> gridComments;
-  private final int nbComm = 2;
   private Grid playGrid;
 
   public IhmGridPlayer(String t, Flags flagStatus, Grid gr) {
