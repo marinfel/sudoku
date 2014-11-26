@@ -12,7 +12,7 @@ public class NodeExplorerImpl implements NodeExplorer {
   private CommunicationManager commManager;
 
   public NodeExplorerImpl() {
-    commManager = CommunicationManager.getInstance();
+    this.commManager = CommunicationManager.getInstance();
   }
 
   @Override
