@@ -4,12 +4,16 @@
  * and open the template in the editor.
  */
 package com.sudoku.data.sample;
-import com.sudoku.data.model.*;
-import java.util.List;
+
+import com.sudoku.data.model.Comment;
+import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.Tag;
+import com.sudoku.data.model.User;
+
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.LinkedList;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 /**

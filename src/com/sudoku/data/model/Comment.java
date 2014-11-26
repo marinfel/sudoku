@@ -9,7 +9,6 @@ package com.sudoku.data.model;
  *  
  * @author jonathan
  */
-import com.sudoku.data.model.User;
 
 public class Comment {
   /** Champs de la classe Comment

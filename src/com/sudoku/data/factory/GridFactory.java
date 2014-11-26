@@ -3,13 +3,13 @@ package com.sudoku.data.factory;
 import com.sudoku.data.model.EmptyCell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
-import java.util.Random;
-
 import solver.Solver;
 import solver.constraints.IntConstraintFactory;
 import solver.search.strategy.IntStrategyFactory;
 import solver.variables.IntVar;
 import solver.variables.VariableFactory;
+
+import java.util.Random;
 
 /**
  *

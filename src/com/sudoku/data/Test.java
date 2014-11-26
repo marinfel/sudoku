@@ -6,7 +6,6 @@
 package com.sudoku.data;
 
 import com.sudoku.data.factory.GridFactory;
-import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 
 /**

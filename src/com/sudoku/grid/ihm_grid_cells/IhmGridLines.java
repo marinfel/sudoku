@@ -10,11 +10,8 @@ import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 
 /**
  *

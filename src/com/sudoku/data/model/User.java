@@ -5,9 +5,12 @@
  */
 package com.sudoku.data.model;
 
-import java.io.UnsupportedEncodingException;
 import org.springframework.security.crypto.codec.Base64;
+
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -15,8 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class User implements Ruleable {
 

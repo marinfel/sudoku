@@ -6,12 +6,12 @@
  */
 package com.sudoku.grid.manager;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 /**
  *

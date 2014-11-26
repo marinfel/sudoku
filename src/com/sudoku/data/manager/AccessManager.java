@@ -5,12 +5,8 @@
  */
 package com.sudoku.data.manager;
 
-import com.sudoku.data.model.AccessAction;
-import com.sudoku.data.model.AccessRule;
-import com.sudoku.data.model.AccessType;
-import com.sudoku.data.model.Grid;
-import com.sudoku.data.model.Ruleable;
-import com.sudoku.data.model.User;
+import com.sudoku.data.model.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
