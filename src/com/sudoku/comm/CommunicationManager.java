@@ -54,9 +54,11 @@ public final class CommunicationManager {
 
   public void discoverNodes() throws IOException {
     if (connectedIps != null) {
-      connectedIps.add(localIp);
-      Message message = new Message(uuid, login, connectedIps);
-      ArrayList<String> newConnectedIps = connectedIps;
+      ArrayList<String> newConnectedIps =
+          (ArrayList<String>) connectedIps.clone();
+      newConnectedIps.add(localIp);
+      Message message = new Message(uuid, login, newConnectedIps);
+      newConnectedIps = connectedIps;
       for (String ip : connectedIps) {
         NettyTransceiver client =
             new NettyTransceiver(new InetSocketAddress(ip, PORT));
