@@ -8,12 +8,12 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
-public abstract class SudokuServer {
+public abstract class Server {
   protected final int PORT = 11023;
   protected String localIp;
-  private Logger logger = LoggerFactory.getLogger(SudokuServer.class);
+  private Logger logger = LoggerFactory.getLogger(Server.class);
 
-  public SudokuServer() {
+  public Server() {
     try {
       this.localIp = getLocalInetAddress().getHostAddress();
     } catch (UnknownHostException ex) {

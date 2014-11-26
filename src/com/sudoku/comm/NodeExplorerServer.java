@@ -7,10 +7,10 @@ import org.apache.avro.ipc.specific.SpecificResponder;
 
 import java.net.InetSocketAddress;
 
-public class AvroServer extends SudokuServer {
+public class NodeExplorerServer extends SudokuServer {
   private static Server server;
 
-  public AvroServer() {
+  public NodeExplorerServer() {
     super();
   }
 
