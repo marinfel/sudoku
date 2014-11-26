@@ -36,7 +36,7 @@
         { "name": "description", "type": "string" },
         { "name": "difficulty", "type": "int" },
         { "name": "published", "type": "boolean" },
-        { "name": "commentsList", "type": [
+        { "name": "comments", "type": [
             "null",
             {
               "type": "array",
@@ -44,7 +44,7 @@
             }
           ]
         },
-        { "name": "tagsList", "type": [
+        { "name": "tags", "type": [
             "null",
             {
               "type": "array",
@@ -72,29 +72,32 @@
         { "name": "createDate", "type": "int" },
         { "name": "updateDate", "type": "int" }
       ]
-    },
-    {
-      "name": "gridList",
-      "type": [
-        "null",
-        {
-          "type": "array",
-          "items": "Grid"
-        }
-      ]
     }
   ],
 
   "messages": {
-    "getAllUserGrids": {
-      "doc": "Retrive all the grids from a specified user",
+    "getGrids": {
+      "doc": "Retrieve all the grids of the specified ip",
       "request": [
         {
-          "name": "getGrids",
-          "type": "User"
+          "name": "ip",
+          "type": "string"
         }
       ],
-      "response": "gridList"
+      "response": {
+        "type": "array",
+        "items": "Grid"
+      }
+    },
+    "getProfile": {
+      "doc": "Retrieve profile information of the specified ip",
+      "request": [
+        {
+          "name": "ip",
+          "type": "string"
+        }
+      ],
+      "response": "User"
     }
   } 
 }
