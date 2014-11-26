@@ -18,16 +18,15 @@ import java.util.ArrayList;
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
   private final int PORT = 11023;
-  private Logger logger = LoggerFactory.getLogger(CommunicationManager.class);
   private String localIp;
   private String uuid;
   private String login;
   private ArrayList<String> connectedIps;
-  private SudokuServer server;
+  private Server nodeExplorerServer;
 
   private CommunicationManager() {
     super();
-    server = new AvroServer();
+    nodeExplorerServer = new NodeExplorerServer();
   }
 
   public final static CommunicationManager getInstance() {
@@ -45,12 +44,12 @@ public final class CommunicationManager {
     this.uuid = uuid;
     this.login = login;
     this.connectedIps = connectedIps;
-    this.localIp = server.getServerInetAddresses();
+    this.localIp = nodeExplorerServer.getServerInetAddresses();
     startServer();
   }
 
   private void startServer() {
-    server.startServer();
+    nodeExplorerServer.startServer();
   }
 
   public void discoverNodes() throws IOException {
@@ -84,7 +83,7 @@ public final class CommunicationManager {
         client.close();
       }
     }
-    server.stopServer();
+    nodeExplorerServer.stopServer();
   }
 
   public ArrayList<Grid> getAllGrids() {
