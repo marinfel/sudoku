@@ -1,5 +1,0 @@
-{
-  "namespace": "com.sudoku.comm.generated",
-  "protocol": "ProfileRetriever",
-  "doc": "Service des profils"
-}
