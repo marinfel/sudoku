@@ -1,0 +1,100 @@
+{
+  "namespace": "com.sudoku.comm.generated",
+  "protocol": "DataRetriever",
+  "doc": "Data retrieval service",
+
+  "types": [
+    {
+      "name": "User",
+      "type": "record",
+      "fields": [
+        { "name": "id", "type": "int" },
+        { "name": "pseudo", "type": "string" },
+        { "name": "salt", "type": "string" },
+        { "name": "birthDate", "type": "string" },
+        { "name": "profilePicturePath", "type": "string" },
+        { "name": "createDate", "type": "string" },
+        { "name": "updateDate", "type": "string" },
+        { "name": "ipAddress", "type": "string" }
+      ]
+    },
+    {
+      "name": "Comment",
+      "type": "record",
+      "fields": [
+        { "name": "author", "type": "string" },
+        { "name": "comment", "type": "string" },
+        { "name": "grade", "type": "int" }
+      ]
+    },
+    {
+      "name": "Grid",
+      "type": "record",
+      "fields": [
+        { "name": "id", "type": "int" },
+        { "name": "title", "type": "string" },
+        { "name": "description", "type": "string" },
+        { "name": "difficulty", "type": "int" },
+        { "name": "published", "type": "boolean" },
+        { "name": "commentsList", "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "Comment"
+            }
+          ]
+        },
+        { "name": "tagsList", "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "string"
+            } 
+          ]
+        },
+        {
+          "name": "matrix",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": [
+                "null",
+                {
+                  "type": "array",
+                  "items": "int"
+                }
+              ]
+            }
+          ]
+        },
+        { "name": "createUser", "type": "User" },
+        { "name": "createDate", "type": "int" },
+        { "name": "updateDate", "type": "int" }
+      ]
+    },
+    {
+      "name": "gridList",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "Grid"
+        }
+      ]
+    }
+  ],
+
+  "messages": {
+    "getAllUserGrids": {
+      "doc": "Retrive all the grids from a specified user",
+      "request": [
+        {
+          "name": "getGrids",
+          "type": "User"
+        }
+      ],
+      "response": "gridList"
+    }
+  } 
+}
