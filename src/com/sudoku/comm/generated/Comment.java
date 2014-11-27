@@ -7,9 +7,9 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Comment extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"int\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  @Deprecated public java.lang.String author;
+  @Deprecated public com.sudoku.comm.generated.User author;
   @Deprecated public java.lang.String comment;
   @Deprecated public int grade;
 
@@ -23,7 +23,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * All-args constructor.
    */
-  public Comment(java.lang.String author, java.lang.String comment, java.lang.Integer grade) {
+  public Comment(com.sudoku.comm.generated.User author, java.lang.String comment, java.lang.Integer grade) {
     this.author = author;
     this.comment = comment;
     this.grade = grade;
@@ -43,7 +43,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: author = (java.lang.String)value$; break;
+    case 0: author = (com.sudoku.comm.generated.User)value$; break;
     case 1: comment = (java.lang.String)value$; break;
     case 2: grade = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
@@ -53,7 +53,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Gets the value of the 'author' field.
    */
-  public java.lang.String getAuthor() {
+  public com.sudoku.comm.generated.User getAuthor() {
     return author;
   }
 
@@ -61,7 +61,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'author' field.
    * @param value the value to set.
    */
-  public void setAuthor(java.lang.String value) {
+  public void setAuthor(com.sudoku.comm.generated.User value) {
     this.author = value;
   }
 
@@ -116,7 +116,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Comment>
     implements org.apache.avro.data.RecordBuilder<Comment> {
 
-    private java.lang.String author;
+    private com.sudoku.comm.generated.User author;
     private java.lang.String comment;
     private int grade;
 
@@ -160,12 +160,12 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /** Gets the value of the 'author' field */
-    public java.lang.String getAuthor() {
+    public com.sudoku.comm.generated.User getAuthor() {
       return author;
     }
     
     /** Sets the value of the 'author' field */
-    public com.sudoku.comm.generated.Comment.Builder setAuthor(java.lang.String value) {
+    public com.sudoku.comm.generated.Comment.Builder setAuthor(com.sudoku.comm.generated.User value) {
       validate(fields()[0], value);
       this.author = value;
       fieldSetFlags()[0] = true;
@@ -237,7 +237,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     public Comment build() {
       try {
         Comment record = new Comment();
-        record.author = fieldSetFlags()[0] ? this.author : (java.lang.String) defaultValue(fields()[0]);
+        record.author = fieldSetFlags()[0] ? this.author : (com.sudoku.comm.generated.User) defaultValue(fields()[0]);
         record.comment = fieldSetFlags()[1] ? this.comment : (java.lang.String) defaultValue(fields()[1]);
         record.grade = fieldSetFlags()[2] ? this.grade : (java.lang.Integer) defaultValue(fields()[2]);
         return record;
