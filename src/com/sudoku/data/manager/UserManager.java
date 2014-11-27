@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserManager { // This is the manager for users.
+public final class UserManager { // This is the manager for users.
   /*
   * Attributs
   */
