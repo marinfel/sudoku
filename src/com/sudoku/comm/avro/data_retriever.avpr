@@ -8,9 +8,7 @@
       "name": "User",
       "type": "record",
       "fields": [
-        { "name": "id", "type": "int" },
         { "name": "pseudo", "type": "string" },
-        { "name": "salt", "type": "string" },
         { "name": "birthDate", "type": "string" },
         { "name": "profilePicturePath", "type": "string" },
         { "name": "createDate", "type": "string" },
@@ -22,7 +20,7 @@
       "name": "Comment",
       "type": "record",
       "fields": [
-        { "name": "author", "type": "string" },
+        { "name": "author", "type": "User" },
         { "name": "comment", "type": "string" },
         { "name": "grade", "type": "int" }
       ]
@@ -69,8 +67,8 @@
           ]
         },
         { "name": "createUser", "type": "User" },
-        { "name": "createDate", "type": "int" },
-        { "name": "updateDate", "type": "int" }
+        { "name": "createDate", "type": "string" },
+        { "name": "updateDate", "type": "string" }
       ]
     }
   ],
@@ -78,12 +76,7 @@
   "messages": {
     "getGrids": {
       "doc": "Retrieve all the grids of the specified ip",
-      "request": [
-        {
-          "name": "ip",
-          "type": "string"
-        }
-      ],
+      "request": [],
       "response": {
         "type": "array",
         "items": "Grid"
@@ -91,12 +84,7 @@
     },
     "getProfile": {
       "doc": "Retrieve profile information of the specified ip",
-      "request": [
-        {
-          "name": "ip",
-          "type": "string"
-        }
-      ],
+      "request": [],
       "response": "User"
     }
   } 
