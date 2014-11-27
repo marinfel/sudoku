@@ -5,6 +5,9 @@
  */
 package com.sudoku.data.model;
 
+import org.apache.velocity.runtime.directive.Parse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -14,13 +17,12 @@ import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class User implements Ruleable {
-
   private String pseudo;
   private String salt;
   private String password;
@@ -30,6 +32,10 @@ public class User implements Ruleable {
   private Date updateDate;
   private String ipAddress;
   private List<ContactCategory> contactCategories;
+
+  private static Logger logger = LoggerFactory.getLogger(User.class);
+
+  private User() {}
 
   public User(String pseudo, String brutPassword, Date birthDate,
               String profilePicturePath)
@@ -51,6 +57,22 @@ public class User implements Ruleable {
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
 
+  }
+
+  public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
+    User resultUser = new User();
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+    resultUser.pseudo = user.getPseudo();
+    resultUser.profilePicturePath = user.getProfilePicturePath();
+    resultUser.ipAddress = user.getIpAddress();
+    try {
+      resultUser.birthDate = df.parse(user.getBirthDate());
+      resultUser.createDate = df.parse(user.getCreateDate());
+      resultUser.updateDate = df.parse(user.getUpdateDate());
+    } catch (ParseException ex) {
+      logger.error(ex.toString());
+    }
+    return resultUser;
   }
 
   private String randomSalt() {

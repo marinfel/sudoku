@@ -31,6 +31,12 @@ public class Comment {
     this.pseudo = u.getPseudo();
   }
 
+  public static Comment buildFromAvroComment(
+      com.sudoku.comm.generated.Comment comment) {
+    return new Comment(comment.getComment(), comment.getGrade(),
+        User.buildFromAvroUser(comment.getAuthor()));
+  }
+
   public User getAuthor() {
     return author;
   }
