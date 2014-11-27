@@ -1,0 +1,73 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author clesaege
+ */
+import com.sudoku.data.model.User;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.ArrayList;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.codec.Base64;
+
+public class UserManager { // This is the manager for users.
+    /*
+    * Attributs
+    */
+    private User loggedUser;
+    private List<User> users;
+    private UserManager instance;
+    
+    
+    public UserManager(){
+            this.loggedUser=null;
+            this.users = new ArrayList<User>(); //Will need to load and deserialise
+            instance=this;
+	}
+    public UserManager getInstance(){
+            return instance;
+	}
+    public User getLoggedUser(){
+            return this.loggedUser;
+        }
+    public List<User> getAllUsers(){
+            return this.users;
+        }
+    public boolean addUser(User u){
+            return this.users.add(u);
+    }
+    public boolean removeUser(User u){
+            return users.remove(u);
+    }
+    public User authenticate(String pseudo, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+        MessageDigest mdigest = MessageDigest.getInstance("SHA-256");
+            for(User u : this.users){ //For all users
+                if (u.getpseudo()==pseudo) //For all correspoding pseudos
+                {
+                    String toBeHashed = password+u.getSalt();
+                    if (new String(Base64.encode(mdigest.digest(toBeHashed.getBytes("UTF-8"))))==u.getPassword()){ //If the hash of pwd+salt is good
+                        loggedUser=u; // If the password is correct, log the user
+                        return u; // and return the identified user
+                    }
+                }
+                }
+            return false; // If we didn't manage to authenticate
+            }
+    
+    public User createUser(){
+        
+    }
+    
+    public List<User> getConnectedUsers(){
+        return null; // Appeler com
+    }
+    
+    }
+
+       
