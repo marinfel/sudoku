@@ -15,8 +15,10 @@ import javafx.event.EventType;
 public class IhmCellEditedEvent extends Event {
 
   //CELL_EDITED a public constant to help to recognize this kind of event
-
+  //it's fired when the value is valid
   public static final EventType<IhmCellEditedEvent> CELL_EDITED = new EventType("CELL_EDITED");
+  //CELL_MODIFIED is like CELL_EDITED but is fired whenever the value
+  public static final EventType<IhmCellEditedEvent> CELL_MODIFIED = new EventType("CELL_MODIFIED");
 
   //An attribut to access to the cell which fired the event 
   public final IhmCellEditable cell;
@@ -26,8 +28,8 @@ public class IhmCellEditedEvent extends Event {
    *
    * @param cell is the cell which fired the event
    */
-  public IhmCellEditedEvent(IhmCellEditable cell) {
-    super(CELL_EDITED);
+  public IhmCellEditedEvent(IhmCellEditable cell, EventType<IhmCellEditedEvent> event) {
+    super(event);
 
     //set the cell holds by the event
     this.cell = cell;

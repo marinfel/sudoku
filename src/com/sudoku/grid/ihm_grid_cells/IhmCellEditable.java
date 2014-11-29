@@ -28,6 +28,7 @@ public class IhmCellEditable extends IhmCell {
 
   protected final static int addlesMaxNumbers = 3;
   private final IhmCellEditedEvent ihmCellEditedEvent;
+  private final IhmCellEditedEvent ihmCellModifiedEvent;
   protected double addlesFontSize = 10;
   protected double valueFontSize = 20;
   protected double addlesSizeX;
@@ -42,9 +43,9 @@ public class IhmCellEditable extends IhmCell {
   /**
    * IHM_CellEditable constructor
    *
-   * @param side           taken by the node (width, height)
+   * @param side taken by the node (width, height)
    * @param addlesFontSize defines the font size in addles TextField
-   * @param valueFontSize  defines the font size in value's TextField
+   * @param valueFontSize defines the font size in value's TextField
    */
   public IhmCellEditable(double side) {
     setMaxSize(side, side);
@@ -79,7 +80,7 @@ public class IhmCellEditable extends IhmCell {
 
     });
 
-        /*init the addles layout attribut and add it to the top of the layout*/
+    /*init the addles layout attribut and add it to the top of the layout*/
     this.add(addlesLayout, 0, 0);
 
     //Create a space and add it in the addles layout to fix the height when there is no addles
@@ -90,7 +91,7 @@ public class IhmCellEditable extends IhmCell {
     space.setFill(Color.TRANSPARENT);
     addlesLayout.getChildren().add(space);
 
-        /*init the addles add-button and add it on the layout next to the addles list*/
+    /*init the addles add-button and add it on the layout next to the addles list*/
     addlesAddButton.setText("+");
     addlesAddButton.setStyle("-fx-font-size: " + addlesFontSize + "px;");
     addlesAddButton.setAlignment(Pos.CENTER);
@@ -120,7 +121,7 @@ public class IhmCellEditable extends IhmCell {
     addlesLayout.getChildren().add(addlesAddButton);
     setAddlesAddButtonVisible(false);
 
-        /*init valueEdit attribut and add it to the bottom of the layout*/
+    /*init valueEdit attribut and add it to the bottom of the layout*/
     valueEdit.setMaxSize(valueSizeX, valueSizeY);
     valueEdit.setStyle("-fx-font-size: " + valueFontSize + "px;");
     valueEdit.setAlignment(Pos.CENTER);
@@ -135,7 +136,8 @@ public class IhmCellEditable extends IhmCell {
     });
     this.add(valueEdit, 0, 1);
 
-    ihmCellEditedEvent = new IhmCellEditedEvent(this);
+    ihmCellEditedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.CELL_EDITED);
+    ihmCellModifiedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.CELL_MODIFIED);
   }
 
   public int getValue() {
@@ -262,7 +264,7 @@ public class IhmCellEditable extends IhmCell {
    * correction on it</p>
    *
    * @param tf a TextField that trigged the event
-   * @param t  a string which was in the TextField before the event
+   * @param t a string which was in the TextField before the event
    * @param t1 a string which is what is in the TextField
    * @return Nothing
    * @throws Nothing
@@ -286,6 +288,11 @@ public class IhmCellEditable extends IhmCell {
       //System.err.println("textFieldHandler(\"" + t1 + "\"): " + ex.getMessage());
     }
 
+    if (fireEditedEvent) {
+      //Fire event that inform the cell has been modified but the value may be invalid
+      fireEvent(ihmCellModifiedEvent);
+    }
+
     // Check if the input value is correct
     if (!checkValue(val)) {
       tf.clear(); //if not then clear it
@@ -299,8 +306,8 @@ public class IhmCellEditable extends IhmCell {
    * Use to delete an addle and set the focus on another addle
    * <p/>
    * <p>
-   * Delete the addle and pass the focus to the previous or to the next addle
-   * or to the add-button</p>
+   * Delete the addle and pass the focus to the previous or to the next addle or
+   * to the add-button</p>
    *
    * @param addle is the addle to delete
    * @return Nothing
