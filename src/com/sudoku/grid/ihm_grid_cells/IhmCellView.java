@@ -13,35 +13,37 @@ import javafx.scene.input.MouseEvent;
 public class IhmCellView extends IhmCell {
 
   protected Label valueView;
-  protected boolean hiden;
-  protected boolean hidable;
+  protected boolean hidden;
+  protected boolean hideable;
 
   protected int valueFontSize = 20;
 
   /**
+   * @param side is the size in px of one side (the cell is a square)
    * @explain: this is constraction function of class IHM_ClleView
    */
   public IhmCellView(int side) {
     this.setMaxSize(side, side);
+    setStyle("-fx-background-color: rgb(236,236,236);");
 
     // When mouse click the cell, we hide the label
     setOnMouseClicked(new EventHandler<MouseEvent>() {
 
       @Override
       public void handle(MouseEvent t) {
-        if (t.getEventType() == MouseEvent.MOUSE_CLICKED && hidable) {
-          setHiden(!hiden);
+        if (t.getEventType() == MouseEvent.MOUSE_CLICKED && hideable) {
+          setHidden(!hidden);
           t.consume();
         }
       }
 
     });
 
-    // Init hiden attribut at false
-    hiden = false;
-    hidable = false;
+    // Init hidden attribut at false
+    hidden = false;
+    hideable = false;
 
-        /*init valueView attribut and add it to the layout*/
+    /*init valueView attribut and add it to the layout*/
     valueView = new Label();
     valueView.setMinSize(side, side);
     valueView.setMaxSize(side, side);
@@ -63,8 +65,7 @@ public class IhmCellView extends IhmCell {
 
   /**
    * @param value type int, this is a value need to be displayed
-   * @explain: this is a function for setting coordinate of the value
-   * displayed
+   * @explain: this is a function for setting coordinate of the value displayed
    */
   @Override
   public final void setValue(int value) {
@@ -79,12 +80,12 @@ public class IhmCellView extends IhmCell {
    *
    * @param hidable
    */
-  public void setHidable(boolean hidable) {
-    this.hidable = hidable;
+  public void setHideable(boolean hidable) {
+    this.hideable = hidable;
   }
 
-  public boolean isHiden() {
-    return hiden;
+  public boolean isHidden() {
+    return hidden;
   }
 
   /**
@@ -92,8 +93,8 @@ public class IhmCellView extends IhmCell {
    *
    * @param hidden
    */
-  public void setHiden(boolean hidden) {
-    this.hiden = hidden;
+  public void setHidden(boolean hidden) {
+    this.hidden = hidden;
     valueView.setVisible(!hidden);// Use to show/hide it
   }
 }

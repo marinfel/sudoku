@@ -33,16 +33,17 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
   protected int doubleLinesSide = 2 * simpleLinesSide;
   protected int cellSide;
   protected int side;
+
   /**
    * IHM_GridLines constructor
    *
-   * @param grid:      grid which contains cells to show
-   * @param side       is only on side in pixel of the grid which will be square
-   *                   (TODO: @param grid is a grid which contains information about cells
-   *                   (fixed, editables, values, etc.)
+   * @param grid: grid which contains cells to show
+   * @param side is only on side in pixel of the grid which will be square
+   * (TODO: @param grid is a grid which contains information about cells (fixed,
+   * editables, values, etc.)
    * @param cellsFlag: How cells will be shown in the graphical interface
    * @throws NullPointerException if grid is null or an error occure when
-   *                              parsing grid
+   * parsing grid
    */
   public IhmGridLines(Grid grid, int side, Flags cellsFlag) {
     //if grid is null
@@ -83,7 +84,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
           ihmCell = new IhmCellView(cellSide);
           ihmCell.setValue(((FixedCell) cell).getValue());
           if (cellsFlag.contains(FIXED_HIDABLE)) {
-            ((IhmCellView) ihmCell).setHidable(true);
+            ((IhmCellView) ihmCell).setHideable(true);
           }
         } else {
           ihmCell = new IhmCellEditable(cellSide);
@@ -190,10 +191,10 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     int index = this.getChildren().indexOf(cell);
     int X = getColIndexFromArrayIndex(index, gridSide);
     int Y = getRowIndexFromArrayIndex(index, gridSide);
-        /*System.out.println("cell(" + X + ", " + Y + "): " + getChildren().size());
-         for(int i = 0; i < getChildren().size(); i++)
-         System.out.println("(" + getRowIndexFromArrayIndex(i, gridSide) + ", " + getColIndexFromArrayIndex(i, gridSide) + "): " + getChildren().get(i).getClass().toString());
-         */
+    /*System.out.println("cell(" + X + ", " + Y + "): " + getChildren().size());
+     for(int i = 0; i < getChildren().size(); i++)
+     System.out.println("(" + getRowIndexFromArrayIndex(i, gridSide) + ", " + getColIndexFromArrayIndex(i, gridSide) + "): " + getChildren().get(i).getClass().toString());
+     */
     //System.out.println("checkCellValue(" + cell.getValue() + ")");
 
     //System.out.println("line:");
