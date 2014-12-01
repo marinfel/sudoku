@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoko.ihm.vue.LoginController">
+   <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="689.0">
+         <children>
+            <ImageView fx:id="avatar" fitHeight="144.0" fitWidth="153.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+               </image>
+            </ImageView>
+            <Label id="userName" fx:id="userName" layoutX="260.0" layoutY="142.0" />
+            <TextField layoutX="453.0" layoutY="276.0" promptText="Utilisateur" />
+            <PasswordField layoutX="453.0" layoutY="312.0" promptText="Mot de passe" />
+            <Button layoutX="491.0" layoutY="350.0" mnemonicParsing="false" onAction="#goToProgram" text="Connexion" />
+            <Button layoutX="779.0" layoutY="534.0" mnemonicParsing="false" onAction="#goToRegister" text="Créer Compte" />
+            <Label layoutX="439.0" layoutY="206.0" text="Sudoku LO23">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>
