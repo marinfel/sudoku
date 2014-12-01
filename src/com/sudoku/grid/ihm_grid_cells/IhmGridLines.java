@@ -9,6 +9,7 @@ import com.sudoku.data.model.Cell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -19,30 +20,35 @@ import javafx.scene.shape.Rectangle;
 public class IhmGridLines extends GridPane implements EventHandler<IhmCellEditedEvent> {
 
   protected static final int cellNumberPerSide = 9;
-  protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
-  protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
   protected static final int cellNumberPerSubside = 3;
   protected static final int popupDelay = 10;
+
+  protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
+  protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
+  private ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<IhmCellEditable>();
+
+  private IhmGridLinesCompleted ihmGridLinesCompleted;
+
   public static Flags FIT_GRID = Flags.resetAutoFlag();
   public static Flags FIXED_HIDABLE = Flags.getAutoNextFlag();
   public static Flags ALL_VIEW = Flags.getAutoNextFlag();
   public static Flags ALL_EDITABLE = Flags.getAutoNextFlag();
-  protected int simpleLinesSide = 1;
 
-  ;
+  protected int simpleLinesSide = 1;
   protected int doubleLinesSide = 2 * simpleLinesSide;
   protected int cellSide;
   protected int side;
+
   /**
    * IHM_GridLines constructor
    *
-   * @param grid:      grid which contains cells to show
-   * @param side       is only on side in pixel of the grid which will be square
-   *                   (TODO: @param grid is a grid which contains information about cells
-   *                   (fixed, editables, values, etc.)
+   * @param grid: grid which contains cells to show
+   * @param side is only on side in pixel of the grid which will be square
+   * (TODO: @param grid is a grid which contains information about cells (fixed,
+   * editables, values, etc.)
    * @param cellsFlag: How cells will be shown in the graphical interface
    * @throws NullPointerException if grid is null or an error occure when
-   *                              parsing grid
+   * parsing grid
    */
   public IhmGridLines(Grid grid, int side, Flags cellsFlag) {
     //if grid is null
@@ -64,7 +70,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     int gridSide = (cellNumberPerSide - 1) + cellNumberPerSide;
     int gridSize = (int) Math.pow(gridSide, 2);
 
-    //Draw Lines with empty spaces instead of cells
+    //Draw Lines with cells
     for (int i = 0; i < gridSize; i++) {
       int X = getColIndexFromArrayIndex(i, gridSide);
       int Y = getRowIndexFromArrayIndex(i, gridSide);
@@ -83,7 +89,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
           ihmCell = new IhmCellView(cellSide);
           ihmCell.setValue(((FixedCell) cell).getValue());
           if (cellsFlag.contains(FIXED_HIDABLE)) {
-            ((IhmCellView) ihmCell).setHidable(true);
+            ((IhmCellView) ihmCell).setHideable(true);
           }
         } else {
           ihmCell = new IhmCellEditable(cellSide);
@@ -93,20 +99,21 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
           throw new NullPointerException();
         }
 
-        //remove the 2 next lines and uncomment to previous lines
-        //ihm_cell = new IhmCellEditable(cellSide);
-        //ihm_cell.setValue(8);
-        //set this list as a listener of a close request event on the pop-up
-        if (ihmCell instanceof IhmCellEditable) {
-          ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
-        }
-
         ihmCell.setX(X >> 1);
         ihmCell.setY(Y >> 1);
 
         add(ihmCell, X, Y);
         cells[X >> 1][Y >> 1] = ihmCell;
 
+        //remove the 2 next lines and uncomment to previous lines
+        //ihm_cell = new IhmCellEditable(cellSide);
+        //ihm_cell.setValue(8);
+        //set this list as a listener of a close request event on the pop-up
+        if (ihmCell instanceof IhmCellEditable) {
+          ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.CELL_MODIFIED, this);
+          emtpyCellsEditable.add((IhmCellEditable) ihmCell);
+        }
       } else if (X % 2 == 1 && Y % 2 == 0) {
         // Add a VLine
         Rectangle vline = new Rectangle();
@@ -151,6 +158,8 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         add(intersectionRect, X, Y);
       }
     }
+
+    ihmGridLinesCompleted = new IhmGridLinesCompleted(this, IhmGridLinesCompleted.GRID_COMPLETED);
   }
 
   public static int getColIndexFromArrayIndex(int index, int arraySide) {
@@ -178,6 +187,12 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     if (t.getEventType() == IhmCellEditedEvent.CELL_EDITED) {
       t.consume();
       checkCellValue(t.cell);
+    } else if (t.getEventType() == IhmCellEditedEvent.CELL_MODIFIED) {
+      //Cell has been modified but value may be invalid
+      //We just add the cell to the array emtpyCellsEditable if it has been removed
+      if (!emtpyCellsEditable.contains(t.cell)) {
+        emtpyCellsEditable.add(t.cell);
+      }
     }
   }
 
@@ -190,10 +205,10 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     int index = this.getChildren().indexOf(cell);
     int X = getColIndexFromArrayIndex(index, gridSide);
     int Y = getRowIndexFromArrayIndex(index, gridSide);
-        /*System.out.println("cell(" + X + ", " + Y + "): " + getChildren().size());
-         for(int i = 0; i < getChildren().size(); i++)
-         System.out.println("(" + getRowIndexFromArrayIndex(i, gridSide) + ", " + getColIndexFromArrayIndex(i, gridSide) + "): " + getChildren().get(i).getClass().toString());
-         */
+    /*System.out.println("cell(" + X + ", " + Y + "): " + getChildren().size());
+     for(int i = 0; i < getChildren().size(); i++)
+     System.out.println("(" + getRowIndexFromArrayIndex(i, gridSide) + ", " + getColIndexFromArrayIndex(i, gridSide) + "): " + getChildren().get(i).getClass().toString());
+     */
     //System.out.println("checkCellValue(" + cell.getValue() + ")");
 
     //System.out.println("line:");
@@ -250,7 +265,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
     //apply what needed to be applied
     if (foundInRow || foundInColumn || foundInSubSquare) {
-      //create pop-up(s)
+      //create pop-up(s) if cell is already in the Grid
       if (IhmPopupsList.getInstance() != null) {
         if (foundInRow) {
           IhmPopupsList.getInstance().addPopup("Value Error!", cell.getValue() + " is already in the row.", popupDelay);
@@ -264,6 +279,13 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
       }
       //clear the cell
       cell.setValue(0);
+    } else {
+      //if cell is valid remove it from the array emtpyCellsEditable
+      emtpyCellsEditable.remove(cell);
+      if (emtpyCellsEditable.isEmpty()) {
+        //Finish, user has completely filled the grid
+        fireEvent(ihmGridLinesCompleted);
+      }
     }
   }
 

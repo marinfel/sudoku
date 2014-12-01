@@ -7,18 +7,24 @@ import com.sudoku.data.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridManager {
+public final class GridManager {
+  private static volatile GridManager instance = null;
   private List<Grid> availableGrids;
   private List<PlayedGrid> playedGrids;
-  private GridManager instance;
 
-  public GridManager() {
+  private GridManager() {
     this.availableGrids = new ArrayList<Grid>();
     this.playedGrids = new ArrayList<PlayedGrid>();
-    instance = this;
   }
 
-  public GridManager getInstance() {
+  public final static GridManager getInstance() {
+    if (instance == null) {
+      synchronized (GridManager.class) {
+        if (instance == null) {
+          instance = new GridManager();
+        }
+      }
+    }
     return instance;
   }
 

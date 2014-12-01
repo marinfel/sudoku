@@ -1,3 +1,6 @@
+# Test dir #
+src/com/sudoku/tests/
+
 # NetBeans specific #
 nbproject/private/
 build/

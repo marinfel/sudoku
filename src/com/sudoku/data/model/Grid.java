@@ -29,6 +29,36 @@ public class Grid {
     }
   }
 
+  public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
+    Grid resultGrid = new Grid();
+    resultGrid.id = grid.getId();
+    resultGrid.title = grid.getTitle();
+    resultGrid.description = grid.getDescription();
+    resultGrid.difficulty = grid.getDifficulty();
+    resultGrid.published = grid.getPublished();
+    resultGrid.createDate = Timestamp.valueOf(grid.getCreateDate());
+    resultGrid.updateDate = Timestamp.valueOf(grid.getUpdateDate());
+    resultGrid.createUser = User.buildFromAvroUser(grid.getCreateUser());
+    for (com.sudoku.comm.generated.Comment comment : grid.getComments()) {
+      resultGrid.comments.add(Comment.buildFromAvroComment(comment));
+    }
+    for (String tag : grid.getTags()) {
+      resultGrid.tags.add(new Tag(tag));
+    }
+    List<List<Integer>> matrix = grid.getMatrix();
+    for (byte i = 0; i < matrix.size(); i++) {
+      List<Integer> row = matrix.get(i);
+      for (byte j = 0; j < row.size(); j++) {
+        if (row.get(j) != null) {
+          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
+        } else {
+          resultGrid.grid[i][j] = new EmptyCell(i, j);
+        }
+      }
+    }
+    return resultGrid;
+  }
+
   public void setEmptyCell(byte x, byte y) throws IllegalArgumentException {
     if (x < 0 || x > 9 || y < 0 || y > 9) {
       throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
@@ -37,7 +67,8 @@ public class Grid {
     grid[x][y] = new EmptyCell(x, y);
   }
 
-  public void setFixedCell(byte x, byte y, byte value) throws IllegalArgumentException {
+  public void setFixedCell(byte x, byte y, byte value)
+      throws IllegalArgumentException {
     if (value < 1 || value > 9) {
       throw new IllegalArgumentException(Cell.Errors.Cell_illegal_value);
     }
@@ -193,15 +224,18 @@ public class Grid {
   }
 
   public void addComment(Comment comment) {
-    if (comment != null && comment.getComment() != null && !comment.getComment().isEmpty()) {
+    if (comment != null && comment.getComment() != null &&
+        !comment.getComment().isEmpty()) {
       comments.add(comment);
     }
   }
 
   public void removeComment(Comment comment) {
-    if (comment != null && comment.getComment() != null && !comment.getComment().isEmpty()) {
+    if (comment != null && comment.getComment() != null &&
+        !comment.getComment().isEmpty()) {
       for (Comment c : comments) {
-        if (c.getComment().equals(comment.getComment()) && c.getGrade() == comment.getGrade()) {
+        if (c.getComment().equals(comment.getComment()) &&
+            c.getGrade().equals(comment.getGrade())) {
           comments.remove(c);
           return;
         }
@@ -222,7 +256,7 @@ public class Grid {
   }
 
   public class errors {
-    public static final String Grid_invalid_grid_array = "The grid must be a 9x9 cell array";
+    public static final String Grid_invalid_grid_array =
+        "The grid must be a 9x9 cell array";
   }
-
 }

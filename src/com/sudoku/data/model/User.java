@@ -5,6 +5,9 @@
  */
 package com.sudoku.data.model;
 
+import org.apache.velocity.runtime.directive.Parse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -14,38 +17,73 @@ import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class User implements Ruleable {
-
   private String pseudo;
   private String salt;
   private String password;
-  private Date birthdate;
+  private Date birthDate;
   private String profilePicturePath;
   private Date createDate;
   private Date updateDate;
-  private String ipAdress;
+  private String ipAddress;
   private List<ContactCategory> contactCategories;
 
-  public User(String pseudo, String brutPassword, Date birthdate, String profilePicturePath) throws NoSuchAlgorithmException, UnsupportedEncodingException, UnknownHostException {
-    MessageDigest mdigest = MessageDigest.getInstance("SHA-256");
+  private static Logger logger = LoggerFactory.getLogger(User.class);
+
+  private User() {}
+
+  public User(String pseudo, String brutPassword, Date birthDate,
+              String profilePicturePath)
+      throws NoSuchAlgorithmException, UnsupportedEncodingException,
+      UnknownHostException {
+    MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
     Calendar cal = new GregorianCalendar();
 
     this.pseudo = pseudo;
     this.salt = this.randomSalt();
     String toBeHashed = password + this.salt;
-    this.password = new String(Base64.encode(mdigest.digest(toBeHashed.getBytes("UTF-8")))); // hash of pwd+salt
-    this.birthdate = birthdate;
+    // hash of pwd+salt
+    this.password =
+        new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+    this.birthDate = birthDate;
     this.profilePicturePath = profilePicturePath;
     this.createDate = cal.getTime();
     this.updateDate = this.createDate;
-    this.ipAdress = InetAddress.getLocalHost().getHostAddress();
+    this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
 
+  }
+
+  public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
+    User resultUser = new User();
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+    resultUser.pseudo = user.getPseudo();
+    resultUser.profilePicturePath = user.getProfilePicturePath();
+    resultUser.ipAddress = user.getIpAddress();
+    try {
+      resultUser.birthDate = df.parse(user.getBirthDate());
+      resultUser.createDate = df.parse(user.getCreateDate());
+      resultUser.updateDate = df.parse(user.getUpdateDate());
+    } catch (ParseException ex) {
+      logger.error(ex.toString());
+    }
+    return resultUser;
+  }
+
+  public static com.sudoku.comm.generated.User buildAvroUser(User user) {
+    return com.sudoku.comm.generated.User.newBuilder()
+        .setBirthDate(user.getBirthDate().toString())
+        .setCreateDate(user.getCreateDate().toString())
+        .setIpAddress(user.getIpAddress())
+        .setProfilePicturePath(user.getProfilePicturePath())
+        .setPseudo(user.getPseudo())
+        .setUpdateDate(user.getUpdateDate().toString())
+        .build();
   }
 
   private String randomSalt() {
@@ -76,18 +114,18 @@ public class User implements Ruleable {
   }
 
   /**
-   * @return the birthdate
+   * @return the birthDate
    */
-  Date getBirthdate() {
-    return birthdate;
+  public Date getBirthDate() {
+    return birthDate;
   }
 
   /**
-   * @param birthdate the birthdate to set
+   * @param birthDate the birthDate to set
    */
-  public void setBirthdate(Date birthdate) {
-    this.birthdate = birthdate;
-    this.UpdateDate();
+  public void setBirthDate(Date birthDate) {
+    this.birthDate = birthDate;
+    this.updateDate();
   }
 
   /**
@@ -102,7 +140,7 @@ public class User implements Ruleable {
    */
   public void setProfilePicturePath(String profilePicturePath) {
     this.profilePicturePath = profilePicturePath;
-    this.UpdateDate();
+    this.updateDate();
   }
 
   /**
@@ -120,26 +158,26 @@ public class User implements Ruleable {
   }
 
   /**
-   * Update The UpdateDate
+   * Update The updateDate
    */
-  private void UpdateDate() {
+  private void updateDate() {
     Calendar cal = new GregorianCalendar();
     this.updateDate = cal.getTime();
   }
 
   /**
-   * @return the ipAdress
+   * @return the ipAddress
    */
-  public String getIpAdress() {
-    return ipAdress;
+  public String getIpAddress() {
+    return ipAddress;
   }
 
   /**
-   * @param ipAdress the ipAdress to set
+   * @param ipAddress the ipAddress to set
    */
-  public void setIpAdress(String ipAdress) {
-    this.ipAdress = ipAdress;
-    this.UpdateDate();
+  public void setIpAddress(String ipAddress) {
+    this.ipAddress = ipAddress;
+    this.updateDate();
   }
 
   /**
@@ -154,7 +192,7 @@ public class User implements Ruleable {
    */
   public void setContactCategories(List<ContactCategory> contactCategories) {
     this.contactCategories = contactCategories;
-    this.UpdateDate();
+    this.updateDate();
   }
 
   @Override
