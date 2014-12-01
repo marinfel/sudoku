@@ -26,10 +26,14 @@ public class DataSample {
   public Grid g1, g2, g3;
 
 
-  DataSample() {
+   public DataSample() {
     try {
       a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
       b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
+      
+      g1 = new Grid();
+      g2 = new Grid();
+      g3 = new Grid();
     } catch (Exception ex) {
       // to be handled
     }
