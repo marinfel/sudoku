@@ -49,7 +49,11 @@ public class Grid {
     for (byte i = 0; i < matrix.size(); i++) {
       List<Integer> row = matrix.get(i);
       for (byte j = 0; j < row.size(); j++) {
-        resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
+        if (row.get(j) != null) {
+          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
+        } else {
+          resultGrid.grid[i][j] = new EmptyCell(i, j);
+        }
       }
     }
     return resultGrid;
