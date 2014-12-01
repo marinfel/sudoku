@@ -6,6 +6,8 @@ import com.sudoku.data.model.Comment;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.util.CollectionUtil;
+import com.sudoku.comm.ConnectionManager;
+
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
@@ -21,8 +24,13 @@ public final class CommunicationManager {
   private String localIp;
   private String uuid;
   private String login;
-  private ArrayList<String> connectedIps;
+  //private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
+  private ArrayList<String> listLocalIp;
+  //list of all IPs to which the user was connected during the session
+  private ArrayList<String> listCurrentSessionIp;
+  private HashMap<String, ConnectionManager> ipToConfirm;
+  private HashMap<String, ConnectionManager> ipConnected;
 
   private CommunicationManager() {
     super();
@@ -44,6 +52,9 @@ public final class CommunicationManager {
     this.uuid = uuid;
     this.login = login;
     this.connectedIps = connectedIps;
+    this.listLocalIp = connectedIps;
+    this.ipToConfirm = new HashMap();
+    this.ipConnected = new HashMap();
     this.localIp = nodeExplorerServer.getServerInetAddresses();
     startServer();
   }
@@ -73,6 +84,11 @@ public final class CommunicationManager {
       }
       connectedIps = newConnectedIps;
     }
+
+  }
+
+  public void fillIpToConfirm(HashMap) {
+
   }
 
   public void disconnect() throws IOException {
