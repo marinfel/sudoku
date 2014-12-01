@@ -7,6 +7,7 @@ import org.apache.avro.ipc.specific.SpecificResponder;
 import java.net.InetSocketAddress;
 
 public class NodeExplorerServer extends Server {
+  private final int PORT = 11023;
 
   public NodeExplorerServer() {
     super();
@@ -15,7 +16,7 @@ public class NodeExplorerServer extends Server {
   public void startServer() {
     server = new NettyServer(
         new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
-        new InetSocketAddress(localIp, EXPLORER_PORT)
+        new InetSocketAddress(localIp, PORT)
     );
   }
 
