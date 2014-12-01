@@ -39,7 +39,6 @@ public class SudukoIHM extends Application {
 //        image = new Image(SudukoIHM.class.getResourceAsStream("veng.png"));
 //        avatar = new ImageView();
 //        avatar.setImage(image);
-        
         ScreensController mainContainer = new ScreensController();
         mainContainer.loadScreen(SudukoIHM.loginID, SudukoIHM.loginFile);
         mainContainer.loadScreen(SudukoIHM.registerID, SudukoIHM.registerFile);

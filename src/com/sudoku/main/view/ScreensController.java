@@ -5,6 +5,7 @@
  */
 package com.sudoku.main.view;
 
+import java.net.URL;
 import java.util.HashMap;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -44,7 +45,7 @@ public class ScreensController extends StackPane {
     //finally injects the screenPane to the controller
     public boolean loadScreen(String name, String resource) {
         try {
-            FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
+            FXMLLoader myLoader = new FXMLLoader(getClass().getResource("/fxml/"+resource));
             Parent loadScreen = (Parent) myLoader.load();
             ControlledScreen myScreenController = (ControlledScreen) myLoader.getController();
             myScreenController.setScreenParents(this);
