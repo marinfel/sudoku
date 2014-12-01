@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+
+import java.util.List;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
@@ -31,6 +34,9 @@ public final class CommunicationManager {
   private ArrayList<String> listCurrentSessionIp;
   private HashMap<String, ConnectionManager> ipToConfirm;
   private HashMap<String, ConnectionManager> ipConnected;
+
+  private  HashMap<String, AvroConnectionManager> connectedIpsCM;
+  private  HashMap<String, AvroConnectionManager> ipsToBeChecked;
 
   private CommunicationManager() {
     super();
@@ -67,7 +73,30 @@ public final class CommunicationManager {
     if (connectedIps != null) {
       ArrayList<String> newConnectedIps =
           (ArrayList<String>) connectedIps.clone();
-      newConnectedIps.add(localIp);
+      //newConnectedIps.add(localIp);
+
+      Iterator<String> itr = connectedIps.iterator();
+      while (itr.hasNext()) {
+        String ip = itr.next();
+        System.out.print("Connect to:" + ip + "\n ");
+        AvroConnectionManager cm = new AvroConnectionManager(ip);
+        try {
+          cm.openConnection();
+          List<String> remoteIps = cm.getConnectedIps(connectedIps);
+          Iterator<String> itrRemote = remoteIps.iterator();
+          System.out.println("Retrieved remote ips:");
+          
+          while (itrRemote.hasNext()) {
+            String addr = itrRemote.next();
+            System.out.println(addr);
+          }
+          System.out.println("*********************");
+          cm.closeConnection();  
+        }
+        catch (ConnectionManager.OfflineUserException exc) {System.out.print("Offline user: " + ip + "\n ");}
+        catch (ConnectionManager.ConnectionClosedException exc) {System.out.print("Closed connection: " + ip + "\n ");}
+      }
+      /*newConnectedIps.add(localIp);
       Message message = new Message(uuid, login, newConnectedIps);
       newConnectedIps = connectedIps;
       for (String ip : connectedIps) {
@@ -77,11 +106,16 @@ public final class CommunicationManager {
             SpecificRequestor.getClient(NodeExplorer.class, client);
         Message receivedMessage = explorer.discoverNode(message);
         // TODO: deal with storing uuids and logins: hashtable with uuid as key
+        List<String> receivedIps = receivedMessage.getListIps();
+        System.out.println("----");
+        for (String ipad : connectedIps) {
+          System.out.println("----" + ipad);
+        }
         newConnectedIps = CollectionUtil.merge(newConnectedIps,
             receivedMessage.getListIps(),
             localIp);
         client.close();
-      }
+      }*/
       connectedIps = newConnectedIps;
     }
 
@@ -92,17 +126,7 @@ public final class CommunicationManager {
   }
 
   public void disconnect() throws IOException {
-    if (connectedIps != null) {
-      for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
-        NodeExplorer explorer = (NodeExplorer)
-            SpecificRequestor.getClient(NodeExplorer.class, client);
-        explorer.disconnect(localIp);
-        client.close();
-      }
-    }
-    nodeExplorerServer.stopServer();
+    
   }
 
   public ArrayList<Grid> getAllGrids() {
