@@ -24,7 +24,7 @@ public final class CommunicationManager {
   private String localIp;
   private String uuid;
   private String login;
-  //private ArrayList<String> connectedIps;
+  private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
   private ArrayList<String> listLocalIp;
   //list of all IPs to which the user was connected during the session
@@ -87,7 +87,7 @@ public final class CommunicationManager {
 
   }
 
-  public void fillIpToConfirm(HashMap) {
+  public void fillIpToConfirm(HashMap<String, ConnectionManager> data) {
 
   }
 
