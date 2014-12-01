@@ -75,6 +75,17 @@ public class User implements Ruleable {
     return resultUser;
   }
 
+  public static com.sudoku.comm.generated.User buildAvroUser(User user) {
+    return com.sudoku.comm.generated.User.newBuilder()
+        .setBirthDate(user.getBirthDate().toString())
+        .setCreateDate(user.getCreateDate().toString())
+        .setIpAddress(user.getIpAddress())
+        .setProfilePicturePath(user.getProfilePicturePath())
+        .setPseudo(user.getPseudo())
+        .setUpdateDate(user.getUpdateDate().toString())
+        .build();
+  }
+
   private String randomSalt() {
     SecureRandom random = new SecureRandom();
     return new BigInteger(130, random).toString(32);
