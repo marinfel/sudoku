@@ -1,25 +1,27 @@
 package com.sudoku.comm;
 
+import com.sudoku.comm.generated.DataRetriever;
 import com.sudoku.comm.generated.NodeExplorer;
 import org.apache.avro.ipc.NettyServer;
 import org.apache.avro.ipc.specific.SpecificResponder;
 
 import java.net.InetSocketAddress;
 
-public class NodeExplorerServer extends Server {
-  private final int PORT = 11023;
+/**
+ * Created by ben on 01/12/14.
+ */
+public class DataRetrieverServer extends Server {
+  private final int PORT = 11024;
 
-  public NodeExplorerServer() {
-    super();
-  }
-
+  @Override
   public void startServer() {
     server = new NettyServer(
-        new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
+        new SpecificResponder(DataRetriever.class, new DataRetrieverImpl()),
         new InetSocketAddress(localIp, PORT)
     );
   }
 
+  @Override
   public void stopServer() {
     if (server != null) {
       server.close();
