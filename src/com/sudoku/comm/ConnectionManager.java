@@ -12,13 +12,14 @@ import java.util.List;
 // Class representing a connection to a remote user
 public abstract class ConnectionManager {
   // Remote user.
-  protected User user;
+  protected String ipAddress;
   protected boolean isConnected;
   // should retrieve it from the communication manager or another conf singleton
   protected final int NODE_PORT = 11023;
 
-  public ConnectionManager(User u) {
-    this.user = u;
+  public ConnectionManager(String ip) {
+    this.ipAddress = ip;
+    this.isConnected = false;
   }
 
   /** 
@@ -27,9 +28,10 @@ public abstract class ConnectionManager {
   public abstract void openConnection()
      throws OfflineUserException;
   
-  public abstract List<String> getConnectedIps(ArrayList<String> newConnectedIps)
-    throws OfflineUserException, ConnectionClosedException {
-      if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
+  public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
+     throws OfflineUserException, ConnectionClosedException {
+    if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
+    return new ArrayList<String>();
   }
   
   public abstract void closeConnection() throws OfflineUserException;

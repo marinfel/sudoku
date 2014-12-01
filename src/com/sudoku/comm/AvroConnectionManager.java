@@ -2,6 +2,7 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
+import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.User;
 import org.apache.avro.AvroRemoteException;
 import org.apache.avro.ipc.NettyTransceiver;
@@ -17,24 +18,31 @@ public class AvroConnectionManager extends ConnectionManager {
   private NettyTransceiver client;
   private NodeExplorer explorer;
 
-  public AvroConnectionManager(User u) {
-    super(u);
+  public AvroConnectionManager(String ip) {
+    super(ip);
   }
 
 
   public void openConnection()
      throws OfflineUserException {
     System.out.println("CM - connect START");
-    client = new NettyTransceiver(new InetSocketAddress(user.getIpAdress(), NODE_PORT));
-    explorer = (NodeExplorer)
-        SpecificRequestor.getClient(NodeExplorer.class, client);
+    try {
+      client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT));
+      explorer = (NodeExplorer)
+          SpecificRequestor.getClient(NodeExplorer.class, client);
+    }
+    catch(IOException exc) {throw new OfflineUserException();}
     System.out.println("CM - connect STOP");
+    isConnected = true;
   }
 
   public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
-     throws OfflineUserException {
+     throws ConnectionClosedException, OfflineUserException {
     System.out.println("CM - getConnectedIps START");
-    Message userCredentials = new Message(, login, newConnectedIps);
+    super.getConnectedIps(newConnectedIps);
+    User localUser = UserManager.getInstance().getLoggedUser();
+    //Message userCredentials = new Message("wut", localUser.getPseudo(), newConnectedIps);
+    Message userCredentials = new Message("wut", "toto", newConnectedIps);
     List<String> res;
 
 
@@ -50,6 +58,8 @@ public class AvroConnectionManager extends ConnectionManager {
   public void closeConnection() throws OfflineUserException {
     System.out.println("CM - CLOSE CONNECTION");
     client.close();
+    client = null;
+    isConnected = false;
   }
 
   /*public ArrayList<Grid> getGrids() throws ConnectionClosedException {
