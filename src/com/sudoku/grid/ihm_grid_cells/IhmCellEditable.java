@@ -21,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import javafx.event.EventType;
-import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 
 /**
@@ -45,7 +44,6 @@ public class IhmCellEditable extends IhmCell {
   protected HBox addlesLayout = new HBox();
   protected ArrayList<TextField> addlesEditList = new ArrayList<TextField>();
   protected Hyperlink addlesAddButton = new Hyperlink();
-  @FXML
   protected TextField valueEdit = new TextField();
 
   /**
