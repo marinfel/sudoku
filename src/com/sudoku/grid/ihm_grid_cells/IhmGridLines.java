@@ -11,6 +11,8 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
@@ -25,7 +27,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
   protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
   protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
-  private ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<IhmCellEditable>();
+  private final ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<IhmCellEditable>();
 
   private IhmGridLinesCompleted ihmGridLinesCompleted;
 
@@ -79,7 +81,6 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         // Add a cell half a time
         IhmCell ihmCell = null;
 
-        //*
         Cell cell = grid.getCell(X >> 1, Y >> 1);
         if (cell == null) {
           throw new NullPointerException();
@@ -94,7 +95,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         } else {
           ihmCell = new IhmCellEditable(cellSide);
         }
-        //*/
+
         if (ihmCell == null) {
           throw new NullPointerException();
         }
@@ -105,13 +106,14 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         add(ihmCell, X, Y);
         cells[X >> 1][Y >> 1] = ihmCell;
 
-        //remove the 2 next lines and uncomment to previous lines
-        //ihm_cell = new IhmCellEditable(cellSide);
-        //ihm_cell.setValue(8);
         //set this list as a listener of a close request event on the pop-up
         if (ihmCell instanceof IhmCellEditable) {
           ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
           ihmCell.addEventHandler(IhmCellEditedEvent.CELL_MODIFIED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.UP_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.DOWN_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.LEFT_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.RIGHT_KEY_TYPED, this);
           emtpyCellsEditable.add((IhmCellEditable) ihmCell);
         }
       } else if (X % 2 == 1 && Y % 2 == 0) {
@@ -185,13 +187,70 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     }
 
     if (t.getEventType() == IhmCellEditedEvent.CELL_EDITED) {
-      t.consume();
       checkCellValue(t.cell);
     } else if (t.getEventType() == IhmCellEditedEvent.CELL_MODIFIED) {
       //Cell has been modified but value may be invalid
       //We just add the cell to the array emtpyCellsEditable if it has been removed
       if (!emtpyCellsEditable.contains(t.cell)) {
         emtpyCellsEditable.add(t.cell);
+      }
+    } else {
+      handleCellEditableArrowTyped(t);
+    }
+
+    t.consume();
+  }
+
+  private void handleCellEditableArrowTyped(IhmCellEditedEvent t) {
+    IhmCellEditable current = t.cell;
+
+    if (t.getEventType() == IhmCellEditedEvent.RIGHT_KEY_TYPED) {
+      //set focus on the next CellEditable at the right of current focused.
+      int x = current.getX() + 1; //init the first iteration
+
+      for (; x < cellNumberPerSide; x++) {
+        //if we have a cell on the same line and a column after the current
+        if (cells[x][current.getY()] instanceof IhmCellEditable) {
+          // found the next cell, set focus on cell
+          ((IhmCellEditable) cells[x][current.getY()]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.LEFT_KEY_TYPED) {
+      //set focus on the next CellEditable at the left of current focused.
+      int x = current.getX() - 1; //init the first iteration
+
+      for (; x >= 0; x--) {
+        //if we have a cell on the same line and a column after the current
+        if (cells[x][current.getY()] instanceof IhmCellEditable) {
+          // found the next cell, set focus on cell
+          ((IhmCellEditable) cells[x][current.getY()]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.UP_KEY_TYPED) {
+      //set focus on the next CellEditable above the current focused.
+      int y = current.getY() - 1; //init the first iteration
+
+      for (; y >= 0; y--) {
+        //if we have a cell on the same line and a column after the current
+        if (cells[current.getX()][y] instanceof IhmCellEditable) {
+          // found the next cell, set focus on cell
+          ((IhmCellEditable) cells[current.getX()][y]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.DOWN_KEY_TYPED) {
+      //set focus on the next CellEditable below the current focused.
+      int y = current.getY() + 1; //init the first iteration
+
+      for (; y < cellNumberPerSide; y++) {
+        //if we have a cell on the same line and a column after the current
+        if (cells[current.getX()][y] instanceof IhmCellEditable) {
+          // found the next cell, set focus on cell
+          ((IhmCellEditable) cells[current.getX()][y]).setFocusOn();
+          break;
+        }
       }
     }
   }
@@ -285,6 +344,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
       if (emtpyCellsEditable.isEmpty()) {
         //Finish, user has completely filled the grid
         fireEvent(ihmGridLinesCompleted);
+
       }
     }
   }

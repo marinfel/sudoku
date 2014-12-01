@@ -20,6 +20,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import javafx.event.EventType;
+import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 
 /**
  * @author Marc-Antoine
@@ -29,6 +32,10 @@ public class IhmCellEditable extends IhmCell {
   protected final static int addlesMaxNumbers = 3;
   private final IhmCellEditedEvent ihmCellEditedEvent;
   private final IhmCellEditedEvent ihmCellModifiedEvent;
+  private final IhmCellEditedEvent ihmCellKeyUpTypedEvent;
+  private final IhmCellEditedEvent ihmCellKeyDownTypedEvent;
+  private final IhmCellEditedEvent ihmCellKeyLeftTypedEvent;
+  private final IhmCellEditedEvent ihmCellKeyRightTypedEvent;
   protected double addlesFontSize = 10;
   protected double valueFontSize = 20;
   protected double addlesSizeX;
@@ -38,6 +45,7 @@ public class IhmCellEditable extends IhmCell {
   protected HBox addlesLayout = new HBox();
   protected ArrayList<TextField> addlesEditList = new ArrayList<TextField>();
   protected Hyperlink addlesAddButton = new Hyperlink();
+  @FXML
   protected TextField valueEdit = new TextField();
 
   /**
@@ -134,12 +142,43 @@ public class IhmCellEditable extends IhmCell {
       }
 
     });
+    //valueEdit.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+    valueEdit.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+      @Override
+      public void handle(KeyEvent t) {
+        if (t.isConsumed()) {
+          return;
+        }
+
+        if (t.getCode() == KeyCode.UP) {
+          t.consume();
+          fireEvent(ihmCellKeyUpTypedEvent);
+        } else if (t.getCode() == KeyCode.DOWN) {
+          t.consume();
+          fireEvent(ihmCellKeyDownTypedEvent);
+        } else if (t.getCode() == KeyCode.LEFT) {
+          t.consume();
+          fireEvent(ihmCellKeyLeftTypedEvent);
+        } else if (t.getCode() == KeyCode.RIGHT) {
+          t.consume();
+          fireEvent(ihmCellKeyRightTypedEvent);
+        }
+      }
+
+    });
     this.add(valueEdit, 0, 1);
 
     ihmCellEditedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.CELL_EDITED);
     ihmCellModifiedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.CELL_MODIFIED);
+
+    ihmCellKeyUpTypedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.UP_KEY_TYPED);
+    ihmCellKeyDownTypedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.DOWN_KEY_TYPED);
+    ihmCellKeyLeftTypedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.LEFT_KEY_TYPED);
+    ihmCellKeyRightTypedEvent = new IhmCellEditedEvent(this, IhmCellEditedEvent.RIGHT_KEY_TYPED);
   }
 
+  @Override
   public int getValue() {
     try {
       //if integer found return it
@@ -175,6 +214,13 @@ public class IhmCellEditable extends IhmCell {
     } else {
       valueEdit.clear();
     }
+  }
+
+  /**
+   * Move foxus on the value TextField of this cell
+   */
+  public void setFocusOn() {
+    valueEdit.requestFocus();
   }
 
   /**
@@ -232,13 +278,35 @@ public class IhmCellEditable extends IhmCell {
           }
 
           //Handle a cell-suppress request
-          if (t.getCode() == KeyCode.DELETE) //delete cell
-          {
+          if (t.getCode() == KeyCode.DELETE) {
+            //delete cell
             deleteAddle(addle);
           } else if (t.getCode() == KeyCode.BACK_SPACE && addle.getText().isEmpty()) {
             if (deleteAddle(addle)) {
               t.consume();
             }
+          }
+        }
+
+      });
+
+      addle.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+        @Override
+        public void handle(KeyEvent t) {
+          if (t.isConsumed()) {
+            return;
+          }
+
+          if (t.getCode() == KeyCode.DOWN) {
+            t.consume();
+            valueEdit.requestFocus();
+          } else if (t.getCode() == KeyCode.LEFT && addlesEditList.indexOf(addle) > 0) {
+            t.consume();
+            addlesEditList.get(addlesEditList.indexOf(addle) - 1).requestFocus();
+          } else if (t.getCode() == KeyCode.RIGHT && addlesEditList.indexOf(addle) < addlesEditList.size() - 1) {
+            t.consume();
+            addlesEditList.get(addlesEditList.indexOf(addle) + 1).requestFocus();
           }
         }
 
