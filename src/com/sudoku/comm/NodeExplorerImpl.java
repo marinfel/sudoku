@@ -28,6 +28,11 @@ public class NodeExplorerImpl implements NodeExplorer {
   }
 
   @Override
+  public Void publishIpsToConfirm(Message sentMessage) throws AvroRemoteException {
+    return null;
+  }
+  
+  @Override
   public Void disconnect(String ip) throws AvroRemoteException {
     commManager.getConnectedIps().remove(ip);
     return null;

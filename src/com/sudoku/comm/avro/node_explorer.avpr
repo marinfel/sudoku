@@ -41,6 +41,16 @@
       ],
       "response": "Message"
     },
+    "publishIpsToConfirm": {
+      "doc": "Publish ips which has been discovered to opened connections.",
+      "request": [
+        {
+          "name": "sentMessage",
+          "type": "Message"
+        }
+      ],
+      "response": "null"
+    },
     "disconnect": {
       "doc": "Send a disconnect message",
       "request": [
