@@ -59,7 +59,8 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         if ((nbNotHiddenCells - number) < 0) {
           String title = new String("Not enough filled cells");
           String text = new String(
-                  "You can't hide that many cells");
+            "You can't hide that many cells");
+          System.out.println(title + "\n" + text);
           IhmPopupsList.getInstance().addPopup(title, text, 10);
         } else {
           LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();

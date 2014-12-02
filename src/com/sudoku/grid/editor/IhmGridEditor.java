@@ -89,7 +89,7 @@ public abstract class IhmGridEditor extends IhmGridView {
 
       @Override
       public void changed(ObservableValue<? extends String> observable,
-              String oldTitle, String newTitle) {
+        String oldTitle, String newTitle) {
         // Handle any change on the textField
         grid.setTitle(newTitle);
       }
@@ -99,100 +99,109 @@ public abstract class IhmGridEditor extends IhmGridView {
 
       @Override
       public void handle(ActionEvent event) {
-        IhmCell[][] cells = gridLines.getCells();
-        int count = 0;
-        int i = 0, j = 0;
-        // count cells number that are going to be FixedCell
-        while (i < cells.length) {
-          j = 0;
-          while (j < cells[i].length && count < 17) {
-            if ((flag.contains(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
-                    || (flag.contains(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
-              count++;
+        if (!(grid.getTitle() == null) && !grid.getTitle().isEmpty()) {
+
+          IhmCell[][] cells = gridLines.getCells();
+          int count = 0;
+          int i = 0, j = 0;
+          // count cells number that are going to be FixedCell
+          while (i < cells.length) {
+            j = 0;
+            while (j < cells[i].length && count < 17) {
+              if ((flag.contains(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
+                || (flag.contains(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
+                count++;
+              }
+              j++;
             }
-            j++;
+            i++;
           }
-          i++;
-        }
-        if (count < 17) {
-          // display an error pop-up when 17 cells are not visible
-          String title = new String("Not enough filled cells");
-          String text = new String(
-                  "You need to fill at least 17 cells to validate your grid");
-          IhmPopupsList.getInstance().addPopup(title, text, 10);
-        } else {
-          // save tags into data's grid objet
-          ArrayList<Tag> tmpList = new ArrayList<Tag>();
-          for (String str : tagsListValues) {
-            tmpList.add(new Tag(str));
-          }
-          grid.setTags(tmpList);
-          i = 0;
-          j = 0;
-          // save final grid into data's grid object
-          if (flag.contains(IhmGridLines.ALL_VIEW)) {
+          if (count < 17) {
+            // display an error pop-up when 17 cells are not visible
+            String title = new String("Not enough filled cells");
+            String text = new String(
+              "You need to fill at least 17 cells to validate your grid");
+            IhmPopupsList.getInstance().addPopup(title, text, 10);
+          } else {
+            // save tags into data's grid objet
+            ArrayList<Tag> tmpList = new ArrayList<Tag>();
+            for (String str : tagsListValues) {
+              tmpList.add(new Tag(str));
+            }
+            grid.setTags(tmpList);
+            i = 0;
+            j = 0;
+            // save final grid into data's grid object
+            if (flag.contains(IhmGridLines.ALL_VIEW)) {
+              for (i = 0; i < cells.length; i++) {
+                for (j = 0; j < cells[i].length; j++) {
+                  if (!((IhmCellView) cells[i][j]).isHidden()) {
+                    grid.setFixedCell((byte) i, (byte) j,
+                      (byte) cells[i][j].getValue());
+                  } else {
+                    System.out.println("entrer dans setEmptyCell");
+                    grid.setEmptyCell((byte) i, (byte) j);
+                  }
+                }
+              }
+            } else { // IhmGridLines.ALL_EDITABLE
+              for (i = 0; i < cells.length; i++) {
+                for (j = 0; j < cells[i].length; j++) {
+                  if (cells[i][j].getValue() > 0) {
+                    grid.setFixedCell((byte) i, (byte) j,
+                      (byte) cells[i][j].getValue());
+                  }
+                }
+              }
+            }
+
+            // display values of the grid object (by column)
             for (i = 0; i < cells.length; i++) {
+              System.out.println("\n");
               for (j = 0; j < cells[i].length; j++) {
-                if (!((IhmCellView) cells[i][j]).isHidden()) {
-                  grid.setFixedCell((byte) i, (byte) j,
-                          (byte) cells[i][j].getValue());
+                if (grid.getCell(j, i) instanceof FixedCell) {
+                  System.out.print(((FixedCell) grid.getCell(j, i)).getValue());
                 } else {
-                  System.out.println("entrer dans setEmptyCell");
-                  grid.setEmptyCell((byte) i, (byte) j);
+                  System.out.print("0");
                 }
               }
             }
-          } else { // IhmGridLines.ALL_EDITABLE
-            for (i = 0; i < cells.length; i++) {
-              for (j = 0; j < cells[i].length; j++) {
-                if (cells[i][j].getValue() > 0) {
-                  grid.setFixedCell((byte) i, (byte) j,
-                          (byte) cells[i][j].getValue());
-                }
-              }
-            }
-          }
-
-          // display values of the grid object (by column)
-          for (i = 0; i < cells.length; i++) {
             System.out.println("\n");
-            for (j = 0; j < cells[i].length; j++) {
-              if (grid.getCell(j, i) instanceof FixedCell) {
-                System.out.print(((FixedCell) grid.getCell(j, i)).getValue());
-              } else {
-                System.out.print("0");
-              }
+            // save creation date into data's grid object
+            java.util.Date date = new java.util.Date();
+            grid.setCreateDate(new Timestamp(date.getTime()));
+            System.out.println(grid.getCreateDate());
+            System.out.println(grid.getTitle());
+            List<Tag> tags = grid.getTags();
+            for (Tag tag : tags) {
+              System.out.println(tag.getName());
             }
-          }
-          System.out.println("\n");
-          // save creation date into data's grid object
-          java.util.Date date = new java.util.Date();
-          grid.setCreateDate(new Timestamp(date.getTime()));
-          System.out.println(grid.getCreateDate());
-          System.out.println(grid.getTitle());
-          List<Tag> tags = grid.getTags();
-          for (Tag tag : tags) {
-            System.out.println(tag.getName());
-          }
 
-          // add a grid to GridManager
-          GridManager gm = GridManager.getInstance();
-          gm.addGrid(grid);
+            // add a grid to GridManager
+            GridManager gm = GridManager.getInstance();
+            gm.addGrid(grid);
 
-          //Envoie event a IhmMain pour indiquer la fin de l'edition
+            //Envoie event a IhmMain pour indiquer la fin de l'edition
+          }
+        } else {
+          String title = new String("No title");
+          String text = new String(
+            "You have to provide a title for your grid");
+          IhmPopupsList.getInstance().addPopup(title, text, 10);
+
         }
       }
     }
     );
 
     cancelBtn.setOnAction(
-            new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent event
-              ) {
-                //supprimer le fichier en dur
-              }
-            });
+      new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event
+        ) {
+          //supprimer le fichier en dur
+        }
+      });
 
     tagField.setOnKeyPressed(new EventHandler<KeyEvent>() {
       @Override
@@ -205,24 +214,24 @@ public abstract class IhmGridEditor extends IhmGridView {
     });
 
     submit.setOnAction(
-            new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent event
-              ) {
-                tagsListValues.add(tagField.getText());
-                tagField.clear();
-              }
-            }
+      new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event
+        ) {
+          tagsListValues.add(tagField.getText());
+          tagField.clear();
+        }
+      }
     );
 
     tagsList.setOnMouseClicked(
-            new EventHandler<MouseEvent>() {
-              @Override
-              public void handle(MouseEvent event
-              ) {
-                tagsListValues.remove(tagsList.getSelectionModel().getSelectedItem());
-              }
-            }
+      new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event
+        ) {
+          tagsListValues.remove(tagsList.getSelectionModel().getSelectedItem());
+        }
+      }
     );
   }
 

@@ -27,8 +27,8 @@ public class SudokuTest extends Application {
     ihm_test = new IhmGridEditorRandomlyFilled();
     ihm_test2 = new IhmGridEditorManuallyFilled();
 
-    //Scene scene = new Scene(ihm_test, 800, 1000);
-    Scene scene = new Scene(ihm_test2, 800, 1000);
+    Scene scene = new Scene(ihm_test, 800, 1000);
+    //Scene scene = new Scene(ihm_test2, 800, 1000);
 
     primaryStage.setTitle("Sudoku Editor");
     primaryStage.setScene(scene);
