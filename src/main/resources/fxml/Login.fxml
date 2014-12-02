@@ -18,15 +18,16 @@
                </image>
             </ImageView>
             <Label id="userName" fx:id="userName" layoutX="260.0" layoutY="142.0" />
-            <TextField layoutX="453.0" layoutY="276.0" promptText="Utilisateur" />
-            <PasswordField layoutX="453.0" layoutY="312.0" promptText="Mot de passe" />
-            <Button layoutX="491.0" layoutY="350.0" mnemonicParsing="false" onAction="#goToProgram" text="Connexion" />
-            <Button layoutX="779.0" layoutY="534.0" mnemonicParsing="false" onAction="#goToRegister" text="Créer Compte" />
+            <TextField fx:id="user" layoutX="453.0" layoutY="276.0" promptText="Utilisateur" />
+            <PasswordField fx:id="passwd" layoutX="453.0" layoutY="312.0" promptText="Mot de passe" />
+            <Button fx:id="login" layoutX="491.0" layoutY="350.0" mnemonicParsing="false" onAction="#goToProgram" text="Connexion" />
+            <Button fx:id="register" layoutX="779.0" layoutY="534.0" mnemonicParsing="false" onAction="#goToRegister" text="Créer Compte" />
             <Label layoutX="439.0" layoutY="206.0" text="Sudoku LO23">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
+            <Button layoutX="21.0" layoutY="643.0" mnemonicParsing="false" onAction="#chooseFile" text="Importer" />
          </children>
       </AnchorPane>
    </content>

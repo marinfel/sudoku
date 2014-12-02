@@ -5,7 +5,6 @@
  */
 package com.sudoku.main.view;
 
-import java.net.URL;
 import java.util.HashMap;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -21,7 +20,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author SAMSUNG
+ * @author JULIANC
  */
 public class ScreensController extends StackPane {
 

@@ -6,6 +6,7 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.data.manager.UserManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -27,12 +28,13 @@ import com.sudoku.data.sample.DataSample;
 
 /**
  *
- * @author MOURAD
+ * @author JULIANC
  */
 public class FXMLDocumentController implements Initializable, ControlledScreen {
     
     //Data
     public DataSample instance;
+    public UserManager instUserM;
         
     @FXML   private Label userName;
     @FXML   private ImageView avatar;
@@ -64,9 +66,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("test data");
+        instUserM = UserManager.getInstance();
         instance = new DataSample();
         System.out.println("test data"+instance.a.getPseudo());
-        userName.setText("Utilisateur : "+instance.a.getPseudo());
+        userName.setText("Utilisateur : "+instUserM.getLoggedUser());
         
         assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -85,8 +88,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
                 
         //Ajouter des éléments aux listes groupes et utilisateurs
-        groups.addAll("Global", "Amis", "Camarades");
-        users.addAll("julian", "user2", "user3");        
+        groups.addAll("Global", "Amis", "Camarades");        
+        //groups.addAll(UserManager.getInstance().getConnectedUsers());
+        users.addAll("julian", "user2", "user3");
+        //users.addAll(UserManager.getInstance().getConnectedUsers());
         listGroups.setItems(groups);
         listUsers.setItems(users);
         //Méthode Bouton "Aller aux grilles"

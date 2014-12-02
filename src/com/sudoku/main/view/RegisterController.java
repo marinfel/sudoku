@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 /**
  *
- * @author MOURAD
+ * @author JULIANC
  */
 public class RegisterController implements Initializable, ControlledScreen {
     
