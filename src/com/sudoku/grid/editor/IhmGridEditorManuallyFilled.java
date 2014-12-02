@@ -12,24 +12,13 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 
 /**
+ *
  * @author mecton08
  */
 public class IhmGridEditorManuallyFilled extends IhmGridEditor {
 
   public IhmGridEditorManuallyFilled(String title, Flags flagStatus, Grid gr) {
     super(title, flagStatus, gr);
-
-    super.getValidBtn().setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        VBox gridLines = (VBox) border.getCenter();
-        for (int i = 0; i < 81; i++) {
-          //Fonction getCells a implementer, renvoie le tableau de IhmCellEditable
-          //grid.setFixedCell( i/9, i%9, gridLines.getCells()[i].getValue() );
-        }
-      }
-    });
   }
-
 
 }
