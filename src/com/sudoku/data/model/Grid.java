@@ -13,6 +13,8 @@ public class Grid {
   private List<Tag> tags;
   private Cell[][] grid;
   private User createUser;
+  private String createPseudo;
+  private String createSalt; // Salt of the creator used as an UUID
   private Date createDate;
   private Date updateDate;
 
@@ -35,6 +37,8 @@ public class Grid {
       }
     }
     createUser = u;
+    createPseudo = u.getPseudo();
+    createSalt = u.getSalt();
     Calendar cal = new GregorianCalendar();
     createDate = cal.getTime();
     updateDate = createDate;
