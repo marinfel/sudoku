@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
-  private final int PORT = 11023;
   private String localIp;
   private String uuid;
   private String login;
@@ -57,8 +56,8 @@ public final class CommunicationManager {
       Message message = new Message(uuid, login, newConnectedIps);
       newConnectedIps = connectedIps;
       for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
+        NettyTransceiver client = new NettyTransceiver(
+            new InetSocketAddress(ip, nodeExplorerServer.getPort()));
         NodeExplorer explorer = (NodeExplorer)
             SpecificRequestor.getClient(NodeExplorer.class, client);
         Message receivedMessage = explorer.discoverNode(message);
@@ -75,8 +74,8 @@ public final class CommunicationManager {
   public void disconnect() throws IOException {
     if (connectedIps != null) {
       for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
+        NettyTransceiver client = new NettyTransceiver(
+            new InetSocketAddress(ip, nodeExplorerServer.getPort()));
         NodeExplorer explorer = (NodeExplorer)
             SpecificRequestor.getClient(NodeExplorer.class, client);
         explorer.disconnect(localIp);
@@ -93,8 +92,8 @@ public final class CommunicationManager {
     if (connectedIps != null) {
       ArrayList<Grid> grids = new ArrayList<>();
       for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
+        NettyTransceiver client = new NettyTransceiver(
+            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
         DataRetriever retriever = (DataRetriever)
             SpecificRequestor.getClient(DataRetriever.class, client);
         grids.addAll(retriever.getGrids());
@@ -115,8 +114,8 @@ public final class CommunicationManager {
       throws IOException {
     ArrayList<com.sudoku.data.model.Grid> grids = new ArrayList<>();
     if (ip != null) {
-      NettyTransceiver client =
-          new NettyTransceiver(new InetSocketAddress(ip, PORT));
+      NettyTransceiver client = new NettyTransceiver(
+          new InetSocketAddress(ip, dataRetrieverServer.getPort()));
       DataRetriever retriever = (DataRetriever)
           SpecificRequestor.getClient(DataRetriever.class, client);
       for (Grid grid : retriever.getGrids()) {
@@ -131,8 +130,8 @@ public final class CommunicationManager {
     ArrayList<com.sudoku.data.model.User> users = new ArrayList<>();
     if (connectedIps != null) {
       for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
+        NettyTransceiver client = new NettyTransceiver(
+            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
         DataRetriever retriever = (DataRetriever)
             SpecificRequestor.getClient(DataRetriever.class, client);
         users.add(com.sudoku.data.model.User
@@ -148,8 +147,8 @@ public final class CommunicationManager {
 
   public com.sudoku.data.model.User getProfile(String ip) throws IOException {
     if (ip != null) {
-      NettyTransceiver client =
-          new NettyTransceiver(new InetSocketAddress(ip, PORT));
+      NettyTransceiver client = new NettyTransceiver(
+          new InetSocketAddress(ip, dataRetrieverServer.getPort()));
       DataRetriever retriever = (DataRetriever)
           SpecificRequestor.getClient(DataRetriever.class, client);
       return com.sudoku.data.model.User
