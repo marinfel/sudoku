@@ -32,8 +32,8 @@ public final class GridManager {
     return availableGrids.add(grid);
   }
 
-  public PlayedGrid addPlayedGrid(Grid grid, User player) {
-    return new PlayedGrid(grid, player);
+  public boolean addPlayedGrid(Grid grid, User player) {
+    return playedGrids.add(new PlayedGrid(grid, player));
   }
 
   public boolean addPlayedGrid(PlayedGrid pgrid) {
@@ -55,6 +55,7 @@ public final class GridManager {
     }
     return result;
   }
+
 
   public boolean updateGridList(List<String> keywords) {
     // BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouv
