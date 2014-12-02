@@ -51,6 +51,17 @@ public class AvroConnectionManager extends ConnectionManager {
     return res;
   }
 
+  public void publishIps(List<String> ips)
+     throws OfflineUserException, ConnectionClosedException {
+    super.publishIps(ips);
+    try {
+      CommunicationManager cm = CommunicationManager.getInstance();
+      Message publishMessage = new Message(cm.getUuid(), cm.getLogin(), ips);
+      explorer.publishIpsToConfirm(publishMessage);
+    }
+    catch (AvroRemoteException exc) {throw new OfflineUserException();}
+  }
+
   public void closeConnection() throws OfflineUserException {
      try {
       explorer.disconnect(CommunicationManager.getInstance().getLocalIp());

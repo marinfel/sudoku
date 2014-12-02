@@ -34,6 +34,11 @@ public abstract class ConnectionManager {
     return new ArrayList<String>();
   }
   
+  public void publishIps(List<String> ips) throws OfflineUserException,
+     ConnectionClosedException {
+    if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
+  }
+
   public abstract void closeConnection() throws OfflineUserException;
   
   /*public abstract ArrayList<Grid> getGrids() throws ConnectionClosedException;

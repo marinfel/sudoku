@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
@@ -36,8 +37,8 @@ public final class CommunicationManager {
   private ArrayList<String> listLocalIp;
   //list of all IPs to which the user was connected during the session
   private ArrayList<String> ipsCurrentSession;
-  private HashMap<String, ConnectionManager> ipsToConfirm;
-  private HashMap<String, ConnectionManager> ipsConnected;
+  private ConcurrentHashMap<String, ConnectionManager> ipsToConfirm;
+  private ConcurrentHashMap<String, ConnectionManager> ipsConnected;
 
   private Timer timerDiscoverNodes;
   private DiscoverNodesTimerTask discoverNodesTimerTask;
@@ -63,8 +64,9 @@ public final class CommunicationManager {
     this.login = login;
     this.connectedIps = connectedIps;
     this.listLocalIp = connectedIps;
-    this.ipsToConfirm = new HashMap();
-    this.ipsConnected = new HashMap();
+    this.ipsCurrentSession = new ArrayList<String>();
+    this.ipsConnected = new ConcurrentHashMap<String, ConnectionManager>();
+    this.ipsToConfirm = new ConcurrentHashMap<String, ConnectionManager>();
     this.localIp = nodeExplorerServer.getServerInetAddresses();
     startServer();
   }
@@ -75,18 +77,17 @@ public final class CommunicationManager {
 
   public void discoverNodes() throws IOException {
     addIpToConfirm(listLocalIp);
-
     if(timerDiscoverNodes == null) {
         timerDiscoverNodes = new Timer();   
         timerDiscoverNodes.schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
     }
   } 
 
-  public HashMap<String, ConnectionManager> getIpsConnected() {
+  public ConcurrentHashMap<String, ConnectionManager> getIpsConnected() {
     return ipsConnected;
   }
 
-  public HashMap<String, ConnectionManager> getIpsToConfirm() {
+  public ConcurrentHashMap<String, ConnectionManager> getIpsToConfirm() {
     return ipsToConfirm;
   }
 
@@ -105,9 +106,9 @@ public final class CommunicationManager {
     addIpCurrentSession(ipToUpdate);
   }
 
-  public void addIpToConfirm(ArrayList<String> listIp) {
+  public void addIpToConfirm(List<String> listIp) {
     if(ipsToConfirm == null){
-      ipsToConfirm = new HashMap();
+      ipsToConfirm = new ConcurrentHashMap();
     }
 
     Iterator<String> itr = listIp.iterator();
@@ -118,10 +119,11 @@ public final class CommunicationManager {
 
   public void addIpToConfirm(String ip) {
     if(ipsToConfirm == null){
-      ipsToConfirm = new HashMap();
+      ipsToConfirm = new ConcurrentHashMap();
     }
-
-    ipsToConfirm.put(ip, null);
+    if(!ipsConnected.containsKey(ip) && ip != localIp) {
+      ipsToConfirm.put(ip, new AvroConnectionManager(localIp));
+    }
   }
 
   public void disconnect() throws IOException {

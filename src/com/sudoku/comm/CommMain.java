@@ -37,7 +37,7 @@ public class CommMain {
       }*/
       commManager.disconnect();
     } catch (Exception ex) {
-      logger.error(ex.toString());
+      logger.error("error :", ex);
     }
   }
 }

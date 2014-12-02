@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.TimerTask;
 import java.util.Iterator;
 import java.util.Timer;
+import java.util.Set;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
@@ -36,10 +40,11 @@ public class DiscoverNodesTimerTask extends TimerTask {
   }
 
   public void launchDiscovery() {
-    HashMap<String, ConnectionManager> ipsToConfirm =  communicationManager.getIpsToConfirm();
+    ConcurrentHashMap<String, ConnectionManager> ipsToConfirm =  communicationManager.getIpsToConfirm();
     Iterator<String> itr = ipsToConfirm.keySet().iterator();
-    HashMap<String, ConnectionManager> ipsConnected =  communicationManager.getIpsConnected();
+    ConcurrentHashMap<String, ConnectionManager> ipsConnected =  communicationManager.getIpsConnected();
 
+    ArrayList<String> ipsToPublish = new ArrayList<String>();
     while (itr.hasNext()) {
 
               
@@ -67,7 +72,10 @@ public class DiscoverNodesTimerTask extends TimerTask {
           ipsToConfirm.put(currentIpToConfirm, currentConnectionManager);
 
           List<String> ipFromRemoteNode = currentConnectionManager.getConnectedIps(ipToShare);
-          
+          for (String ipToP : ipFromRemoteNode) {
+            ipsToPublish.add(ipToP);
+          }
+
           //update ipsConnected & ipsToConfirm
           updateIpsInCommunicationManager(currentIpToConfirm, itr);
 
@@ -78,6 +86,7 @@ public class DiscoverNodesTimerTask extends TimerTask {
             String addr = itrRemote.next();
             System.out.println(addr);
           }
+          communicationManager.addIpToConfirm(ipFromRemoteNode);
           System.out.println("[END TimerTask]");
           System.out.println("*********************");
           // END DEBUG
@@ -86,6 +95,20 @@ public class DiscoverNodesTimerTask extends TimerTask {
       }
         catch (ConnectionManager.OfflineUserException exc) {System.out.print("Offline user: " + currentIpToConfirm + "\n ");}
         catch (ConnectionManager.ConnectionClosedException exc) {System.out.print("Closed connection: " + currentIpToConfirm + "\n ");}   
+    }
+
+    // Publishing known nodes
+    if(ipsToPublish.size() != 0) {
+      Collection<ConnectionManager> connectedManagers = ipsConnected.values();
+      for (ConnectionManager cm : connectedManagers) {
+        try {
+          cm.openConnection();
+          cm.publishIps(ipsToPublish);
+          cm.closeConnection();        
+        }
+        catch (ConnectionManager.OfflineUserException exc) {System.out.print("Offline user");}
+        catch (ConnectionManager.ConnectionClosedException exc) {System.out.print("Closed connection");}   
+      }
     }
   }
 
