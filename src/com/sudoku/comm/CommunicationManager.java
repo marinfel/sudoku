@@ -74,13 +74,35 @@ public final class CommunicationManager {
   }
 
   public void discoverNodes() throws IOException {
-    ipsToConfirm.put("172.26.25.19", null);
-    ipsToConfirm.put("172.26.25.20", null);
+    addIpToConfirm(listLocalIp);
 
     if(timerDiscoverNodes == null) {
         timerDiscoverNodes = new Timer();   
-        timerDiscoverNodes.schedule(new DiscoverNodesTimerTask(ipsCurrentSession, ipsToConfirm, ipsConnected), new Date(), 1000 * 5);
+        timerDiscoverNodes.schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
     }
+  } 
+
+  public HashMap<String, ConnectionManager> getIpsConnected() {
+    return ipsConnected;
+  }
+
+  public HashMap<String, ConnectionManager> getIpsToConfirm() {
+    return ipsToConfirm;
+  }
+
+  public void addIpConnected(String ip, ConnectionManager cm) {
+    ipsConnected.put(ip, cm);
+  }
+
+  public void addIpCurrentSession(String ip) {
+    ipsCurrentSession.add(ip);
+  }
+
+  public void syncIps(String ipToUpdate, Iterator<String> iterator) {
+    ConnectionManager tmpCM = ipsToConfirm.get(ipToUpdate);
+    addIpConnected(ipToUpdate, tmpCM);
+    iterator.remove();
+    addIpCurrentSession(ipToUpdate);
   }
 
   public void addIpToConfirm(ArrayList<String> listIp) {
@@ -98,6 +120,8 @@ public final class CommunicationManager {
     if(ipsToConfirm == null){
       ipsToConfirm = new HashMap();
     }
+
+    ipsToConfirm.put(ip, null);
   }
 
   public void disconnect() throws IOException {

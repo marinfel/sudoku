@@ -24,30 +24,41 @@ import java.util.Timer;
 
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
-  private HashMap<String, ConnectionManager> ipsToConfirm;
-  private HashMap<String, ConnectionManager> ipsConnected;
+  private final CommunicationManager communicationManager;
 
-  public DiscoverNodesTimerTask(ArrayList<String> ipsCurrentSession, HashMap<String, ConnectionManager> ipsToConfirm,  HashMap<String, ConnectionManager> ipsConnected) {
-    this.ipsToConfirm = ipsToConfirm;
-    this.ipsConnected = ipsConnected;
-    this.localIp = CommunicationManager.getInstance().getLocalIp();
+  public DiscoverNodesTimerTask() {
+    this.communicationManager = CommunicationManager.getInstance();
+    this.localIp = communicationManager.getLocalIp();
   }
 
-  public void updateIpsConnectedAndIpsToConfirm(String ipToUpdate, Iterator<String> iterator) {
-    ConnectionManager tmpCM = ipsToConfirm.get(ipToUpdate);
-    ipsConnected.put(ipToUpdate, tmpCM);
-    //ipsToConfirm.remove(ipToUpdate);
-    iterator.remove();
-    //ipsCurrentSession.add(ipToUpdate);
+  public void updateIpsInCommunicationManager(String ipToUpdate, Iterator<String> iterator) {
+    communicationManager.syncIps(ipToUpdate, iterator);
   }
 
   public void launchDiscovery() {
+    HashMap<String, ConnectionManager> ipsToConfirm =  communicationManager.getIpsToConfirm();
     Iterator<String> itr = ipsToConfirm.keySet().iterator();
+    HashMap<String, ConnectionManager> ipsConnected =  communicationManager.getIpsConnected();
 
     while (itr.hasNext()) {
+
+              
+              //DEBUG MURAT  
+              //      
+              ArrayList<String> ipsConnectedTMP = new ArrayList<String>(ipsConnected.keySet());
+              Iterator<String> itrDebug = ipsConnectedTMP.iterator();
+
+                System.out.println("ipsConnectedTMP");
+
+          while (itrDebug.hasNext()) {
+            System.out.println(itrDebug.next());
+          }
+                          System.out.println("/ipsConnectedTMP");
+
+
       ArrayList<String> ipToShare = new ArrayList<String>(ipsConnected.keySet());
-      
       ipToShare.add(localIp);
+
       String currentIpToConfirm = itr.next();
       System.out.println("[BEGIN TimerTask] Connecting to :" + currentIpToConfirm + "\n ");
       AvroConnectionManager currentConnectionManager = new AvroConnectionManager(currentIpToConfirm);
@@ -58,7 +69,7 @@ public class DiscoverNodesTimerTask extends TimerTask {
           List<String> ipFromRemoteNode = currentConnectionManager.getConnectedIps(ipToShare);
           
           //update ipsConnected & ipsToConfirm
-          updateIpsConnectedAndIpsToConfirm(currentIpToConfirm, itr);
+          updateIpsInCommunicationManager(currentIpToConfirm, itr);
 
           //DEBUG
           Iterator<String> itrRemote = ipFromRemoteNode.iterator();
