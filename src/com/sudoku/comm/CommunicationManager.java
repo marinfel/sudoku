@@ -157,7 +157,8 @@ public final class CommunicationManager {
     return null;
   }
 
-  public void pushCommentAndSync(Comment newComment, Grid gridToSync) { }
+  public void pushCommentAndSync(Comment newComment, Grid gridToSync) {
+  }
 
   public ArrayList<String> getConnectedIps() {
     return connectedIps;

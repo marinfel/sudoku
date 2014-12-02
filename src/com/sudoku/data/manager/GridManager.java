@@ -27,11 +27,11 @@ public final class GridManager {
     }
     return instance;
   }
-  
-  public void save(){ // Serialize and save grids
-      
-      // TO BE COMPLETED
-      
+
+  public void save() { // Serialize and save grids
+
+    // TO BE COMPLETED
+
   }
 
   public boolean addGrid(Grid grid) {
@@ -39,7 +39,7 @@ public final class GridManager {
   }
 
   public boolean addPlayedGrid(Grid grid, User player) {
-  return playedGrids.add(new PlayedGrid(grid, player));
+    return playedGrids.add(new PlayedGrid(grid, player));
   }
 
 

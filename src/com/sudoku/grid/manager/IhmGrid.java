@@ -3,6 +3,7 @@ package com.sudoku.grid.manager;
 import com.sudoku.grid.editor.IhmGridEditor;
 import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
 import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+
 import java.util.ArrayList;
 
 public class IhmGrid {
@@ -28,7 +29,6 @@ public class IhmGrid {
   }
 
   /**
-   *
    * @param createEmptyGrid
    * @return
    */
@@ -38,7 +38,6 @@ public class IhmGrid {
   }
 
   /**
-   *
    * @return
    */
   public IhmGridPlayer playGrid() {
@@ -47,7 +46,6 @@ public class IhmGrid {
   }
 
   /**
-   *
    * @param keayword
    * @return
    */
@@ -57,7 +55,6 @@ public class IhmGrid {
   }
 
   /**
-   *
    * @return
    */
   public Manager getGridManager() {

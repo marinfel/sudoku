@@ -45,7 +45,7 @@ public class DataRetrieverImpl implements DataRetriever {
         for (byte j = 0; j < matrix[0].length; j++) {
           if (matrix[i][j] instanceof FixedCell) {
             resultMatrix.get(i).add(j,
-                (int)((FixedCell) matrix[i][j]).getValue());
+                (int) ((FixedCell) matrix[i][j]).getValue());
           } else {
             resultMatrix.get(i).add(j, null);
           }

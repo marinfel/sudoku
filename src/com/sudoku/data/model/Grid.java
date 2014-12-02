@@ -1,11 +1,6 @@
 package com.sudoku.data.model;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.UUID;
 import java.util.*;
 
 public class Grid {
@@ -21,8 +16,9 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  public Grid(){}
-  
+  public Grid() {
+  }
+
   public Grid(String t, User u) {
     id = UUID.randomUUID();
     title = t;
@@ -38,10 +34,10 @@ public class Grid {
         grid[i][j] = new EmptyCell(i, j);
       }
     }
-    createUser=u;
+    createUser = u;
     Calendar cal = new GregorianCalendar();
-    createDate=cal.getTime();
-    updateDate=createDate;
+    createDate = cal.getTime();
+    updateDate = createDate;
 
   }
 
@@ -133,10 +129,10 @@ public class Grid {
       result += comment.getGrade();
       i++;
     }
-    if(i!=0)
-        return result / i;
+    if (i != 0)
+      return result / i;
     else
-        return 0;
+      return 0;
   }
 
   public UUID getId() {
