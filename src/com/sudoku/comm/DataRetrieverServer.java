@@ -11,7 +11,7 @@ import java.net.InetSocketAddress;
  * Created by ben on 01/12/14.
  */
 public class DataRetrieverServer extends Server {
-  private final int PORT = 11024;
+  public final int PORT = 11024;
 
   @Override
   public void startServer() {
@@ -26,5 +26,10 @@ public class DataRetrieverServer extends Server {
     if (server != null) {
       server.close();
     }
+  }
+
+  @Override
+  public int getPort() {
+    return PORT;
   }
 }

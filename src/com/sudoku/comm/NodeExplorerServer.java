@@ -7,7 +7,7 @@ import org.apache.avro.ipc.specific.SpecificResponder;
 import java.net.InetSocketAddress;
 
 public class NodeExplorerServer extends Server {
-  private final int PORT = 11023;
+  public final int PORT = 11023;
 
   public NodeExplorerServer() {
     super();
@@ -24,5 +24,10 @@ public class NodeExplorerServer extends Server {
     if (server != null) {
       server.close();
     }
+  }
+
+  @Override
+  public int getPort() {
+    return PORT;
   }
 }
