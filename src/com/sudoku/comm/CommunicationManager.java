@@ -2,12 +2,22 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.*;
 import com.sudoku.util.CollectionUtil;
+import com.sudoku.comm.ConnectionManager;
+import com.sudoku.comm.DiscoverNodesTimerTask;
+
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+
+import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Timer;
+import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
@@ -17,6 +27,15 @@ public final class CommunicationManager {
   private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
   private Server dataRetrieverServer;
+
+  private ArrayList<String> listLocalIp;
+  //list of all IPs to which the user was connected during the session
+  private ArrayList<String> ipsCurrentSession;
+  private ConcurrentHashMap<String, ConnectionManager> ipsToConfirm;
+  private ConcurrentHashMap<String, ConnectionManager> ipsConnected;
+
+  private Timer timerDiscoverNodes;
+  private DiscoverNodesTimerTask discoverNodesTimerTask;
 
   private CommunicationManager() {
     super();
@@ -40,6 +59,10 @@ public final class CommunicationManager {
     this.login = login;
     this.connectedIps = connectedIps;
     this.localIp = nodeExplorerServer.getInetAddress();
+    this.listLocalIp = connectedIps;
+    this.ipsCurrentSession = new ArrayList<String>();
+    this.ipsConnected = new ConcurrentHashMap<String, ConnectionManager>();
+    this.ipsToConfirm = new ConcurrentHashMap<String, ConnectionManager>();
     startServer();
   }
 
@@ -49,7 +72,7 @@ public final class CommunicationManager {
   }
 
   public void discoverNodes() throws IOException {
-    if (connectedIps != null) {
+    /*if (connectedIps != null) {
       ArrayList<String> newConnectedIps =
           (ArrayList<String>) connectedIps.clone();
       newConnectedIps.add(localIp);
@@ -67,12 +90,21 @@ public final class CommunicationManager {
             localIp);
         client.close();
       }
-      connectedIps = newConnectedIps;
+      connectedIps = newConnectedIps;*/
+    addIpToConfirm(listLocalIp);
+    if(timerDiscoverNodes == null) {
+        timerDiscoverNodes = new Timer();   
+        timerDiscoverNodes
+            .schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
     }
+  } 
+
+  public ConcurrentHashMap<String, ConnectionManager> getIpsConnected() {
+    return ipsConnected;
   }
 
   public void disconnect() throws IOException {
-    if (connectedIps != null) {
+   /* if (connectedIps != null) {
       for (String ip : connectedIps) {
         NettyTransceiver client = new NettyTransceiver(
             new InetSocketAddress(ip, nodeExplorerServer.getPort()));
@@ -83,7 +115,46 @@ public final class CommunicationManager {
       }
     }
     dataRetrieverServer.stopServer();
-    nodeExplorerServer.stopServer();
+    nodeExplorerServer.stopServer();*/
+  }
+
+  public ConcurrentHashMap<String, ConnectionManager> getIpsToConfirm() {
+    return ipsToConfirm;
+  }
+
+  public void addIpConnected(String ip, ConnectionManager cm) {
+    ipsConnected.put(ip, cm);
+  }
+
+  public void addIpCurrentSession(String ip) {
+    ipsCurrentSession.add(ip);
+  }
+
+  public void syncIps(String ipToUpdate, Iterator<String> iterator) {
+    ConnectionManager tmpCM = ipsToConfirm.get(ipToUpdate);
+    addIpConnected(ipToUpdate, tmpCM);
+    iterator.remove();
+    addIpCurrentSession(ipToUpdate);
+  }
+
+  public void addIpToConfirm(List<String> listIp) {
+    if(ipsToConfirm == null){
+      ipsToConfirm = new ConcurrentHashMap();
+    }
+
+    Iterator<String> itr = listIp.iterator();
+    while(itr.hasNext()) {
+      addIpToConfirm(itr.next());
+    }
+  }
+
+  public void addIpToConfirm(String ip) {
+    if(ipsToConfirm == null){
+      ipsToConfirm = new ConcurrentHashMap();
+    }
+    if(!ipsConnected.containsKey(ip) && ip != localIp) {
+      ipsToConfirm.put(ip, new AvroConnectionManager(localIp));
+    }
   }
 
   public ArrayList<com.sudoku.data.model.Grid> getAllGrids()
