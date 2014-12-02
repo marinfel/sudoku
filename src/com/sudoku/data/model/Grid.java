@@ -2,10 +2,14 @@ package com.sudoku.data.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
+import java.util.*;
 
 public class Grid {
-  private int id;
+  private UUID id;
   private String title;
   private String description;
   private int difficulty;
@@ -14,10 +18,17 @@ public class Grid {
   private List<Tag> tags;
   private Cell[][] grid;
   private User createUser;
-  private Timestamp createDate;
-  private Timestamp updateDate;
+  private Date createDate;
+  private Date updateDate;
 
-  public Grid() {
+  private Grid(){}
+  
+  public Grid(String t, User u) {
+    id=UUID.randomUUID();
+    title=t;
+    description="";
+    difficulty=0;
+    published=false;
     comments = new ArrayList<>();
     tags = new ArrayList<>();
 
@@ -27,6 +38,11 @@ public class Grid {
         grid[i][j] = new EmptyCell(i, j);
       }
     }
+    createUser=u;
+    Calendar cal = new GregorianCalendar();
+    createDate=cal.getTime();
+    updateDate=createDate;
+
   }
 
   public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
