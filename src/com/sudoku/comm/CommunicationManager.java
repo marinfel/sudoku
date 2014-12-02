@@ -139,7 +139,7 @@ public final class CommunicationManager {
 
   public void addIpToConfirm(List<String> listIp) {
     if(ipsToConfirm == null){
-      ipsToConfirm = new ConcurrentHashMap();
+      ipsToConfirm = new ConcurrentHashMap<>();
     }
 
     Iterator<String> itr = listIp.iterator();
@@ -150,9 +150,9 @@ public final class CommunicationManager {
 
   public void addIpToConfirm(String ip) {
     if(ipsToConfirm == null){
-      ipsToConfirm = new ConcurrentHashMap();
+      ipsToConfirm = new ConcurrentHashMap<>();
     }
-    if(!ipsConnected.containsKey(ip) && ip != localIp) {
+    if(!ipsConnected.containsKey(ip) && !ip.equals(localIp)) {
       ipsToConfirm.put(ip, new AvroConnectionManager(localIp));
     }
   }
