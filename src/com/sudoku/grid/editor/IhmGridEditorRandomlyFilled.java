@@ -5,26 +5,24 @@
  */
 package com.sudoku.grid.editor;
 
-import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
-import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmCell;
 import com.sudoku.grid.ihm_grid_cells.IhmCellView;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
+import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
+
 /**
- *
  * @author Mehdi KANE, Céline TO This class generates an entire filled grid, the
- * user can hide cells to make his own grid to be played
+ *         user can hide cells to make his own grid to be played
  */
 public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
 
@@ -59,7 +57,7 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         if ((nbNotHiddenCells - number) < 0) {
           String title = new String("Not enough filled cells");
           String text = new String(
-                  "You can't hide that many cells");
+              "You can't hide that many cells");
           IhmPopupsList.getInstance().addPopup(title, text, 10);
         } else {
           LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();

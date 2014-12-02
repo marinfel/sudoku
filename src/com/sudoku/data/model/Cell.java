@@ -14,6 +14,7 @@ public class Cell {
 
   protected byte x;
   protected byte y;
+
   protected Cell(byte x, byte y) throws IllegalArgumentException {
 
     if (x < 0 || x >= 9 || y < 0 || y >= 9) {

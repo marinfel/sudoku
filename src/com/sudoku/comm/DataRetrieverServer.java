@@ -1,7 +1,6 @@
 package com.sudoku.comm;
 
 import com.sudoku.comm.generated.DataRetriever;
-import com.sudoku.comm.generated.NodeExplorer;
 import org.apache.avro.ipc.NettyServer;
 import org.apache.avro.ipc.specific.SpecificResponder;
 

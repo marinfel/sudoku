@@ -29,7 +29,7 @@
       "name": "Grid",
       "type": "record",
       "fields": [
-        { "name": "id", "type": "int" },
+        { "name": "id", "type": "string" },
         { "name": "title", "type": "string" },
         { "name": "description", "type": "string" },
         { "name": "difficulty", "type": "int" },
