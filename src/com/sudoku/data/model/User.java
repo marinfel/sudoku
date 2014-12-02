@@ -64,6 +64,7 @@ public class User implements Ruleable {
     resultUser.pseudo = user.getPseudo();
     resultUser.profilePicturePath = user.getProfilePicturePath();
     resultUser.ipAddress = user.getIpAddress();
+    resultUser.salt = user.getSalt();
     try {
       resultUser.birthDate = df.parse(user.getBirthDate());
       resultUser.createDate = df.parse(user.getCreateDate());
@@ -81,6 +82,7 @@ public class User implements Ruleable {
         .setIpAddress(user.getIpAddress())
         .setProfilePicturePath(user.getProfilePicturePath())
         .setPseudo(user.getPseudo())
+        .setSalt(user.getSalt())
         .setUpdateDate(user.getUpdateDate().toString())
         .build();
   }
