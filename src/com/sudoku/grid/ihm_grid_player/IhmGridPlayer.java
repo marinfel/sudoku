@@ -36,7 +36,7 @@ public class IhmGridPlayer extends IhmGridView {
   private Grid playGrid;
 
   public IhmGridPlayer(String t, Flags flagStatus, Grid gr) {
-    super(t, flagStatus, gr);
+    super(flagStatus, gr);
 
     //mettre la grille
     //commentaires

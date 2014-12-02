@@ -21,8 +21,8 @@ public class IhmGridPreview extends IhmGridLayout {
   Text authorName;
   Vector<StarView> grades;
 
-  public IhmGridPreview(String ttl, double numberOfStars, Grid gr) {
-    super(ttl, IhmGridLines.ALL_VIEW, gr);
+  public IhmGridPreview(double numberOfStars, Grid gr) {
+    super(IhmGridLines.ALL_VIEW, gr);
 
     getChildren().add(gridLines);
 
