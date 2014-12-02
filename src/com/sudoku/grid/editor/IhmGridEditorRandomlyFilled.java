@@ -5,9 +5,11 @@
  */
 package com.sudoku.grid.editor;
 
+import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmCell;
 import com.sudoku.grid.ihm_grid_cells.IhmCellView;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import java.util.Collections;
@@ -29,9 +31,8 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
   private Button deleteCells;
   private TextField deleteCellsField;
 
-  public IhmGridEditorRandomlyFilled(String title, Flags flagStatus, Grid gr) {
-    // Grid gr = generateRandomGrid();
-    super(title, flagStatus, gr);
+  public IhmGridEditorRandomlyFilled() {
+    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid());
 
     // button with the number of cases that the user wants to hide randomly
     deleteCells = new Button("Delete Cells");
