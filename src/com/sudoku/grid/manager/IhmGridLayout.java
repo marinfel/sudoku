@@ -40,7 +40,7 @@ public abstract class IhmGridLayout extends StackPane {
     title.setFont(Font.font("Verdana", sizeTitle));
     getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
-    grid = new Grid();
+    //grid = new Grid();
   }
 
   /**

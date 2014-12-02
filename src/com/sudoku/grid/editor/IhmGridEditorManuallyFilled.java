@@ -5,6 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
+import com.sudoku.data.manager.GridManager;
+import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 
@@ -14,7 +16,7 @@ import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 public class IhmGridEditorManuallyFilled extends IhmGridEditor {
 
   public IhmGridEditorManuallyFilled() {
-    super(IhmGridLines.ALL_EDITABLE, new Grid());
+    super(IhmGridLines.ALL_EDITABLE, new Grid("", UserManager.getInstance().getLoggedUser()));
   }
 
 }
