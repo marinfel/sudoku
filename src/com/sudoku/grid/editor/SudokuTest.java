@@ -5,6 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
+import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -26,12 +28,15 @@ public class SudokuTest extends Application {
 
     IhmGridEditorRandomlyFilled ihm_test;
     IhmGridEditorManuallyFilled ihm_test2;
+    IhmGridPlayer ihm_test3;
 
     ihm_test = new IhmGridEditorRandomlyFilled();
     ihm_test2 = new IhmGridEditorManuallyFilled();
+    ihm_test3 = new IhmGridPlayer(new Grid());
 
     Scene scene = new Scene(ihm_test, 800, 1000);
     //Scene scene = new Scene(ihm_test2, 800, 1000);
+    //Scene scene = new Scene(ihm_test3, 800, 1000);
 
     primaryStage.setTitle("Sudoku Editor");
     primaryStage.setScene(scene);
