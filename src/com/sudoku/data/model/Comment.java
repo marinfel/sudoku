@@ -15,20 +15,27 @@ public class Comment {
    * Champs de la classe Comment
    * *
    */
-  private User author;
-  private String pseudo;
+  private final User author;
+  private final String pseudo;
+  private final String userSalt; // We use the salt as an UUID to identify the poster
   private String comment;
   private Integer grade;
 
   /**
    * Méthode de la classe  Comment
+     * @param comment
+     * @param grade
+     * @param u
    */
+  
+  
 
   public Comment(String comment, Integer grade, User u) {
     this.comment = comment;
     this.grade = grade;
     this.author = u;
     this.pseudo = u.getPseudo();
+    this.userSalt = u.getSalt();
   }
 
   public static Comment buildFromAvroComment(
