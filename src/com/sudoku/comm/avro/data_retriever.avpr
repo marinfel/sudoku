@@ -9,6 +9,7 @@
       "type": "record",
       "fields": [
         { "name": "pseudo", "type": "string" },
+        { "name": "salt", "type": "string" },
         { "name": "birthDate", "type": "string" },
         { "name": "profilePicturePath", "type": "string" },
         { "name": "createDate", "type": "string" },

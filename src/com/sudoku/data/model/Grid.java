@@ -13,10 +13,21 @@ public class Grid {
   private List<Tag> tags;
   private Cell[][] grid;
   private User createUser;
+  private String createPseudo;
+  private String createSalt; // Salt of the creator used as an UUID
   private Date createDate;
   private Date updateDate;
 
   public Grid() {
+    comments = new ArrayList<>();
+    tags = new ArrayList<>();
+
+    grid = new Cell[9][9];
+    for(byte i = 0; i < 9; i++){
+        for(byte j = 0; j < 9; j++){
+            grid[i][j] = new EmptyCell(i, j);
+        }
+    }
   }
 
   public Grid(String t, User u) {
@@ -35,6 +46,8 @@ public class Grid {
       }
     }
     createUser = u;
+    createPseudo = u.getPseudo();
+    createSalt = u.getSalt();
     Calendar cal = new GregorianCalendar();
     createDate = cal.getTime();
     updateDate = createDate;
