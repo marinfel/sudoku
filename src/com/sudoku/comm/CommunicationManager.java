@@ -39,7 +39,7 @@ public final class CommunicationManager {
     this.uuid = uuid;
     this.login = login;
     this.connectedIps = connectedIps;
-    this.localIp = nodeExplorerServer.getServerInetAddresses();
+    this.localIp = nodeExplorerServer.getInetAddress();
     startServer();
   }
 

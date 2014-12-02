@@ -27,7 +27,7 @@ public abstract class Server {
 
   public abstract int getPort();
 
-  public String getServerInetAddresses() {
+  public String getInetAddress() {
     return this.localIp;
   }
 
