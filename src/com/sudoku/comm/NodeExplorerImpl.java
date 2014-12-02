@@ -17,9 +17,7 @@ public class NodeExplorerImpl implements NodeExplorer {
 
   @Override
   public Message discoverNode(Message sentMessage) throws AvroRemoteException {
-    commManager.setConnectedIps(CollectionUtil.merge(
-        commManager.getConnectedIps(), sentMessage.getListIps(),
-        commManager.getLocalIp()));
+    commManager.addIpToConfirm(sentMessage.getListIps());
     return Message.newBuilder()
         .setListIps(commManager.getConnectedIps())
         .setLogin(commManager.getLogin())
@@ -27,6 +25,12 @@ public class NodeExplorerImpl implements NodeExplorer {
         .build();
   }
 
+  @Override
+  public Void publishIpsToConfirm(Message sentMessage) throws AvroRemoteException {
+    commManager.addIpToConfirm(sentMessage.getListIps());
+    return null;
+  }
+  
   @Override
   public Void disconnect(String ip) throws AvroRemoteException {
     commManager.getConnectedIps().remove(ip);
