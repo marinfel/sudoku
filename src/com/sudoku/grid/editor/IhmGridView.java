@@ -14,18 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * @author mecton08
  */
 public abstract class IhmGridView extends IhmGridLayout {
-
-  //protected textItemInput textInput;
-  //protected textItemView textView;
-  protected enum mode {
-
-    Play,
-    Edit
-  }
 
   protected final BorderPane border;
 
@@ -68,6 +59,14 @@ public abstract class IhmGridView extends IhmGridLayout {
      */
     //border.setCenter();
     //
+  }
+
+  //protected textItemInput textInput;
+  //protected textItemView textView;
+  protected enum mode {
+
+    Play,
+    Edit
   }
 
 }

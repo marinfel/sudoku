@@ -9,10 +9,11 @@ import com.sudoku.data.model.Cell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
-import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 
 /**
  * @author Marc-Antoine MARTIN
@@ -20,35 +21,31 @@ import javafx.scene.shape.Rectangle;
 public class IhmGridLines extends GridPane implements EventHandler<IhmCellEditedEvent> {
 
   protected static final int cellNumberPerSide = 9;
-  protected static final int cellNumberPerSubside = 3;
-  protected static final int popupDelay = 10;
-
   protected Rectangle lines[] = new Rectangle[(cellNumberPerSide - 1) * (cellNumberPerSide - 1)];
   protected IhmCell cells[][] = new IhmCell[cellNumberPerSide][cellNumberPerSide];
-  private ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<IhmCellEditable>();
-
-  private IhmGridLinesCompleted ihmGridLinesCompleted;
-
+  protected static final int cellNumberPerSubside = 3;
+  protected static final int popupDelay = 10;
   public static Flags FIT_GRID = Flags.resetAutoFlag();
   public static Flags FIXED_HIDABLE = Flags.getAutoNextFlag();
   public static Flags ALL_VIEW = Flags.getAutoNextFlag();
   public static Flags ALL_EDITABLE = Flags.getAutoNextFlag();
-
   protected int simpleLinesSide = 1;
   protected int doubleLinesSide = 2 * simpleLinesSide;
   protected int cellSide;
   protected int side;
+  private ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<IhmCellEditable>();
+  private IhmGridLinesCompleted ihmGridLinesCompleted;
 
   /**
    * IHM_GridLines constructor
    *
-   * @param grid: grid which contains cells to show
-   * @param side is only on side in pixel of the grid which will be square
-   * (TODO: @param grid is a grid which contains information about cells (fixed,
-   * editables, values, etc.)
+   * @param grid:      grid which contains cells to show
+   * @param side       is only on side in pixel of the grid which will be square
+   *                   (TODO: @param grid is a grid which contains information about cells (fixed,
+   *                   editables, values, etc.)
    * @param cellsFlag: How cells will be shown in the graphical interface
    * @throws NullPointerException if grid is null or an error occure when
-   * parsing grid
+   *                              parsing grid
    */
   public IhmGridLines(Grid grid, int side, Flags cellsFlag) {
     //if grid is null

@@ -9,8 +9,8 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public abstract class Server {
-  protected String localIp;
   protected static org.apache.avro.ipc.Server server;
+  protected String localIp;
   private Logger logger = LoggerFactory.getLogger(Server.class);
 
   public Server() {
@@ -27,7 +27,7 @@ public abstract class Server {
 
   public abstract int getPort();
 
-  public String getServerInetAddresses() {
+  public String getInetAddress() {
     return this.localIp;
   }
 

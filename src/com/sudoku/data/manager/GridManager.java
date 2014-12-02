@@ -13,8 +13,8 @@ public final class GridManager {
   private List<PlayedGrid> playedGrids;
 
   private GridManager() {
-    this.availableGrids = new ArrayList<Grid>();
-    this.playedGrids = new ArrayList<PlayedGrid>();
+    this.availableGrids = new ArrayList<>();
+    this.playedGrids = new ArrayList<>();
   }
 
   public final static GridManager getInstance() {
@@ -28,6 +28,12 @@ public final class GridManager {
     return instance;
   }
 
+  public void save() { // Serialize and save grids
+
+    // TO BE COMPLETED
+
+  }
+
   public boolean addGrid(Grid grid) {
     return availableGrids.add(grid);
   }
@@ -35,6 +41,7 @@ public final class GridManager {
   public boolean addPlayedGrid(Grid grid, User player) {
     return playedGrids.add(new PlayedGrid(grid, player));
   }
+
 
   public boolean addPlayedGrid(PlayedGrid pgrid) {
     return playedGrids.add(pgrid);
@@ -55,7 +62,6 @@ public final class GridManager {
     }
     return result;
   }
-
 
   public boolean updateGridList(List<String> keywords) {
     // BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouv

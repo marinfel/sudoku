@@ -5,7 +5,6 @@
  */
 package com.sudoku.data.model;
 
-import org.apache.velocity.runtime.directive.Parse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
@@ -23,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class User implements Ruleable {
+  private static Logger logger = LoggerFactory.getLogger(User.class);
   private String pseudo;
   private String salt;
   private String password;
@@ -33,9 +33,8 @@ public class User implements Ruleable {
   private String ipAddress;
   private List<ContactCategory> contactCategories;
 
-  private static Logger logger = LoggerFactory.getLogger(User.class);
-
-  private User() {}
+  private User() {
+  }
 
   public User(String pseudo, String brutPassword, Date birthDate,
               String profilePicturePath)
@@ -65,6 +64,7 @@ public class User implements Ruleable {
     resultUser.pseudo = user.getPseudo();
     resultUser.profilePicturePath = user.getProfilePicturePath();
     resultUser.ipAddress = user.getIpAddress();
+    resultUser.salt = user.getSalt();
     try {
       resultUser.birthDate = df.parse(user.getBirthDate());
       resultUser.createDate = df.parse(user.getCreateDate());
@@ -82,6 +82,7 @@ public class User implements Ruleable {
         .setIpAddress(user.getIpAddress())
         .setProfilePicturePath(user.getProfilePicturePath())
         .setPseudo(user.getPseudo())
+        .setSalt(user.getSalt())
         .setUpdateDate(user.getUpdateDate().toString())
         .build();
   }

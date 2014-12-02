@@ -43,9 +43,9 @@ public class IhmCellEditable extends IhmCell {
   /**
    * IHM_CellEditable constructor
    *
-   * @param side taken by the node (width, height)
+   * @param side           taken by the node (width, height)
    * @param addlesFontSize defines the font size in addles TextField
-   * @param valueFontSize defines the font size in value's TextField
+   * @param valueFontSize  defines the font size in value's TextField
    */
   public IhmCellEditable(double side) {
     setMaxSize(side, side);
@@ -264,7 +264,7 @@ public class IhmCellEditable extends IhmCell {
    * correction on it</p>
    *
    * @param tf a TextField that trigged the event
-   * @param t a string which was in the TextField before the event
+   * @param t  a string which was in the TextField before the event
    * @param t1 a string which is what is in the TextField
    * @return Nothing
    * @throws Nothing

@@ -5,18 +5,21 @@
  */
 package com.sudoku.grid.editor;
 
-import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
-import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
  * @author mecton08
  */
 public class SudokuTest extends Application {
+
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
 
   @Override
   public void start(Stage primaryStage) {
@@ -33,13 +36,6 @@ public class SudokuTest extends Application {
     primaryStage.setTitle("Sudoku Editor");
     primaryStage.setScene(scene);
     primaryStage.show();
-  }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
   }
 
 }

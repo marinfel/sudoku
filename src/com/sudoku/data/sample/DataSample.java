@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author Jonathan
@@ -26,11 +27,15 @@ public class DataSample {
   public Grid g1, g2, g3;
 
 
-   public DataSample() {
+  public DataSample() {
     try {
-      a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
-      b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
-      
+      a = new User("User1", "User1",
+          new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"),
+          "");
+      b = new User("User2", "User2",
+          new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"),
+          "");
+
       g1 = new Grid();
       g2 = new Grid();
       g3 = new Grid();
@@ -55,7 +60,7 @@ public class DataSample {
     g1.setCreateUser(a);
     g1.setDifficulty(3);
     g1.setDescription("This is the awesome grid n°1");
-    g1.setId(1);
+    g1.setId(UUID.randomUUID());
 
     //Création de Grid g2
     List<Comment> comments2 = new LinkedList<>();
@@ -74,7 +79,7 @@ public class DataSample {
     g2.setCreateUser(a);
     g2.setDifficulty(4);
     g2.setDescription("This is the awesome grid n°2");
-    g2.setId(2);
+    g2.setId(UUID.randomUUID());
 
     //Création de Grid g3
     List<Comment> comments3 = new LinkedList<>();
@@ -93,7 +98,7 @@ public class DataSample {
     g3.setCreateUser(b);
     g3.setDifficulty(4);
     g3.setDescription("This is the awesome grid n°2");
-    g3.setId(2);
+    g3.setId(UUID.randomUUID());
 
   }
 

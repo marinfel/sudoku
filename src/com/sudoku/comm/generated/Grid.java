@@ -7,9 +7,9 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Grid extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Grid\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"difficulty\",\"type\":\"int\"},{\"name\":\"published\",\"type\":\"boolean\"},{\"name\":\"comments\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Comment\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"int\"}]}}]},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]},{\"name\":\"matrix\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]}]},{\"name\":\"createUser\",\"type\":\"User\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Grid\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"difficulty\",\"type\":\"int\"},{\"name\":\"published\",\"type\":\"boolean\"},{\"name\":\"comments\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Comment\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"int\"}]}}]},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]},{\"name\":\"matrix\",\"type\":[\"null\",{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]}]},{\"name\":\"createUser\",\"type\":\"User\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  @Deprecated public int id;
+  @Deprecated public java.lang.String id;
   @Deprecated public java.lang.String title;
   @Deprecated public java.lang.String description;
   @Deprecated public int difficulty;
@@ -31,7 +31,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public Grid(java.lang.Integer id, java.lang.String title, java.lang.String description, java.lang.Integer difficulty, java.lang.Boolean published, java.util.List<com.sudoku.comm.generated.Comment> comments, java.util.List<java.lang.String> tags, java.util.List<java.util.List<java.lang.Integer>> matrix, com.sudoku.comm.generated.User createUser, java.lang.String createDate, java.lang.String updateDate) {
+  public Grid(java.lang.String id, java.lang.String title, java.lang.String description, java.lang.Integer difficulty, java.lang.Boolean published, java.util.List<com.sudoku.comm.generated.Comment> comments, java.util.List<java.lang.String> tags, java.util.List<java.util.List<java.lang.Integer>> matrix, com.sudoku.comm.generated.User createUser, java.lang.String createDate, java.lang.String updateDate) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -67,7 +67,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (java.lang.Integer)value$; break;
+    case 0: id = (java.lang.String)value$; break;
     case 1: title = (java.lang.String)value$; break;
     case 2: description = (java.lang.String)value$; break;
     case 3: difficulty = (java.lang.Integer)value$; break;
@@ -85,7 +85,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Gets the value of the 'id' field.
    */
-  public java.lang.Integer getId() {
+  public java.lang.String getId() {
     return id;
   }
 
@@ -93,7 +93,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
    * Sets the value of the 'id' field.
    * @param value the value to set.
    */
-  public void setId(java.lang.Integer value) {
+  public void setId(java.lang.String value) {
     this.id = value;
   }
 
@@ -268,7 +268,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Grid>
     implements org.apache.avro.data.RecordBuilder<Grid> {
 
-    private int id;
+    private java.lang.String id;
     private java.lang.String title;
     private java.lang.String description;
     private int difficulty;
@@ -384,12 +384,12 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     }
 
     /** Gets the value of the 'id' field */
-    public java.lang.Integer getId() {
+    public java.lang.String getId() {
       return id;
     }
     
     /** Sets the value of the 'id' field */
-    public com.sudoku.comm.generated.Grid.Builder setId(int value) {
+    public com.sudoku.comm.generated.Grid.Builder setId(java.lang.String value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -403,6 +403,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Clears the value of the 'id' field */
     public com.sudoku.comm.generated.Grid.Builder clearId() {
+      id = null;
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -659,7 +660,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     public Grid build() {
       try {
         Grid record = new Grid();
-        record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
+        record.id = fieldSetFlags()[0] ? this.id : (java.lang.String) defaultValue(fields()[0]);
         record.title = fieldSetFlags()[1] ? this.title : (java.lang.String) defaultValue(fields()[1]);
         record.description = fieldSetFlags()[2] ? this.description : (java.lang.String) defaultValue(fields()[2]);
         record.difficulty = fieldSetFlags()[3] ? this.difficulty : (java.lang.Integer) defaultValue(fields()[3]);
