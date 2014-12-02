@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sudoku.main.view.RegisterController">
+   <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="689.0">
+         <children>
+            <ImageView fx:id="avatar" fitHeight="61.0" fitWidth="62.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+               </image>
+            </ImageView>
+            <Label id="userName" fx:id="userName" layoutX="270.0" layoutY="125.0" />
+            <VBox layoutX="463.0" layoutY="230.0">
+               <children>
+                  <TextField fx:id="user" layoutX="260.0" layoutY="123.0" promptText="Utilisateur" />
+                  <PasswordField fx:id="passwd" layoutX="260.0" layoutY="159.0" promptText="Mot de passe" />
+                  <TextField fx:id="nom" layoutX="260.0" layoutY="193.0" promptText="Nom" />
+                  <TextField fx:id="prenom" layoutX="260.0" layoutY="232.0" promptText="Prénom" />                  
+               </children>
+            </VBox>
+            <Button layoutX="764.0" layoutY="517.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="25.0" prefWidth="115.0" text="Retourner" />
+            <Button layoutX="484.0" layoutY="346.0" mnemonicParsing="false" onAction="#goToProgram" text="Créer Compte" />
+            <Label layoutX="381.0" layoutY="187.0" text="Créer Nouveau Compte">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>
