@@ -7,6 +7,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.util.CollectionUtil;
 import com.sudoku.comm.ConnectionManager;
+import com.sudoku.comm.DiscoverNodesTimerTask;
 
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.Date;
 
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
@@ -29,14 +32,15 @@ public final class CommunicationManager {
   private String login;
   private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
+
   private ArrayList<String> listLocalIp;
   //list of all IPs to which the user was connected during the session
-  private ArrayList<String> listCurrentSessionIp;
-  private HashMap<String, ConnectionManager> ipToConfirm;
-  private HashMap<String, ConnectionManager> ipConnected;
+  private ArrayList<String> ipsCurrentSession;
+  private HashMap<String, ConnectionManager> ipsToConfirm;
+  private HashMap<String, ConnectionManager> ipsConnected;
 
-  private  HashMap<String, AvroConnectionManager> connectedIpsCM;
-  private  HashMap<String, AvroConnectionManager> ipsToBeChecked;
+  private Timer timerDiscoverNodes;
+  private DiscoverNodesTimerTask discoverNodesTimerTask;
 
   private CommunicationManager() {
     super();
@@ -59,8 +63,8 @@ public final class CommunicationManager {
     this.login = login;
     this.connectedIps = connectedIps;
     this.listLocalIp = connectedIps;
-    this.ipToConfirm = new HashMap();
-    this.ipConnected = new HashMap();
+    this.ipsToConfirm = new HashMap();
+    this.ipsConnected = new HashMap();
     this.localIp = nodeExplorerServer.getServerInetAddresses();
     startServer();
   }
@@ -70,60 +74,18 @@ public final class CommunicationManager {
   }
 
   public void discoverNodes() throws IOException {
-    if (connectedIps != null) {
-      ArrayList<String> newConnectedIps =
-          (ArrayList<String>) connectedIps.clone();
-      //newConnectedIps.add(localIp);
+    ipsToConfirm.put("172.26.25.19", null);
+    ipsToConfirm.put("172.26.25.20", null);
 
-      Iterator<String> itr = connectedIps.iterator();
-      while (itr.hasNext()) {
-        String ip = itr.next();
-        System.out.print("Connect to:" + ip + "\n ");
-        AvroConnectionManager cm = new AvroConnectionManager(ip);
-        try {
-          cm.openConnection();
-          List<String> remoteIps = cm.getConnectedIps(connectedIps);
-          Iterator<String> itrRemote = remoteIps.iterator();
-          System.out.println("Retrieved remote ips:");
-          
-          while (itrRemote.hasNext()) {
-            String addr = itrRemote.next();
-            System.out.println(addr);
-          }
-          System.out.println("*********************");
-          cm.closeConnection();  
-        }
-        catch (ConnectionManager.OfflineUserException exc) {System.out.print("Offline user: " + ip + "\n ");}
-        catch (ConnectionManager.ConnectionClosedException exc) {System.out.print("Closed connection: " + ip + "\n ");}
-      }
-      /*newConnectedIps.add(localIp);
-      Message message = new Message(uuid, login, newConnectedIps);
-      newConnectedIps = connectedIps;
-      for (String ip : connectedIps) {
-        NettyTransceiver client =
-            new NettyTransceiver(new InetSocketAddress(ip, PORT));
-        NodeExplorer explorer = (NodeExplorer)
-            SpecificRequestor.getClient(NodeExplorer.class, client);
-        Message receivedMessage = explorer.discoverNode(message);
-        // TODO: deal with storing uuids and logins: hashtable with uuid as key
-        List<String> receivedIps = receivedMessage.getListIps();
-        System.out.println("----");
-        for (String ipad : connectedIps) {
-          System.out.println("----" + ipad);
-        }
-        newConnectedIps = CollectionUtil.merge(newConnectedIps,
-            receivedMessage.getListIps(),
-            localIp);
-        client.close();
-      }*/
-      connectedIps = newConnectedIps;
+    if(timerDiscoverNodes == null) {
+        timerDiscoverNodes = new Timer();   
+        timerDiscoverNodes.schedule(new DiscoverNodesTimerTask(ipsCurrentSession, ipsToConfirm, ipsConnected), new Date(), 1000 * 5);
     }
-
   }
 
   public void addIpToConfirm(ArrayList<String> listIp) {
-    if(ipToConfirm == null){
-      ipToConfirm = new HashMap();
+    if(ipsToConfirm == null){
+      ipsToConfirm = new HashMap();
     }
 
     Iterator<String> itr = listIp.iterator();
@@ -133,19 +95,8 @@ public final class CommunicationManager {
   }
 
   public void addIpToConfirm(String ip) {
-    if(ipToConfirm == null){
-      ipToConfirm = new HashMap();
-    }
-
-    if(!ipToConfirm.containsKey(ip)) {
-      ConnectionManager connectionManagerTmp = new ConnectionManager(ip);
-      ipToConfirm.put(ip, connectionManagerTmp);      
-    }
-    else {
-      if(ipToConfirm.get(ip) == null) {
-          ConnectionManager connectionManagerTmp = new ConnectionManager(ip);
-          ipToConfirm.put(ip, connectionManagerTmp);
-      }
+    if(ipsToConfirm == null){
+      ipsToConfirm = new HashMap();
     }
   }
 

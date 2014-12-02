@@ -31,13 +31,14 @@ public class CommMain {
     connectedIps.add("172.26.25.20");
     CommunicationManager commManager = CommunicationManager.getInstance();
     commManager.init(uuid, login, connectedIps);
+
     System.out.println("ip: " + commManager.getLocalIp());
     try {
       commManager.discoverNodes();
       Thread.sleep(5000);
-      for (String ip : commManager.getConnectedIps()) {
+      /*for (String ip : commManager.getConnectedIps()) {
         System.out.println(ip);
-      }
+      }*/
       commManager.disconnect();
     } catch (Exception ex) {
       logger.error(ex.toString());
