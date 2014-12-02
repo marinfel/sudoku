@@ -14,14 +14,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
+ *
  * @author mecton08
  */
 public abstract class IhmGridView extends IhmGridLayout {
 
-  protected BorderPane border;
+    //protected textItemInput textInput;
+  //protected textItemView textView;
+  protected enum mode {
 
-  public IhmGridView() {
+    Play,
+    Edit
   }
+
+  protected final BorderPane border;
 
   public IhmGridView(String title, Flags flagStatus, Grid gr) {
     super(title, flagStatus, gr);
@@ -40,38 +46,28 @@ public abstract class IhmGridView extends IhmGridLayout {
     border.setRight(rightVBox);
     border.setCenter(centerVBox);
 
-
-    //VBox centerLayout = (VBox)border.getCenter();
+        //VBox centerLayout = (VBox)border.getCenter();
     //centerLayout.getChildren().add(sudokuGrid);
-
     centerVBox.getChildren().add(gridLines);
 
     IhmPopupsList.init(150.0, 500.0, 10);
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
     rightVBox.getChildren().add(popupList);
 
-        /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
-         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+    /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
+     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
 
-         @Override
-         public void handle(WindowEvent t) {
-         if(t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST){
-         popupList.finalize();
-         }
-         }
+     @Override
+     public void handle(WindowEvent t) {
+     if(t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST){
+     popupList.finalize();
+     }
+     }
 
-         });
-         */
-    //border.setCenter();
+     });
+     */
+        //border.setCenter();
     //
-  }
-
-  //protected textItemInput textInput;
-  //protected textItemView textView;
-  protected enum mode {
-
-    Play,
-    Edit
   }
 
 }
