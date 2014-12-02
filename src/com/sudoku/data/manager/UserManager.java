@@ -29,6 +29,10 @@ public final class UserManager { // This is the manager for users.
     this.distantUsers = new ArrayList<>(); //
   }
 
+  public void save(){ // Serialize and save localUsers, we do not keep track of distantUsers
+      // TO BE COMPLETED   
+  }
+  
   public final static UserManager getInstance() {
     if (instance == null) {
       synchronized (UserManager.class) {
@@ -40,37 +44,28 @@ public final class UserManager { // This is the manager for users.
     return instance;
   }
 
-  public void save() { // Serialize and save localUsers, we do not keep track of distantUsers
-
-    // TO BE COMPLETED
-
-  }
-
   public User getLoggedUser() {
     return this.loggedUser;
   }
 
-  public List<User> getLocalUsers() {
+  public List<User> getLocalUsers() { 
     return this.localUsers;
   }
-
-  public List<User> getDistantUsers() {
+  public List<User> getDistantUsers() { 
     return this.distantUsers;
   }
-
+  
   public boolean addLocalUser(User u) {
     return this.localUsers.add(u);
   }
-
   public boolean addDistantUser(User u) {
     return this.distantUsers.add(u);
   }
-
+  
 
   public boolean removeLocalUser(User u) {
     return localUsers.remove(u);
   }
-
   public boolean removeDistantUser(User u) {
     return distantUsers.remove(u);
   }
@@ -83,7 +78,7 @@ public final class UserManager { // This is the manager for users.
       {
         String toBeHashed = password + u.getSalt();
         if (new String(Base64.encode(
-            mDigest.digest(toBeHashed.getBytes("UTF-8"))))
+              mDigest.digest(toBeHashed.getBytes("UTF-8"))))
             .equals(u.getPassword())) { //If the hash of pwd+salt is good
           loggedUser = u; // If the password is correct, log the user
           return u; // and return the identified user
@@ -92,11 +87,12 @@ public final class UserManager { // This is the manager for users.
     }
     return null; // If we didn't manage to authenticate
   }
-
-  public void logoff() {
-    this.loggedUser = null;
+  
+  public void logoff()
+  {
+      this.loggedUser=null;
   }
-
+  
 
   public User createUser() {
     return null;
@@ -106,6 +102,19 @@ public final class UserManager { // This is the manager for users.
     return null; // Appeler com
   }
 
+  
+  public boolean exportLoggedUserToFile(String path) {
+        // TO BE COMPLETED
+        // Serialize this.loggedUser and write in a file.
+    return true;
 }
+  
+  public User importUser(String path) {
+        // TO BE COMPLETED
+        // Derialize from a file and add to local users
+    return null;
+}  
 
        
+}
+
