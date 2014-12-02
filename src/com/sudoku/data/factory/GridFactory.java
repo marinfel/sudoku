@@ -1,5 +1,6 @@
 package com.sudoku.data.factory;
 
+import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.EmptyCell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
@@ -23,7 +24,7 @@ public class GridFactory {
   }
 
   public static Grid generateRandomGrid(int nbEmptyCells) {
-    Grid g = new Grid();
+    Grid g = new Grid("", UserManager.getInstance().getLoggedUser());
     byte x, y;
     Random r = new Random(System.currentTimeMillis());
     for (byte i = 1; i < 10; i++) {

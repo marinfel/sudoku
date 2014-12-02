@@ -39,7 +39,7 @@ public final class CommunicationManager {
     this.uuid = uuid;
     this.login = login;
     this.connectedIps = connectedIps;
-    this.localIp = nodeExplorerServer.getServerInetAddresses();
+    this.localIp = nodeExplorerServer.getInetAddress();
     startServer();
   }
 
@@ -157,7 +157,8 @@ public final class CommunicationManager {
     return null;
   }
 
-  public void pushCommentAndSync(Comment newComment, Grid gridToSync) { }
+  public void pushCommentAndSync(Comment newComment, Grid gridToSync) {
+  }
 
   public ArrayList<String> getConnectedIps() {
     return connectedIps;

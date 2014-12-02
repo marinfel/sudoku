@@ -9,6 +9,8 @@ package com.sudoku.main.view;
 import com.sudoku.data.manager.UserManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.sudoku.data.sample.DataSample;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,22 +26,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import com.sudoku.data.sample.DataSample;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  *
  * @author JULIANC
  */
 public class FXMLDocumentController implements Initializable, ControlledScreen {
-    
+
     //Data
     public DataSample instance;
     public UserManager instUserM;
-        
+
     @FXML   private Label userName;
     @FXML   private ImageView avatar;
     @FXML   private Button connexion;
-    
+
     // Partie JulianC
     ScreensController myController;
     @FXML   private StackPane panes;
@@ -58,10 +62,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     @FXML   private Button newGroup;
     @FXML   private TextField nameGroup;
     @FXML   private Button delGroup;
-        
+
     public static final ObservableList groups = FXCollections.observableArrayList();
     public static final ObservableList users  = FXCollections.observableArrayList();
-    
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,11 +74,11 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         instance = new DataSample();
         System.out.println("test data"+instance.a.getPseudo());
         userName.setText("Utilisateur : "+instUserM.getLoggedUser());
-        
+
         assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-        assert paneUser != null : "fx:id=\"paneUser\" was not injected: check your FXML file 'FXMLDocument.fxml'.";        
+        assert paneUser != null : "fx:id=\"paneUser\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert paneGroup != null : "fx:id=\"paneGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert listGroups != null : "fx:id=\"listGroups\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert listUsers != null : "fx:id=\"listUsers\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -86,9 +90,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-                
+
         //Ajouter des éléments aux listes groupes et utilisateurs
-        groups.addAll("Global", "Amis", "Camarades");        
+        groups.addAll("Global", "Amis", "Camarades");
         //groups.addAll(UserManager.getInstance().getConnectedUsers());
         users.addAll("julian", "user2", "user3");
         //users.addAll(UserManager.getInstance().getConnectedUsers());
@@ -96,18 +100,19 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         listUsers.setItems(users);
         //Méthode Bouton "Aller aux grilles"
         goToGrids.setOnAction(new EventHandler<ActionEvent>(){
-            @Override public void handle(ActionEvent e){   
+            @Override public void handle(ActionEvent e){
 //                Dialogs dialog = null;
 //                dialog.title("Message");
 //                dialog.masthead("Message d'information");
 //                dialog.message("Vous allez aux grilles de l'utilisateur: "+user.getText());
 //                dialog.showInformation();
-            }
-        });
-        
-        //Méthode Bouton "Supprimer du groupe"
-        delFromGroup.setOnAction(new EventHandler<ActionEvent>(){
-            @Override public void handle(ActionEvent e){                           
+      }
+    });
+
+    //Méthode Bouton "Supprimer du groupe"
+    delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
 //                dialog.owner(null);
 //                dialog.title("Confirm Dialog");
 //                dialog.message("Voulez-vous supprimer l'utilisateur '"+user.getText()+"' du groupe '"+nameGroup.getText()+"'?");
@@ -119,22 +124,24 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                } else {
 //                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
 //                }
-            }
-        });
-        
-        //Méthode Bouton "Nouveau Groupe"
-        newGroup.setOnAction(new EventHandler<ActionEvent>(){
-            @Override public void handle(ActionEvent e){                
+      }
+    });
+
+    //Méthode Bouton "Nouveau Groupe"
+    newGroup.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
 //                dialog.title("Message");
 //                dialog.masthead("Message d'information");
 //                dialog.message("Créer un nouveau groupe");
 //                dialog.showInformation();
-            }
-        });
-        
-        //Méthode Bouton "Supprimer Groupe"
-        delGroup.setOnAction(new EventHandler<ActionEvent>(){
-            @Override public void handle(ActionEvent e){   
+      }
+    });
+
+    //Méthode Bouton "Supprimer Groupe"
+    delGroup.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
 //                dialog.owner(null);
 //                dialog.title("Confirm Dialog");
 //                dialog.message("Voulez-vous supprimer le groupe '"+nameGroup.getText()+"'?");
@@ -146,61 +153,63 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                } else {
 //                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
 //                }
-            }
+      }
+    });
+
+    //Méthode ListView Groupes -> OnClick
+    listGroups.getSelectionModel().selectedItemProperty().addListener(
+        new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> ov,
+                              String old_val, String new_val) {
+            nombUsers.setText(listUsers.getItems().size() + " utilisateurs connectés");
+            nameGroup.setText(new_val);
+            paneGroup.setVisible(true);
+            paneUser.setVisible(false);
+          }
         });
-                      
-        //Méthode ListView Groupes -> OnClick
-        listGroups.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String old_val, String new_val) {
-                    nombUsers.setText(listUsers.getItems().size()+" utilisateurs connectés");
-                    nameGroup.setText(new_val);
-                    paneGroup.setVisible(true);    
-                    paneUser.setVisible(false);    
-            }
-        }); 
-        
-        //Méthode ListView Groupes -> OnClick
-        listGroups.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String old_val, String new_val) {
-                    nombUsers.setText(listUsers.getItems().size()+" utilisateurs connectés");
-                    nameGroup.setText(new_val);
-                    paneGroup.setVisible(true);    
-                    paneUser.setVisible(false);    
-            }
-        });       
-        
-        //Méthode ListView Utilisateurs -> OnClick
-        listUsers.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<String>() {
-                public void changed(ObservableValue<? extends String> ov, 
-                    String old_val, String new_val) {
-                    user.setText(new_val);
-                    paneUser.setVisible(true);
-                    paneGroup.setVisible(false);                            
-            }
+
+    //Méthode ListView Groupes -> OnClick
+    listGroups.getSelectionModel().selectedItemProperty().addListener(
+        new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> ov,
+                              String old_val, String new_val) {
+            nombUsers.setText(listUsers.getItems().size() + " utilisateurs connectés");
+            nameGroup.setText(new_val);
+            paneGroup.setVisible(true);
+            paneUser.setVisible(false);
+          }
         });
-    }    
-    
-    @Override
-    public void setScreenParents(ScreensController screenParent) {
-        myController = screenParent;
-    }
-    
-    @FXML
-    private void goToLogin(ActionEvent event) {
-        myController.setScreen(SudukoIHM.loginID);
-    }   
-    @FXML
-    private void goToFillGrid(ActionEvent event) {
-        myController.setScreen(SudukoIHM.fillGridID);
-    } 
-    @FXML
-    private void goToFromFullGrid(ActionEvent event) {
-        myController.setScreen(SudukoIHM.fromFullGridID);
-    }  
+
+    //Méthode ListView Utilisateurs -> OnClick
+    listUsers.getSelectionModel().selectedItemProperty().addListener(
+        new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> ov,
+                              String old_val, String new_val) {
+            user.setText(new_val);
+            paneUser.setVisible(true);
+            paneGroup.setVisible(false);
+          }
+        });
+  }
+
+  @Override
+  public void setScreenParents(ScreensController screenParent) {
+    myController = screenParent;
+  }
+
+  @FXML
+  private void goToLogin(ActionEvent event) {
+    myController.setScreen(SudukoIHM.loginID);
+  }
+
+  @FXML
+  private void goToFillGrid(ActionEvent event) {
+    myController.setScreen(SudukoIHM.fillGridID);
+  }
+
+  @FXML
+  private void goToFromFullGrid(ActionEvent event) {
+    myController.setScreen(SudukoIHM.fromFullGridID);
+  }
 }
 

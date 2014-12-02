@@ -7,9 +7,10 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class User extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String pseudo;
+  @Deprecated public java.lang.String salt;
   @Deprecated public java.lang.String birthDate;
   @Deprecated public java.lang.String profilePicturePath;
   @Deprecated public java.lang.String createDate;
@@ -26,8 +27,9 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public User(java.lang.String pseudo, java.lang.String birthDate, java.lang.String profilePicturePath, java.lang.String createDate, java.lang.String updateDate, java.lang.String ipAddress) {
+  public User(java.lang.String pseudo, java.lang.String salt, java.lang.String birthDate, java.lang.String profilePicturePath, java.lang.String createDate, java.lang.String updateDate, java.lang.String ipAddress) {
     this.pseudo = pseudo;
+    this.salt = salt;
     this.birthDate = birthDate;
     this.profilePicturePath = profilePicturePath;
     this.createDate = createDate;
@@ -40,11 +42,12 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return pseudo;
-    case 1: return birthDate;
-    case 2: return profilePicturePath;
-    case 3: return createDate;
-    case 4: return updateDate;
-    case 5: return ipAddress;
+    case 1: return salt;
+    case 2: return birthDate;
+    case 3: return profilePicturePath;
+    case 4: return createDate;
+    case 5: return updateDate;
+    case 6: return ipAddress;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -53,11 +56,12 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: pseudo = (java.lang.String)value$; break;
-    case 1: birthDate = (java.lang.String)value$; break;
-    case 2: profilePicturePath = (java.lang.String)value$; break;
-    case 3: createDate = (java.lang.String)value$; break;
-    case 4: updateDate = (java.lang.String)value$; break;
-    case 5: ipAddress = (java.lang.String)value$; break;
+    case 1: salt = (java.lang.String)value$; break;
+    case 2: birthDate = (java.lang.String)value$; break;
+    case 3: profilePicturePath = (java.lang.String)value$; break;
+    case 4: createDate = (java.lang.String)value$; break;
+    case 5: updateDate = (java.lang.String)value$; break;
+    case 6: ipAddress = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -75,6 +79,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    */
   public void setPseudo(java.lang.String value) {
     this.pseudo = value;
+  }
+
+  /**
+   * Gets the value of the 'salt' field.
+   */
+  public java.lang.String getSalt() {
+    return salt;
+  }
+
+  /**
+   * Sets the value of the 'salt' field.
+   * @param value the value to set.
+   */
+  public void setSalt(java.lang.String value) {
+    this.salt = value;
   }
 
   /**
@@ -174,6 +193,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     implements org.apache.avro.data.RecordBuilder<User> {
 
     private java.lang.String pseudo;
+    private java.lang.String salt;
     private java.lang.String birthDate;
     private java.lang.String profilePicturePath;
     private java.lang.String createDate;
@@ -192,25 +212,29 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
         this.pseudo = data().deepCopy(fields()[0].schema(), other.pseudo);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.birthDate)) {
-        this.birthDate = data().deepCopy(fields()[1].schema(), other.birthDate);
+      if (isValidValue(fields()[1], other.salt)) {
+        this.salt = data().deepCopy(fields()[1].schema(), other.salt);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.profilePicturePath)) {
-        this.profilePicturePath = data().deepCopy(fields()[2].schema(), other.profilePicturePath);
+      if (isValidValue(fields()[2], other.birthDate)) {
+        this.birthDate = data().deepCopy(fields()[2].schema(), other.birthDate);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.createDate)) {
-        this.createDate = data().deepCopy(fields()[3].schema(), other.createDate);
+      if (isValidValue(fields()[3], other.profilePicturePath)) {
+        this.profilePicturePath = data().deepCopy(fields()[3].schema(), other.profilePicturePath);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.updateDate)) {
-        this.updateDate = data().deepCopy(fields()[4].schema(), other.updateDate);
+      if (isValidValue(fields()[4], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[4].schema(), other.createDate);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.ipAddress)) {
-        this.ipAddress = data().deepCopy(fields()[5].schema(), other.ipAddress);
+      if (isValidValue(fields()[5], other.updateDate)) {
+        this.updateDate = data().deepCopy(fields()[5].schema(), other.updateDate);
         fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.ipAddress)) {
+        this.ipAddress = data().deepCopy(fields()[6].schema(), other.ipAddress);
+        fieldSetFlags()[6] = true;
       }
     }
     
@@ -221,25 +245,29 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
         this.pseudo = data().deepCopy(fields()[0].schema(), other.pseudo);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.birthDate)) {
-        this.birthDate = data().deepCopy(fields()[1].schema(), other.birthDate);
+      if (isValidValue(fields()[1], other.salt)) {
+        this.salt = data().deepCopy(fields()[1].schema(), other.salt);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.profilePicturePath)) {
-        this.profilePicturePath = data().deepCopy(fields()[2].schema(), other.profilePicturePath);
+      if (isValidValue(fields()[2], other.birthDate)) {
+        this.birthDate = data().deepCopy(fields()[2].schema(), other.birthDate);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.createDate)) {
-        this.createDate = data().deepCopy(fields()[3].schema(), other.createDate);
+      if (isValidValue(fields()[3], other.profilePicturePath)) {
+        this.profilePicturePath = data().deepCopy(fields()[3].schema(), other.profilePicturePath);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.updateDate)) {
-        this.updateDate = data().deepCopy(fields()[4].schema(), other.updateDate);
+      if (isValidValue(fields()[4], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[4].schema(), other.createDate);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.ipAddress)) {
-        this.ipAddress = data().deepCopy(fields()[5].schema(), other.ipAddress);
+      if (isValidValue(fields()[5], other.updateDate)) {
+        this.updateDate = data().deepCopy(fields()[5].schema(), other.updateDate);
         fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.ipAddress)) {
+        this.ipAddress = data().deepCopy(fields()[6].schema(), other.ipAddress);
+        fieldSetFlags()[6] = true;
       }
     }
 
@@ -268,6 +296,31 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       return this;
     }
 
+    /** Gets the value of the 'salt' field */
+    public java.lang.String getSalt() {
+      return salt;
+    }
+    
+    /** Sets the value of the 'salt' field */
+    public com.sudoku.comm.generated.User.Builder setSalt(java.lang.String value) {
+      validate(fields()[1], value);
+      this.salt = value;
+      fieldSetFlags()[1] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'salt' field has been set */
+    public boolean hasSalt() {
+      return fieldSetFlags()[1];
+    }
+    
+    /** Clears the value of the 'salt' field */
+    public com.sudoku.comm.generated.User.Builder clearSalt() {
+      salt = null;
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
     /** Gets the value of the 'birthDate' field */
     public java.lang.String getBirthDate() {
       return birthDate;
@@ -275,21 +328,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'birthDate' field */
     public com.sudoku.comm.generated.User.Builder setBirthDate(java.lang.String value) {
-      validate(fields()[1], value);
+      validate(fields()[2], value);
       this.birthDate = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[2] = true;
       return this; 
     }
     
     /** Checks whether the 'birthDate' field has been set */
     public boolean hasBirthDate() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[2];
     }
     
     /** Clears the value of the 'birthDate' field */
     public com.sudoku.comm.generated.User.Builder clearBirthDate() {
       birthDate = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -300,21 +353,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'profilePicturePath' field */
     public com.sudoku.comm.generated.User.Builder setProfilePicturePath(java.lang.String value) {
-      validate(fields()[2], value);
+      validate(fields()[3], value);
       this.profilePicturePath = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[3] = true;
       return this; 
     }
     
     /** Checks whether the 'profilePicturePath' field has been set */
     public boolean hasProfilePicturePath() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[3];
     }
     
     /** Clears the value of the 'profilePicturePath' field */
     public com.sudoku.comm.generated.User.Builder clearProfilePicturePath() {
       profilePicturePath = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[3] = false;
       return this;
     }
 
@@ -325,21 +378,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'createDate' field */
     public com.sudoku.comm.generated.User.Builder setCreateDate(java.lang.String value) {
-      validate(fields()[3], value);
+      validate(fields()[4], value);
       this.createDate = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[4] = true;
       return this; 
     }
     
     /** Checks whether the 'createDate' field has been set */
     public boolean hasCreateDate() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[4];
     }
     
     /** Clears the value of the 'createDate' field */
     public com.sudoku.comm.generated.User.Builder clearCreateDate() {
       createDate = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[4] = false;
       return this;
     }
 
@@ -350,21 +403,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'updateDate' field */
     public com.sudoku.comm.generated.User.Builder setUpdateDate(java.lang.String value) {
-      validate(fields()[4], value);
+      validate(fields()[5], value);
       this.updateDate = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[5] = true;
       return this; 
     }
     
     /** Checks whether the 'updateDate' field has been set */
     public boolean hasUpdateDate() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[5];
     }
     
     /** Clears the value of the 'updateDate' field */
     public com.sudoku.comm.generated.User.Builder clearUpdateDate() {
       updateDate = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[5] = false;
       return this;
     }
 
@@ -375,21 +428,21 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'ipAddress' field */
     public com.sudoku.comm.generated.User.Builder setIpAddress(java.lang.String value) {
-      validate(fields()[5], value);
+      validate(fields()[6], value);
       this.ipAddress = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[6] = true;
       return this; 
     }
     
     /** Checks whether the 'ipAddress' field has been set */
     public boolean hasIpAddress() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[6];
     }
     
     /** Clears the value of the 'ipAddress' field */
     public com.sudoku.comm.generated.User.Builder clearIpAddress() {
       ipAddress = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -398,11 +451,12 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       try {
         User record = new User();
         record.pseudo = fieldSetFlags()[0] ? this.pseudo : (java.lang.String) defaultValue(fields()[0]);
-        record.birthDate = fieldSetFlags()[1] ? this.birthDate : (java.lang.String) defaultValue(fields()[1]);
-        record.profilePicturePath = fieldSetFlags()[2] ? this.profilePicturePath : (java.lang.String) defaultValue(fields()[2]);
-        record.createDate = fieldSetFlags()[3] ? this.createDate : (java.lang.String) defaultValue(fields()[3]);
-        record.updateDate = fieldSetFlags()[4] ? this.updateDate : (java.lang.String) defaultValue(fields()[4]);
-        record.ipAddress = fieldSetFlags()[5] ? this.ipAddress : (java.lang.String) defaultValue(fields()[5]);
+        record.salt = fieldSetFlags()[1] ? this.salt : (java.lang.String) defaultValue(fields()[1]);
+        record.birthDate = fieldSetFlags()[2] ? this.birthDate : (java.lang.String) defaultValue(fields()[2]);
+        record.profilePicturePath = fieldSetFlags()[3] ? this.profilePicturePath : (java.lang.String) defaultValue(fields()[3]);
+        record.createDate = fieldSetFlags()[4] ? this.createDate : (java.lang.String) defaultValue(fields()[4]);
+        record.updateDate = fieldSetFlags()[5] ? this.updateDate : (java.lang.String) defaultValue(fields()[5]);
+        record.ipAddress = fieldSetFlags()[6] ? this.ipAddress : (java.lang.String) defaultValue(fields()[6]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

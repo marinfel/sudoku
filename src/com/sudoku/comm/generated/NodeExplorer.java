@@ -27,12 +27,14 @@ public interface NodeExplorer {
     /**
      * Discover a distant node
      */
-    void discoverNode(com.sudoku.comm.generated.Message sentMessage, org.apache.avro.ipc.Callback<com.sudoku.comm.generated.Message> callback) throws java.io.IOException;    public static final org.apache.avro.Protocol PROTOCOL = com.sudoku.comm.generated.NodeExplorer.PROTOCOL;
+    void discoverNode(com.sudoku.comm.generated.Message sentMessage, org.apache.avro.ipc.Callback<com.sudoku.comm.generated.Message> callback) throws java.io.IOException;
 
     /**
      * Send a disconnect message
      */
-    void disconnect(java.lang.String ip, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    void disconnect(java.lang.String ip, org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;    public static final org.apache.avro.Protocol PROTOCOL = com.sudoku.comm.generated.NodeExplorer.PROTOCOL;
+
+
 
 
   }

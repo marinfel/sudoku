@@ -6,6 +6,7 @@
 
 package com.sudoku.main.view;
 
+
 import com.sudoku.data.manager.UserManager;
 import java.io.File;
 import java.net.URL;
@@ -20,6 +21,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -55,11 +59,11 @@ public class LoginController implements Initializable, ControlledScreen {
     @FXML
     private void goToProgram(ActionEvent event) {
         myController.setScreen(SudukoIHM.programID);
-        try {
+        /*try {
             instUserM.authenticate(user.getText(), passwd.getText());            
         } catch (Exception ex) {
             System.out.println("Erreur de loggin");
-        }                
+        } */               
     }   
     
     @FXML
@@ -73,6 +77,5 @@ public class LoginController implements Initializable, ControlledScreen {
         chooser.setTitle("Open File");
         File file = chooser.showOpenDialog(new Stage());
         //fileText.setText(""+file);        
-    }   
-    
+    }       
 }

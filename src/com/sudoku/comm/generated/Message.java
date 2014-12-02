@@ -15,6 +15,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
   public java.lang.String login;
   @Deprecated
   public java.util.List<java.lang.String> listIps;
+
   /**
    * Default constructor.  Note that this does not initialize fields
    * to their default values from the schema.  If that is desired then
