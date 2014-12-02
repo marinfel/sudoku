@@ -127,14 +127,16 @@ public class Grid {
     this.title = titre;
   }
 
-  public int getMeanGrades() {
+  public int getMeanGrades() { //Give the mean, or 0 if there is no grades
     int i = 0, result = 0;
     for (Comment comment : comments) {
       result += comment.getGrade();
       i++;
     }
-
-    return result / i;
+    if(i!=0)
+        return result / i;
+    else
+        return 0;
   }
 
   public UUID getId() {
