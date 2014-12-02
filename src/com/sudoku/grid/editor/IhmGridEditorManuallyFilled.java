@@ -6,6 +6,7 @@
 package com.sudoku.grid.editor;
 
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,8 +18,8 @@ import javafx.scene.layout.VBox;
  */
 public class IhmGridEditorManuallyFilled extends IhmGridEditor {
 
-  public IhmGridEditorManuallyFilled(String title, Flags flagStatus, Grid gr) {
-    super(title, flagStatus, gr);
+  public IhmGridEditorManuallyFilled() {
+    super(IhmGridLines.ALL_EDITABLE, new Grid());
   }
 
 }

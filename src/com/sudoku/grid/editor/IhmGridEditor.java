@@ -5,6 +5,7 @@
  */
 package com.sudoku.grid.editor;
 
+import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.Tag;
@@ -44,8 +45,8 @@ public abstract class IhmGridEditor extends IhmGridView {
   private Button cancelBtn;
   private Flags flag;
 
-  public IhmGridEditor(String ttl, Flags flagStatus, Grid gr) {
-    super(ttl, flagStatus, gr);
+  public IhmGridEditor(Flags flagStatus, Grid gr) {
+    super(flagStatus, gr);
 
     // bouton d'enregistrement de la grille
     editTitle = new TextField();
@@ -105,8 +106,8 @@ public abstract class IhmGridEditor extends IhmGridView {
         while (i < cells.length) {
           j = 0;
           while (j < cells[i].length && count < 17) {
-            if ((flag.equals(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
-                    || (flag.equals(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
+            if ((flag.contains(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
+                    || (flag.contains(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
               count++;
             }
             j++;
@@ -174,8 +175,10 @@ public abstract class IhmGridEditor extends IhmGridView {
             System.out.println(tag.getName());
           }
 
-          //Envoie nouvelle grid a data
-          // return grid;
+          // add a grid to GridManager
+          GridManager gm = GridManager.getInstance();
+          gm.addGrid(grid);
+
           //Envoie event a IhmMain pour indiquer la fin de l'edition
         }
       }

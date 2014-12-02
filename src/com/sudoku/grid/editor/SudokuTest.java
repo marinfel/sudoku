@@ -5,6 +5,7 @@
  */
 package com.sudoku.grid.editor;
 
+import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import javafx.application.Application;
@@ -23,19 +24,11 @@ public class SudokuTest extends Application {
     IhmGridEditorRandomlyFilled ihm_test;
     IhmGridEditorManuallyFilled ihm_test2;
 
-    //Grid gr = generateRandomGrid();
-    Grid g = new Grid();
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        g.setFixedCell((byte) i, (byte) j, (byte) 8);
-      }
-    }
+    ihm_test = new IhmGridEditorRandomlyFilled();
+    ihm_test2 = new IhmGridEditorManuallyFilled();
 
-    ihm_test = new IhmGridEditorRandomlyFilled("test randomly filled", IhmGridLines.ALL_VIEW, g);
-    ihm_test2 = new IhmGridEditorManuallyFilled("test manually filled", IhmGridLines.ALL_EDITABLE, g);
-
-    Scene scene = new Scene(ihm_test, 800, 1000);
-    //Scene scene = new Scene(ihm_test2, 800, 1000);
+    //Scene scene = new Scene(ihm_test, 800, 1000);
+    Scene scene = new Scene(ihm_test2, 800, 1000);
 
     primaryStage.setTitle("Sudoku Editor");
     primaryStage.setScene(scene);
