@@ -29,6 +29,10 @@ public final class UserManager { // This is the manager for users.
     this.distantUsers = new ArrayList<>(); //
   }
 
+  public void save(){ // Serialize and save localUsers, we do not keep track of distantUsers
+      // TO BE COMPLETED   
+  }
+  
   public final static UserManager getInstance() {
     if (instance == null) {
       synchronized (UserManager.class) {
@@ -98,6 +102,19 @@ public final class UserManager { // This is the manager for users.
     return null; // Appeler com
   }
 
+  
+  public boolean exportLoggedUserToFile(String path) {
+        // TO BE COMPLETED
+        // Serialize this.loggedUser and write in a file.
+    return true;
 }
+  
+  public User importUser(String path) {
+        // TO BE COMPLETED
+        // Derialize from a file and add to local users
+    return null;
+}  
 
        
+}
+

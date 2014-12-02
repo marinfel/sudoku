@@ -14,23 +14,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * @author mecton08
  */
 public abstract class IhmGridView extends IhmGridLayout {
 
-    //protected textItemInput textInput;
-  //protected textItemView textView;
-  protected enum mode {
-
-    Play,
-    Edit
-  }
-
   protected final BorderPane border;
 
-  public IhmGridView(String title, Flags flagStatus, Grid gr) {
-    super(title, flagStatus, gr);
+  public IhmGridView(Flags flagStatus, Grid gr) {
+    super(flagStatus, gr);
     border = new BorderPane();
     getChildren().add(border);
     HBox topHBox = new HBox();
@@ -46,7 +37,7 @@ public abstract class IhmGridView extends IhmGridLayout {
     border.setRight(rightVBox);
     border.setCenter(centerVBox);
 
-        //VBox centerLayout = (VBox)border.getCenter();
+    //VBox centerLayout = (VBox)border.getCenter();
     //centerLayout.getChildren().add(sudokuGrid);
     centerVBox.getChildren().add(gridLines);
 
@@ -66,8 +57,16 @@ public abstract class IhmGridView extends IhmGridLayout {
 
      });
      */
-        //border.setCenter();
+    //border.setCenter();
     //
+  }
+
+  //protected textItemInput textInput;
+  //protected textItemView textView;
+  protected enum mode {
+
+    Play,
+    Edit
   }
 
 }

@@ -27,14 +27,13 @@ public abstract class IhmGridLayout extends StackPane {
   protected IhmGridLines gridLines;
 
   //Grid grille;
-
   public IhmGridLayout() {
   }
 
-  public IhmGridLayout(String ttl, Flags flagStatus, Grid gr) {
+  public IhmGridLayout(Flags flagStatus, Grid gr) {
     grid = gr;
     gridLines = new IhmGridLines(grid, 500, flagStatus);
-    title = new Label(ttl);
+    title = new Label("");
     title.setFont(Font.font("Verdana", sizeTitle));
     getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);

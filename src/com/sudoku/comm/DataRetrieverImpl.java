@@ -45,7 +45,7 @@ public class DataRetrieverImpl implements DataRetriever {
         for (byte j = 0; j < matrix[0].length; j++) {
           if (matrix[i][j] instanceof FixedCell) {
             resultMatrix.get(i).add(j,
-                (int)((FixedCell) matrix[i][j]).getValue());
+                (int) ((FixedCell) matrix[i][j]).getValue());
           } else {
             resultMatrix.get(i).add(j, null);
           }
@@ -55,7 +55,7 @@ public class DataRetrieverImpl implements DataRetriever {
       grids.add(Grid.newBuilder()
           .setCreateDate(grid.getCreateDate().toString())
           .setUpdateDate(grid.getUpdateDate().toString())
-          .setId(grid.getId())
+          .setId(grid.getId().toString())
           .setTitle(grid.getTitle())
           .setDescription(grid.getDescription())
           .setDifficulty(grid.getDifficulty())
