@@ -45,7 +45,6 @@ public class DiscoverNodesTimerTask extends TimerTask {
     Iterator<String> itr = ipsToConfirm.keySet().iterator();
 
     while (itr.hasNext()) {
-      //ArrayList<String> ipToShare = (ArrayList<String>) ipsConnected.keySet();
       ArrayList<String> ipToShare = new ArrayList<String>(ipsConnected.keySet());
       
       ipToShare.add(localIp);
