@@ -137,12 +137,8 @@ public class Grid {
     return result / i;
   }
 
-  public int getId() {
+  public UUID getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getDescription() {
@@ -193,7 +189,7 @@ public class Grid {
     this.createUser = createUser;
   }
 
-  public Timestamp getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
@@ -201,7 +197,7 @@ public class Grid {
     this.createDate = createDate;
   }
 
-  public Timestamp getUpdateDate() {
+  public Date getUpdateDate() {
     return updateDate;
   }
 
