@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 // Class representing a connection to a remote user
 public class AvroConnectionManager extends ConnectionManager {
-  private final static Long CONNECTION_TIME_OUT = new Long(1000);
+  private final static Long CONNECTION_TIME_OUT = 1000L;
 
   private NettyTransceiver client;
   private NodeExplorer explorer;
@@ -24,15 +24,15 @@ public class AvroConnectionManager extends ConnectionManager {
     super(ip);
   }
 
-
-  public void openConnection()
-     throws OfflineUserException {
+  public void openConnection() throws OfflineUserException {
     try {
-      client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT), CONNECTION_TIME_OUT);
+      client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT),
+          CONNECTION_TIME_OUT);
       explorer = (NodeExplorer)
           SpecificRequestor.getClient(NodeExplorer.class, client);
+    } catch(IOException exc) {
+      throw new OfflineUserException();
     }
-    catch(IOException exc) {throw new OfflineUserException();}
     isConnected = true;
   }
 
@@ -40,14 +40,16 @@ public class AvroConnectionManager extends ConnectionManager {
      throws ConnectionClosedException, OfflineUserException {
     super.getConnectedIps(newConnectedIps);
     CommunicationManager cm = CommunicationManager.getInstance();
-    Message userCredentials = new Message(cm.getUuid(), cm.getLogin(), newConnectedIps);
+    Message userCredentials =
+        new Message(cm.getUuid(), cm.getLogin(), newConnectedIps);
     List<String> res;
 
     try {
       Message receivedMessage = explorer.discoverNode(userCredentials);
       res = receivedMessage.getListIps();
+    } catch (AvroRemoteException exc) {
+      throw new OfflineUserException();
     }
-    catch (AvroRemoteException exc) {throw new OfflineUserException();}
     return res;
   }
 
@@ -58,15 +60,17 @@ public class AvroConnectionManager extends ConnectionManager {
       CommunicationManager cm = CommunicationManager.getInstance();
       Message publishMessage = new Message(cm.getUuid(), cm.getLogin(), ips);
       explorer.publishIpsToConfirm(publishMessage);
+    } catch (AvroRemoteException exc) {
+      throw new OfflineUserException();
     }
-    catch (AvroRemoteException exc) {throw new OfflineUserException();}
   }
 
   public void closeConnection() throws OfflineUserException {
      try {
       explorer.disconnect(CommunicationManager.getInstance().getLocalIp());
-    }
-    catch (AvroRemoteException exc) {throw new OfflineUserException();}
+    } catch (AvroRemoteException exc) {
+       throw new OfflineUserException();
+     }
     client.close();
     client = null;
     isConnected = false;
