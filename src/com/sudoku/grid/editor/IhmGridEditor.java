@@ -105,8 +105,8 @@ public abstract class IhmGridEditor extends IhmGridView {
         while (i < cells.length) {
           j = 0;
           while (j < cells[i].length && count < 17) {
-            if ((flag.equals(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
-                    || (flag.equals(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
+            if ((flag.contains(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
+                    || (flag.contains(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
               count++;
             }
             j++;
