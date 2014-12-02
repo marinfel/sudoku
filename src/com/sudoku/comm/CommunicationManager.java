@@ -121,8 +121,32 @@ public final class CommunicationManager {
 
   }
 
-  public void fillIpToConfirm(HashMap<String, ConnectionManager> data) {
+  public void addIpToConfirm(ArrayList<String> listIp) {
+    if(ipToConfirm == null){
+      ipToConfirm = new HashMap();
+    }
 
+    Iterator<String> itr = listIp.iterator();
+    while(itr.hasNext()) {
+      addIpToConfirm(itr.next());
+    }
+  }
+
+  public void addIpToConfirm(String ip) {
+    if(ipToConfirm == null){
+      ipToConfirm = new HashMap();
+    }
+
+    if(!ipToConfirm.containsKey(ip)) {
+      ConnectionManager connectionManagerTmp = new ConnectionManager(ip);
+      ipToConfirm.put(ip, connectionManagerTmp);      
+    }
+    else {
+      if(ipToConfirm.get(ip) == null) {
+          ConnectionManager connectionManagerTmp = new ConnectionManager(ip);
+          ipToConfirm.put(ip, connectionManagerTmp);
+      }
+    }
   }
 
   public void disconnect() throws IOException {
