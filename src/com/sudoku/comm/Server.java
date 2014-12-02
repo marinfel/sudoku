@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public abstract class Server {
-  protected final int EXPLORER_PORT = 11023;
   protected String localIp;
   protected static org.apache.avro.ipc.Server server;
   private Logger logger = LoggerFactory.getLogger(Server.class);
