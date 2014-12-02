@@ -19,6 +19,15 @@ public class Grid {
   private Date updateDate;
 
   public Grid() {
+    comments = new ArrayList<>();
+    tags = new ArrayList<>();
+
+    grid = new Cell[9][9];
+    for(byte i = 0; i < 9; i++){
+        for(byte j = 0; j < 9; j++){
+            grid[i][j] = new EmptyCell(i, j);
+        }
+    }
   }
 
   public Grid(String t, User u) {
