@@ -21,14 +21,14 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  private Grid(){}
+  public Grid(){}
   
   public Grid(String t, User u) {
-    id=UUID.randomUUID();
-    title=t;
-    description="";
-    difficulty=0;
-    published=false;
+    id = UUID.randomUUID();
+    title = t;
+    description = "";
+    difficulty = 0;
+    published = false;
     comments = new ArrayList<>();
     tags = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class Grid {
 
   public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
     Grid resultGrid = new Grid();
-    resultGrid.id = grid.getId();
+    resultGrid.id = UUID.fromString(grid.getId());
     resultGrid.title = grid.getTitle();
     resultGrid.description = grid.getDescription();
     resultGrid.difficulty = grid.getDifficulty();
@@ -139,6 +139,10 @@ public class Grid {
 
   public UUID getId() {
     return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public String getDescription() {

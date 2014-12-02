@@ -55,7 +55,7 @@ public class DataRetrieverImpl implements DataRetriever {
       grids.add(Grid.newBuilder()
           .setCreateDate(grid.getCreateDate().toString())
           .setUpdateDate(grid.getUpdateDate().toString())
-          .setId(grid.getId())
+          .setId(grid.getId().toString())
           .setTitle(grid.getTitle())
           .setDescription(grid.getDescription())
           .setDifficulty(grid.getDifficulty())
