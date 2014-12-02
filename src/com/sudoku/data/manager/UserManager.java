@@ -19,12 +19,14 @@ public final class UserManager { // This is the manager for users.
   * Attributs
   */
   private static volatile UserManager instance = null;
-  private User loggedUser;
-  private List<User> users;
+  private User loggedUser; // The user actualy logged on this machine
+  private List<User> localUsers; // Local Users
+  private List<User> distantUsers; // Users connected but not on this machine
 
   private UserManager() {
     this.loggedUser = null;
-    this.users = new ArrayList<User>(); //Will need to load and deserialise
+    this.localUsers = new ArrayList<>(); // Will need to load and deserialise
+    this.distantUsers = new ArrayList<>(); //
   }
 
   public final static UserManager getInstance() {
@@ -42,23 +44,33 @@ public final class UserManager { // This is the manager for users.
     return this.loggedUser;
   }
 
-  public List<User> getAllUsers() {
-    return this.users;
+  public List<User> getLocalUsers() { 
+    return this.localUsers;
   }
-
-  public boolean addUser(User u) {
-    return this.users.add(u);
+  public List<User> getDistantUsers() { 
+    return this.distantUsers;
   }
+  
+  public boolean addLocalUser(User u) {
+    return this.localUsers.add(u);
+  }
+  public boolean addDistantUser(User u) {
+    return this.distantUsers.add(u);
+  }
+  
 
-  public boolean removeUser(User u) {
-    return users.remove(u);
+  public boolean removeLocalUser(User u) {
+    return localUsers.remove(u);
+  }
+  public boolean removeDistantUser(User u) {
+    return distantUsers.remove(u);
   }
 
   public User authenticate(String pseudo, String password)
       throws NoSuchAlgorithmException, UnsupportedEncodingException {
     MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
-    for (User u : this.users) { //For all users
-      if (u.getPseudo() == pseudo) //For all correspoding pseudos
+    for (User u : this.localUsers) { //For all users
+      if (u.getPseudo().equals(pseudo)) //For all correspoding pseudos
       {
         String toBeHashed = password + u.getSalt();
         if (new String(Base64.encode(
@@ -71,6 +83,12 @@ public final class UserManager { // This is the manager for users.
     }
     return null; // If we didn't manage to authenticate
   }
+  
+  public void logoff()
+  {
+      this.loggedUser=null;
+  }
+  
 
   public User createUser() {
     return null;
