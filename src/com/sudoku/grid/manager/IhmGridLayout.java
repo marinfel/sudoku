@@ -7,6 +7,7 @@
 package com.sudoku.grid.manager;
 
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.manager.UserManager;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_grid_preview.StarView;
@@ -40,7 +41,7 @@ public abstract class IhmGridLayout extends StackPane {
     title.setFont(Font.font("Verdana", sizeTitle));
     getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
-    grid = new Grid();
+    grid = new Grid("", UserManager.getInstance().getLoggedUser());
   }
 
   /**

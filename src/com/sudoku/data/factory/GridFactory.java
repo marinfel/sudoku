@@ -54,7 +54,7 @@ public class GridFactory {
 
 
   private static Grid generateGrid(SolverObject solver) {
-    Grid g = new Grid();
+    Grid g = new Grid("", UserManager.getInstance().getLoggedUser());
     for (byte i = 0; i < n; i++) {
       for (byte j = 0; j < n; j++) {
         byte b = (byte) solver.rows[i][j].getValue();
