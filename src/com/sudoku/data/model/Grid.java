@@ -37,6 +37,14 @@ public class Grid {
       }
     }
     createUser = u;
+    try{
+        createPseudo = u.getPseudo();
+        createSalt = u.getSalt();
+    }
+    catch(NullPointerException e){
+        createPseudo = "";
+        createSalt = "" ;
+    }
     createPseudo = u.getPseudo();
     createSalt = u.getSalt();
     Calendar cal = new GregorianCalendar();
