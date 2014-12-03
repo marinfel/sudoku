@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -35,6 +36,15 @@ public class CollectionUtil {
                                        T toRemove) {
     ArrayList<T> al = union(l1, l2);
     al.remove(toRemove);
+    return al;
+  }
+
+  public static <T> ArrayList<T> subtract(Collection<T> l1, Collection<T> l2) {
+    ArrayList<T> al = new ArrayList<T>();
+    al.addAll(l1);
+    for(T item : l2) {
+      al.remove(item);
+    }
     return al;
   }
 }
