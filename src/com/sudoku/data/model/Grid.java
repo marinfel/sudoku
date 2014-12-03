@@ -18,7 +18,7 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  private Grid() {
+  public Grid() {
   }
 
   public Grid(String t, User u) {
@@ -37,6 +37,14 @@ public class Grid {
       }
     }
     createUser = u;
+    try{
+        createPseudo = u.getPseudo();
+        createSalt = u.getSalt();
+    }
+    catch(NullPointerException e){
+        createPseudo = "";
+        createSalt = "" ;
+    }
     createPseudo = u.getPseudo();
     createSalt = u.getSalt();
     Calendar cal = new GregorianCalendar();
