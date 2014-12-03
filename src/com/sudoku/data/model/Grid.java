@@ -18,7 +18,7 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  private Grid() {
+  public Grid() {
   }
 
   public Grid(String t, User u) {
@@ -75,17 +75,12 @@ public class Grid {
     return resultGrid;
   }
 
-  private void updateDate(){
-      Calendar cal = new GregorianCalendar();
-      updateDate = cal.getTime();
-  }
-  
   public void setEmptyCell(byte x, byte y) throws IllegalArgumentException {
     if (x < 0 || x > 9 || y < 0 || y > 9) {
       throw new IllegalArgumentException(Cell.Errors.Cell_illegal_position);
     }
+
     grid[x][y] = new EmptyCell(x, y);
-    this.updateDate();
   }
 
   public void setFixedCell(byte x, byte y, byte value)
@@ -103,7 +98,6 @@ public class Grid {
     } else {
       grid[x][y] = new FixedCell(x, y, value);
     }
-    this.updateDate();
   }
 
   public Cell getCell(int x, int y) throws IllegalArgumentException {
@@ -121,7 +115,7 @@ public class Grid {
     if (grid.length != 9 || grid[0].length != 9) {
       throw new IllegalArgumentException(Grid.errors.Grid_invalid_grid_array);
     }
-    this.updateDate();
+
     this.grid = grid;
   }
 
@@ -131,7 +125,6 @@ public class Grid {
 
   public void setTitle(String titre) {
     this.title = titre;
-    this.updateDate();
   }
 
   public int getMeanGrades() { //Give the mean, or 0 if there is no grades
@@ -150,6 +143,9 @@ public class Grid {
     return id;
   }
 
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public String getDescription() {
     return description;
@@ -157,7 +153,6 @@ public class Grid {
 
   public void setDescription(String description) {
     this.description = description;
-    this.updateDate();
   }
 
   public int getDifficulty() {
@@ -166,7 +161,6 @@ public class Grid {
 
   public void setDifficulty(int difficulty) {
     this.difficulty = difficulty;
-    this.updateDate();
   }
 
   public boolean isPublished() {
@@ -175,16 +169,14 @@ public class Grid {
 
   public void setPublished(boolean published) {
     this.published = published;
-    this.updateDate();
   }
 
   public List<Comment> getComments() {
     return comments;
   }
 
-  public void addComments(Comment c) {
-    this.comments.add(c);
-    this.updateDate();
+  public void setComments(List<Comment> comments) {
+    this.comments = comments;
   }
 
   public List<Tag> getTags() {
@@ -193,13 +185,15 @@ public class Grid {
 
   public void setTags(List<Tag> tags) {
     this.tags = tags;
-    this.updateDate();
   }
 
   public User getCreateUser() {
     return createUser;
   }
 
+  public void setCreateUser(User createUser) {
+    this.createUser = createUser;
+  }
 
   public Date getCreateDate() {
     return createDate;
@@ -207,13 +201,15 @@ public class Grid {
 
   public void setCreateDate(Timestamp createDate) {
     this.createDate = createDate;
-    this.updateDate();
   }
 
   public Date getUpdateDate() {
     return updateDate;
   }
 
+  public void setUpdateDate(Timestamp updateDate) {
+    this.updateDate = updateDate;
+  }
 
   public double getAverageGrade() {
     double averageGrade = 0.0;
@@ -232,7 +228,6 @@ public class Grid {
       }
       tags.add(tag);
     }
-    this.updateDate();
   }
 
   public void removeTag(Tag tag) {
@@ -244,7 +239,6 @@ public class Grid {
         }
       }
     }
-    this.updateDate();
   }
 
   public void addComment(Comment comment) {
@@ -252,7 +246,6 @@ public class Grid {
         !comment.getComment().isEmpty()) {
       comments.add(comment);
     }
-    this.updateDate();
   }
 
   public void removeComment(Comment comment) {
@@ -266,7 +259,6 @@ public class Grid {
         }
       }
     }
-    this.updateDate();
   }
 
   @Override

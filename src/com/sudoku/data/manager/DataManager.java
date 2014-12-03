@@ -25,6 +25,7 @@ public class DataManager {
     private static DataManager instance = new DataManager();
     UserManager userMgr;
     GridManager gridMgr;
+    AccessManager accMgr;
     private File jsonFile;
     private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backup.json";
     
@@ -33,6 +34,8 @@ public class DataManager {
         //sans solution pour le moment.
         gridMgr= GridManager.getInstance();
         userMgr=UserManager.getInstance();
+        accMgr=AccessManager.getInstance();
+        
     }
     private DataManager(DataManager DM){
         
