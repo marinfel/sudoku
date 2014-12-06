@@ -100,7 +100,7 @@ public final class UserManager { // This is the manager for users.
 
   public User createUser(String pseudo, String brutPassword, Date birthDate, String profilePicturePath) { // Create a local user and add it to the manager
     User u = new User(pseudo, brutPassword, birthDate, profilePicturePath);
-    this.addLocalUser(User u);
+    this.addLocalUser(u);
     return u;
   }
 
