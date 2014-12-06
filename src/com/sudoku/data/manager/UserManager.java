@@ -14,6 +14,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public final class UserManager { // This is the manager for users.
   /*
   * Attributs
@@ -94,8 +98,10 @@ public final class UserManager { // This is the manager for users.
   }
   
 
-  public User createUser() {
-    return null;
+  public User createUser(String pseudo, String brutPassword, Date birthDate, String profilePicturePath) { // Create a local user and add it to the manager
+    User u = new User(pseudo, brutPassword, birthDate, profilePicturePath);
+    this.addLocalUser(User u);
+    return u;
   }
 
   public List<User> getConnectedUsers() {
