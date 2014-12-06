@@ -6,9 +6,11 @@
 package com.sudoku.grid.tests;
 
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.ihm_grid_cells.IhmCellEditable;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLinesCompleted;
+import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
 import javafx.application.Application;
@@ -130,10 +132,9 @@ public class GridTest extends Application {
 
     });
     root.getChildren().add(glines);
-        //*/
 
     //*
-    IhmPopupsList.init(200, 500, 6);
+    IhmPopupsList.init(200, 700, 6);
     IhmPopupsList plist = IhmPopupsList.getInstance();
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
@@ -148,8 +149,13 @@ public class GridTest extends Application {
     });
     root.getChildren().add(plist);
     //*/
-        /*
+
+    /*
      IhmGridPreview ce = new IhmGridPreview("Test Preview", 5);
+     root.getChildren().add(ce);
+     //*/
+    /*
+     IhmGridEditorManuallyFilled ce = new IhmGridEditorManuallyFilled();
      root.getChildren().add(ce);
      //*/
     primaryStage.show();
