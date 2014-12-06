@@ -14,17 +14,18 @@ public class Grid {
   private Cell[][] grid;
   private User createUser;
   private String createPseudo;
-  private String createSalt; // Salt of the creator used as an UUID
+  private String createSalt; // Salt of the creator used as a UUID
   private Date createDate;
   private Date updateDate;
 
-  public Grid() {
-  }
+  public Grid() {}
 
   public Grid(String t, User u) {
     id = UUID.randomUUID();
     title = t;
     description = "";
+    createPseudo = "";
+    createSalt = "" ;
     difficulty = 0;
     published = false;
     comments = new ArrayList<>();
@@ -36,21 +37,16 @@ public class Grid {
         grid[i][j] = new EmptyCell(i, j);
       }
     }
+    
     createUser = u;
-    try{
+    if(createUser != null){
         createPseudo = u.getPseudo();
         createSalt = u.getSalt();
     }
-    catch(NullPointerException e){
-        createPseudo = "";
-        createSalt = "" ;
-    }
-    createPseudo = u.getPseudo();
-    createSalt = u.getSalt();
+    
     Calendar cal = new GregorianCalendar();
     createDate = cal.getTime();
     updateDate = createDate;
-
   }
 
   public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
