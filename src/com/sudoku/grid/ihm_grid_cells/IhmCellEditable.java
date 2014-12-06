@@ -28,7 +28,7 @@ import javafx.scene.Cursor;
  */
 public class IhmCellEditable extends IhmCell {
 
-  protected final static int addlesMaxNumbers = 3;
+  protected final static int ADDLES_MAX_NUNMBER = 3;
   private final IhmCellEditedEvent ihmCellEditedEvent;
   private final IhmCellEditedEvent ihmCellModifiedEvent;
   private final IhmCellEditedEvent ihmCellKeyUpTypedEvent;
@@ -49,17 +49,15 @@ public class IhmCellEditable extends IhmCell {
   /**
    * IHM_CellEditable constructor
    *
-   * @param side           taken by the node (width, height)
-   * @param addlesFontSize defines the font size in addles TextField
-   * @param valueFontSize  defines the font size in value's TextField
+   * @param side taken by the node (width, height)
    */
   public IhmCellEditable(double side) {
     setMaxSize(side, side);
 
     valueSizeX = getMaxWidth();
-    valueSizeY = getMaxHeight() * (1 - 1 / addlesMaxNumbers);
-    addlesSizeX = getMaxWidth() / addlesMaxNumbers;
-    addlesSizeY = getMaxHeight() / addlesMaxNumbers;
+    valueSizeY = getMaxHeight() * (1 - 1 / ADDLES_MAX_NUNMBER);
+    addlesSizeX = getMaxWidth() / ADDLES_MAX_NUNMBER;
+    addlesSizeY = getMaxHeight() / ADDLES_MAX_NUNMBER;
 
     addlesFontSize = addlesSizeX * 0.7;
     valueFontSize = valueSizeY * 0.5;
@@ -69,7 +67,7 @@ public class IhmCellEditable extends IhmCell {
 
       @Override
       public void handle(MouseEvent t) {
-        if (addlesEditList.size() < addlesMaxNumbers) {
+        if (addlesEditList.size() < ADDLES_MAX_NUNMBER) {
           setAddlesAddButtonVisible(true);
         }
       }
@@ -245,7 +243,7 @@ public class IhmCellEditable extends IhmCell {
    */
   protected void addlesAddButtonHandler(ActionEvent t) {
     // Check if there is enough rooms on the top of the  layout
-    if (addlesEditList.size() < addlesMaxNumbers) {
+    if (addlesEditList.size() < ADDLES_MAX_NUNMBER) {
       // Add a new addles to the list and to the addlesLayout
       final TextField addle = new TextField();
       addle.setMaxSize(addlesSizeX, addlesSizeY);
@@ -315,7 +313,7 @@ public class IhmCellEditable extends IhmCell {
       addlesLayout.getChildren().add(addlesLayout.getChildren().size() - 1, addle);
 
       // Hide the addles add-button if there is no more rooms after adding the new one
-      setAddlesAddButtonVisible(addlesEditList.size() != addlesMaxNumbers);
+      setAddlesAddButtonVisible(addlesEditList.size() != ADDLES_MAX_NUNMBER);
 
       // Set Focus on the addles created
       addle.requestFocus();
@@ -330,7 +328,7 @@ public class IhmCellEditable extends IhmCell {
    * correction on it</p>
    *
    * @param tf a TextField that trigged the event
-   * @param t  a string which was in the TextField before the event
+   * @param t a string which was in the TextField before the event
    * @param t1 a string which is what is in the TextField
    * @return Nothing
    * @throws Nothing
@@ -385,7 +383,7 @@ public class IhmCellEditable extends IhmCell {
     //delete the addle and check if it succeeds
     if (index >= 0 && addlesLayout.getChildren().remove(addle) && (addlesEditList.remove(index) == addle)) {
       // Hide the addles add-button if there is no more rooms after adding the new one
-      if (addlesEditList.size() < addlesMaxNumbers) {
+      if (addlesEditList.size() < ADDLES_MAX_NUNMBER) {
         setAddlesAddButtonVisible(true);
       }
 
