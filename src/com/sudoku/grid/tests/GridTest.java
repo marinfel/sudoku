@@ -7,6 +7,7 @@ package com.sudoku.grid.tests;
 
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.ihm_grid_cells.IhmCellEditable;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
@@ -14,6 +15,13 @@ import com.sudoku.grid.ihm_grid_cells.IhmGridLinesCompleted;
 import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -56,7 +64,7 @@ public class GridTest extends Application {
      root.getChildren().add(ce);
      //*/
     //*
-    Grid g = new Grid("", UserManager.getInstance().getLoggedUser());
+    Grid g = new Grid("blabla", UserManager.getInstance().getLoggedUser());
     /*for (byte x = 0; x < 9; x++) {
      for (byte y = 0; y < 9; y++) {
      if (Math.random() > 0.5) {
