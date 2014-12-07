@@ -13,7 +13,8 @@ public abstract class IhmCell extends GridPane {
   protected int y = -1;
 
   /**
-   * TODO
+   * @param value
+   * @return
    */
   protected boolean checkValue(int value) {
     //check the value

@@ -25,6 +25,7 @@ public class IhmGridLinesCompleted extends Event {
    * IhmCellLinesCompleted constructor
    *
    * @param grid is the grid which fired the event
+   * @param event
    */
   public IhmGridLinesCompleted(IhmGridLines grid, EventType<IhmGridLinesCompleted> event) {
     super(event);

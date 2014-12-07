@@ -20,8 +20,9 @@ import java.util.logging.Logger;
  */
 public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseRequestEvent> {
 
-  protected static final int titleFontSize = 12;
-  protected static final int textFontSize = 10;
+  protected static final int TITLE_FONT_SIZE = 12;
+  protected static final int TEXT_FONT_SIZE = 10;
+
   private static IhmPopupsList instance = null;
   protected double popupHeight;
   protected double popupWidth;
@@ -29,8 +30,7 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   protected ArrayList<IhmPopup> popups = new ArrayList<>();
 
   /**
-   * @class IHM_PopupsList constructor Use IHM_PopupsList.getInstance()
-   * instead.
+   * @class IHM_PopupsList constructor Use IHM_PopupsList.getInstance() instead.
    */
   private IhmPopupsList(double width, double height, int nbMaxPopus) {
     //set the maximum number of pop-ups that the list can hold
@@ -47,10 +47,10 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   }
 
   /**
-   * @param height     is the max height of this graphical object
-   * @param width      is the max width of this graphical object
+   * @param height is the max height of this graphical object
+   * @param width is the max width of this graphical object
    * @param nbMaxPopus is the max number of popup shown in the list. It will
-   *                   determine the height of each pop-ups
+   * determine the height of each pop-ups
    * @class IHM_PopupsList initializer, you must call it before calling
    * getInstance();
    */
@@ -62,10 +62,6 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   }
 
   /**
-   * @param height     is the max height of this graphical object
-   * @param width      is the max width of this graphical object
-   * @param nbMaxPopus is the max number of popup shown in the list. It will
-   *                   determine the height of each pop-ups
    * @return an instance of IhmPopupsList. If the instance hasn't been
    * instanciated, return null;
    * @throws NullPointerException if the list hasn't been initialised
@@ -106,13 +102,13 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
    * user. The popup is automatically added to the list.
    *
    * @param title is the pop-up's title
-   * @param text  is the pop-up's body text
+   * @param text is the pop-up's body text
    * @param delay is the pop-up's showing delay
    * @return the instance of the popup created
    */
   public IhmPopup addPopup(String title, String text, int delay) {
     //Create a new pop-up
-    IhmPopup popup = new IhmPopup(popupWidth, popupHeight, title, titleFontSize, text, textFontSize, delay);
+    IhmPopup popup = new IhmPopup(popupWidth, popupHeight, title, TITLE_FONT_SIZE, text, TEXT_FONT_SIZE, delay);
 
     //set this list as a listener of a close request event on the pop-up
     popup.addEventHandler(IhmPopupCloseRequestEvent.POPUP_CLOSEREQUEST, this);
