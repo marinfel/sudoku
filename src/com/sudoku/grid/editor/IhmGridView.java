@@ -45,8 +45,6 @@ public abstract class IhmGridView extends IhmGridLayout {
     IhmPopupsList.init(150.0, 500.0, 10);
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
     rightVBox.getChildren().add(popupList);
-    popupList.addPopup("test", "texte de test", 10);
-    //rightVBox.getChildren().add(new Label("Ceci est un test"));
 
     /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
      primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){
