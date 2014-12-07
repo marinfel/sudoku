@@ -116,8 +116,8 @@ public class DataSample {
        UserManager userMgr=UserManager.getInstance();
        GridManager gridMgr=GridManager.getInstance();
        
-       userMgr.addUser(a);
-       userMgr.addUser(b);
+       userMgr.addLocalUser(a);
+       userMgr.addLocalUser(b);
        
        gridMgr.addGrid(g1);
        gridMgr.addGrid(g2);
