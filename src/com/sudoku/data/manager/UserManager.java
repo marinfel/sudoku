@@ -134,8 +134,5 @@ public final class UserManager { // This is the manager for users.
     return null;
   }
 
-  public void addUser(User a) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
 
 }
