@@ -10,6 +10,7 @@ import com.sudoku.data.sample.DataSample;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 
 /**
@@ -19,18 +20,28 @@ import javafx.scene.layout.AnchorPane;
 public class ListGridManager {
     private DataSample instance;
     
-    public ListGridManager()
+    public ListGridManager(DataSample i)
     {
-        instance = new DataSample();
-        instance.exec();
+        instance=i;
     }
     
     public List<AnchorPane> AllGrid()
     {
         List GridList = new ArrayList<AnchorPane>();
         GridList.add(new GridThumbnail(instance.g1));
-        GridList.add(new GridThumbnail(instance.g2));
-        GridList.add(new GridThumbnail(instance.g3));
+        /*GridList.add(new GridThumbnail(instance.g2));
+        GridList.add(new GridThumbnail(instance.g3));*/
         return GridList;
+    }
+    
+    public GridPane getGridThumbnailContainer()
+    {
+        GridThumbnailContainer container = new GridThumbnailContainer();
+        container.addGridThumbnail(new GridThumbnail(instance.g1));
+        container.addGridThumbnail(new GridThumbnail(instance.g2));
+        container.addGridThumbnail(new GridThumbnail(instance.g3));
+        container.addGridThumbnail(new GridThumbnail(instance.g1));
+        container.addGridThumbnail(new GridThumbnail(instance.g2));
+        return container.getInstance();
     }
 }

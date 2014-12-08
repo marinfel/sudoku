@@ -8,7 +8,7 @@ package com.sudoku.main.view;
 
 import com.sudoku.data.sample.DataSample;
 import com.sudoku.main.manager.ListGridManager;
-import java.awt.ScrollPane;
+import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -209,12 +209,17 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     
     
     // Liste Grille
-      ListGridManager myGridManager=new ListGridManager();
+      /*ListGridManager myGridManager=new ListGridManager();
       
       for(int i = 0; i<myGridManager.AllGrid().size();i++)
       {
           grid1.getChildren().add(myGridManager.AllGrid().get(i));
-      }
+      }*/
+    ListGridManager gridList=new ListGridManager(instance);
+    ScrollPane  scpane = new ScrollPane();
+    scpane.setContent(gridList.getGridThumbnailContainer());
+    scpane.setPrefSize(800, 800);
+    grid1.getChildren().add(scpane);
   }
 
     
