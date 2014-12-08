@@ -66,9 +66,9 @@ public class DataSample {
       g1.setTags((List<Tag>)tags);
        
       // g1.setCreateDate(new Timestamp(2014,11,4,14,48,0,0));
-       //g1.setCreateUser(a);
-       //g1.setDifficulty(3);
-       //g1.setDescription("This is the awesome grid n°1");
+       g1.setCreateUser(a);
+       g1.setDifficulty(3);
+       g1.setDescription("This is the awesome grid n°1");
        //g1.setId(1);
        
        //Création de Grid g2
@@ -126,7 +126,7 @@ public class DataSample {
        
        DataManager dataMgr= DataManager.getInstance();
        
-       dataMgr.saveToJson();
+       //dataMgr.saveToJson();
        
        System.out.println(" Datasample finished");
        
