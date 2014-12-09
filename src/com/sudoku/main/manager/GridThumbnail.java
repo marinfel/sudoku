@@ -36,7 +36,7 @@ public class GridThumbnail extends AnchorPane {
         border = new BorderPane();
         GridInfo = new GridPane();
         SeeMoreButton = new Button("See More");
-        gridInstance = new IhmGridPreview(3,instance);
+        gridInstance = new IhmGridPreview(3,instance,100);
         initThumbnail();
         setPositions();
         setThisAnchorElements();
