@@ -32,7 +32,7 @@ public class CommMain {
     System.out.println("ip: " + commManager.getLocalIp());
     try {
       commManager.discoverNodes();
-      Thread.sleep(5000);
+      Thread.sleep(10000);
       /*for (String ip : commManager.getConnectedIps()) {
         System.out.println(ip);
       }*/

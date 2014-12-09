@@ -22,18 +22,21 @@ public class AvroConnectionManager extends ConnectionManager {
 
   public AvroConnectionManager(String ip) {
     super(ip);
+    client = null;
   }
 
 
   public void openConnection()
      throws OfflineUserException {
-    try {
-      client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT), CONNECTION_TIME_OUT);
-      explorer = (NodeExplorer)
-          SpecificRequestor.getClient(NodeExplorer.class, client);
+    if (client == null) {
+      try {
+        client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT), CONNECTION_TIME_OUT);
+        explorer = (NodeExplorer)
+            SpecificRequestor.getClient(NodeExplorer.class, client);
+      }
+      catch(IOException exc) {throw new OfflineUserException();}
+      isConnected = true;
     }
-    catch(IOException exc) {throw new OfflineUserException();}
-    isConnected = true;
   }
 
   public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
