@@ -110,6 +110,10 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         if (ihmCell instanceof IhmCellEditable) {
           ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
           ihmCell.addEventHandler(IhmCellEditedEvent.CELL_MODIFIED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.UP_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.DOWN_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.LEFT_KEY_TYPED, this);
+          ihmCell.addEventHandler(IhmCellEditedEvent.RIGHT_KEY_TYPED, this);
           emtpyCellsEditable.add((IhmCellEditable) ihmCell);
         }
       } else if (X % 2 == 1 && Y % 2 == 0) {
@@ -190,6 +194,34 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
       //We just add the cell to the array emtpyCellsEditable if it has been removed
       if (!emtpyCellsEditable.contains(t.cell)) {
         emtpyCellsEditable.add(t.cell);
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.UP_KEY_TYPED) {
+      for (int y = t.cell.getY() - 1; y >= 0; y--) {
+        if (cells[t.cell.getX()][y] instanceof IhmCellEditable) {
+          ((IhmCellEditable) cells[t.cell.getX()][y]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.DOWN_KEY_TYPED) {
+      for (int y = t.cell.getY() + 1; y < CELL_NUMBER_PER_SIDE; y++) {
+        if (cells[t.cell.getX()][y] instanceof IhmCellEditable) {
+          ((IhmCellEditable) cells[t.cell.getX()][y]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.LEFT_KEY_TYPED) {
+      for (int x = t.cell.getX() - 1; x >= 0; x--) {
+        if (cells[x][t.cell.getY()] instanceof IhmCellEditable) {
+          ((IhmCellEditable) cells[x][t.cell.getY()]).setFocusOn();
+          break;
+        }
+      }
+    } else if (t.getEventType() == IhmCellEditedEvent.RIGHT_KEY_TYPED) {
+      for (int x = t.cell.getX() + 1; x < CELL_NUMBER_PER_SIDE; x++) {
+        if (cells[x][t.cell.getY()] instanceof IhmCellEditable) {
+          ((IhmCellEditable) cells[x][t.cell.getY()]).setFocusOn();
+          break;
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ import com.sudoku.data.manager.UserManager;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_grid_preview.StarView;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.ihm_grid_preview.StarsBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -25,6 +25,8 @@ import javafx.scene.layout.VBox;
  * @author Mélie
  */
 public abstract class IhmGridLayout extends StackPane {
+
+  protected static final int MAX_NUMBER_OF_STARS = 5;
 
   protected final int sizeTitle = 25;
   protected Label title;
@@ -71,29 +73,7 @@ public abstract class IhmGridLayout extends StackPane {
     return title.getText();
   }
 
-  public HBox getStarsBox(int numberOfStars) {
-    int i;
-    if (numberOfStars < 0) {
-      numberOfStars = 0;
-    }
-    if (numberOfStars > 5) {
-      numberOfStars = 5;
-    }
-    Vector<StarView> grades = new Vector();
-    int num = (int) Math.floor(numberOfStars);
-    for (i = 0; i <= num; i++) {
-      grades.add(new StarView(1));
-    }
-    if (Math.round(numberOfStars * 2) % 2 != 0) {
-      grades.add(new StarView(2));
-    }
-    for (i = grades.size(); i < 6; i++) {
-      grades.add(new StarView(3));
-    }
-    HBox box = new HBox();
-    for (i = 1; i < 6; i++) {
-      box.getChildren().add(grades.get(i).getStar());
-    }
-    return box;
+  public StarsBox getStarsBox() {
+    return new StarsBox(MAX_NUMBER_OF_STARS);
   }
 }
