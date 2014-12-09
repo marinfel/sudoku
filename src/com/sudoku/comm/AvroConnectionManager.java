@@ -80,11 +80,6 @@ public class AvroConnectionManager extends ConnectionManager {
   }
 
   public void closeConnection() throws OfflineUserException {
-    try {
-      explorer.disconnect(CommunicationManager.getInstance().getLocalIp());
-    } catch (AvroRemoteException exc) {
-      throw new OfflineUserException();
-    }
     if (client != null) {
       client.close();
       client = null;
