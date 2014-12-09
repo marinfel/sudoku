@@ -35,10 +35,10 @@ public abstract class IhmGridLayout extends StackPane {
   protected final BorderPane border;
 
   //Grid grille;
-  public IhmGridLayout(Flags flagStatus, Grid gr) {
+  public IhmGridLayout(Flags flagStatus, Grid gr, int size) {
     grid = gr;
 	//sceneHeight=size;
-	//sceneLength=size;
+    //sceneLength=size;
     gridLines = new IhmGridLines(grid, size, flagStatus);
     title = new Label("");
     title.setFont(Font.font("Verdana", sizeTitle));
