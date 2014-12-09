@@ -13,6 +13,7 @@ public class NodeExplorerServer extends Server {
     super();
   }
 
+  @Override
   public void startServer() {
     server = new NettyServer(
         new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
@@ -20,6 +21,7 @@ public class NodeExplorerServer extends Server {
     );
   }
 
+  @Override
   public void stopServer() {
     if (server != null) {
       server.close();

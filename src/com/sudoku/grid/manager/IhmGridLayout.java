@@ -18,6 +18,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.HBox;
 import java.util.Vector;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 /**
  * @author Mélie
@@ -25,25 +27,43 @@ import java.util.Vector;
 public abstract class IhmGridLayout extends StackPane {
 
   protected static final int MAX_NUMBER_OF_STARS = 5;
-  protected final int sceneHeight = 200;
-  protected final int sceneLength = 200;
+
   protected final int sizeTitle = 25;
   protected Label title;
   protected Grid grid;
   protected IhmGridLines gridLines;
+  protected final BorderPane border;
 
   //Grid grille;
-  public IhmGridLayout() {
-  }
-
-  public IhmGridLayout(Flags flagStatus, Grid gr) {
+  public IhmGridLayout(Flags flagStatus, Grid gr, int size) {
     grid = gr;
-    gridLines = new IhmGridLines(grid, 500, flagStatus);
+
+    gridLines = new IhmGridLines(grid, size, flagStatus);
     title = new Label("");
     title.setFont(Font.font("Verdana", sizeTitle));
     getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
     grid = new Grid("", UserManager.getInstance().getLoggedUser());
+
+    border = new BorderPane();
+    getChildren().add(border);
+    HBox topHBox = new HBox();
+    VBox leftVBox = new VBox();
+    HBox bottomHBox = new HBox();
+    VBox rightVBox = new VBox();
+    VBox centerVBox = new VBox();
+
+    // center a faire
+    border.setTop(topHBox);
+    border.setLeft(leftVBox);
+    border.setBottom(bottomHBox);
+    border.setRight(rightVBox);
+    border.setCenter(centerVBox);
+
+    //VBox centerLayout = (VBox)border.getCenter();
+    //centerLayout.getChildren().add(sudokuGrid);
+    centerVBox.getChildren().add(gridLines);
+
   }
 
   /**
