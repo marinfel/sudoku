@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 /**
@@ -37,9 +38,11 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
     deleteCells = new Button("Delete Cells");
     deleteCellsField = new TextField("0");
     
+    border.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
+    
     VBox leftLayout = (VBox) border.getLeft();
     leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
-    leftLayout.setAlignment(Pos.CENTER);
+    leftLayout.setAlignment(Pos.TOP_CENTER);
     // A FAIRE : bloquer la case pour ne pas pouvoir entrer nombres négatifs
 
     deleteCells.setOnAction(new EventHandler<ActionEvent>() {
