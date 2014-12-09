@@ -56,8 +56,8 @@ public class DataSample {
        //création de Grid g1
        List<Comment> comments = new ArrayList<>();
        //Ajout de commentaires
-       comments.add(new Comment("texte du commentaire 1".toString(),1, a));
-       comments.add(new Comment("texte du commentaire 2".toString(),2, a));
+       comments.add(new Comment("texte du commentaire 1",1, a));
+       comments.add(new Comment("texte du commentaire 2",2, a));
        g1.setComments(comments);
        //Ajout de tags
        List<Tag> tags= new ArrayList<Tag>();
