@@ -148,13 +148,9 @@ public final class CommunicationManager {
       try {
         String ip = itr.next();
         ConnectionManager cm = ipsConnected.get(ip);
-        System.out.println("[Comm Manager: disconnect] disconnecting from" + ip);
         cm.openConnection();
-        System.out.println("[Comm Manager: disconnect] disconnecting, calling disconnect");
         cm.disconnect();
-        System.out.println("[Comm Manager: disconnect] disconnecting, called disconnect");
         cm.closeConnection();
-        System.out.println("[Comm Manager: disconnect] disconnecting done");
       }
       catch(ConnectionManager.OfflineUserException ex){}
       catch(ConnectionManager.ConnectionClosedException ex){}
