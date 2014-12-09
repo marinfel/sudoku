@@ -54,11 +54,10 @@ public class DataSample {
       }
        // a.saveToJson();
        //création de Grid g1
-       List<Comment> comments = new ArrayList<>();
        //Ajout de commentaires
-       comments.add(new Comment("texte du commentaire 1",1, a));
-       comments.add(new Comment("texte du commentaire 2",2, a));
-       g1.setComments(comments);
+       g1.addComment(new Comment("texte du commentaire 1",1, a));
+       g1.addComment(new Comment("texte du commentaire 2",2, a));
+
        //Ajout de tags
        List<Tag> tags= new ArrayList<Tag>();
        tags.add(new Tag("Hard"));
