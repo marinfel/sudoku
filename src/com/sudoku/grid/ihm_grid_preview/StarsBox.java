@@ -87,4 +87,9 @@ public class StarsBox extends HBox implements EventHandler<MouseEvent> {
   public double getValueAtClick() {
     return valueAtClick;
   }
+
+  public void reset() {
+    setValue(0);
+    valueAtClick = 0;
+  }
 }
