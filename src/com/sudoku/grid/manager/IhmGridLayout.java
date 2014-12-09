@@ -26,8 +26,8 @@ import javafx.scene.layout.VBox;
  */
 public abstract class IhmGridLayout extends StackPane {
 
-  protected final int sceneHeight = 200;
-  protected final int sceneLength = 200;
+  //protected int sceneHeight=200;
+  //protected int sceneLength=200;
   protected final int sizeTitle = 25;
   protected Label title;
   protected Grid grid;
@@ -37,7 +37,9 @@ public abstract class IhmGridLayout extends StackPane {
   //Grid grille;
   public IhmGridLayout(Flags flagStatus, Grid gr) {
     grid = gr;
-    gridLines = new IhmGridLines(grid, 500, flagStatus);
+	//sceneHeight=size;
+	//sceneLength=size;
+    gridLines = new IhmGridLines(grid, size, flagStatus);
     title = new Label("");
     title.setFont(Font.font("Verdana", sizeTitle));
     getChildren().add(title);
@@ -92,8 +94,6 @@ public abstract class IhmGridLayout extends StackPane {
       grades.add(new StarView(3));
     }
     HBox box = new HBox();
-    box.setLayoutX(5);
-    box.setLayoutY(sceneHeight - 30);
     for (i = 1; i < 6; i++) {
       box.getChildren().add(grades.get(i).getStar());
     }

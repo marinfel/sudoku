@@ -20,6 +20,7 @@
         <avro.version>1.7.7</avro.version>
         <javafx.version>2.2.3</javafx.version>
     </properties>
+	
 
     <dependencies>
         <dependency>
