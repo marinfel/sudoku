@@ -25,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -61,6 +62,7 @@ public abstract class IhmGridEditor extends IhmGridView {
 
     topLayout.getChildren().add(editTitle);
     topLayout.setPrefHeight(100);
+    topLayout.setAlignment(Pos.CENTER);
 
     // layout du bas : ajout de tags
     VBox bottomVBox = new VBox();
@@ -92,11 +94,11 @@ public abstract class IhmGridEditor extends IhmGridView {
     bottomLayout.setPrefHeight(100);
 
     VBox rightLayout = (VBox) border.getRight();
-    rightLayout.setPrefWidth(150);
-    rightLayout.setMaxWidth(150);
-    rightLayout.setPrefWidth(150);
+    rightLayout.setPrefWidth(110);
+    rightLayout.setMinWidth(100);
+    //rightLayout.setPrefWidth(150);
 
-    border.setPadding(new Insets(30.0, 10.0, 10.0, 200.0));
+    border.setPadding(new Insets(0.0, 100.0, 10.0, 100.0));
 
 // handlers
     editTitle.textProperty().addListener(new ChangeListener<String>() {

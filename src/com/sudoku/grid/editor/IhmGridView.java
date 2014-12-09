@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 public abstract class IhmGridView extends IhmGridLayout {
 
 
+
   public IhmGridView(Flags flagStatus, Grid gr, int size) {
     super(flagStatus, gr, size);
 
@@ -27,9 +28,7 @@ public abstract class IhmGridView extends IhmGridLayout {
     //centerLayout.getChildren().add(sudokuGrid);
     //centerVBox.getChildren().add(gridLines);
 
-  //protected final BorderPane border;
-  //public IhmGridView(Flags flagStatus, Grid gr, int size) {
-    //super(flagStatus, gr, size);
+
 
     IhmPopupsList.init(150.0, 500.0, 10);
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
