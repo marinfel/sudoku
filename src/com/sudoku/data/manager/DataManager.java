@@ -23,19 +23,19 @@ import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL
  */
 public class DataManager {
     private static volatile DataManager instance = null;
-    UserManager userMgr;
-    GridManager gridMgr;
-    AccessManager accMgr;
+    public UserManager userMgr;
+    public GridManager gridMgr;
+    private AccessManager accMgr;
     private File jsonFile;
     private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backup.json";
     
     private DataManager(){
         //Problème à la serialisation de grid manager au niveau de la fonction get lastplayed grid
         //sans solution pour le moment.
-        
-        gridMgr= GridManager.getInstance();
-        userMgr=UserManager.getInstance();
-        accMgr=AccessManager.getInstance();
+         
+        //gridMgr= GridManager.getInstance();
+        //userMgr=UserManager.getInstance();
+        //accMgr=AccessManager.getInstance();
         
     }
     private DataManager(DataManager DM){
@@ -50,7 +50,10 @@ public class DataManager {
     } 
     
       public void saveToJson(){
-       ObjectMapper mapper = new ObjectMapper();
+        gridMgr= GridManager.getInstance();
+        userMgr=UserManager.getInstance();
+        accMgr=AccessManager.getInstance();
+        /* ObjectMapper mapper = new ObjectMapper();
        //Pour sérializer les champs publics comme privés
        mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
        //pour ne pas planter sur une valeur null
@@ -73,9 +76,12 @@ public class DataManager {
 	 
 	            ex.printStackTrace();
         }
+                */
+        userMgr.SaveToJson();
+        gridMgr.SaveToJson();
     }
-    public static DataManager buildFromJson(){
-        ObjectMapper mapper= new ObjectMapper();
+    public static void buildFromJson(){
+        /* ObjectMapper mapper= new ObjectMapper();
         // To avoid any undeclared property error
         //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
             
@@ -84,7 +90,7 @@ public class DataManager {
                 File jsonFile = new File(jsonFilePath);
 	 
                 DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
-                
+               // UserManager.setInstance(mapper.readValue(jsonFile, UserManager.class));
         }catch (JsonGenerationException ex) {
          
 	 
@@ -100,6 +106,10 @@ public class DataManager {
 	 
 	}
         return DataManager.getInstance();
+     */
         
-    }
+       UserManager.BuildFromJson();
+       GridManager.BuildFromJson();
+       
+    } 
 }

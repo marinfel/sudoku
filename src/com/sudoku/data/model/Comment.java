@@ -28,8 +28,14 @@ public class Comment {
      * @param u
    */
   
-  
-
+  // Nécessaire pour la désérialisation
+     public Comment(){
+    this.comment = "";
+    this.grade = 0;
+    this.author = null;
+    this.pseudo = null;
+    this.userSalt = null;
+    }
   public Comment(String comment, Integer grade, User u) {
     this.comment = comment;
     this.grade = grade;
@@ -67,5 +73,8 @@ public class Comment {
   public void setGrade(Integer grade) {
     this.grade = grade;
   }
-}
+  public String getUserSalt(){
+      return this.userSalt;
+  }
 
+}
