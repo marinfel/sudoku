@@ -3,6 +3,7 @@ package com.sudoku.data.model;
 import java.sql.Timestamp;
 import java.util.*;
 
+
 public class Grid {
   private UUID id;
   private String title;
@@ -116,7 +117,7 @@ public class Grid {
   }
 
   public void setGrid(Cell[][] grid) throws IllegalArgumentException {
-    if (grid.length != 9 || grid[0].length != 9) {
+    if (grid.length != 9 || grid[0].length != 9) { //Check if the grid is of the right size
       throw new IllegalArgumentException(Grid.errors.Grid_invalid_grid_array);
     }
 
@@ -131,8 +132,9 @@ public class Grid {
     this.title = titre;
   }
 
-  public int getMeanGrades() { //Give the mean, or 0 if there is no grades
-    int i = 0, result = 0;
+  public double getMeanGrades() { //Give the mean rounded to the nearest integer
+    int i = 0;
+    double result=0;
     for (Comment comment : comments) {
       result += comment.getGrade();
       i++;
@@ -143,6 +145,7 @@ public class Grid {
       return 0;
   }
 
+    
   public UUID getId() {
     return id;
   }
@@ -215,13 +218,7 @@ public class Grid {
     this.updateDate = updateDate;
   }
 
-  public double getAverageGrade() {
-    double averageGrade = 0.0;
-    for (Comment comment : comments) {
-      averageGrade += comment.getGrade();
-    }
-    return averageGrade / comments.size();
-  }
+
 
   public void addTag(Tag tag) {
     if (tag != null && tag.getName() != null && !tag.getName().isEmpty()) {
