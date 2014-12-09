@@ -36,7 +36,7 @@ public final class CommunicationManager {
     dataRetrieverServer = new DataRetrieverServer();
   }
 
-  public final static CommunicationManager getInstance() {
+  public static final CommunicationManager getInstance() {
     if (instance == null) {
       synchronized (CommunicationManager.class) {
         if (instance == null) {

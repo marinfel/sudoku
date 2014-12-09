@@ -1,10 +1,5 @@
 package com.sudoku.comm;
 
-import com.sudoku.data.model.Comment;
-import com.sudoku.data.model.Grid;
-import com.sudoku.data.model.User;
-
-import java.io.IOException;
 import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +48,12 @@ public abstract class ConnectionManager {
 
   //Exceptions
   public class ConnectionClosedException extends Exception {
-    public ConnectionClosedException() { super(); }
-    public ConnectionClosedException(String message) { super(message); }
+    public ConnectionClosedException() {
+      super();
+    }
+    public ConnectionClosedException(String message) {
+      super(message);
+    }
     public ConnectionClosedException(String message, Throwable cause) {
       super(message, cause);
     }
@@ -62,11 +61,17 @@ public abstract class ConnectionManager {
   }
 
   public class OfflineUserException extends Exception {
-    public OfflineUserException() { super(); }
-    public OfflineUserException(String message) { super(message); }
+    public OfflineUserException() {
+      super();
+    }
+    public OfflineUserException(String message) {
+      super(message);
+    }
     public OfflineUserException(String message, Throwable cause) {
       super(message, cause);
     }
-    public OfflineUserException(Throwable cause) { super(cause); }
+    public OfflineUserException(Throwable cause) {
+      super(cause);
+    }
   }
 }

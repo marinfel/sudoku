@@ -11,7 +11,7 @@ import java.util.Enumeration;
 public abstract class Server {
   protected static org.apache.avro.ipc.Server server;
   protected String localIp;
-  private Logger LOGGER = LoggerFactory.getLogger(Server.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
   public Server() {
     try {

@@ -12,7 +12,9 @@ import java.net.InetSocketAddress;
 public class DataRetrieverServer extends Server {
   public static final int PORT = 11024;
 
-  public DataRetrieverServer() { super(); }
+  public DataRetrieverServer() {
+    super();
+  }
 
   @Override
   public void startServer() {
