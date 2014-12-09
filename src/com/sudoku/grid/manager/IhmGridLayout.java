@@ -35,10 +35,7 @@ public abstract class IhmGridLayout extends StackPane {
   protected final BorderPane border;
 
   //Grid grille;
-  public IhmGridLayout() {
-  }
-
-  public IhmGridLayout(Flags flagStatus, Grid gr, int size) {
+  public IhmGridLayout(Flags flagStatus, Grid gr) {
     grid = gr;
 	//sceneHeight=size;
 	//sceneLength=size;
