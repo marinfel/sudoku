@@ -55,7 +55,6 @@ public class User implements Ruleable {
     this.updateDate = this.createDate;
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
-
   }
 
   public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
@@ -205,5 +204,4 @@ public class User implements Ruleable {
   public Boolean isUser() {
     return true;
   }
-
 }

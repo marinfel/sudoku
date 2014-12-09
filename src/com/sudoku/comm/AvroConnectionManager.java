@@ -22,18 +22,22 @@ public class AvroConnectionManager extends ConnectionManager {
 
   public AvroConnectionManager(String ip) {
     super(ip);
+    client = null;
   }
 
+
   public void openConnection() throws OfflineUserException {
-    try {
-      client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT),
-          CONNECTION_TIME_OUT);
-      explorer = (NodeExplorer)
-          SpecificRequestor.getClient(NodeExplorer.class, client);
-    } catch(IOException exc) {
-      throw new OfflineUserException();
+    if (client == null) {
+      try {
+        client =
+            new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT),
+                CONNECTION_TIME_OUT);
+        explorer = (NodeExplorer)
+            SpecificRequestor.getClient(NodeExplorer.class, client);
+        isConnected = true;
+      }
+      catch(IOException exc) {throw new OfflineUserException();}
     }
-    isConnected = true;
   }
 
   public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
@@ -65,31 +69,21 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
-  public void closeConnection() throws OfflineUserException {
-     try {
+  public void disconnect() throws OfflineUserException,
+     ConnectionClosedException {
+    super.disconnect();
+    try {
       explorer.disconnect(CommunicationManager.getInstance().getLocalIp());
     } catch (AvroRemoteException exc) {
-       throw new OfflineUserException();
-     }
-    client.close();
-    client = null;
+      throw new OfflineUserException();
+    }
+  }
+
+  public void closeConnection() throws OfflineUserException {
+    if (client != null) {
+      client.close();
+      client = null;
+    }
     isConnected = false;
   }
-
-  /*public ArrayList<Grid> getGrids() throws ConnectionClosedException {
-
-  }
-  
-  public User getProfile() throws ConnectionClosedException {
-
-  }
-
-  public void pushComment(Comment c, Grid g) throws ConnectionClosedException {
-
-  }
-
-  public void publishComment(Comment c, Grid g) throws ConnectionClosedException {
-
-  }
-  */
 }

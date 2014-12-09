@@ -22,7 +22,7 @@ import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL
  * @author Jonathan
  */
 public class DataManager {
-    private static DataManager instance = new DataManager();
+    private static volatile DataManager instance = null;
     UserManager userMgr;
     GridManager gridMgr;
     AccessManager accMgr;
@@ -32,6 +32,7 @@ public class DataManager {
     private DataManager(){
         //Problème à la serialisation de grid manager au niveau de la fonction get lastplayed grid
         //sans solution pour le moment.
+        
         gridMgr= GridManager.getInstance();
         userMgr=UserManager.getInstance();
         accMgr=AccessManager.getInstance();
@@ -41,8 +42,13 @@ public class DataManager {
         
     }
     public static DataManager getInstance(){
-        return instance;
+        if(instance==null){
+            instance= new DataManager();
+        }
+        
+    return instance;
     } 
+    
       public void saveToJson(){
        ObjectMapper mapper = new ObjectMapper();
        //Pour sérializer les champs publics comme privés
@@ -68,20 +74,18 @@ public class DataManager {
 	            ex.printStackTrace();
         }
     }
-    public static User buildFromJson(){
+    public static DataManager buildFromJson(){
         ObjectMapper mapper= new ObjectMapper();
         // To avoid any undeclared property error
-        mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
-            User usr = null;
+        //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
+            
         try {
 	 
                 File jsonFile = new File(jsonFilePath);
 	 
-                usr = mapper.readValue(jsonFile, User.class);
+                DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
                 
-	        System.out.println(usr);
-	        System.out.println(mapper.writeValueAsString(usr));
-        } catch (JsonGenerationException ex) {
+        }catch (JsonGenerationException ex) {
          
 	 
 	            ex.printStackTrace();
@@ -95,7 +99,7 @@ public class DataManager {
 	            ex.printStackTrace();
 	 
 	}
-        return usr;
+        return DataManager.getInstance();
         
     }
 }

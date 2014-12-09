@@ -6,6 +6,7 @@
 package com.sudoku.data.sample;
 
 import com.sudoku.data.factory.GridFactory;
+import com.sudoku.data.manager.AccessManager;
 import com.sudoku.data.model.*;
 import java.util.List;
 
@@ -32,8 +33,7 @@ import com.sudoku.data.manager.UserManager;
 public class DataSample {
 
     // User et grid sont accesibles directement, servez-vous
-    public User a;
-    public User b;
+    public User a, b, c;
     public Grid g1,g2,g3;
     
     
@@ -48,16 +48,16 @@ public class DataSample {
       try {
         a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
         b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
+        c = new User("User3", "User3", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
       } catch (Exception ex) {
         // to be handled
       }
        // a.saveToJson();
        //création de Grid g1
-       List<Comment> comments = new ArrayList<>();
        //Ajout de commentaires
-       comments.add(new Comment("texte du commentaire 1".toString(),1, a));
-       comments.add(new Comment("texte du commentaire 2".toString(),2, a));
-       g1.setComments(comments);
+       g1.addComment(new Comment("texte du commentaire 1",1, a));
+       g1.addComment(new Comment("texte du commentaire 2",2, a));
+
        //Ajout de tags
        List<Tag> tags= new ArrayList<Tag>();
        tags.add(new Tag("Hard"));
@@ -124,7 +124,15 @@ public class DataSample {
        gridMgr.addGrid(g3);
        gridMgr.addPlayedGrid(g2,b);
        
-       DataManager dataMgr= DataManager.getInstance();
+       AccessManager accessMgr = AccessManager.getInstance();
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.display, a);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, a);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, a);
+       
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, b);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);
+       
+       DataManager dataMgr = DataManager.getInstance();
        
        //dataMgr.saveToJson();
        
@@ -136,8 +144,6 @@ public class DataSample {
         users.add(a);
         users.add(b);
         return users;
-        
-      
      }
 
 }

@@ -112,4 +112,17 @@ public final class GridManager {
   public List<Grid> getAvailableGrids() {
     return availableGrids;
   }
+  
+  public List<Grid> getUserGrids(User user) {
+      List usersGrids = new ArrayList<>();
+      
+      for(Grid g : this.availableGrids){
+          if(g.getCreateUser() == user){
+              usersGrids.add(g);
+          }
+      }
+      
+      return usersGrids;
+  }
+  
 }
