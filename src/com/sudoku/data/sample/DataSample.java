@@ -134,7 +134,7 @@ public class DataSample {
        
        DataManager dataMgr = DataManager.getInstance();
        
-       //dataMgr.saveToJson();
+       dataMgr.saveToJson();
        
        System.out.println(" Datasample finished");
        

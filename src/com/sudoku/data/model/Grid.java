@@ -2,6 +2,7 @@ package com.sudoku.data.model;
 
 import java.sql.Timestamp;
 import java.util.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 
 public class Grid {
@@ -131,7 +132,7 @@ public class Grid {
   public void setTitle(String titre) {
     this.title = titre;
   }
-
+@JsonIgnore
   public double getMeanGrades() { //Give the mean rounded to the nearest integer
     int i = 0;
     double result=0;
@@ -219,7 +220,6 @@ public class Grid {
   }
 
 
-
   public void addTag(Tag tag) {
     if (tag != null && tag.getName() != null && !tag.getName().isEmpty()) {
       for (Tag t : tags) {
@@ -277,5 +277,12 @@ public class Grid {
   public class errors {
     public static final String Grid_invalid_grid_array =
         "The grid must be a 9x9 cell array";
+  }
+  // for deserialisation use only
+  public String getCreatePseudo(){
+      return createPseudo;
+  }
+  public String getCreateSalt(){
+      return createSalt;
   }
 }

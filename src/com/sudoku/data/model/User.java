@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class User implements Ruleable {
   private static Logger logger = LoggerFactory.getLogger(User.class);
@@ -194,12 +195,13 @@ public class User implements Ruleable {
     this.contactCategories = contactCategories;
     this.updateDate();
   }
-
+  @JsonIgnore
   @Override
   public Boolean hasUser(User user) {
     return this.equals(user);
   }
-
+  
+  @JsonIgnore
   @Override
   public Boolean isUser() {
     return true;

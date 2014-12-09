@@ -1,10 +1,5 @@
 package com.sudoku.comm;
 
-import com.sudoku.data.model.Comment;
-import com.sudoku.data.model.Grid;
-import com.sudoku.data.model.User;
-
-import java.io.IOException;
 import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +10,7 @@ public abstract class ConnectionManager {
   protected String ipAddress;
   protected boolean isConnected;
   // should retrieve it from the communication manager or another conf singleton
-  protected final int NODE_PORT = 11023;
+  protected static final int NODEPORT = 11023;
 
   public ConnectionManager(String ip) {
     this.ipAddress = ip;
@@ -27,7 +22,7 @@ public abstract class ConnectionManager {
    */
   public abstract void openConnection() throws OfflineUserException;
   
-  public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
+  public List<String> getConnectedIps(List<String> newConnectedIps)
      throws OfflineUserException, ConnectionClosedException {
     if (!isConnected) {
       throw new ConnectionClosedException("Must open connection first.");
@@ -44,22 +39,21 @@ public abstract class ConnectionManager {
 
   public void disconnect() throws OfflineUserException,
      ConnectionClosedException {
-    if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
+    if (!isConnected) {
+      throw new ConnectionClosedException("Must open connection first.");
+    }
   }
 
   public abstract void closeConnection() throws OfflineUserException;
-  
-  /*public abstract ArrayList<Grid> getGrids() throws ConnectionClosedException;
-  public abstract User getProfile() throws ConnectionClosedException;
-  public abstract void pushComment(Comment c, Grid g)
-    throws ConnectionClosedException;
-  public abstract void publishComment(Comment c, Grid g)
-    throws ConnectionClosedException;*/
 
   //Exceptions
   public class ConnectionClosedException extends Exception {
-    public ConnectionClosedException() { super(); }
-    public ConnectionClosedException(String message) { super(message); }
+    public ConnectionClosedException() {
+      super();
+    }
+    public ConnectionClosedException(String message) {
+      super(message);
+    }
     public ConnectionClosedException(String message, Throwable cause) {
       super(message, cause);
     }
@@ -67,11 +61,17 @@ public abstract class ConnectionManager {
   }
 
   public class OfflineUserException extends Exception {
-    public OfflineUserException() { super(); }
-    public OfflineUserException(String message) { super(message); }
+    public OfflineUserException() {
+      super();
+    }
+    public OfflineUserException(String message) {
+      super(message);
+    }
     public OfflineUserException(String message, Throwable cause) {
       super(message, cause);
     }
-    public OfflineUserException(Throwable cause) { super(cause); }
+    public OfflineUserException(Throwable cause) {
+      super(cause);
+    }
   }
 }
