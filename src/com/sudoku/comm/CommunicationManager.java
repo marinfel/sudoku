@@ -141,6 +141,8 @@ public final class CommunicationManager {
   }
 
   public void disconnect() throws IOException {
+    nodeExplorerServer.stopServer();
+    timerDiscoverNodes.cancel();
     Iterator<String> itr = ipsConnected.keySet().iterator();
     while(itr.hasNext()) {
       try {
@@ -153,11 +155,10 @@ public final class CommunicationManager {
         System.out.println("[Comm Manager: disconnect] disconnecting, called disconnect");
         cm.closeConnection();
         System.out.println("[Comm Manager: disconnect] disconnecting done");
-        
       }
       catch(ConnectionManager.OfflineUserException ex){}
       catch(ConnectionManager.ConnectionClosedException ex){}
-      timerDiscoverNodes.cancel();
+      itr.remove();
     }
 
   }
