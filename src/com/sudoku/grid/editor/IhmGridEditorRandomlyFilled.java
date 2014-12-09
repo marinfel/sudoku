@@ -23,49 +23,59 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 /**
- * @author Mehdi KANE, Céline TO This class generates an entire filled grid, the
- * user can hide cells to make his own grid to be played
+ * @author Celine To and Mehdi Kane Instantiates a completely filled grid, the
+ * user can choose to hide cells by clicking on a cell or by typing a number of
+ * cells to be randomly removed
  */
 public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
-  
+
   private Button deleteCells;
   private TextField deleteCellsField;
-  
+
+  /**
+   * Constructor changes the padding of the borderPane and inserts controls in
+   * the leftPane to remove cells.
+   */
   public IhmGridEditorRandomlyFilled() {
     super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid(), 500);
 
     // button with the number of cases that the user wants to hide randomly
     deleteCells = new Button("Delete Cells");
     deleteCellsField = new TextField("0");
-    
+
     border.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
-    
+
     VBox leftLayout = (VBox) border.getLeft();
     leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
     leftLayout.setAlignment(Pos.TOP_CENTER);
-    // A FAIRE : bloquer la case pour ne pas pouvoir entrer nombres négatifs
 
+    //Handler of the delete button
     deleteCells.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         deleteCells();
       }
     });
-    
+
+    //Handler of the TextField to delete cells
     deleteCellsField.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         deleteCells();
       }
     });
-    
+
   }
-  
+
+  /**
+   * Randomly hides a number of cells given in the deleteCellsField
+   */
   public void deleteCells() {
     IhmCell[][] cells = gridLines.getCells();
     int number = Integer.parseInt(deleteCellsField.getText());
     int nbNotHiddenCells = 0;
-    // count number of visible cells
+
+    //Counts the number of visible cells
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         if (!((IhmCellView) cells[i][j]).isHidden()) {
@@ -73,12 +83,19 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         }
       }
     }
+
+    //Checks if the number of cells to delete is too big
     if ((nbNotHiddenCells - number) < 0) {
       String title = new String("Not enough filled cells");
       String text = new String(
         "You can't hide that many cells");
       IhmPopupsList.getInstance().addPopup(title, text, 10);
-    } else {
+    } else if (number < 0) { //Checks if number of cells to delete is positive
+      String title = new String("Negative Value");
+      String text = new String(
+        "Enter a positive number");
+      IhmPopupsList.getInstance().addPopup(title, text, 10);
+    } else { //Hides the number of cells desired
       LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();
       // make a list of visible cells
       for (int i = 0; i < cells.length; i++) {
@@ -90,11 +107,10 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         }
       }
       Collections.shuffle(notHiddenCells);
-      // hide n cells (hidden = true)
       for (int i = 0; i < number; i++) {
         (notHiddenCells.poll()).setHidden(true);
       }
     }
   }
-  
+
 }

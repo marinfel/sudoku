@@ -11,12 +11,13 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 
 /**
- * @author mecton08
+ * @author Celine To and Mehdi Kane Instantiate an empty grid that has to be
+ * field by the user
  */
 public class IhmGridEditorManuallyFilled extends IhmGridEditor {
 
   public IhmGridEditorManuallyFilled() {
-    super(IhmGridLines.ALL_EDITABLE, new Grid("", UserManager.getInstance().getLoggedUser()),500);
+    super(IhmGridLines.ALL_EDITABLE, new Grid("", UserManager.getInstance().getLoggedUser()), 500);
   }
 
 }
