@@ -11,8 +11,8 @@ import org.apache.avro.ipc.specific.SpecificRequestor;
 import java.io.IOException;
 import java.lang.Long;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.List;
+
 // Class representing a connection to a remote user
 public class AvroConnectionManager extends ConnectionManager {
   private final static Long CONNECTION_TIME_OUT = 1000L;
@@ -40,7 +40,7 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
-  public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
+  public List<String> getConnectedIps(List<String> newConnectedIps)
      throws ConnectionClosedException, OfflineUserException {
     super.getConnectedIps(newConnectedIps);
     CommunicationManager cm = CommunicationManager.getInstance();

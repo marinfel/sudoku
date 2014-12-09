@@ -34,3 +34,8 @@ bin/
 .idea
 *.iml
 /nbproject/
+/sonar-runner-2.4/
+/sonarqube-4.5.1/
+/sonar-project.properties
+/src/com/sudoku/sonar-project.properties
+/settings.xml

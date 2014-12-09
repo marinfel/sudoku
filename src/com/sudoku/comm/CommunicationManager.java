@@ -21,11 +21,11 @@ public final class CommunicationManager {
   private Server nodeExplorerServer;
   private Server dataRetrieverServer;
 
-  private Logger logger = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
-  private ArrayList<String> localIps;
-  private ConcurrentHashMap<String, ConnectionManager> ipsToConfirm;
-  private ConcurrentHashMap<String, ConnectionManager> ipsConnected;
+  private List<String> localIps;
+  private Map<String, ConnectionManager> ipsToConfirm;
+  private Map<String, ConnectionManager> ipsConnected;
 
   private Timer timerDiscoverNodes;
   private DiscoverNodesTimerTask discoverNodesTimerTask;
@@ -47,7 +47,7 @@ public final class CommunicationManager {
     return instance;
   }
 
-  public void init(String uuid, String login, ArrayList<String> localIps) {
+  public void init(String uuid, String login, List<String> localIps) {
     this.uuid = uuid;
     this.login = login;
     this.localIp = nodeExplorerServer.getInetAddress();
@@ -71,11 +71,11 @@ public final class CommunicationManager {
     }
   } 
 
-  public ConcurrentHashMap<String, ConnectionManager> getIpsConnected() {
+  public Map<String, ConnectionManager> getIpsConnected() {
     return ipsConnected;
   }
 
-  public ConcurrentHashMap<String, ConnectionManager> getIpsToConfirm() {
+  public Map<String, ConnectionManager> getIpsToConfirm() {
     return ipsToConfirm;
   }
 
@@ -109,10 +109,10 @@ public final class CommunicationManager {
     }
   }
 
-  public ArrayList<com.sudoku.data.model.Grid> getAllGrids()
+  public List<com.sudoku.data.model.Grid> getAllGrids()
       throws IOException {
-    ArrayList<com.sudoku.data.model.Grid> resultGrids = new ArrayList<>();
-    ArrayList<Grid> grids = new ArrayList<>();
+    List<com.sudoku.data.model.Grid> resultGrids = new ArrayList<>();
+    List<Grid> grids = new ArrayList<>();
     for (String ip : ipsConnected.keySet()) {
       NettyTransceiver client = new NettyTransceiver(
           new InetSocketAddress(ip, dataRetrieverServer.getPort()));
@@ -131,8 +131,7 @@ public final class CommunicationManager {
     if (cm != null) {
       try {
         cm.closeConnection();
-      }
-      catch(ConnectionManager.OfflineUserException exc) {
+      }catch(ConnectionManager.OfflineUserException exc) {
         // Nothing to do, already closed
       }
       ipsConnected.remove(ip);
@@ -151,10 +150,9 @@ public final class CommunicationManager {
         cm.openConnection();
         cm.disconnect();
         cm.closeConnection();
-      }
-      catch(ConnectionManager.OfflineUserException |
+      }catch(ConnectionManager.OfflineUserException |
           ConnectionManager.ConnectionClosedException ex) {
-        logger.info(ex.toString());
+        LOGGER.info(ex.toString());
       }
       itr.remove();
     }
@@ -165,9 +163,9 @@ public final class CommunicationManager {
     return getAllGrids(user.getIpAddress());
   }
 
-  public ArrayList<com.sudoku.data.model.Grid> getAllGrids(String ip)
+  public List<com.sudoku.data.model.Grid> getAllGrids(String ip)
       throws IOException {
-    ArrayList<com.sudoku.data.model.Grid> grids = new ArrayList<>();
+    List<com.sudoku.data.model.Grid> grids = new ArrayList<>();
     if (ip != null) {
       NettyTransceiver client = new NettyTransceiver(
           new InetSocketAddress(ip, dataRetrieverServer.getPort()));
@@ -180,9 +178,9 @@ public final class CommunicationManager {
     return grids;
   }
 
-  public ArrayList<com.sudoku.data.model.User> getAllProfiles()
+  public List<com.sudoku.data.model.User> getAllProfiles()
       throws IOException {
-    ArrayList<com.sudoku.data.model.User> users = new ArrayList<>();
+    List<com.sudoku.data.model.User> users = new ArrayList<>();
     for (String ip : ipsConnected.keySet()) {
       NettyTransceiver client = new NettyTransceiver(
           new InetSocketAddress(ip, dataRetrieverServer.getPort()));

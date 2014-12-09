@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
   private final CommunicationManager communicationManager;
-  private Logger logger = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
   public DiscoverNodesTimerTask() {
     this.communicationManager = CommunicationManager.getInstance();
@@ -42,30 +42,30 @@ public class DiscoverNodesTimerTask extends TimerTask {
   }
 
   public void launchDiscovery() {
-    ConcurrentHashMap<String, ConnectionManager> ipsToConfirm =
+    Map<String, ConnectionManager> ipsToConfirm =
         communicationManager.getIpsToConfirm();
     Iterator<String> itr = ipsToConfirm.keySet().iterator();
-    ConcurrentHashMap<String, ConnectionManager> ipsConnected =
+    Map<String, ConnectionManager> ipsConnected =
         communicationManager.getIpsConnected();
 
-    ArrayList<String> ipsToPublish = new ArrayList<>();
+    List<String> ipsToPublish = new ArrayList<>();
     while (itr.hasNext()) {
-      ArrayList<String> ipsConnectedTMP =
+      List<String> ipsConnectedTMP =
           new ArrayList<>(ipsConnected.keySet());
       Iterator<String> itrDebug = ipsConnectedTMP.iterator();
 
-      logger.debug("ipsConnectedTMP");
+      LOGGER.debug("ipsConnectedTMP");
 
       while (itrDebug.hasNext()) {
-        logger.debug(itrDebug.next());
+        LOGGER.debug(itrDebug.next());
       }
-      logger.debug("/ipsConnectedTMP");
+      LOGGER.debug("/ipsConnectedTMP");
 
-      ArrayList<String> ipToShare = new ArrayList<>(ipsConnected.keySet());
+      List<String> ipToShare = new ArrayList<>(ipsConnected.keySet());
       ipToShare.add(localIp);
 
       String currentIpToConfirm = itr.next();
-      logger.debug("[BEGIN TimerTask] Connecting to :" +
+      LOGGER.debug("[BEGIN TimerTask] Connecting to :" +
           currentIpToConfirm + "\n ");
       AvroConnectionManager currentConnectionManager =
           new AvroConnectionManager(currentIpToConfirm);
@@ -84,22 +84,22 @@ public class DiscoverNodesTimerTask extends TimerTask {
 
         //DEBUG
         Iterator<String> itrRemote = ipFromRemoteNode.iterator();
-        logger.debug("[TimerTask] ip From Remote Node (from " +
+        LOGGER.debug("[TimerTask] ip From Remote Node (from " +
             currentIpToConfirm + ") : ");
         while (itrRemote.hasNext()) {
           String addr = itrRemote.next();
-          logger.debug(addr);
+          LOGGER.debug(addr);
         }
         communicationManager.addIpToConfirm(ipFromRemoteNode);
-        logger.debug("[END TimerTask]");
-        logger.debug("*********************");
+        LOGGER.debug("[END TimerTask]");
+        LOGGER.debug("*********************");
         // END DEBUG
 
         currentConnectionManager.closeConnection();
       } catch (ConnectionManager.OfflineUserException exc) {
-        logger.debug("Offline user: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Offline user: " + currentIpToConfirm + "\n ");
       } catch (ConnectionManager.ConnectionClosedException exc) {
-        logger.debug("Closed connection: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Closed connection: " + currentIpToConfirm + "\n ");
       }
 
       // Publishing known nodes
@@ -111,9 +111,9 @@ public class DiscoverNodesTimerTask extends TimerTask {
             cm.publishIps(ipsToPublish);
             cm.closeConnection();
           } catch (ConnectionManager.OfflineUserException exc) {
-            logger.debug("Offline user");
+            LOGGER.debug("Offline user");
           } catch (ConnectionManager.ConnectionClosedException exc) {
-            logger.debug("Closed connection");
+            LOGGER.debug("Closed connection");
           }
         }
       }

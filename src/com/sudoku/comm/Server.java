@@ -11,13 +11,13 @@ import java.util.Enumeration;
 public abstract class Server {
   protected static org.apache.avro.ipc.Server server;
   protected String localIp;
-  private Logger logger = LoggerFactory.getLogger(Server.class);
+  private Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
   public Server() {
     try {
       this.localIp = getLocalInetAddress().getHostAddress();
     } catch (UnknownHostException ex) {
-      logger.error(ex.toString());
+      LOGGER.error(ex.toString());
     }
   }
 
@@ -66,7 +66,7 @@ public abstract class Server {
       }
       return jdkSuppliedAddress;
     } catch (Exception ex) {
-      logger.error(ex.toString());
+      LOGGER.error(ex.toString());
       UnknownHostException unknownHostException =
           new UnknownHostException("Failed to determine IP: " + ex);
       unknownHostException.initCause(ex);

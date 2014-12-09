@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
  * Created by ben on 01/12/14.
  */
 public class DataRetrieverServer extends Server {
-  public final int PORT = 11024;
+  public static final int PORT = 11024;
 
   public DataRetrieverServer() { super(); }
 

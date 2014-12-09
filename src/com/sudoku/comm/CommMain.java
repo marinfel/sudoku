@@ -4,18 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ben on 19/11/14.
  */
 public class CommMain {
-  private static Logger logger =
+  private static final Logger LOGGER =
       LoggerFactory.getLogger(CommMain.class);
 
   public static void main(String[] args) {
     String uuid = "uuid";
     String login = "login";
-    ArrayList<String> connectedIps = new ArrayList<>();
+    List<String> connectedIps = new ArrayList<>();
     //connectedIps.add(args[0]);
     connectedIps.add("172.26.25.19");
     connectedIps.add("172.26.25.20");
@@ -38,7 +39,7 @@ public class CommMain {
       }*/
       commManager.disconnect();
     } catch (Exception ex) {
-      logger.error("error :", ex);
+      LOGGER.error("error :", ex);
     }
   }
 }
