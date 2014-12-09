@@ -37,93 +37,102 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author celine
+ * @author Celine To and Mehdi Kane
  */
 public abstract class IhmGridEditor extends IhmGridView {
 
-  private TextField editTitle;
-  // gestion des ajouts de tags
-  private Button validBtn;
-  private Button cancelBtn;
-  private Flags flag;
+  private TextField editTitle; //Field to enter the grid title
+  private Button validBtn; //Button to valid the edited grid
+  private Button cancelBtn; //Cancel edition
+  private Flags flag; //Flag to know if the cells are editable or fixed
 
+  /**
+   *
+   * @param flagStatus Indicates whether the cells have to be fixed or editable
+   * @param gr Grid object created by data
+   * @param size Size of the grid in pixels
+   */
   public IhmGridEditor(Flags flagStatus, Grid gr, int size) {
-    super(flagStatus, gr, size);
+    super(flagStatus, gr, size); //IhmGridView's constructor
 
-    // bouton d'enregistrement de la grille
     editTitle = new TextField();
-    editTitle.setPromptText("Entrer le titre");
-    validBtn = new Button("Valider");
-    cancelBtn = new Button("Annuler");
-
+    editTitle.setPromptText("Enter a grid title");
+    validBtn = new Button("Submit");
+    cancelBtn = new Button("Cancel");
     flag = flagStatus;
 
+    //Adds the editTitle text field to the top of the borderPane
     HBox topLayout = (HBox) border.getTop();
-
     topLayout.getChildren().add(editTitle);
     topLayout.setPrefHeight(100);
     topLayout.setAlignment(Pos.CENTER);
 
-    // layout du bas : ajout de tags
-    VBox bottomVBox = new VBox();
-    // list of entered tags
+    //HBox that contains the list of tags (i.e. tagsList)
     HBox firstHbox = new HBox();
     final ListView<String> tagsList = new ListView<String>();
     final ObservableList<String> tagsListValues = FXCollections.observableArrayList();
     tagsList.setItems(tagsListValues);
     tagsList.setOrientation(Orientation.HORIZONTAL);
     firstHbox.getChildren().add(tagsList);
-    //bottomLayout.setPrefHeight(100);
-    // enter a tag
+
+    //HBox that contains the text field to enter a new tag
     HBox secondHbox = new HBox();
     final TextField tagField = new TextField();
-    tagField.setPromptText("Entrez votre tag");
+    tagField.setPromptText("Type in a tag");
     secondHbox.getChildren().add(tagField);
     Button submit = new Button("+");
     secondHbox.getChildren().add(submit);
 
+    //Adds the two previous HBox a VBox to align them vertically
+    VBox bottomVBox = new VBox();
     bottomVBox.getChildren().addAll(firstHbox, secondHbox);
-    //bottomVBox.setPrefWidth(500.0);
-    tagsList.setMaxHeight(75.0); //Sinon le tagsList cache les boutons du leftPane
+    tagsList.setMaxHeight(75.0); //Avoids that the tag list hides the grid
     tagsList.setPrefWidth(400.0);
 
-    // layout du bas
+    /*Adds the previous VBox, the valid and cancel buttons
+     to the bottom of the borderPane
+     */
     HBox bottomLayout = (HBox) border.getBottom();
-
     bottomLayout.getChildren().addAll(bottomVBox, validBtn, cancelBtn);
     bottomLayout.setPrefHeight(100);
 
+    //Adjusts the dimensions of the right pane of the borderPane
     VBox rightLayout = (VBox) border.getRight();
     rightLayout.setPrefWidth(110);
     rightLayout.setMinWidth(100);
-    //rightLayout.setPrefWidth(150);
 
+    //Sets the padding around the four sides of the borderPane
     border.setPadding(new Insets(0.0, 100.0, 10.0, 100.0));
 
-// handlers
+    /*Handler that changes the grid title whenever the content of the editTitle
+     textField is modified
+     */
     editTitle.textProperty().addListener(new ChangeListener<String>() {
-
       @Override
       public void changed(ObservableValue<? extends String> observable,
         String oldTitle, String newTitle) {
-        // Handle any change on the textField
         grid.setTitle(newTitle);
       }
     });
 
+    //Handler that checks if everything is valid before leaving the edition mode
     validBtn.setOnAction(new EventHandler<ActionEvent>() {
-
       @Override
       public void handle(ActionEvent event) {
+        //Checks that the grid title is not null and is not empty
         if (!(grid.getTitle() == null) && !grid.getTitle().isEmpty()) {
 
           IhmCell[][] cells = gridLines.getCells();
           int count = 0;
           int i = 0, j = 0;
-          // count cells number that are going to be FixedCell
+          //Counts the number of FixedCell
           while (i < cells.length) {
             j = 0;
             while (j < cells[i].length && count < 17) {
+              /*Cells that are editable and have a positive value
+               (IhmGridEditorManuallyFilled) or cells that are fixed and visible
+               (IhmGridEditorRandomlyFilled) will be FixedCell
+               */
               if ((flag.contains(IhmGridLines.ALL_EDITABLE) && cells[i][j].getValue() > 0)
                 || (flag.contains(IhmGridLines.ALL_VIEW) && !((IhmCellView) cells[i][j]).isHidden())) {
                 count++;
@@ -132,22 +141,23 @@ public abstract class IhmGridEditor extends IhmGridView {
             }
             i++;
           }
-          if (count < 17) {
-            // display an error pop-up when 17 cells are not visible
+          if (count < 17) { //At least 17 cells have to be filled
+            //Displays an error pop-up to inform the user
             String title = new String("Not enough filled cells");
             String text = new String(
               "You need to fill at least 17 cells to validate your grid");
             IhmPopupsList.getInstance().addPopup(title, text, 10);
           } else {
-            // save tags into data's grid objet
+            //Saves the tags in data's grid object
             ArrayList<Tag> tmpList = new ArrayList<Tag>();
             for (String str : tagsListValues) {
               tmpList.add(new Tag(str));
             }
             grid.setTags(tmpList);
+
             i = 0;
             j = 0;
-            // save final grid into data's grid object
+            //Saves the edited grid in data's grid object
             if (flag.contains(IhmGridLines.ALL_VIEW)) {
               for (i = 0; i < cells.length; i++) {
                 for (j = 0; j < cells[i].length; j++) {
@@ -155,12 +165,11 @@ public abstract class IhmGridEditor extends IhmGridView {
                     grid.setFixedCell((byte) i, (byte) j,
                       (byte) cells[i][j].getValue());
                   } else {
-                    System.out.println("entrer dans setEmptyCell");
                     grid.setEmptyCell((byte) i, (byte) j);
                   }
                 }
               }
-            } else { // IhmGridLines.ALL_EDITABLE
+            } else { //IhmGridLines.ALL_EDITABLE
               for (i = 0; i < cells.length; i++) {
                 for (j = 0; j < cells[i].length; j++) {
                   if (cells[i][j].getValue() > 0) {
@@ -171,36 +180,32 @@ public abstract class IhmGridEditor extends IhmGridView {
               }
             }
 
-            // display values of the grid object (by column)
-            for (i = 0; i < cells.length; i++) {
-              System.out.println("\n");
-              for (j = 0; j < cells[i].length; j++) {
-                if (grid.getCell(j, i) instanceof FixedCell) {
-                  System.out.print(((FixedCell) grid.getCell(j, i)).getValue());
-                } else {
-                  System.out.print("0");
-                }
-              }
-            }
-            System.out.println("\n");
-            // save creation date into data's grid object
+            //Display values of the grid object (by column)
+            /*for (i = 0; i < cells.length; i++) {
+             System.out.println("\n");
+             for (j = 0; j < cells[i].length; j++) {
+             if (grid.getCell(j, i) instanceof FixedCell) {
+             System.out.print(((FixedCell) grid.getCell(j, i)).getValue());
+             } else {
+             System.out.print("0");
+             }
+             }
+             }
+             System.out.println("\n");
+             */
+            //Saves creation date into data's grid object
             java.util.Date date = new java.util.Date();
             grid.setCreateDate(new Timestamp(date.getTime()));
-            System.out.println(grid.getCreateDate());
-            System.out.println(grid.getTitle());
-            List<Tag> tags = grid.getTags();
-            for (Tag tag : tags) {
-              System.out.println(tag.getName());
-            }
 
-            // add a grid to GridManager
+            //Adds the grid to the GridManager to make it available for Main
             GridManager gm = GridManager.getInstance();
             gm.addGrid(grid);
 
-            //Envoie event a IhmMain pour indiquer la fin de l'edition
+            //Notify Main of the successful creation of a grid
           }
-        } else {
-          String title = new String("No title");
+        } else { //If there is no title to the Grid
+          //Displays a popup error to notify the user
+          String title = new String("No Title");
           String text = new String(
             "You have to provide a title for your grid");
           IhmPopupsList.getInstance().addPopup(title, text, 10);
@@ -210,25 +215,30 @@ public abstract class IhmGridEditor extends IhmGridView {
     }
     );
 
+    /*
+     Handler that cancels the grid creation process and displays the editing
+     choice screen
+     */
     cancelBtn.setOnAction(
       new EventHandler<ActionEvent>() {
         @Override
-        public void handle(ActionEvent event
-        ) {
-          //supprimer le fichier en dur
+        public void handle(ActionEvent event) {
+
         }
       });
 
+    //When the Enter key is pressed adds a tag to the tagList
     tagField.setOnKeyPressed(new EventHandler<KeyEvent>() {
       @Override
       public void handle(KeyEvent ke) {
-        if (ke.getCode().equals(KeyCode.ENTER)) {
+        if (ke.getCode().equals(KeyCode.ENTER) && !tagField.getText().isEmpty()) {
           tagsListValues.add(tagField.getText());
           tagField.clear();
         }
       }
     });
 
+    //Adds a tag when the submit button is pressed
     submit.setOnAction(
       new EventHandler<ActionEvent>() {
         @Override
@@ -240,6 +250,7 @@ public abstract class IhmGridEditor extends IhmGridView {
       }
     );
 
+    //Remove the clicked tag from the tag list
     tagsList.setOnMouseClicked(
       new EventHandler<MouseEvent>() {
         @Override
@@ -251,6 +262,7 @@ public abstract class IhmGridEditor extends IhmGridView {
     );
   }
 
+  //Utilité concretement ??????
   public Button getValidBtn() {
     return validBtn;
   }

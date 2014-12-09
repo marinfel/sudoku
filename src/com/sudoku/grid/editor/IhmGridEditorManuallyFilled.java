@@ -17,6 +17,7 @@ import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 public class IhmGridEditorManuallyFilled extends IhmGridEditor {
 
   public IhmGridEditorManuallyFilled() {
+    //IhmGridEditor's constructor
     super(IhmGridLines.ALL_EDITABLE, new Grid("", UserManager.getInstance().getLoggedUser()), 500);
   }
 

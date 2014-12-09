@@ -37,9 +37,10 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
    * the leftPane to remove cells.
    */
   public IhmGridEditorRandomlyFilled() {
+    //IhmGridEditor's constructor
     super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid(), 500);
 
-    // button with the number of cases that the user wants to hide randomly
+    // Button with the number of cases that the user wants to hide randomly
     deleteCells = new Button("Delete Cells");
     deleteCellsField = new TextField("0");
 
@@ -84,20 +85,20 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
       }
     }
 
-    //Checks if the number of cells to delete is too big
+    //Checks if the number of cells to delete is higher than the # of visible cells
     if ((nbNotHiddenCells - number) < 0) {
-      String title = new String("Not enough filled cells");
+      String title = new String("Not Enough Filled Cells");
       String text = new String(
         "You can't hide that many cells");
       IhmPopupsList.getInstance().addPopup(title, text, 10);
-    } else if (number < 0) { //Checks if number of cells to delete is positive
+    } else if (number < 0) { //Checks if the number of cells to delete is positive
       String title = new String("Negative Value");
       String text = new String(
         "Enter a positive number");
       IhmPopupsList.getInstance().addPopup(title, text, 10);
-    } else { //Hides the number of cells desired
+    } else { //Hides the desired number of cells
       LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();
-      // make a list of visible cells
+      //Makes a list of the visible cells
       for (int i = 0; i < cells.length; i++) {
         for (int j = 0; j < cells[i].length; j++) {
           IhmCellView tmp = (IhmCellView) cells[i][j];
@@ -106,9 +107,9 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
           }
         }
       }
-      Collections.shuffle(notHiddenCells);
+      Collections.shuffle(notHiddenCells); //Shuffles the visible cells
       for (int i = 0; i < number; i++) {
-        (notHiddenCells.poll()).setHidden(true);
+        (notHiddenCells.poll()).setHidden(true); //Hide the cells
       }
     }
   }
