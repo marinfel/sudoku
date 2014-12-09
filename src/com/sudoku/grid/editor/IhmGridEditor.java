@@ -23,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -56,14 +57,13 @@ public abstract class IhmGridEditor extends IhmGridView {
 
     flag = flagStatus;
 
-    // layout du haut
     HBox topLayout = (HBox) border.getTop();
 
-    topLayout.getChildren().addAll(editTitle, validBtn, cancelBtn);
+    topLayout.getChildren().add(editTitle);
     topLayout.setPrefHeight(100);
 
     // layout du bas : ajout de tags
-    VBox bottomLayout = (VBox) border.getBottom();
+    VBox bottomVBox = new VBox();
     // list of entered tags
     HBox firstHbox = new HBox();
     final ListView<String> tagsList = new ListView<String>();
@@ -71,7 +71,7 @@ public abstract class IhmGridEditor extends IhmGridView {
     tagsList.setItems(tagsListValues);
     tagsList.setOrientation(Orientation.HORIZONTAL);
     firstHbox.getChildren().add(tagsList);
-    bottomLayout.setPrefHeight(100);
+    //bottomLayout.setPrefHeight(100);
     // enter a tag
     HBox secondHbox = new HBox();
     final TextField tagField = new TextField();
@@ -80,11 +80,25 @@ public abstract class IhmGridEditor extends IhmGridView {
     Button submit = new Button("+");
     secondHbox.getChildren().add(submit);
 
-    bottomLayout.getChildren().addAll(firstHbox, secondHbox);
-
+    bottomVBox.getChildren().addAll(firstHbox, secondHbox);
+    //bottomVBox.setPrefWidth(500.0);
     tagsList.setMaxHeight(75.0); //Sinon le tagsList cache les boutons du leftPane
-    // handlers
+    tagsList.setPrefWidth(400.0);
 
+    // layout du bas
+    HBox bottomLayout = (HBox) border.getBottom();
+
+    bottomLayout.getChildren().addAll(bottomVBox, validBtn, cancelBtn);
+    bottomLayout.setPrefHeight(100);
+
+    VBox rightLayout = (VBox) border.getRight();
+    rightLayout.setPrefWidth(150);
+    rightLayout.setMaxWidth(150);
+    rightLayout.setPrefWidth(150);
+
+    border.setPadding(new Insets(30.0, 10.0, 10.0, 200.0));
+
+// handlers
     editTitle.textProperty().addListener(new ChangeListener<String>() {
 
       @Override
