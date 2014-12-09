@@ -39,6 +39,11 @@ public abstract class ConnectionManager {
     if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
   }
 
+  public void disconnect() throws OfflineUserException,
+     ConnectionClosedException {
+    if (!isConnected) throw new ConnectionClosedException("Must open connection first.");
+  }
+
   public abstract void closeConnection() throws OfflineUserException;
   
   /*public abstract ArrayList<Grid> getGrids() throws ConnectionClosedException;

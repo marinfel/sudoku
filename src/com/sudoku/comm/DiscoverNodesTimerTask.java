@@ -90,7 +90,7 @@ public class DiscoverNodesTimerTask extends TimerTask {
           System.out.println("[END TimerTask]");
           System.out.println("*********************");
           // END DEBUG
-          
+
           currentConnectionManager.closeConnection();  
       }
         catch (ConnectionManager.OfflineUserException exc) {System.out.print("Offline user: " + currentIpToConfirm + "\n ");}

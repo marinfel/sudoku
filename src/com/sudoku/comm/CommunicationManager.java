@@ -126,8 +126,35 @@ public final class CommunicationManager {
     }
   }
 
+  public void removeConnectedIp(String ip) {
+    ConnectionManager cm = ipsConnected.get(ip);
+    if (cm != null) {
+      try {
+        cm.closeConnection();
+      }
+      catch(ConnectionManager.OfflineUserException exc) {
+        // Nothing to do, already closed
+      }
+      ipsConnected.remove(ip);
+      ipsToConfirm.put(ip, cm);
+    }
+  }
+
   public void disconnect() throws IOException {
-    
+    Iterator<String> itr = ipsConnected.keySet().iterator();
+    while(itr.hasNext()) {
+      try {
+        ConnectionManager cm = ipsConnected.get(itr.next());
+        cm.openConnection();
+        cm.disconnect();
+        cm.closeConnection();
+        
+      }
+      catch(ConnectionManager.OfflineUserException ex){}
+      catch(ConnectionManager.ConnectionClosedException ex){}
+      timerDiscoverNodes.cancel();
+    }
+
   }
 
   public ArrayList<Grid> getAllGrids() {
