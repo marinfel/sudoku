@@ -19,25 +19,27 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
+import javafx.geometry.Pos;
 
 /**
  * @author Mehdi KANE, Céline TO This class generates an entire filled grid, the
  * user can hide cells to make his own grid to be played
  */
 public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
-
+  
   private Button deleteCells;
   private TextField deleteCellsField;
-
+  
   public IhmGridEditorRandomlyFilled() {
-    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid(),500);
+    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid(), 500);
 
     // button with the number of cases that the user wants to hide randomly
     deleteCells = new Button("Delete Cells");
     deleteCellsField = new TextField("0");
-
+    
     VBox leftLayout = (VBox) border.getLeft();
     leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
+    leftLayout.setAlignment(Pos.CENTER);
     // A FAIRE : bloquer la case pour ne pas pouvoir entrer nombres négatifs
 
     deleteCells.setOnAction(new EventHandler<ActionEvent>() {
@@ -46,16 +48,16 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         deleteCells();
       }
     });
-
+    
     deleteCellsField.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
         deleteCells();
       }
     });
-
+    
   }
-
+  
   public void deleteCells() {
     IhmCell[][] cells = gridLines.getCells();
     int number = Integer.parseInt(deleteCellsField.getText());
@@ -91,5 +93,5 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
       }
     }
   }
-
+  
 }
