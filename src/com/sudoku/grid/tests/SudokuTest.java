@@ -37,8 +37,9 @@ public class SudokuTest extends Application {
 
     IhmGridLayout ihm_test;
 
-    ihm_test = new IhmGridEditorRandomlyFilled();
+    //ihm_test = new IhmGridEditorRandomlyFilled();
     //ihm_test = new IhmGridEditorManuallyFilled();
+    ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
 
     //ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
     //ihm_test = new IhmGridEditorManuallyFilled();

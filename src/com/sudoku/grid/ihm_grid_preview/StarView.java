@@ -6,43 +6,59 @@
 package com.sudoku.grid.ihm_grid_preview;
 
 //import ihm_grid.*;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
  * @author groudame
  */
-public class StarView {
+public final class StarView extends ImageView {
 
-  ImageView star;
+  public enum StarTypes {
 
-  public StarView(int typeOfStars) {
-    Image iStar;
-    switch (typeOfStars) {
-      case 1: //yellow
-        iStar = new Image(getClass().getResource("yellowStar.png").toExternalForm());
-        //iStar = new Image("yellowStar.png", true);
+    FILLED,
+    HALF,
+    EMPTY;
+  };
+
+  protected final Image starFilled;
+  protected final Image starHalf;
+  protected final Image starEmpty;
+
+  public StarView() {
+    //yellow - com.sudoku.grid.ihm_grid_preview.
+    starFilled = new Image(new File("pictures/grid/yellowStar.png").toURI().toString());
+    //white and yellow
+    starHalf = new Image(new File("pictures/grid/yellowWhiteStar.png").toURI().toString());
+    //white
+    //iStar = new Image(getClass().getResource("whiteStar.png").toExternalForm());
+    starEmpty = new Image(new File("pictures/grid/whiteStar.png").toURI().toString());
+
+    setType(StarTypes.EMPTY);
+  }
+
+  public StarView(StarTypes typeOfStar) {
+    this();
+    setType(typeOfStar);
+  }
+
+  public void setType(StarTypes type) {
+    switch (type) {
+      case FILLED:
+        setImage(starFilled);
         break;
-      case 2: //white and yellow
-        iStar = new Image(getClass().getResource("yellowWhiteStar.png").toExternalForm());
-        //iStar = new Image("yellowWhiteStar.png");
+      case HALF:
+        setImage(starHalf);
         break;
-      default: //white
-        iStar = new Image(getClass().getResource("whiteStar.png").toExternalForm());
-        //iStar = new Image("whiteStar.png");
+      case EMPTY:
+        setImage(starEmpty);
+        break;
+      default:
         break;
     }
-    star = new ImageView();
-    star.setImage(iStar);
-
   }
-
-  /**
-   * @return the star
-   */
-  public ImageView getStar() {
-    return star;
-  }
-
 }
