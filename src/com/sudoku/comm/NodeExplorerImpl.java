@@ -2,7 +2,6 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
-import com.sudoku.util.CollectionUtil;
 import org.apache.avro.AvroRemoteException;
 
 import java.util.ArrayList;

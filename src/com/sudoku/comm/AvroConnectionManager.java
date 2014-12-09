@@ -2,20 +2,17 @@ package com.sudoku.comm;
 
 import com.sudoku.comm.generated.Message;
 import com.sudoku.comm.generated.NodeExplorer;
-import com.sudoku.data.manager.UserManager;
-import com.sudoku.data.model.User;
 import org.apache.avro.AvroRemoteException;
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import java.io.IOException;
-import java.lang.Long;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.List;
+
 // Class representing a connection to a remote user
 public class AvroConnectionManager extends ConnectionManager {
-  private final static Long CONNECTION_TIME_OUT = 1000L;
+  private static final Long CONNECTION_TIME_OUT = 1000L;
 
   private NettyTransceiver client;
   private NodeExplorer explorer;
@@ -30,17 +27,16 @@ public class AvroConnectionManager extends ConnectionManager {
     if (client == null) {
       try {
         client =
-            new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT),
+            new NettyTransceiver(new InetSocketAddress(ipAddress, NODEPORT),
                 CONNECTION_TIME_OUT);
         explorer = (NodeExplorer)
             SpecificRequestor.getClient(NodeExplorer.class, client);
         isConnected = true;
-      }
-      catch(IOException exc) {throw new OfflineUserException();}
+      } catch(IOException exc) {throw new OfflineUserException();}
     }
   }
 
-  public List<String> getConnectedIps(ArrayList<String> newConnectedIps)
+  public List<String> getConnectedIps(List<String> newConnectedIps)
      throws ConnectionClosedException, OfflineUserException {
     super.getConnectedIps(newConnectedIps);
     CommunicationManager cm = CommunicationManager.getInstance();
@@ -80,11 +76,6 @@ public class AvroConnectionManager extends ConnectionManager {
   }
 
   public void closeConnection() throws OfflineUserException {
-    try {
-      explorer.disconnect(CommunicationManager.getInstance().getLocalIp());
-    } catch (AvroRemoteException exc) {
-      throw new OfflineUserException();
-    }
     if (client != null) {
       client.close();
       client = null;

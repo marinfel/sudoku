@@ -46,7 +46,7 @@ public class User implements Ruleable {
 
     this.pseudo = pseudo;
     this.salt = this.randomSalt();
-    String toBeHashed = password + this.salt;
+    String toBeHashed = brutPassword + this.salt;
     // hash of pwd+salt
     this.password =
         new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));

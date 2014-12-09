@@ -19,12 +19,15 @@ import javafx.scene.layout.VBox;
  */
 public abstract class IhmGridView extends IhmGridLayout {
 
-  //protected final BorderPane border;
-  public IhmGridView(Flags flagStatus, Grid gr) {
-    super(flagStatus, gr);
+  public IhmGridView(Flags flagStatus, Grid gr, int size) {
+    super(flagStatus, gr, size);
 
+    //VBox centerLayout = (VBox)border.getCenter();
+    //centerLayout.getChildren().add(sudokuGrid);
+    //centerVBox.getChildren().add(gridLines);
     IhmPopupsList.init(150.0, 500.0, 10);
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
+
     ((VBox) border.getRight()).getChildren().add(popupList);
     popupList.addPopup("test", "texte de test", 10);
     //rightVBox.getChildren().add(new Label("Ceci est un test"));

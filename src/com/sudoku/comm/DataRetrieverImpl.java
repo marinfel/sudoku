@@ -22,9 +22,9 @@ public class DataRetrieverImpl implements DataRetriever {
   public List<Grid> getGrids() throws AvroRemoteException {
     List<com.sudoku.data.model.Grid> availableGrids =
         GridManager.getInstance().getAvailableGrids();
-    ArrayList<Grid> grids = new ArrayList<>();
+    List<Grid> grids = new ArrayList<>();
     for (com.sudoku.data.model.Grid grid : availableGrids) {
-      ArrayList<Comment> comments = new ArrayList<>();
+      List<Comment> comments = new ArrayList<>();
       for (com.sudoku.data.model.Comment comment : grid.getComments()) {
         comments.add(Comment.newBuilder()
             .setAuthor(
@@ -34,7 +34,7 @@ public class DataRetrieverImpl implements DataRetriever {
             .build());
       }
 
-      ArrayList<String> tags = new ArrayList<>();
+      List<String> tags = new ArrayList<>();
       for (com.sudoku.data.model.Tag tag : grid.getTags()) {
         tags.add(tag.getName());
       }
