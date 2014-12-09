@@ -32,14 +32,16 @@ public class AccessManager {
   /**
    * @return the rules
    */
-  public HashMap<Grid, ArrayList<AccessRule>> getAllAccessRules() {
+  public HashMap<Grid, ArrayList<AccessRule>> getRules() {
     return rules;
   }
 
+  //jsonignore
   public ArrayList<AccessRule> getAllAccessRulesForGrid(Grid grid) {
     return this.rules.get(grid);
   }
 
+  //jsonignore
   private AccessRule getAccessRule(Grid grid, AccessAction accessAction, Ruleable appliedTo) {
 
     ArrayList<AccessRule> rulesList = this.rules.get(grid);

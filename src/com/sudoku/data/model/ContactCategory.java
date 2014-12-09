@@ -5,17 +5,19 @@
  */
 package com.sudoku.data.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactCategory implements Ruleable {
 
   private String name;
-  private List<User> contacts;
+  private List<User> contacts = new ArrayList<>();
 
   public ContactCategory() {
   }
 
   public ContactCategory(String name) {
+      this.name = name;
   }
 
   /**
