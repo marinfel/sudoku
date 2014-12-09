@@ -11,6 +11,7 @@ import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_preview.StarView;
+import com.sudoku.grid.ihm_grid_preview.StarsBox;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,19 +36,23 @@ import javafx.stage.Stage;
 public class IhmGridPlayer extends IhmGridView {
 
   private final int nbComm = 2;
-  HBox grades;
+
+  private StarsBox starsBox;
+  //private User author;
+  //private List<Comment> gridComments;
+
   private User author;
   private List<Comment> gridComments;
   private Grid playGrid;
 
   public IhmGridPlayer(Grid gr) {
-    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), gr,500);
+    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), gr, 500);
     //Box de commentaire en bas
-    final VBox commBox = (VBox) border.getBottom();
+    final HBox commBox = (HBox) border.getBottom();
 
     // list of comments
     for (int i = 1; i < nbComm; i++) {
-      Comment comm = gridComments.get(gridComments.size()-i);
+      Comment comm = gridComments.get(gridComments.size() - i);
       VBox oneCommBox = new VBox();
       Label commTitle = new Label("premier com"/*comm.getTitle()*/);
       //Label commAuthorAndDate = new Label(comm.getAuthor()+" - "+comm.getCreateDate()*/);
@@ -56,7 +61,6 @@ public class IhmGridPlayer extends IhmGridView {
       commBox.getChildren().addAll(oneCommBox);
     }
 
-    
     HBox commButton = new HBox();
 
     //Bouton Ajouter un commentaire
@@ -64,9 +68,9 @@ public class IhmGridPlayer extends IhmGridView {
     addComment.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-          System.out.println("showaddcom()");
-          showAddCommentForm();
-        
+        System.out.println("showaddcom()");
+        showAddCommentForm();
+
       }
     });
 
@@ -94,13 +98,14 @@ public class IhmGridPlayer extends IhmGridView {
   }
 
   private void showAddCommentForm() {
-    
-    HBox gradeFormBox;
+
     final Stage stage = new Stage();
+
     GridPane gridPane = new GridPane();
     gridPane.setAlignment(Pos.CENTER);
     gridPane.setHgap(10);
     gridPane.setVgap(10);
+
     Scene scene = new Scene(gridPane, 300, 150);
     stage.setScene(scene);
     stage.setTitle("Add Comments");
@@ -121,20 +126,11 @@ public class IhmGridPlayer extends IhmGridView {
     Label labelNote = new Label("Note");
     //gradeFormBox = getStarsBox(3);
     gridPane.add(labelNote, 0, 3);
-    
-    //grades = getStarsBox(1);
-    //gridPane.add(gradeFormBox, 1, 3);
 
-     //gradeFormBox.addEventFilter(MouseEvent.MUSE_MOVED, new EventHandler<MouseEvent>() {
+    starsBox = getStarsBox();
+    starsBox.setHoverable(true);
+    gridPane.add(starsBox, 1, 3);
 
-     /*@Override
-     public void handle(MouseEvent event) {
-     //gradeFormBox = getStarsBox((int) Math.ceil(event.getX() * 5 / 140));
-     }
-     ;
-     });*/
-    
-    //gridPane.add(gradeFormBox, 1, 3);
     stage.show();
 
     Button buttonOk = new Button("Ok");
