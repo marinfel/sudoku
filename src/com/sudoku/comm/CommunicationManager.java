@@ -7,6 +7,8 @@ import com.sudoku.comm.DiscoverNodesTimerTask;
 
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -22,6 +24,8 @@ public final class CommunicationManager {
   private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
   private Server dataRetrieverServer;
+
+  private Logger logger = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
   private ArrayList<String> listLocalIp;
   //list of all IPs to which the user was connected during the session
@@ -98,21 +102,6 @@ public final class CommunicationManager {
     return ipsConnected;
   }
 
-  public void disconnect() throws IOException {
-   /* if (connectedIps != null) {
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, nodeExplorerServer.getPort()));
-        NodeExplorer explorer = (NodeExplorer)
-            SpecificRequestor.getClient(NodeExplorer.class, client);
-        explorer.disconnect(localIp);
-        client.close();
-      }
-    }
-    dataRetrieverServer.stopServer();
-    nodeExplorerServer.stopServer();*/
-  }
-
   public ConcurrentHashMap<String, ConnectionManager> getIpsToConfirm() {
     return ipsToConfirm;
   }
@@ -138,7 +127,7 @@ public final class CommunicationManager {
     }
 
     Iterator<String> itr = listIp.iterator();
-    while(itr.hasNext()) {
+    while (itr.hasNext()) {
       addIpToConfirm(itr.next());
     }
   }
@@ -169,6 +158,40 @@ public final class CommunicationManager {
       }
     }
     return resultGrids;
+  }
+
+  public void removeConnectedIp(String ip) {
+    ConnectionManager cm = ipsConnected.get(ip);
+    if (cm != null) {
+      try {
+        cm.closeConnection();
+      }
+      catch(ConnectionManager.OfflineUserException exc) {
+        // Nothing to do, already closed
+      }
+      ipsConnected.remove(ip);
+      ipsToConfirm.put(ip, cm);
+    }
+  }
+
+  public void disconnect() throws IOException {
+    nodeExplorerServer.stopServer();
+    timerDiscoverNodes.cancel();
+    Iterator<String> itr = ipsConnected.keySet().iterator();
+    while(itr.hasNext()) {
+      try {
+        String ip = itr.next();
+        ConnectionManager cm = ipsConnected.get(ip);
+        cm.openConnection();
+        cm.disconnect();
+        cm.closeConnection();
+      }
+      catch(ConnectionManager.OfflineUserException |
+          ConnectionManager.ConnectionClosedException ex) {
+        logger.info(ex.toString());
+      }
+      itr.remove();
+    }
   }
 
   public ArrayList<com.sudoku.data.model.Grid> getAllGrids(

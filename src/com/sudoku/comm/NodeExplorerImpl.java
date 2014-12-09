@@ -30,10 +30,10 @@ public class NodeExplorerImpl implements NodeExplorer {
     commManager.addIpToConfirm(sentMessage.getListIps());
     return null;
   }
-  
+
   @Override
   public Void disconnect(String ip) throws AvroRemoteException {
-    commManager.getConnectedIps().remove(ip);
+    commManager.removeConnectedIp(ip);
     return null;
   }
 }
