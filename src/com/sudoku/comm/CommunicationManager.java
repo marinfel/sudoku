@@ -10,13 +10,8 @@ import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class CommunicationManager {
@@ -228,7 +223,16 @@ public final class CommunicationManager {
     return null;
   }
 
-  public void pushCommentAndSync(Comment newComment, Grid gridToSync) {
+  public void pushComment(Comment comment, UUID gridUuid) throws IOException {
+    if (connectedIps != null) {
+      for (String ip : connectedIps) {
+        NettyTransceiver client = new NettyTransceiver(
+            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
+        DataRetriever retriever = (DataRetriever)
+            SpecificRequestor.getClient(DataRetriever.class, client);
+        retriever.commentGrid(comment, gridUuid.toString());
+      }
+    }
   }
 
   public ArrayList<String> getConnectedIps() {

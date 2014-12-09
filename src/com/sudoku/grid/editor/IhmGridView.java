@@ -9,6 +9,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -44,6 +45,8 @@ public abstract class IhmGridView extends IhmGridLayout {
     IhmPopupsList.init(150.0, 500.0, 10);
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
     rightVBox.getChildren().add(popupList);
+    popupList.addPopup("test", "texte de test", 10);
+    //rightVBox.getChildren().add(new Label("Ceci est un test"));
 
     /* A IMPLEMENTER POUR LE BON FONCTIONNEMENT DE L'APPLICATION
      primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>(){

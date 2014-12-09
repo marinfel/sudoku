@@ -9,10 +9,14 @@ import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
+import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
+import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * @author mecton08
@@ -29,22 +33,30 @@ public class SudokuTest extends Application {
   @Override
   public void start(Stage primaryStage) {
 
-    IhmGridEditorRandomlyFilled ihm_test;
-    IhmGridEditorManuallyFilled ihm_test2;
-    IhmGridPlayer ihm_test3;
+    IhmGridView ihm_test;
 
     ihm_test = new IhmGridEditorRandomlyFilled();
-    ihm_test2 = new IhmGridEditorManuallyFilled();
-    ihm_test3 = new IhmGridPlayer(
-      new Grid("", UserManager.getInstance().getLoggedUser()));
+    //ihm_test = new IhmGridEditorManuallyFilled();
+    //ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
 
-    //Scene scene = new Scene(ihm_test, 800, 1000);
-    Scene scene = new Scene(ihm_test2, 800, 1000);
+    Scene scene = new Scene(ihm_test, 800, 1000);
+    //Scene scene = new Scene(ihm_test2, 800, 1000);
     //Scene scene = new Scene(ihm_test3, 800, 1000);
 
     primaryStage.setTitle("Sudoku Editor");
     primaryStage.setScene(scene);
     primaryStage.show();
+
+    primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+      @Override
+      public void handle(WindowEvent t) {
+        if (t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
+          IhmPopupsList.getInstance().finalize();
+        }
+      }
+
+    });
   }
 
 }
