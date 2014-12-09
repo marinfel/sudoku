@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.editor;
+package com.sudoku.grid.tests;
 
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
+import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
 import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -34,10 +36,10 @@ public class SudokuTest extends Application {
     ihm_test = new IhmGridEditorRandomlyFilled();
     ihm_test2 = new IhmGridEditorManuallyFilled();
     ihm_test3 = new IhmGridPlayer(
-        new Grid("", UserManager.getInstance().getLoggedUser()));
+      new Grid("", UserManager.getInstance().getLoggedUser()));
 
-    Scene scene = new Scene(ihm_test, 800, 1000);
-    //Scene scene = new Scene(ihm_test2, 800, 1000);
+    //Scene scene = new Scene(ihm_test, 800, 1000);
+    Scene scene = new Scene(ihm_test2, 800, 1000);
     //Scene scene = new Scene(ihm_test3, 800, 1000);
 
     primaryStage.setTitle("Sudoku Editor");

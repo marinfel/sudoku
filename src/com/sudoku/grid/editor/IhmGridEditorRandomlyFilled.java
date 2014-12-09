@@ -22,7 +22,7 @@ import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 
 /**
  * @author Mehdi KANE, Céline TO This class generates an entire filled grid, the
- *         user can hide cells to make his own grid to be played
+ * user can hide cells to make his own grid to be played
  */
 public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
 
@@ -57,7 +57,7 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
         if ((nbNotHiddenCells - number) < 0) {
           String title = new String("Not enough filled cells");
           String text = new String(
-              "You can't hide that many cells");
+            "You can't hide that many cells");
           IhmPopupsList.getInstance().addPopup(title, text, 10);
         } else {
           LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();
