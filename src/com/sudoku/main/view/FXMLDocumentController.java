@@ -7,6 +7,8 @@
 package com.sudoku.main.view;
 
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.main.manager.ListGridManager;
+import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,6 +27,8 @@ import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.layout.AnchorPane;
+import javax.swing.JScrollPane;
 
 /**
  * @author MOURAD
@@ -75,11 +79,14 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private TextField nameGroup;
   @FXML
   private Button delGroup;
+  @FXML
+  private AnchorPane grid1;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     System.out.println("test data");
     instance = new DataSample();
+    instance.exec();
     System.out.println("test data" + instance.a.getPseudo());
     userName.setText("Utilisateur : " + instance.a.getPseudo());
 
@@ -98,6 +105,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert grid1 != null : "fx:id=\"grid1\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
 
     //Ajouter des éléments aux listes groupes et utilisateurs
     groups.addAll("Global", "Amis", "Camarades");
@@ -197,8 +205,24 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             paneGroup.setVisible(false);
           }
         });
+    
+    
+    
+    // Liste Grille
+      /*ListGridManager myGridManager=new ListGridManager();
+      
+      for(int i = 0; i<myGridManager.AllGrid().size();i++)
+      {
+          grid1.getChildren().add(myGridManager.AllGrid().get(i));
+      }*/
+    ListGridManager gridList=new ListGridManager(instance);
+    ScrollPane  scpane = new ScrollPane();
+    scpane.setContent(gridList.getGridThumbnailContainer());
+    scpane.setPrefSize(800, 800);
+    grid1.getChildren().add(scpane);
   }
 
+    
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
@@ -218,5 +242,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private void goToFromFullGrid(ActionEvent event) {
     myController.setScreen(SudukoIHM.fromFullGridID);
   }
+  
 }
 
