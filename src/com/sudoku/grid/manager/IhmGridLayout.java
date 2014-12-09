@@ -35,9 +35,6 @@ public abstract class IhmGridLayout extends StackPane {
   protected final BorderPane border;
 
   //Grid grille;
-  public IhmGridLayout() {
-  }
-
   public IhmGridLayout(Flags flagStatus, Grid gr) {
     grid = gr;
     gridLines = new IhmGridLines(grid, 500, flagStatus);
