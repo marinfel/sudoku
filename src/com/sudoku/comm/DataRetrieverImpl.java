@@ -12,6 +12,7 @@ import org.apache.avro.AvroRemoteException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by ben on 26/11/14.
@@ -74,5 +75,17 @@ public class DataRetrieverImpl implements DataRetriever {
     com.sudoku.data.model.User currentUser =
         UserManager.getInstance().getLoggedUser();
     return com.sudoku.data.model.User.buildAvroUser(currentUser);
+  }
+
+  @Override
+  public Void commentGrid(Comment comment, String gridUuid)
+      throws AvroRemoteException {
+    com.sudoku.data.model.Grid grid =
+        GridManager.getInstance().getGridById(UUID.fromString(gridUuid));
+    if (grid != null) {
+      grid.addComment(com.sudoku.data.model.Comment
+          .buildFromAvroComment(comment));
+    }
+    return null;
   }
 }

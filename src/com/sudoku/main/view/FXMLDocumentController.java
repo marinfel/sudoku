@@ -7,10 +7,13 @@
 package com.sudoku.main.view;
 
 import com.sudoku.data.manager.UserManager;
+import com.sudoku.data.model.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
+import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,7 +31,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -39,13 +54,16 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     //Data
     public DataSample instance;
     public UserManager instUserM;
+    
+    public List<User> ListUsers = new LinkedList<>();
 
     @FXML   private Label userName;
     @FXML   private ImageView avatar;
     @FXML   private Button connexion;
 
-    // Partie JulianC
-    ScreensController myController;
+    // Partie Julian
+    
+    ScreensController myController;    
     @FXML   private StackPane panes;
     @FXML   private Pane paneUser;
     @FXML   private Pane paneGroup;
@@ -64,17 +82,19 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     @FXML   private Button delGroup;
 
     public static final ObservableList groups = FXCollections.observableArrayList();
-    public static final ObservableList users  = FXCollections.observableArrayList();
-
+    public static ObservableList users  = FXCollections.observableArrayList();
+    
+    public ObservableList getUsersToShow(List<User> ListUsers){
+        ObservableList ObsList  = FXCollections.observableArrayList();
+        Iterator<User> i = ListUsers.iterator();
+        while(i.hasNext())
+            ObsList.add(i.next().getPseudo());
+        return ObsList;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("test data");
-        instUserM = UserManager.getInstance();
-        instance = new DataSample();
-        System.out.println("test data"+instance.a.getPseudo());
-        userName.setText("Utilisateur : "+instUserM.getLoggedUser());
-
+                
         assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -91,10 +111,19 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
         assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
 
+        System.out.println("test data");
+        instUserM = UserManager.getInstance();
+        instance = new DataSample();
+        instance.exec();        
+        System.out.println("test data"+instance.a.getPseudo());
+        userName.setText("Utilisateur : "+instUserM.getLoggedUser());
+        
         //Ajouter des éléments aux listes groupes et utilisateurs
         groups.addAll("Global", "Amis", "Camarades");
         //groups.addAll(UserManager.getInstance().getConnectedUsers());
-        users.addAll("julian", "user2", "user3");
+        ListUsers = instance.getUserList();
+        users = getUsersToShow(ListUsers);
+        //users.addAll("julian", "user2", "user3");
         //users.addAll(UserManager.getInstance().getConnectedUsers());
         listGroups.setItems(groups);
         listUsers.setItems(users);
@@ -108,7 +137,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                dialog.showInformation();
       }
     });
-
+    
     //Méthode Bouton "Supprimer du groupe"
     delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -174,7 +203,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           public void changed(ObservableValue<? extends String> ov,
                               String old_val, String new_val) {
             nombUsers.setText(listUsers.getItems().size() + " utilisateurs connectés");
-            nameGroup.setText(new_val);
+            nameGroup.setText(new_val);            
             paneGroup.setVisible(true);
             paneUser.setVisible(false);
           }
@@ -186,6 +215,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           public void changed(ObservableValue<? extends String> ov,
                               String old_val, String new_val) {
             user.setText(new_val);
+            User a = ListUsers.get(listUsers.getSelectionModel().getSelectedIndex());
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            birthD.setText("Date de Naissance: "+df.format(a.getBirthDate()));
             paneUser.setVisible(true);
             paneGroup.setVisible(false);
           }

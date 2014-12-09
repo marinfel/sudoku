@@ -87,6 +87,20 @@
       "doc": "Retrieve profile information of the specified ip",
       "request": [],
       "response": "User"
+    },
+    "commentGrid" : {
+      "doc": "Send comment on a grid",
+      "request": [
+        {
+          "name": "comment",
+          "type": "Comment"
+        },
+        {
+          "name": "gridUuid",
+          "type": "string"
+        }
+      ],
+      "response": "null"
     }
   } 
 }

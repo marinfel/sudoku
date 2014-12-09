@@ -19,6 +19,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.util.HashMap;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -87,6 +88,12 @@ public class ScreensController extends StackPane {
             new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
             new KeyFrame(new Duration(200), new KeyValue(opacity, 1.0)));
         fadeIn.play();
+      }
+      if(name == SudukoIHM.fromFullGridID){
+          this.fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_SHOWING));
+      }
+      else if(name == SudukoIHM.fillGridID){
+          this.fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_SHOWING));
       }
       return true;
     } else {

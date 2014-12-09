@@ -8,7 +8,10 @@ package com.sudoku.main.view;
 
 
 import com.sudoku.data.manager.UserManager;
+import com.sudoku.data.model.User;
+import com.sudoku.data.sample.DataSample;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,6 +26,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -33,6 +39,8 @@ public class LoginController implements Initializable, ControlledScreen {
             
     @FXML   private ImageView avatar;
     private Image image;
+    public DataSample instance;
+    public List<User> ListUsers = new LinkedList<>();
         
     // Partie JulianC
     ScreensController myController;    
@@ -46,6 +54,10 @@ public class LoginController implements Initializable, ControlledScreen {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        instance = new DataSample();
+        instance.exec();        
+        ListUsers = instance.getUserList();
+        
 //        image = new Image("sudoku.jpg");
 //        avatar = new ImageView();
 //        avatar.setImage(image);
@@ -60,10 +72,10 @@ public class LoginController implements Initializable, ControlledScreen {
     private void goToProgram(ActionEvent event) {
         myController.setScreen(SudukoIHM.programID);
         /*try {
-            instUserM.authenticate(user.getText(), passwd.getText());            
-        } catch (Exception ex) {
-            System.out.println("Erreur de loggin");
-        } */               
+            instUserM.authenticate(user.getText(), passwd.getText());
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            System.out.println("Erreur loggin");
+        }*/               
     }   
     
     @FXML

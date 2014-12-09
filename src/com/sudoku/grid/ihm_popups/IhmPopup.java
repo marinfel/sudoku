@@ -17,10 +17,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- TODO: Labels don't use alignments given, why???
- */
-
 /**
  * @author Marc-Antoine
  * @class IHM_Popup is a graphical object intem of a specific list (see
@@ -32,20 +28,21 @@ public class IhmPopup extends GridPane {
   private final TimeoutTimerTask timeoutTimerTask;
   private final IhmPopupCloseRequestEvent ihmPopupCloseRequestEvent;
   protected Label title = new Label();
-  protected Label text = new Label("Here is the body...");
+  protected Label text = new Label();
   protected int delay = 0;
   protected Label delayText = new Label(String.valueOf(delay) + " sec remaining before auto-closing");
 
   /**
-   * @param title         is the main title
+   * @param popupWidth
+   * @param popupHeight
+   * @param title is the main title
    * @param titleFontSize is the title font's size (often 12pt)
-   * @param text          is the body text
-   * @param textFontSize  is the body text font's size (often 10pt)
-   * @param delay         is the showing delay, after this delay, the popup is removed
-   *                      from the list
+   * @param text is the body text
+   * @param textFontSize is the body text font's size (often 10pt)
+   * @param delay is the showing delay, after this delay, the popup is removed
+   * from the list
    * @class IHM_Popup constructor This constructor shouldn't be called by the
-   * user, the object is automaticcally created by the list (see
-   * IHM_PopupList)
+   * user, the object is automaticcally created by the list (see IHM_PopupList)
    */
   public IhmPopup(double popupWidth, double popupHeight, String title, int titleFontSize, String text, int textFontSize, int delay) {
     //fix size
@@ -114,8 +111,8 @@ public class IhmPopup extends GridPane {
   }
 
   /**
-   * Set the behavior of a user click event on the widget, basically it
-   * request to close the popup
+   * Set the behavior of a user click event on the widget, basically it request
+   * to close the popup
    *
    * @param t is the mouse click event
    */
@@ -159,15 +156,15 @@ public class IhmPopup extends GridPane {
      */
     @Override
     public void run() {
-            /*We call the following method because we are in a detached thread
-             compared to the User Interface JavaFX thread and our behaviour will
-             affect the User Interface. To be able to do that, we need to signal
-             it to JavaFX.*/
+      /*We call the following method because we are in a detached thread
+       compared to the User Interface JavaFX thread and our behaviour will
+       affect the User Interface. To be able to do that, we need to signal
+       it to JavaFX.*/
       Platform.runLater(new Runnable() {
 
         /**
-         * Method run when JavaFX allows a detached thread to modify the
-         * User Interface.
+         * Method run when JavaFX allows a detached thread to modify the User
+         * Interface.
          */
         @Override
         public void run() {

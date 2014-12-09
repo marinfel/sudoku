@@ -6,6 +6,9 @@ import com.sudoku.data.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 public final class GridManager {
   private static volatile GridManager instance = null;
@@ -68,7 +71,7 @@ public final class GridManager {
     // son existence dans le diag de squence
     return false;
   }
-
+  @JsonIgnore
   public Grid getLatestPlayedGrid() {
     Grid g = availableGrids.get(0);
     for (Grid grid : availableGrids) {
@@ -97,8 +100,16 @@ public final class GridManager {
     return result;
   }
 
+  public Grid getGridById(UUID uuid) {
+    for (Grid grid : availableGrids) {
+      if (grid.getId() == uuid) {
+        return grid;
+      }
+    }
+    return null;
+  }
+
   public List<Grid> getAvailableGrids() {
     return availableGrids;
   }
-
 }
