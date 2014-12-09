@@ -1,12 +1,11 @@
 package com.sudoku.comm;
 
 import com.sudoku.comm.generated.*;
-import com.sudoku.util.CollectionUtil;
-import com.sudoku.comm.ConnectionManager;
-import com.sudoku.comm.DiscoverNodesTimerTask;
 
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -19,13 +18,12 @@ public final class CommunicationManager {
   private String localIp;
   private String uuid;
   private String login;
-  private ArrayList<String> connectedIps;
   private Server nodeExplorerServer;
   private Server dataRetrieverServer;
 
-  private ArrayList<String> listLocalIp;
-  //list of all IPs to which the user was connected during the session
-  private ArrayList<String> ipsCurrentSession;
+  private Logger logger = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
+
+  private ArrayList<String> localIps;
   private ConcurrentHashMap<String, ConnectionManager> ipsToConfirm;
   private ConcurrentHashMap<String, ConnectionManager> ipsConnected;
 
@@ -49,13 +47,11 @@ public final class CommunicationManager {
     return instance;
   }
 
-  public void init(String uuid, String login, ArrayList<String> connectedIps) {
+  public void init(String uuid, String login, ArrayList<String> localIps) {
     this.uuid = uuid;
     this.login = login;
-    this.connectedIps = connectedIps;
     this.localIp = nodeExplorerServer.getInetAddress();
-    this.listLocalIp = connectedIps;
-    this.ipsCurrentSession = new ArrayList<String>();
+    this.localIps = localIps;
     this.ipsConnected = new ConcurrentHashMap<String, ConnectionManager>();
     this.ipsToConfirm = new ConcurrentHashMap<String, ConnectionManager>();
     startServer();
@@ -67,50 +63,16 @@ public final class CommunicationManager {
   }
 
   public void discoverNodes() throws IOException {
-    /*if (connectedIps != null) {
-      ArrayList<String> newConnectedIps =
-          (ArrayList<String>) connectedIps.clone();
-      newConnectedIps.add(localIp);
-      Message message = new Message(uuid, login, newConnectedIps);
-      newConnectedIps = connectedIps;
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, nodeExplorerServer.getPort()));
-        NodeExplorer explorer = (NodeExplorer)
-            SpecificRequestor.getClient(NodeExplorer.class, client);
-        Message receivedMessage = explorer.discoverNode(message);
-        // TODO: deal with storing uuids and logins: hashtable with uuid as key
-        newConnectedIps = CollectionUtil.merge(newConnectedIps,
-            receivedMessage.getListIps(),
-            localIp);
-        client.close();
-      }
-      connectedIps = newConnectedIps;*/
-    addIpToConfirm(listLocalIp);
+    addIpToConfirm(localIps);
     if(timerDiscoverNodes == null) {
-        timerDiscoverNodes = new Timer();   
-        timerDiscoverNodes
-            .schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
+      timerDiscoverNodes = new Timer();
+      timerDiscoverNodes
+          .schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
     }
   } 
 
   public ConcurrentHashMap<String, ConnectionManager> getIpsConnected() {
     return ipsConnected;
-  }
-
-  public void disconnect() throws IOException {
-   /* if (connectedIps != null) {
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, nodeExplorerServer.getPort()));
-        NodeExplorer explorer = (NodeExplorer)
-            SpecificRequestor.getClient(NodeExplorer.class, client);
-        explorer.disconnect(localIp);
-        client.close();
-      }
-    }
-    dataRetrieverServer.stopServer();
-    nodeExplorerServer.stopServer();*/
   }
 
   public ConcurrentHashMap<String, ConnectionManager> getIpsToConfirm() {
@@ -121,15 +83,10 @@ public final class CommunicationManager {
     ipsConnected.put(ip, cm);
   }
 
-  public void addIpCurrentSession(String ip) {
-    ipsCurrentSession.add(ip);
-  }
-
   public void syncIps(String ipToUpdate, Iterator<String> iterator) {
     ConnectionManager tmpCM = ipsToConfirm.get(ipToUpdate);
     addIpConnected(ipToUpdate, tmpCM);
     iterator.remove();
-    addIpCurrentSession(ipToUpdate);
   }
 
   public void addIpToConfirm(List<String> listIp) {
@@ -138,7 +95,7 @@ public final class CommunicationManager {
     }
 
     Iterator<String> itr = listIp.iterator();
-    while(itr.hasNext()) {
+    while (itr.hasNext()) {
       addIpToConfirm(itr.next());
     }
   }
@@ -155,20 +112,52 @@ public final class CommunicationManager {
   public ArrayList<com.sudoku.data.model.Grid> getAllGrids()
       throws IOException {
     ArrayList<com.sudoku.data.model.Grid> resultGrids = new ArrayList<>();
-    if (connectedIps != null) {
-      ArrayList<Grid> grids = new ArrayList<>();
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
-        DataRetriever retriever = (DataRetriever)
-            SpecificRequestor.getClient(DataRetriever.class, client);
-        grids.addAll(retriever.getGrids());
-      }
-      for (Grid grid : grids) {
-        resultGrids.add(com.sudoku.data.model.Grid.buildFromAvroGrid(grid));
-      }
+    ArrayList<Grid> grids = new ArrayList<>();
+    for (String ip : ipsConnected.keySet()) {
+      NettyTransceiver client = new NettyTransceiver(
+          new InetSocketAddress(ip, dataRetrieverServer.getPort()));
+      DataRetriever retriever = (DataRetriever)
+          SpecificRequestor.getClient(DataRetriever.class, client);
+      grids.addAll(retriever.getGrids());
+    }
+    for (Grid grid : grids) {
+      resultGrids.add(com.sudoku.data.model.Grid.buildFromAvroGrid(grid));
     }
     return resultGrids;
+  }
+
+  public void removeConnectedIp(String ip) {
+    ConnectionManager cm = ipsConnected.get(ip);
+    if (cm != null) {
+      try {
+        cm.closeConnection();
+      }
+      catch(ConnectionManager.OfflineUserException exc) {
+        // Nothing to do, already closed
+      }
+      ipsConnected.remove(ip);
+      ipsToConfirm.put(ip, cm);
+    }
+  }
+
+  public void disconnect() throws IOException {
+    nodeExplorerServer.stopServer();
+    timerDiscoverNodes.cancel();
+    Iterator<String> itr = ipsConnected.keySet().iterator();
+    while(itr.hasNext()) {
+      try {
+        String ip = itr.next();
+        ConnectionManager cm = ipsConnected.get(ip);
+        cm.openConnection();
+        cm.disconnect();
+        cm.closeConnection();
+      }
+      catch(ConnectionManager.OfflineUserException |
+          ConnectionManager.ConnectionClosedException ex) {
+        logger.info(ex.toString());
+      }
+      itr.remove();
+    }
   }
 
   public ArrayList<com.sudoku.data.model.Grid> getAllGrids(
@@ -194,15 +183,13 @@ public final class CommunicationManager {
   public ArrayList<com.sudoku.data.model.User> getAllProfiles()
       throws IOException {
     ArrayList<com.sudoku.data.model.User> users = new ArrayList<>();
-    if (connectedIps != null) {
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
-        DataRetriever retriever = (DataRetriever)
-            SpecificRequestor.getClient(DataRetriever.class, client);
-        users.add(com.sudoku.data.model.User
-            .buildFromAvroUser(retriever.getProfile()));
-      }
+    for (String ip : ipsConnected.keySet()) {
+      NettyTransceiver client = new NettyTransceiver(
+          new InetSocketAddress(ip, dataRetrieverServer.getPort()));
+      DataRetriever retriever = (DataRetriever)
+          SpecificRequestor.getClient(DataRetriever.class, client);
+      users.add(com.sudoku.data.model.User
+          .buildFromAvroUser(retriever.getProfile()));
     }
     return users;
   }
@@ -224,23 +211,17 @@ public final class CommunicationManager {
   }
 
   public void pushComment(Comment comment, UUID gridUuid) throws IOException {
-    if (connectedIps != null) {
-      for (String ip : connectedIps) {
-        NettyTransceiver client = new NettyTransceiver(
-            new InetSocketAddress(ip, dataRetrieverServer.getPort()));
-        DataRetriever retriever = (DataRetriever)
-            SpecificRequestor.getClient(DataRetriever.class, client);
-        retriever.commentGrid(comment, gridUuid.toString());
-      }
+    for (String ip : ipsConnected.keySet()) {
+      NettyTransceiver client = new NettyTransceiver(
+          new InetSocketAddress(ip, dataRetrieverServer.getPort()));
+      DataRetriever retriever = (DataRetriever)
+          SpecificRequestor.getClient(DataRetriever.class, client);
+      retriever.commentGrid(comment, gridUuid.toString());
     }
   }
 
-  public ArrayList<String> getConnectedIps() {
-    return connectedIps;
-  }
-
-  public void setConnectedIps(ArrayList<String> connectedIps) {
-    this.connectedIps = connectedIps;
+  public Set<String> getConnectedIps() {
+    return ipsConnected.keySet();
   }
 
   public String getLocalIp() {
