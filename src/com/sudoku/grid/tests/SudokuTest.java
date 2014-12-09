@@ -40,11 +40,9 @@ public class SudokuTest extends Application {
 
     //ihm_test = new IhmGridEditorRandomlyFilled();
     //ihm_test = new IhmGridEditorManuallyFilled();
-    ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
-
-
     ihm_test = new IhmGridEditorManuallyFilled();
     //ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
+	//ihm_test = new IhmGridPreview(2,new Grid("", UserManager.getInstance().getLoggedUser()),100):
 
 
     Scene scene = new Scene(ihm_test, 800, 1000);

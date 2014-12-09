@@ -26,8 +26,6 @@ import javafx.scene.layout.VBox;
  */
 public abstract class IhmGridLayout extends StackPane {
 
-  //protected int sceneHeight=200;
-  //protected int sceneLength=200;
   protected final int sizeTitle = 25;
   protected Label title;
   protected Grid grid;
@@ -40,8 +38,6 @@ public abstract class IhmGridLayout extends StackPane {
 
   public IhmGridLayout(Flags flagStatus, Grid gr, int size) {
     grid = gr;
-	//sceneHeight=size;
-	//sceneLength=size;
     gridLines = new IhmGridLines(grid, size, flagStatus);
     title = new Label("");
     title.setFont(Font.font("Verdana", sizeTitle));

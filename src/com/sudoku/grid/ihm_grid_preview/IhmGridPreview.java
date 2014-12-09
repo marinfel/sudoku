@@ -28,8 +28,8 @@ public class IhmGridPreview extends IhmGridLayout {
   Vector<StarView> grades;
   protected final BorderPane border;
 
-  public IhmGridPreview(double numberOfStars, int size) {
-    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), generateRandomGrid(), size);
+  public IhmGridPreview(double numberOfStars, Grid gr, int size) {
+    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), gr, size);
 	
 	border = new BorderPane();
     getChildren().add(border);
