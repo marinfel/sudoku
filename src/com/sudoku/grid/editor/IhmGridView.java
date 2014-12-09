@@ -21,8 +21,8 @@ public abstract class IhmGridView extends IhmGridLayout {
 
   protected final BorderPane border;
 
-  public IhmGridView(Flags flagStatus, Grid gr) {
-    super(flagStatus, gr);
+  public IhmGridView(Flags flagStatus, Grid gr, int size) {
+    super(flagStatus, gr, size);
     border = new BorderPane();
     getChildren().add(border);
     HBox topHBox = new HBox();

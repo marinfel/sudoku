@@ -30,7 +30,7 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
   private TextField deleteCellsField;
 
   public IhmGridEditorRandomlyFilled() {
-    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid());
+    super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE), generateRandomGrid(),500);
 
     // button with the number of cases that the user wants to hide randomly
     deleteCells = new Button("Delete Cells");

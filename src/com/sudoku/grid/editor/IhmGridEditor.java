@@ -45,8 +45,8 @@ public abstract class IhmGridEditor extends IhmGridView {
   private Button cancelBtn;
   private Flags flag;
 
-  public IhmGridEditor(Flags flagStatus, Grid gr) {
-    super(flagStatus, gr);
+  public IhmGridEditor(Flags flagStatus, Grid gr, int size) {
+    super(flagStatus, gr, size);
 
     // bouton d'enregistrement de la grille
     editTitle = new TextField();
