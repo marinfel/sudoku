@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 import com.sudoku.data.sample.DataSample;
 import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
 import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+import com.sudoku.main.manager.ListGridManager;
+import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -44,6 +46,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.WindowEvent;
+import javafx.scene.layout.AnchorPane;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -80,6 +84,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     @FXML   private Button newGroup;
     @FXML   private TextField nameGroup;
     @FXML   private Button delGroup;
+    @FXML   private AnchorPane grid1;
 
     public static final ObservableList groups = FXCollections.observableArrayList();
     public static ObservableList users  = FXCollections.observableArrayList();
@@ -135,8 +140,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                dialog.masthead("Message d'information");
 //                dialog.message("Vous allez aux grilles de l'utilisateur: "+user.getText());
 //                dialog.showInformation();
-      }
-    });
+        }
+        });
     
     //Méthode Bouton "Supprimer du groupe"
     delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
@@ -222,8 +227,24 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             paneGroup.setVisible(false);
           }
         });
+    
+    
+    
+    // Liste Grille
+      /*ListGridManager myGridManager=new ListGridManager();
+      
+      for(int i = 0; i<myGridManager.AllGrid().size();i++)
+      {
+          grid1.getChildren().add(myGridManager.AllGrid().get(i));
+      }*/
+    ListGridManager gridList = new ListGridManager(instance);
+    ScrollPane  scpane = new ScrollPane();
+    scpane.setContent(gridList.getGridThumbnailContainer());
+    scpane.setPrefSize(800, 800);
+    grid1.getChildren().add(scpane);
   }
 
+    
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
@@ -243,5 +264,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private void goToFromFullGrid(ActionEvent event) {
     myController.setScreen(SudukoIHM.fromFullGridID);
   }
+  
 }
 

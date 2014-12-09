@@ -6,6 +6,7 @@
 package com.sudoku.data.sample;
 
 import com.sudoku.data.factory.GridFactory;
+import com.sudoku.data.manager.AccessManager;
 import com.sudoku.data.model.*;
 import java.util.List;
 
@@ -32,8 +33,7 @@ import com.sudoku.data.manager.UserManager;
 public class DataSample {
 
     // User et grid sont accesibles directement, servez-vous
-    public User a;
-    public User b;
+    public User a, b, c;
     public Grid g1,g2,g3;
     
     
@@ -48,6 +48,7 @@ public class DataSample {
       try {
         a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("14/09/1989"), "");
         b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
+        c = new User("User3", "User3", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
       } catch (Exception ex) {
         // to be handled
       }
@@ -66,9 +67,9 @@ public class DataSample {
        g1.setTags(tags);
        
       // g1.setCreateDate(new Timestamp(2014,11,4,14,48,0,0));
-       //g1.setCreateUser(a);
-       //g1.setDifficulty(3);
-       //g1.setDescription("This is the awesome grid n°1");
+       g1.setCreateUser(a);
+       g1.setDifficulty(3);
+       g1.setDescription("This is the awesome grid n°1");
        //g1.setId(1);
        
        //Création de Grid g2
@@ -124,9 +125,17 @@ public class DataSample {
        gridMgr.addGrid(g3);
        gridMgr.addPlayedGrid(g2,b);
        
+       AccessManager accessMgr = AccessManager.getInstance();
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.display, a);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, a);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, a);
+       
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, b);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);
+       
        DataManager dataMgr = DataManager.getInstance();
        
-       dataMgr.saveToJson();
+       //dataMgr.saveToJson();
        
        System.out.println(" Datasample finished");
        
