@@ -144,8 +144,9 @@ public final class CommunicationManager {
     Iterator<String> itr = ipsConnected.keySet().iterator();
     while(itr.hasNext()) {
       try {
-        ConnectionManager cm = ipsConnected.get(itr.next());
-        System.out.println("[Comm Manager: disconnect] disconnecting from" + itr.next());
+        String ip = itr.next();
+        ConnectionManager cm = ipsConnected.get(ip);
+        System.out.println("[Comm Manager: disconnect] disconnecting from" + ip);
         cm.openConnection();
         System.out.println("[Comm Manager: disconnect] disconnecting, calling disconnect");
         cm.disconnect();

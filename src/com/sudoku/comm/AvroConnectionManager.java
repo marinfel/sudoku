@@ -29,6 +29,8 @@ public class AvroConnectionManager extends ConnectionManager {
   public void openConnection()
      throws OfflineUserException {
     if (client == null) {
+      System.out.println("****************OPENING CONNECTION");
+
       try {
         client = new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT), CONNECTION_TIME_OUT);
         explorer = (NodeExplorer)
@@ -36,6 +38,8 @@ public class AvroConnectionManager extends ConnectionManager {
       }
       catch(IOException exc) {throw new OfflineUserException();}
       isConnected = true;
+    } else {
+      System.out.println("****************ALREADY OPENED");
     }
   }
 
