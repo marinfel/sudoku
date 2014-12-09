@@ -30,7 +30,7 @@ public class AvroConnectionManager extends ConnectionManager {
     if (client == null) {
       try {
         client =
-            new NettyTransceiver(new InetSocketAddress(ipAddress, NODE_PORT),
+            new NettyTransceiver(new InetSocketAddress(ipAddress, NODEPORT),
                 CONNECTION_TIME_OUT);
         explorer = (NodeExplorer)
             SpecificRequestor.getClient(NodeExplorer.class, client);

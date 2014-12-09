@@ -158,7 +158,7 @@ public final class CommunicationManager {
     }
   }
 
-  public ArrayList<com.sudoku.data.model.Grid> getAllGrids(
+  public List<com.sudoku.data.model.Grid> getAllGrids(
       com.sudoku.data.model.User user) throws IOException {
     return getAllGrids(user.getIpAddress());
   }
