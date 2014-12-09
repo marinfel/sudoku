@@ -11,12 +11,15 @@ import com.sudoku.data.manager.UserManager;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_grid_preview.StarView;
+import com.sudoku.grid.ihm_popups.IhmPopupsList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.HBox;
 import java.util.Vector;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 /**
  * @author Mélie
@@ -29,6 +32,7 @@ public abstract class IhmGridLayout extends StackPane {
   protected Label title;
   protected Grid grid;
   protected IhmGridLines gridLines;
+  protected final BorderPane border;
 
   //Grid grille;
   public IhmGridLayout() {
@@ -42,6 +46,26 @@ public abstract class IhmGridLayout extends StackPane {
     getChildren().add(title);
     StackPane.setAlignment(title, Pos.TOP_CENTER);
     grid = new Grid("", UserManager.getInstance().getLoggedUser());
+
+    border = new BorderPane();
+    getChildren().add(border);
+    HBox topHBox = new HBox();
+    VBox leftVBox = new VBox();
+    HBox bottomHBox = new HBox();
+    VBox rightVBox = new VBox();
+    VBox centerVBox = new VBox();
+
+    // center a faire
+    border.setTop(topHBox);
+    border.setLeft(leftVBox);
+    border.setBottom(bottomHBox);
+    border.setRight(rightVBox);
+    border.setCenter(centerVBox);
+
+    //VBox centerLayout = (VBox)border.getCenter();
+    //centerLayout.getChildren().add(sudokuGrid);
+    centerVBox.getChildren().add(gridLines);
+
   }
 
   /**
