@@ -12,6 +12,8 @@ import java.net.InetSocketAddress;
 public class DataRetrieverServer extends Server {
   public final int PORT = 11024;
 
+  public DataRetrieverServer() { super(); }
+
   @Override
   public void startServer() {
     server = new NettyServer(
