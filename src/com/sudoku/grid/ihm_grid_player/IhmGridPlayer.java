@@ -12,6 +12,7 @@ import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
 import com.sudoku.grid.ihm_grid_preview.StarView;
+import com.sudoku.grid.ihm_grid_preview.StarsBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -38,7 +39,7 @@ public class IhmGridPlayer extends IhmGridView {
 
   private final int nbComm = 2;
   private Vector<StarView> grades;
-  private HBox gradeFormBox;
+  private StarsBox starsBox;
   //private User author;
   //private List<Comment> gridComments;
   private Grid playGrid;
@@ -141,28 +142,14 @@ public class IhmGridPlayer extends IhmGridView {
      });*/
   }
 
-  private Vector<StarView> getStars(int numberOfStars) {
-    grades = new Vector();
-    int i;
-    int num = (int) Math.floor(numberOfStars);
-    for (i = 0; i <= num; i++) {
-      grades.add(new StarView(1));
-    }
-    if (Math.round(numberOfStars * 2) % 2 != 0) {
-      grades.add(new StarView(2));
-    }
-    for (i = grades.size(); i < 6; i++) {
-      grades.add(new StarView(3));
-    }
-    return grades;
-  }
-
   private void showAddCommentForm() {
     final Stage stage = new Stage();
+
     GridPane gridPane = new GridPane();
     gridPane.setAlignment(Pos.CENTER);
     gridPane.setHgap(10);
     gridPane.setVgap(10);
+
     Scene scene = new Scene(gridPane, 300, 150);
     stage.setScene(scene);
     stage.setTitle("Add Comments");
@@ -173,32 +160,19 @@ public class IhmGridPlayer extends IhmGridView {
     gridPane.add(labelTitle, 0, 1);
     gridPane.add(titleField, 1, 1);
 
-    final Label labelText = new Label("Text");
+    Label labelText = new Label("Text");
     //textField.setPrefSize(50, 50);
     gridPane.add(labelText, 0, 2);
-
     TextField textField = new TextField();
     gridPane.add(textField, 1, 2);
 
     /*Note */
     Label labelNote = new Label("Note");
     gridPane.add(labelNote, 0, 3);
-    //la note
-    // grades = getStars(0);
+    starsBox = getStarsBox();
+    starsBox.setHoverable(true);
+    gridPane.add(starsBox, 1, 3);
 
-    /*gradeFormBox = getStarsBox(0);
-
-     gradeFormBox.addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
-
-     @Override
-     public void handle(MouseEvent event) {
-     gradeFormBox = getStarsBox((int) Math.ceil(event.getX() * 5 / 140));
-     }
-     ;
-
-     });
-     gridPane.add(gradeFormBox, 1, 3);
-     gradeFormBox = getStarsBox(3);*/
     stage.show();
 
     Button buttonOk = new Button("Ok");
