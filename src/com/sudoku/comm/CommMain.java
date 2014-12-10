@@ -10,6 +10,8 @@ import java.util.List;
  * Created by ben on 19/11/14.
  */
 public class CommMain {
+  private CommMain() {
+  }
   private static final Logger LOGGER =
       LoggerFactory.getLogger(CommMain.class);
 
@@ -17,7 +19,6 @@ public class CommMain {
     String uuid = "uuid";
     String login = "login";
     List<String> connectedIps = new ArrayList<>();
-    //connectedIps.add(args[0]);
     connectedIps.add("172.26.25.19");
     connectedIps.add("172.26.25.20");
     connectedIps.add("172.26.25.21");
@@ -30,13 +31,10 @@ public class CommMain {
     CommunicationManager commManager = CommunicationManager.getInstance();
     commManager.init(uuid, login, connectedIps);
 
-    System.out.println("ip: " + commManager.getLocalIp());
+    LOGGER.info("ip: " + commManager.getLocalIp());
     try {
       commManager.discoverNodes();
       Thread.sleep(10000);
-      /*for (String ip : commManager.getConnectedIps()) {
-        System.out.println(ip);
-      }*/
       commManager.disconnect();
     } catch (Exception ex) {
       LOGGER.error("error :", ex);
