@@ -6,13 +6,24 @@ import org.apache.avro.ipc.specific.SpecificResponder;
 
 import java.net.InetSocketAddress;
 
+/**
+ * Class implementing the server in charge of node exploring
+ * @author Murat Cansiz
+ * @see Server
+ */
 public class NodeExplorerServer extends Server {
   public static final int PORT = 11023;
 
+  /**
+   * Class constructor
+   */
   public NodeExplorerServer() {
     super();
   }
 
+  /**
+   * Starts the server
+   */
   @Override
   public void startServer() {
     server = new NettyServer(
@@ -21,6 +32,9 @@ public class NodeExplorerServer extends Server {
     );
   }
 
+  /**
+   * Stops the server
+   */
   @Override
   public void stopServer() {
     if (server != null) {
@@ -28,6 +42,10 @@ public class NodeExplorerServer extends Server {
     }
   }
 
+  /**
+   * Retrieves the port used by this server
+   * @return the port used
+   */
   @Override
   public int getPort() {
     return PORT;
