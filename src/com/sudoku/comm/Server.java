@@ -8,11 +8,19 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+/**
+ * Abstract class encapsulating an Avro server
+ * @author Murat Cansiz
+ * @see NodeExplorerServer and DataRetrieverServer
+ */
 public abstract class Server {
   protected static org.apache.avro.ipc.Server server;
   protected String localIp;
   private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
+  /**
+   * Class constructor
+   */
   public Server() {
     try {
       this.localIp = getLocalInetAddress().getHostAddress();
@@ -21,16 +29,35 @@ public abstract class Server {
     }
   }
 
+  /**
+   * Abstract method to start the server
+   */
   public abstract void startServer();
 
+  /**
+   * Abstract method to stop the server
+   */
   public abstract void stopServer();
 
+  /**
+   * Abstract method to retrieve the port used by this specific server
+   * @return the port used by the server
+   */
   public abstract int getPort();
 
+  /**
+   * Retrieves the ip address of the server this code is running on
+   * @return the ip address as a string
+   */
   public String getInetAddress() {
     return this.localIp;
   }
 
+  /**
+   * Finds out the ip address of the server this code is running on
+   * @return the ip address as an InetAddress object
+   * @throws UnknownHostException
+   */
   private InetAddress getLocalInetAddress() throws UnknownHostException {
     try {
       InetAddress candidateAddress = null;
