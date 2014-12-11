@@ -7,15 +7,23 @@ import org.apache.avro.ipc.specific.SpecificResponder;
 import java.net.InetSocketAddress;
 
 /**
- * Created by ben on 01/12/14.
+ * Class implementing the server in charge of data retrieving
+ * @author Benjamin Frat
+ * @see Server
  */
 public class DataRetrieverServer extends Server {
   public static final int PORT = 11024;
 
+  /**
+   * Class constructor
+   */
   public DataRetrieverServer() {
     super();
   }
 
+  /**
+   * Starts the server
+   */
   @Override
   public void startServer() {
     avroServer = new NettyServer(
@@ -24,6 +32,9 @@ public class DataRetrieverServer extends Server {
     );
   }
 
+  /**
+   * Stops the server
+   */
   @Override
   public void stopServer() {
     if (avroServer != null) {
@@ -31,6 +42,10 @@ public class DataRetrieverServer extends Server {
     }
   }
 
+  /**
+   * Retrieves the port used by this server
+   * @return the port used
+   */
   @Override
   public int getPort() {
     return PORT;
