@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 public abstract class Server {
-  protected static org.apache.avro.ipc.Server server;
+  protected static org.apache.avro.ipc.Server avroServer;
   protected String localIp;
   private static final Logger LOGGER = LoggerFactory.getLogger(Server.class);
 
@@ -17,7 +17,7 @@ public abstract class Server {
     try {
       this.localIp = getLocalInetAddress().getHostAddress();
     } catch (UnknownHostException ex) {
-      LOGGER.error(ex.toString());
+      LOGGER.error(ex.toString(), ex);
     }
   }
 

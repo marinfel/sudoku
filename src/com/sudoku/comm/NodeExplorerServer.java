@@ -15,7 +15,7 @@ public class NodeExplorerServer extends Server {
 
   @Override
   public void startServer() {
-    server = new NettyServer(
+    avroServer = new NettyServer(
         new SpecificResponder(NodeExplorer.class, new NodeExplorerImpl()),
         new InetSocketAddress(localIp, PORT)
     );
@@ -23,8 +23,8 @@ public class NodeExplorerServer extends Server {
 
   @Override
   public void stopServer() {
-    if (server != null) {
-      server.close();
+    if (avroServer != null) {
+      avroServer.close();
     }
   }
 

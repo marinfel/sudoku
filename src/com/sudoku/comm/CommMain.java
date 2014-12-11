@@ -10,10 +10,12 @@ import java.util.List;
  * Created by ben on 19/11/14.
  */
 public class CommMain {
-  private CommMain() {
-  }
   private static final Logger LOGGER =
       LoggerFactory.getLogger(CommMain.class);
+  public static final int SLEEP_TIMER = 10000;
+  
+  private CommMain() {
+  }
 
   public static void main(String[] args) {
     String uuid = "uuid";
@@ -34,7 +36,7 @@ public class CommMain {
     LOGGER.info("ip: " + commManager.getLocalIp());
     try {
       commManager.discoverNodes();
-      Thread.sleep(10000);
+      Thread.sleep(SLEEP_TIMER);
       commManager.disconnect();
     } catch (Exception ex) {
       LOGGER.error("error :", ex);

@@ -13,6 +13,10 @@ import java.util.*;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ *
+ * @author someone
+ */
 public final class CommunicationManager {
   private static volatile CommunicationManager instance = null;
   private String localIp;
@@ -20,6 +24,7 @@ public final class CommunicationManager {
   private String login;
   private Server nodeExplorerServer;
   private Server dataRetrieverServer;
+  private static final int MS_TIMER = 1000 * 5;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
@@ -28,7 +33,6 @@ public final class CommunicationManager {
   private Map<String, ConnectionManager> ipsConnected;
 
   private Timer timerDiscoverNodes;
-  private DiscoverNodesTimerTask discoverNodesTimerTask;
 
   private CommunicationManager() {
     super();
@@ -67,7 +71,7 @@ public final class CommunicationManager {
     if(timerDiscoverNodes == null) {
       timerDiscoverNodes = new Timer();
       timerDiscoverNodes
-          .schedule(new DiscoverNodesTimerTask(), new Date(), 1000 * 5);
+          .schedule(new DiscoverNodesTimerTask(), new Date(), MS_TIMER);
     }
   } 
 
@@ -131,7 +135,7 @@ public final class CommunicationManager {
     if (cm != null) {
       try {
         cm.closeConnection();
-      }catch(ConnectionManager.OfflineUserException exc) {
+      } catch(ConnectionManager.OfflineUserException exc) {
         // Nothing to do, already closed
       }
       ipsConnected.remove(ip);
@@ -152,7 +156,7 @@ public final class CommunicationManager {
         cm.closeConnection();
       }catch(ConnectionManager.OfflineUserException |
           ConnectionManager.ConnectionClosedException ex) {
-        LOGGER.info(ex.toString());
+        LOGGER.info(ex.toString(), ex);
       }
       itr.remove();
     }

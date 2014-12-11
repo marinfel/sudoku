@@ -18,7 +18,7 @@ public class DataRetrieverServer extends Server {
 
   @Override
   public void startServer() {
-    server = new NettyServer(
+    avroServer = new NettyServer(
         new SpecificResponder(DataRetriever.class, new DataRetrieverImpl()),
         new InetSocketAddress(localIp, PORT)
     );
@@ -26,8 +26,8 @@ public class DataRetrieverServer extends Server {
 
   @Override
   public void stopServer() {
-    if (server != null) {
-      server.close();
+    if (avroServer != null) {
+      avroServer.close();
     }
   }
 
