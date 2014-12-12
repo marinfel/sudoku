@@ -4,6 +4,8 @@ package com.sudoku.data.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 
 
 public class PlayedGrid {
@@ -13,7 +15,11 @@ public class PlayedGrid {
   private Grid grid;
   private User player;
 
-
+    //for deserialisation use only
+    public PlayedGrid(){
+    
+    }
+    
   public PlayedGrid(Grid grid) {
     super();
     this.grid = grid;
@@ -32,7 +38,7 @@ public class PlayedGrid {
   public void setGrid(Grid grid) {
     this.grid = grid;
   }
-
+  @JsonIgnore
   public boolean isComplete() {
     return false;
   }
@@ -51,5 +57,13 @@ public class PlayedGrid {
 
   public void setPlayer(User player) {
     this.player = player;
+  }
+  //for deserialisation use only
+  public Timestamp getStartDate(){
+      return startDate;
+  }
+  //for deserialisation use only
+  public Timestamp getUpdateDate(){
+      return updateDate;
   }
 }

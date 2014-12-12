@@ -1,35 +1,21 @@
 package com.sudoku.comm;
 
-import com.sudoku.comm.generated.Message;
-import com.sudoku.comm.generated.NodeExplorer;
-import com.sudoku.data.model.Comment;
-import com.sudoku.data.model.Grid;
-import com.sudoku.data.model.User;
-import com.sudoku.util.CollectionUtil;
 import com.sudoku.comm.ConnectionManager;
 
-import org.apache.avro.ipc.NettyTransceiver;
-import org.apache.avro.ipc.specific.SpecificRequestor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.TimerTask;
 import java.util.Iterator;
-import java.util.Timer;
-import java.util.Set;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
   private final CommunicationManager communicationManager;
-  private Logger logger = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
   public DiscoverNodesTimerTask() {
     this.communicationManager = CommunicationManager.getInstance();
@@ -42,30 +28,30 @@ public class DiscoverNodesTimerTask extends TimerTask {
   }
 
   public void launchDiscovery() {
-    ConcurrentHashMap<String, ConnectionManager> ipsToConfirm =
+    Map<String, ConnectionManager> ipsToConfirm =
         communicationManager.getIpsToConfirm();
     Iterator<String> itr = ipsToConfirm.keySet().iterator();
-    ConcurrentHashMap<String, ConnectionManager> ipsConnected =
+    Map<String, ConnectionManager> ipsConnected =
         communicationManager.getIpsConnected();
 
-    ArrayList<String> ipsToPublish = new ArrayList<>();
+    List<String> ipsToPublish = new ArrayList<>();
     while (itr.hasNext()) {
-      ArrayList<String> ipsConnectedTMP =
+      List<String> ipsConnectedTMP =
           new ArrayList<>(ipsConnected.keySet());
       Iterator<String> itrDebug = ipsConnectedTMP.iterator();
 
-      logger.debug("ipsConnectedTMP");
+      LOGGER.debug("ipsConnectedTMP");
 
       while (itrDebug.hasNext()) {
-        logger.debug(itrDebug.next());
+        LOGGER.debug(itrDebug.next());
       }
-      logger.debug("/ipsConnectedTMP");
+      LOGGER.debug("/ipsConnectedTMP");
 
-      ArrayList<String> ipToShare = new ArrayList<>(ipsConnected.keySet());
+      List<String> ipToShare = new ArrayList<>(ipsConnected.keySet());
       ipToShare.add(localIp);
 
       String currentIpToConfirm = itr.next();
-      logger.debug("[BEGIN TimerTask] Connecting to :" +
+      LOGGER.debug("[BEGIN TimerTask] Connecting to :" +
           currentIpToConfirm + "\n ");
       AvroConnectionManager currentConnectionManager =
           new AvroConnectionManager(currentIpToConfirm);
@@ -84,26 +70,26 @@ public class DiscoverNodesTimerTask extends TimerTask {
 
         //DEBUG
         Iterator<String> itrRemote = ipFromRemoteNode.iterator();
-        logger.debug("[TimerTask] ip From Remote Node (from " +
+        LOGGER.debug("[TimerTask] ip From Remote Node (from " +
             currentIpToConfirm + ") : ");
         while (itrRemote.hasNext()) {
           String addr = itrRemote.next();
-          logger.debug(addr);
+          LOGGER.debug(addr);
         }
         communicationManager.addIpToConfirm(ipFromRemoteNode);
-        logger.debug("[END TimerTask]");
-        logger.debug("*********************");
+        LOGGER.debug("[END TimerTask]");
+        LOGGER.debug("*********************");
         // END DEBUG
 
         currentConnectionManager.closeConnection();
       } catch (ConnectionManager.OfflineUserException exc) {
-        logger.debug("Offline user: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Offline user: " + currentIpToConfirm + "\n ", exc);
       } catch (ConnectionManager.ConnectionClosedException exc) {
-        logger.debug("Closed connection: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Closed connection: " + currentIpToConfirm + "\n ", exc);
       }
 
       // Publishing known nodes
-      if (ipsToPublish.size() != 0) {
+      if (!ipsToPublish.isEmpty()) {
         Collection<ConnectionManager> connectedManagers = ipsConnected.values();
         for (ConnectionManager cm : connectedManagers) {
           try {
@@ -111,9 +97,9 @@ public class DiscoverNodesTimerTask extends TimerTask {
             cm.publishIps(ipsToPublish);
             cm.closeConnection();
           } catch (ConnectionManager.OfflineUserException exc) {
-            logger.debug("Offline user");
+            LOGGER.debug("Offline user", exc);
           } catch (ConnectionManager.ConnectionClosedException exc) {
-            logger.debug("Closed connection");
+            LOGGER.debug("Closed connection", exc);
           }
         }
       }
