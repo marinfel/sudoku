@@ -10,9 +10,9 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
 import com.sudoku.grid.editor.IhmGridView;
-import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
-import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.preview.IhmGridPreview;
+import com.sudoku.grid.player.IhmGridPlayer;
+import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -55,7 +55,7 @@ public class SudokuTest extends Application {
       @Override
       public void handle(WindowEvent t) {
         if (t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
-          IhmPopupsList.getInstance().finalize();
+          IhmPopupsList.getInstance().killAllTimers();
         }
       }
 

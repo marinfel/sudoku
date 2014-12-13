@@ -8,10 +8,10 @@ package com.sudoku.grid.manager;
 
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.manager.UserManager;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
-import com.sudoku.grid.ihm_grid_preview.StarView;
-import com.sudoku.grid.ihm_grid_preview.StarsBox;
+import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLines.Flags;
+import com.sudoku.grid.preview.StarView;
+import com.sudoku.grid.preview.StarsBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
