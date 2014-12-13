@@ -72,6 +72,8 @@ public class IhmCellView extends IhmCell {
     //first check the value
     if (checkValue(value)) { //set the value
       valueView.setText(String.valueOf(value));
+    } else {
+      valueView.setText("");
     }
   }
 
