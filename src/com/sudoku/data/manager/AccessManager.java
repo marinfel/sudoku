@@ -6,9 +6,17 @@
 package com.sudoku.data.manager;
 
 import com.sudoku.data.model.*;
+import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * @author JE
@@ -17,7 +25,12 @@ public class AccessManager {
 
   private static AccessManager instance;
   private HashMap<Grid, ArrayList<AccessRule>> rules;
-
+  
+  @JsonIgnore
+  private File jsonFile;
+  @JsonIgnore
+  private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backupAccessManager.json";
+    
   private AccessManager() {
     this.rules = new HashMap<>();
   }
@@ -37,11 +50,13 @@ public class AccessManager {
   }
 
   //jsonignore
+  @JsonIgnore
   public ArrayList<AccessRule> getAllAccessRulesForGrid(Grid grid) {
     return this.rules.get(grid);
   }
 
   //jsonignore
+  @JsonIgnore
   private AccessRule getAccessRule(Grid grid, AccessAction accessAction, Ruleable appliedTo) {
 
     ArrayList<AccessRule> rulesList = this.rules.get(grid);
@@ -143,5 +158,59 @@ public class AccessManager {
 
     // Sinon, la regle indiquee au niveau de l'utilisateur est prioritaire
     return userLevelAccessType;
+  }
+  
+   public void SaveToJson(){
+       ObjectMapper mapper = new ObjectMapper();
+       //Pour sérializer les champs publics comme privés
+       mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+       //pour ne pas planter sur une valeur null
+       //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+       //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
+        
+        try {
+                 jsonFile = new File(jsonFilePath);
+	 
+	            mapper.writeValue(jsonFile, this);
+                    //Pour logger le processus de sauvegarde
+	            System.out.println(mapper.writeValueAsString(this));
+        } catch (JsonGenerationException ex) {
+                   ex.printStackTrace();
+ 
+	} catch (JsonMappingException ex) {
+	 
+	            ex.printStackTrace();
+        } catch (IOException ex) {
+	 
+	            ex.printStackTrace();
+        }
+    }
+  public static UserManager BuildFromJson(){
+  ObjectMapper mapper= new ObjectMapper();
+        // To avoid any undeclared property error
+        //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
+            
+        try {
+	 
+                File jsonFile = new File(jsonFilePath);
+	 
+                //DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
+                AccessManager.instance = mapper.readValue(jsonFile, AccessManager.class);
+        }catch (JsonGenerationException ex) {
+         
+	 
+	            ex.printStackTrace();
+ 
+	} catch (JsonMappingException ex) {
+	 
+	            ex.printStackTrace();
+	 
+	} catch (IOException ex) {
+	 
+	            ex.printStackTrace();
+	 
+	}
+        return UserManager.getInstance();
+  
   }
 }

@@ -6,13 +6,17 @@
 package com.sudoku.data;
 
 import com.sudoku.data.factory.GridFactory;
+import com.sudoku.data.manager.AccessManager;
 import com.sudoku.data.manager.DataManager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
+import com.sudoku.data.model.AccessRule;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,9 +40,10 @@ public class TestRestore {
       DataManager.buildFromJson();
     List<User> ul1= UserManager.getInstance().getLocalUsers();
     List<Grid> gl1= GridManager.getInstance().getAvailableGrids();
+    HashMap<Grid, ArrayList<AccessRule>> al1 = AccessManager.getInstance().getRules();
     System.out.println(ul1.get(0).toString());
     System.out.println(gl1.toString());
     System.out.println("Au fait, je m'éxécute");
-  
+    System.out.println(al1.toString());
   }
 }
