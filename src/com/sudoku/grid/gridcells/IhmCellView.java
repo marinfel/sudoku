@@ -1,4 +1,4 @@
-package com.sudoku.grid.ihm_grid_cells;
+package com.sudoku.grid.gridcells;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

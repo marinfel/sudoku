@@ -5,10 +5,10 @@
  */
 package com.sudoku.grid.editor;
 
-import com.sudoku.grid.ihm_grid_cells.IhmCell;
-import com.sudoku.grid.ihm_grid_cells.IhmCellView;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.gridcells.IhmCell;
+import com.sudoku.grid.gridcells.IhmCellView;
+import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.popups.IhmPopupsList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

@@ -5,7 +5,7 @@
  */
 package com.sudoku.main.manager;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+import com.sudoku.grid.preview.IhmGridPreview;
 import javafx.geometry.Insets;
 import  javafx.scene.control.Label;
 import javafx.scene.control.Button;

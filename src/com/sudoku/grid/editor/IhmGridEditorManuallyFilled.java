@@ -8,7 +8,7 @@ package com.sudoku.grid.editor;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLines;
 
 /**
  * @author Celine To and Mehdi Kane Instantiate an empty grid that has to be

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_popups;
+package com.sudoku.grid.popups;
 
 import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   protected double popupHeight;
   protected double popupWidth;
   protected int nbMaxPopups;
-  protected ArrayList<IhmPopup> popups = new ArrayList<>();
+  protected List<IhmPopup> popups = new ArrayList<>();
 
   /**
    * @class IHM_PopupsList constructor Use IHM_PopupsList.getInstance() instead.
@@ -78,22 +79,13 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   /**
    * Finalize the list by killing timers of its popups Needed to be call when
    * the application is quit (ie: Stage.setOnCloseRequest(handler which calls
-   * IhmPopupsList.finalize())
+   * IhmPopupsList.killAllTimers())
    */
-  @Override
-  public void finalize() {
-    try {
-      for (IhmPopup popup : popups) //Kill the timer otherwise there will continue to run
+  public void killAllTimers() {
+    for (IhmPopup popup : popups) {
+      //Kill the timer otherwise there will continue to run
       //Can't use the requestToClose() function because it will modify the list that we are using
-      {
-        popup.finalize();
-      }
-    } finally {
-      try {
-        super.finalize();
-      } catch (Throwable ex) {
-        Logger.getLogger(IhmPopupsList.class.getName()).log(Level.SEVERE, null, ex);
-      }
+      popup.killTimer();
     }
   }
 

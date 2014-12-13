@@ -1,8 +1,8 @@
 package com.sudoku.grid.manager;
 
 import com.sudoku.grid.editor.IhmGridEditor;
-import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
-import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+import com.sudoku.grid.player.IhmGridPlayer;
+import com.sudoku.grid.preview.IhmGridPreview;
 
 import java.util.ArrayList;
 

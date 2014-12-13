@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_grid_preview;
+package com.sudoku.grid.preview;
 
-import com.sudoku.grid.ihm_grid_cells.IhmCell;
-import com.sudoku.grid.ihm_grid_cells.IhmCellView;
+import com.sudoku.grid.gridcells.IhmCell;
+import com.sudoku.grid.gridcells.IhmCellView;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLines;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_grid_cells;
+package com.sudoku.grid.gridcells;
 
 import com.sudoku.data.model.Cell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.popups.IhmPopupsList;
 import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;

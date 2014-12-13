@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_grid_preview;
+package com.sudoku.grid.preview;
 
 import java.util.ArrayList;
 import javafx.event.EventHandler;
