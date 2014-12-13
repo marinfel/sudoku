@@ -85,7 +85,11 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
         if ((cell instanceof FixedCell && cellsFlag.contains(FIT_GRID)) || cellsFlag.contains(ALL_VIEW)) {
           ihmCell = new IhmCellView(cellSide);
-          ihmCell.setValue(((FixedCell) cell).getValue());
+          if (cell instanceof FixedCell) {
+            ihmCell.setValue(((FixedCell) cell).getValue());
+          } else {
+            ihmCell.setValue(0);
+          }
           if (cellsFlag.contains(FIXED_HIDABLE)) {
             ((IhmCellView) ihmCell).setHideable(true);
           }

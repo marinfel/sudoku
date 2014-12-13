@@ -130,7 +130,7 @@ public class GridTest extends Application {
     g.setFixedCell((byte) 8, (byte) 7, (byte) 4);
     g.setFixedCell((byte) 8, (byte) 8, (byte) 6);
 
-    IhmGridLines glines = new IhmGridLines(g, 500, IhmGridLines.FIT_GRID.add(IhmGridLines.FIXED_HIDABLE));
+    IhmGridLines glines = new IhmGridLines(g, 500, IhmGridLines.ALL_VIEW);
     glines.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, new EventHandler<IhmGridLinesCompleted>() {
 
       @Override
