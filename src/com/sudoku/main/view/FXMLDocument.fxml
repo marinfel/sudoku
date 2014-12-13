@@ -117,7 +117,7 @@
                         </Tab>
                         <Tab text="Liste Grilles">
                             <content>
-                                <SplitPane prefHeight="160.0" prefWidth="200.0">
+                                <SplitPane prefHeight="606.0" prefWidth="1074.0">
                                     <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="660.0">
                                             <children>
@@ -134,52 +134,52 @@
                                                             <children>
                                                                 <Accordion prefHeight="403.0" prefWidth="430.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                     <panes>
-                                                                        <TitledPane animated="false" text="Mes grilles">
+                                                                        <TitledPane animated="false" text="Grilles en cours">
                                                                             <content>
                                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                     <children>
                                                                                         <ScrollPane layoutX="60.0" layoutY="48.0" prefHeight="324.0" prefWidth="428.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <content>
-                                                                                                <AnchorPane fx:id="grid1" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="800.0" />
+                                                                                                <AnchorPane fx:id="currentGrid" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="800.0" />
                                                                                             </content>
                                                                                         </ScrollPane>
                                                                                     </children>
                                                                                 </AnchorPane>
                                                                             </content>
                                                                         </TitledPane>
-                                                                        <TitledPane animated="false" text="untitled 2">
+                                                                        <TitledPane animated="false" text="Grilles distantes">
                                                                             <content>
                                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                     <children>
                                                                                         <ScrollPane layoutX="66.0" layoutY="62.0" prefHeight="324.0" prefWidth="428.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <content>
-                                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                                                                                <AnchorPane fx:id="distanteGrid" minHeight="0.0" minWidth="0.0" prefHeight="431.0" prefWidth="752.0" />
                                                                                             </content>
                                                                                         </ScrollPane>
                                                                                     </children>
                                                                                 </AnchorPane>
                                                                             </content>
                                                                         </TitledPane>
-                                                                        <TitledPane animated="false" text="untitled 3">
+                                                                        <TitledPane animated="false" text="Grilles terminées">
                                                                             <content>
                                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                     <children>
                                                                                         <ScrollPane prefHeight="324.0" prefWidth="428.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <content>
-                                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                                                                                <AnchorPane fx:id="finishedGrid" minHeight="0.0" minWidth="0.0" prefHeight="430.0" prefWidth="753.0" />
                                                                                             </content>
                                                                                         </ScrollPane>
                                                                                     </children>
                                                                                 </AnchorPane>
                                                                             </content>
                                                                         </TitledPane>
-                                                                        <TitledPane animated="false" text="untitled">
+                                                                        <TitledPane fx:id="MesGrilles" animated="false" text="Mes grilles">
                                                                             <content>
                                                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                                     <children>
                                                                                         <ScrollPane prefHeight="298.0" prefWidth="428.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <content>
-                                                                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                                                                                <AnchorPane fx:id="myGrid" minHeight="0.0" minWidth="0.0" prefHeight="432.0" prefWidth="754.0" />
                                                                                             </content>
                                                                                         </ScrollPane>
                                                                                     </children>

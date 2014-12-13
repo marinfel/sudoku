@@ -26,6 +26,10 @@ import java.util.Locale;
 import com.sudoku.data.manager.DataManager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Jonathan
@@ -118,6 +122,14 @@ public class DataSample {
        
        userMgr.addLocalUser(a);
        userMgr.addLocalUser(b);
+       
+        try {
+            userMgr.authenticate("User1", "User1");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
        gridMgr.addGrid(g1);
        gridMgr.addGrid(g2);
