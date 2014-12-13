@@ -6,6 +6,7 @@
 package com.sudoku.main.manager;
 
 import com.sudoku.data.manager.GridManager;
+import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.sample.DataSample;
 import java.util.ArrayList;
@@ -38,14 +39,9 @@ public class ListGridManager {
     public GridPane getGridThumbnailContainer()
     {
         GridThumbnailContainer container = new GridThumbnailContainer();
-        /*container.addGridThumbnail(new GridThumbnail(instance.g1));
-        container.addGridThumbnail(new GridThumbnail(instance.g2));
-        container.addGridThumbnail(new GridThumbnail(instance.g3));
-        container.addGridThumbnail(new GridThumbnail(instance.g1));
-        container.addGridThumbnail(new GridThumbnail(instance.g2));*/
-        for(int i = 0; i<GridManager.getInstance().getUserGrids(instance.a).size();i++)
+        for(int i = 0; i<GridManager.getInstance().getUserGrids(UserManager.getInstance().getLoggedUser()).size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(GridManager.getInstance().getUserGrids(instance.a).get(i)));
+            container.addGridThumbnail(new GridThumbnail(GridManager.getInstance().getUserGrids(UserManager.getInstance().getLoggedUser()).get(i)));
         }
         return container.getInstance();
     }
