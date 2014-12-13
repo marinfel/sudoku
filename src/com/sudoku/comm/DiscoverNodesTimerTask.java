@@ -83,13 +83,13 @@ public class DiscoverNodesTimerTask extends TimerTask {
 
         currentConnectionManager.closeConnection();
       } catch (ConnectionManager.OfflineUserException exc) {
-        LOGGER.debug("Offline user: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Offline user: " + currentIpToConfirm + "\n ", exc);
       } catch (ConnectionManager.ConnectionClosedException exc) {
-        LOGGER.debug("Closed connection: " + currentIpToConfirm + "\n ");
+        LOGGER.debug("Closed connection: " + currentIpToConfirm + "\n ", exc);
       }
 
       // Publishing known nodes
-      if (ipsToPublish.size() != 0) {
+      if (!ipsToPublish.isEmpty()) {
         Collection<ConnectionManager> connectedManagers = ipsConnected.values();
         for (ConnectionManager cm : connectedManagers) {
           try {
@@ -97,9 +97,9 @@ public class DiscoverNodesTimerTask extends TimerTask {
             cm.publishIps(ipsToPublish);
             cm.closeConnection();
           } catch (ConnectionManager.OfflineUserException exc) {
-            LOGGER.debug("Offline user");
+            LOGGER.debug("Offline user", exc);
           } catch (ConnectionManager.ConnectionClosedException exc) {
-            LOGGER.debug("Closed connection");
+            LOGGER.debug("Closed connection", exc);
           }
         }
       }

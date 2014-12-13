@@ -1,11 +1,11 @@
 package com.sudoku.comm;
 
-import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.List;
 
 // Class representing a connection to a remote user
 public abstract class ConnectionManager {
+  private static final String ERROR_MSG = "Must open connection first.";
   // Remote user.
   protected String ipAddress;
   protected boolean isConnected;
@@ -19,28 +19,29 @@ public abstract class ConnectionManager {
 
   /** 
    * Tries to open a connection.
+   * @throws com.sudoku.comm.ConnectionManager.OfflineUserException
    */
   public abstract void openConnection() throws OfflineUserException;
   
   public List<String> getConnectedIps(List<String> newConnectedIps)
      throws OfflineUserException, ConnectionClosedException {
     if (!isConnected) {
-      throw new ConnectionClosedException("Must open connection first.");
+      throw new ConnectionClosedException(ERROR_MSG);
     }
-    return new ArrayList<String>();
+    return new ArrayList<>();
   }
   
   public void publishIps(List<String> ips) throws OfflineUserException,
      ConnectionClosedException {
     if (!isConnected) {
-      throw new ConnectionClosedException("Must open connection first.");
+      throw new ConnectionClosedException(ERROR_MSG);
     }
   }
 
   public void disconnect() throws OfflineUserException,
      ConnectionClosedException {
     if (!isConnected) {
-      throw new ConnectionClosedException("Must open connection first.");
+      throw new ConnectionClosedException(ERROR_MSG);
     }
   }
 
@@ -57,7 +58,9 @@ public abstract class ConnectionManager {
     public ConnectionClosedException(String message, Throwable cause) {
       super(message, cause);
     }
-    public ConnectionClosedException(Throwable cause) { super(cause); }
+    public ConnectionClosedException(Throwable cause) {
+      super(cause);
+    }
   }
 
   public class OfflineUserException extends Exception {

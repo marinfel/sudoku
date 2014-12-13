@@ -32,7 +32,9 @@ public class AvroConnectionManager extends ConnectionManager {
         explorer = (NodeExplorer)
             SpecificRequestor.getClient(NodeExplorer.class, client);
         isConnected = true;
-      } catch(IOException exc) {throw new OfflineUserException();}
+      } catch(IOException exc) {
+        throw new OfflineUserException();
+      }
     }
   }
 

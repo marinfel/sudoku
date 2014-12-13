@@ -27,6 +27,9 @@ import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.Event;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javax.swing.JScrollPane;
 
@@ -39,6 +42,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   public static final ObservableList users = FXCollections.observableArrayList();
   //Data
   public DataSample instance;
+  ListGridManager gridList;
+  ScrollPane  scpane ;
+  
   // Partie JulianC
   ScreensController myController;
   @FXML
@@ -80,7 +86,15 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private Button delGroup;
   @FXML
-  private AnchorPane grid1;
+  private AnchorPane currentGrid;
+  @FXML
+  private AnchorPane distanteGrid;
+  @FXML
+  private AnchorPane finishedGrid;
+  @FXML
+  private AnchorPane myGrid;
+  @FXML
+  private TitledPane MesGrilles;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -105,7 +119,12 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert grid1 != null : "fx:id=\"grid1\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert currentGrid != null : "fx:id=\"currentGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert distanteGrid != null : "fx:id=\"distanteGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+
 
     //Ajouter des éléments aux listes groupes et utilisateurs
     groups.addAll("Global", "Amis", "Camarades");
@@ -205,21 +224,17 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             paneGroup.setVisible(false);
           }
         });
+   
     
+    EventHandler<MouseEvent> mousehandler = new EventHandler<MouseEvent>() {
+    @Override
+    public void handle(MouseEvent mouseEvent) {
+            System.out.println("hi");
+            refreshMyGrids();
+        }
+    };
     
-    
-    // Liste Grille
-      /*ListGridManager myGridManager=new ListGridManager();
-      
-      for(int i = 0; i<myGridManager.AllGrid().size();i++)
-      {
-          grid1.getChildren().add(myGridManager.AllGrid().get(i));
-      }*/
-    ListGridManager gridList=new ListGridManager(instance);
-    ScrollPane  scpane = new ScrollPane();
-    scpane.setContent(gridList.getGridThumbnailContainer());
-    scpane.setPrefSize(800, 800);
-    grid1.getChildren().add(scpane);
+    MesGrilles.setOnMouseClicked(mousehandler);
   }
 
     
@@ -243,5 +258,13 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     myController.setScreen(SudukoIHM.fromFullGridID);
   }
   
+  private void refreshMyGrids(){
+    // My Grids
+    gridList=new ListGridManager(instance);
+    scpane = new ScrollPane();
+    scpane.setContent(gridList.getGridThumbnailContainer());
+    scpane.setPrefSize(800, 800);
+    myGrid.getChildren().add(scpane);
+  }
 }
 
