@@ -24,10 +24,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
+import javafx.stage.Screen;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -45,8 +46,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   ListGridManager gridList;
   ScrollPane  scpane ;
   
-  // Partie JulianC
   ScreensController myController;
+  @FXML
+  private TitledPane mainContainer;
   @FXML
   private Label userName;
   @FXML
@@ -95,15 +97,22 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private AnchorPane myGrid;
   @FXML
   private TitledPane MesGrilles;
+  @FXML
+  private AnchorPane ContentContainer;
 
   @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    System.out.println("test data");
+  public void initialize(URL url, ResourceBundle rb) 
+  {
     instance = new DataSample();
     instance.exec();
     System.out.println("test data" + instance.a.getPseudo());
     userName.setText("Utilisateur : " + instance.a.getPseudo());
-
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
+    mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
+    ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
+    ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
+    
     assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -124,9 +133,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert mainContainer != null : "fx:id=\"mainContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
 
-
-    //Ajouter des éléments aux listes groupes et utilisateurs
+    //Ajouter des éléments aux listes groupes et utilisateurs 
     groups.addAll("Global", "Amis", "Camarades");
     users.addAll("julian", "user2", "user3");
     listGroups.setItems(groups);
@@ -263,7 +273,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     gridList=new ListGridManager(instance);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer());
-    scpane.setPrefSize(800, 800);
+    scpane.setPrefSize(myGrid.getHeight(), myGrid.getWidth());
     myGrid.getChildren().add(scpane);
   }
 }

@@ -7,11 +7,13 @@
 package com.sudoku.main.view;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
 
 /**
  * @author MOURAD
@@ -45,6 +47,7 @@ public class SudukoIHM extends Application {
 //        image = new Image(SudukoIHM.class.getResourceAsStream("veng.png"));
 //        avatar = new ImageView();
 //        avatar.setImage(image);
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     ScreensController mainContainer = new ScreensController();
     mainContainer.loadScreen(SudukoIHM.loginID, SudukoIHM.loginFile);
     mainContainer.loadScreen(SudukoIHM.registerID, SudukoIHM.registerFile);
@@ -56,9 +59,11 @@ public class SudukoIHM extends Application {
     root.getChildren().addAll(mainContainer);
     Scene scene = new Scene(root);
     primaryStage.setTitle("Sudoku LO23");
-    primaryStage.setResizable(false);
+    primaryStage.setResizable(true);
     primaryStage.sizeToScene();
     primaryStage.setScene(scene);
+    primaryStage.setHeight(primaryScreenBounds.getHeight()*0.8);
+    primaryStage.setWidth(primaryScreenBounds.getWidth()*0.8);
     primaryStage.show();
   }
 }
