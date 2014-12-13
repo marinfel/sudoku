@@ -79,6 +79,7 @@ public class DataManager {
                 */
         userMgr.SaveToJson();
         gridMgr.SaveToJson();
+        accMgr.SaveToJson();
     }
     public static void buildFromJson(){
         /* ObjectMapper mapper= new ObjectMapper();
@@ -110,6 +111,7 @@ public class DataManager {
         
        UserManager.BuildFromJson();
        GridManager.BuildFromJson();
+       AccessManager.BuildFromJson();
        
     } 
 }
