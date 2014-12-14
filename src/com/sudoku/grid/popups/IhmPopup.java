@@ -101,6 +101,10 @@ public class IhmPopup extends GridPane {
    * @param t is the mouse click event
    */
   protected void mouseClickHandler(MouseEvent t) {
+    if (t.isConsumed()) {
+      return;
+    }
+    t.consume();
     requestToClose();
   }
 
