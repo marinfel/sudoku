@@ -29,6 +29,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,7 +46,14 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   //Data
   public DataSample instance;
   ListGridManager gridList;
+  ListGridManager currentList;
+  ListGridManager distantList;
+  ListGridManager finishedList;
+
   ScrollPane  scpane ;
+  ScrollPane distantPane;
+  ScrollPane currentPane;
+  ScrollPane finishedPane;
   
   ScreensController myController;
   @FXML
@@ -99,6 +108,12 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private TitledPane MesGrilles;
   @FXML
   private AnchorPane ContentContainer;
+  @FXML
+  private Tab ListGrille;
+  @FXML
+  private TabPane TabP;
+
+
 
   @Override
   public void initialize(URL url, ResourceBundle rb) 
@@ -113,6 +128,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
     ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
     
+    assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ListGrille != null : "fx:id=\"ListGrille\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -239,12 +256,18 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     EventHandler<MouseEvent> mousehandler = new EventHandler<MouseEvent>() {
     @Override
     public void handle(MouseEvent mouseEvent) {
-            System.out.println("hi");
             refreshMyGrids();
         }
     };
     
-    MesGrilles.setOnMouseClicked(mousehandler);
+    TabP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+        @Override public void changed(ObservableValue<? extends Tab> tab, Tab oldTab, Tab newTab) {
+            if(newTab.getText().equalsIgnoreCase("Liste Grilles"))
+            {
+                refreshMyGrids();
+            }
+        }
+      });
   }
 
     
@@ -270,11 +293,32 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   private void refreshMyGrids(){
     // My Grids
-    gridList=new ListGridManager(instance);
+    gridList = new ListGridManager(instance);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer());
-    scpane.setPrefSize(myGrid.getHeight(), myGrid.getWidth());
+    scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
+    
+    //Current Grids
+    currentList = new ListGridManager(instance);
+    currentPane= new ScrollPane();
+    currentPane.setContent(currentList.getCurrentGridThumbnailContainer());
+    currentPane.setPrefSize(800,400);
+    currentGrid.getChildren().add(currentPane);
+    
+    //Finished Grids
+    finishedList = new ListGridManager(instance);
+    finishedPane = new ScrollPane();
+    finishedPane.setContent(finishedList.getFinishedGridThumbnailContainer());
+    finishedPane.setPrefSize(800, 400);
+    finishedGrid.getChildren().add(finishedPane);
+    
+    //Distant Grids
+    distantList = new ListGridManager(instance);
+    distantPane = new ScrollPane();
+    distantPane.setContent(distantList.getDistantGridThumbnailContainer());
+    distantPane.setPrefSize(800, 400);
+    distanteGrid.getChildren().add(distantPane);
   }
 }
 
