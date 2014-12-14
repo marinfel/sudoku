@@ -7,7 +7,9 @@
 package com.sudoku.main.view;
 
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.grid.player.IhmGridPlayer;
 import com.sudoku.main.manager.ListGridManager;
+import com.sudoku.main.manager.RefreshGridPlayer;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -112,6 +114,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private Tab ListGrille;
   @FXML
   private TabPane TabP;
+  @FXML
+  private Tab Jouer;
+  @FXML
+  private AnchorPane GridPlayer;
 
 
 
@@ -128,6 +134,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
     ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
     
+    assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert ListGrille != null : "fx:id=\"ListGrille\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -253,18 +261,15 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         });
    
     
-    EventHandler<MouseEvent> mousehandler = new EventHandler<MouseEvent>() {
-    @Override
-    public void handle(MouseEvent mouseEvent) {
-            refreshMyGrids();
-        }
-    };
-    
     TabP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
         @Override public void changed(ObservableValue<? extends Tab> tab, Tab oldTab, Tab newTab) {
             if(newTab.getText().equalsIgnoreCase("Liste Grilles"))
             {
                 refreshMyGrids();
+            }
+            else if(newTab.getText().equalsIgnoreCase("Jouer"))
+            {
+                refreshGridPlayer();
             }
         }
       });
@@ -319,6 +324,20 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     distantPane.setContent(distantList.getDistantGridThumbnailContainer());
     distantPane.setPrefSize(800, 400);
     distanteGrid.getChildren().add(distantPane);
+  }
+  
+  private void refreshGridPlayer(){
+      RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
+      System.out.println("In RefreshGridPlayer");
+      if(instance.getCurrentGrid() != null)
+      {
+          System.out.println("tiiitre "+instance.getCurrentGrid().getTitle()+instance.getCurrentGrid().getCreatePseudo());
+          if(instance.getCurrentGrid()!=null)
+          {
+            IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
+            GridPlayer.getChildren().add(GridP);
+          }
+      }
   }
 }
 
