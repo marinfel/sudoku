@@ -328,10 +328,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   private void refreshGridPlayer(){
       RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
-      System.out.println("In RefreshGridPlayer");
       if(instance.getCurrentGrid() != null)
       {
-          System.out.println("tiiitre "+instance.getCurrentGrid().getTitle()+instance.getCurrentGrid().getCreatePseudo());
           if(instance.getCurrentGrid()!=null)
           {
             IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());

@@ -87,7 +87,6 @@ public class GridThumbnail extends AnchorPane {
         @Override
         public void handle(ActionEvent e) {
             RefreshGridPlayer.getInstance().setCurrentGrid(instance);
-            System.out.println("heee");
         }
       });
     }

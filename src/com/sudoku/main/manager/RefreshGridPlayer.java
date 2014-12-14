@@ -45,6 +45,5 @@ public class RefreshGridPlayer {
     public void setCurrentGrid(Grid g)
     {
         currentGrid=g;
-        System.out.println("Set current grid "+currentGrid.getCreatePseudo()+currentGrid.getTitle());
     }
 }
