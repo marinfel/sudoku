@@ -25,7 +25,6 @@ import javafx.stage.WindowEvent;
  */
 public class FromFullGridController implements Initializable, ControlledScreen {
 
-  // Partie JulianC
   ScreensController myController;
   @FXML
   private Pane fromFullPane;

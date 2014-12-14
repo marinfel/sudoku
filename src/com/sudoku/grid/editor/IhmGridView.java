@@ -6,8 +6,8 @@
 package com.sudoku.grid.editor;
 
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines.Flags;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.gridcells.IhmGridLines.Flags;
+import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;

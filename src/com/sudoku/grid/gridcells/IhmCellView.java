@@ -1,4 +1,4 @@
-package com.sudoku.grid.ihm_grid_cells;
+package com.sudoku.grid.gridcells;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -72,6 +72,8 @@ public class IhmCellView extends IhmCell {
     //first check the value
     if (checkValue(value)) { //set the value
       valueView.setText(String.valueOf(value));
+    } else {
+      valueView.setText("");
     }
   }
 

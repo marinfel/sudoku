@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_grid_cells;
+package com.sudoku.grid.gridcells;
 
 import com.sudoku.data.model.Cell;
 import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
+import com.sudoku.grid.popups.IhmPopupsList;
 import javafx.event.EventHandler;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -85,7 +85,11 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
         if ((cell instanceof FixedCell && cellsFlag.contains(FIT_GRID)) || cellsFlag.contains(ALL_VIEW)) {
           ihmCell = new IhmCellView(cellSide);
-          ihmCell.setValue(((FixedCell) cell).getValue());
+          if (cell instanceof FixedCell) {
+            ihmCell.setValue(((FixedCell) cell).getValue());
+          } else {
+            ihmCell.setValue(0);
+          }
           if (cellsFlag.contains(FIXED_HIDABLE)) {
             ((IhmCellView) ihmCell).setHideable(true);
           }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_popups;
+package com.sudoku.grid.popups;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -92,22 +92,6 @@ public class IhmPopup extends GridPane {
     //initialise the timer which decrease the showing time with a 1sec period
     timeoutTimerTask = new TimeoutTimerTask();
     timer.schedule(timeoutTimerTask, 0, 1000);
-  }
-
-  /**
-   * Called when the object is destroyed
-   */
-  @Override
-  public void finalize() {
-    try {
-      killTimer();
-    } finally {
-      try {
-        super.finalize();
-      } catch (Throwable ex) {
-        Logger.getLogger(IhmPopup.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
   }
 
   /**

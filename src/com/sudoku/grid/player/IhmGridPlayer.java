@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.ihm_grid_player;
+package com.sudoku.grid.player;
 
 import com.sudoku.data.model.Comment;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridView;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import com.sudoku.grid.ihm_grid_preview.StarView;
-import com.sudoku.grid.ihm_grid_preview.StarsBox;
+import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.preview.StarView;
+import com.sudoku.grid.preview.StarsBox;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
