@@ -209,7 +209,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     //Ajouter des éléments aux listes groupes et utilisateurs
     groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
     loggedUser = userManag.getLoggedUser();
-      System.out.println("USER AAA: "+loggedUser);
+    
     userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
     //ListUsers = UserManager.getInstance().getConnectedUsers();
     listUsers = instance.getUserList();    
