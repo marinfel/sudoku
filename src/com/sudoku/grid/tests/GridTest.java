@@ -9,12 +9,12 @@ import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
-import com.sudoku.grid.ihm_grid_cells.IhmCellEditable;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLinesCompleted;
-import com.sudoku.grid.ihm_grid_player.IhmGridPlayer;
-import com.sudoku.grid.ihm_popups.IhmPopupsList;
-import com.sudoku.grid.ihm_grid_preview.IhmGridPreview;
+import com.sudoku.grid.gridcells.IhmCellEditable;
+import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
+import com.sudoku.grid.player.IhmGridPlayer;
+import com.sudoku.grid.popups.IhmPopupsList;
+import com.sudoku.grid.preview.IhmGridPreview;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
@@ -151,7 +151,7 @@ public class GridTest extends Application {
       public void handle(WindowEvent t) {
         if (t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
           System.out.println("handle(WINDOW_CLOSE_REQUEST)");
-          IhmPopupsList.getInstance().finalize();
+//          IhmPopupsList.getInstance().finalize();
         }
       }
 

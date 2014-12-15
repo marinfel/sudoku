@@ -43,27 +43,26 @@ public class UserCategoryManager {
     }
     
     /**
-     * @param contCat catégories de l'utilisateur connecté
-     * @param connUsers
-     * @return un HashMap avec le nom de toutes les catégories de l'utilisateur connecté
-     * et une liste des utilisateurs qui appartiennent à chaque catégorie
+     * @param contCat Liste de catégories à l'utilisateur connecté
+     * @param connUsers LIste des utilisateurs qui sont connectés
+     * @return Un HashMap avec le nom de toutes les catégories à l'utilisateur connecté
+     * avec une liste d'utilisateurs qui appartiennent à chaque catégorie
      */
     public HashMap<String,List<User>> getUsersCategories(List<ContactCategory> contCat, List<User> connUsers){        
         List<User> globalUsers = connUsers; // Liste des utilisateurs qui n'ont pas une catégorie définie
-        List<User> usersWithCateg = new LinkedList<>(); // Liste des utilisateurs qui ont une catégorie définie        
+        List<User> usersWithCateg = new LinkedList<>(); // Liste des utilisateurs qui ont une catégorie définie
+        List<User> categoryUsers; // Liste des utilisateurs à retourner pour chaque catégorie
         HashMap<String,List<User>> retur = new HashMap<>(); // HashMap à retourner        
         Iterator<ContactCategory> itCat = contCat.iterator(); //Pour parcourir la liste de catégories
+        retur.put("Global",globalUsers);
         while(itCat.hasNext()){ 
-            List<User> categoryUsers; // Liste des utilisateurs à retourner pour chaque catégorie
             ContactCategory cat = itCat.next();
             categoryUsers = cat.getContacts();
             retur.put(cat.getName(), categoryUsers);
             usersWithCateg.addAll(cat.getContacts());
-            categoryUsers.clear();
         }
         globalUsers.removeAll(usersWithCateg);
         if(!globalUsers.isEmpty()){
-            System.out.println("AAAAAAAAAA");
             retur.put("Global",globalUsers);
         }
         return retur;
@@ -72,17 +71,19 @@ public class UserCategoryManager {
     public HashMap<String,ObservableList> changeToObservableData(HashMap<String, List<User>> categoryAndUsers) {
         HashMap<String,ObservableList> dataToShow = new HashMap<>();
         ObservableList usersCategory = FXCollections.observableArrayList();
+        List<User> liUser;
         for (Map.Entry e : categoryAndUsers.entrySet()) {
-            System.out.println("CAT: "+e.getKey());
             String categ = (String)e.getKey();
-            List<User> liUser = (List<User>)e.getValue();
+            liUser = (List<User>)e.getValue();
             Iterator<User> itUs = liUser.iterator();
             while(itUs.hasNext()){
                 //System.out.println("US: "+itUs.next().getPseudo());
-                usersCategory.add(itUs.next().getPseudo());                
+                String userAdd = itUs.next().getPseudo();
+                usersCategory.add(userAdd);
             }
             dataToShow.put(categ, usersCategory);
-            usersCategory.clear();
+            //usersCategory.clear();
+            liUser.clear();
         }
         return dataToShow;
     }

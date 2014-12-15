@@ -10,8 +10,10 @@ import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.ContactCategory;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.grid.player.IhmGridPlayer;
 import com.sudoku.main.manager.ListGridManager;
 import com.sudoku.main.manager.UserCategoryManager;
+import com.sudoku.main.manager.RefreshGridPlayer;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,7 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-
+import javafx.stage.Screen;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.Event;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.FocusModel;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -53,10 +61,18 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 
   public static ObservableList groups = FXCollections.observableArrayList();
   public static ObservableList users = FXCollections.observableArrayList();
+  public static ObservableList users_n = FXCollections.observableArrayList();
   //Data
   public DataSample instance;
   ListGridManager gridList;
+  ListGridManager currentList;
+  ListGridManager distantList;
+  ListGridManager finishedList;
+
   ScrollPane  scpane ;
+  ScrollPane distantPane;
+  ScrollPane currentPane;
+  ScrollPane finishedPane;
   
   public User loggedUser;
   public UserManager userManag;
@@ -68,6 +84,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   // Partie JulianC
   ScreensController myController;
+  @FXML
+  private TitledPane mainContainer;
   @FXML
   private Label userName;
   @FXML
@@ -97,6 +115,21 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private Label nombUsers;
   @FXML
+  private Label userHome;
+  @FXML
+  private TextField dateBornHome;
+  @FXML
+  private TextField dateCreatHome;
+  @FXML
+  private TextField nameHome;
+  @FXML
+  private PasswordField pass1Home;
+  @FXML
+  private PasswordField pass2Home;
+  @FXML
+  private PasswordField pass3Home;
+  
+  @FXML
   private Button goToGrids;
   @FXML
   private Button delFromGroup;
@@ -116,10 +149,22 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private AnchorPane myGrid;
   @FXML
   private TitledPane MesGrilles;
+  @FXML
+  private AnchorPane ContentContainer;
+  @FXML
+  private Tab ListGrille;
+  @FXML
+  private TabPane TabP;
+  @FXML
+  private Tab Jouer;
+  @FXML
+  private AnchorPane GridPlayer;
+
+
 
   @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    System.out.println("test data");
+  public void initialize(URL url, ResourceBundle rb) 
+  {
     instance = new DataSample();
     instance.exec();
     
@@ -128,7 +173,16 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     
     System.out.println("test data" + instance.a.getPseudo());
     userName.setText("Utilisateur : "+userManag.getLoggedUser());
-
+    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+    mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
+    mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
+    ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
+    ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
+    
+    assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ListGrille != null : "fx:id=\"ListGrille\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -149,20 +203,34 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-
+    assert mainContainer != null : "fx:id=\"mainContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
 
     //Ajouter des éléments aux listes groupes et utilisateurs
     groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
     loggedUser = userManag.getLoggedUser();
+      System.out.println("USER AAA: "+loggedUser);
     userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
     //ListUsers = UserManager.getInstance().getConnectedUsers();
-    listUsers = instance.getUserList();
-    users = userCategoryManag.getUsersToShow(listUsers);
-    categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
-    observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
-    showConnectedUsers(observableData,1); //Les afficher
+    listUsers = instance.getUserList();    
+    //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
+    //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
+    //showConnectedUsers(observableData,"Global"); //Les afficher
     //users.addAll("julian", "user2", "user3");
     //users.addAll(UserManager.getInstance().getConnectedUsers());
+    //users.addAll(userCategoryManag.getUsersToShow(listUsers));
+    users = userCategoryManag.getUsersToShow(listUsers);
+    
+    listGroups.setItems(groups);
+    listUsersView.setItems(users);
+    
+    //Charger données utilisateur
+    userHome.setText("Utilisateur: "+instance.a.getPseudo());
+    nameHome.setText(instance.a.getPseudo());
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+    dateBornHome.setText(df.format(instance.a.getBirthDate()));
+    dateCreatHome.setText(df.format(instance.a.getCreateDate()));
+    //instance.a.getProfilePicturePath(); //image d'utilisateur
     
     //Méthode Bouton "Aller aux grilles"
     goToGrids.setOnAction(new EventHandler<ActionEvent>() {
@@ -227,10 +295,16 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     listGroups.getSelectionModel().selectedItemProperty().addListener(
         new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {
+                              String old_val, String new_val) {            
+            //showConnectedUsers(observableData,new_val); //Les afficher
+            if(new_val.equals("Utilisateurs connectés"))
+                listUsersView.setItems(users);
+            else{
+                listUsersView.setItems(users_n);
+            }
             nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
-            showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
-            nameGroup.setText(new_val);
+            //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
+            nameGroup.setText(new_val);            
             paneGroup.setVisible(true);
             paneUser.setVisible(false);
           }
@@ -251,15 +325,18 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         });
    
     
-    EventHandler<MouseEvent> mousehandler = new EventHandler<MouseEvent>() {
-    @Override
-    public void handle(MouseEvent mouseEvent) {
-            System.out.println("hi");
-            refreshMyGrids();
+    TabP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+        @Override public void changed(ObservableValue<? extends Tab> tab, Tab oldTab, Tab newTab) {
+            if(newTab.getText().equalsIgnoreCase("Liste Grilles"))
+            {
+                refreshMyGrids();
+            }
+            else if(newTab.getText().equalsIgnoreCase("Jouer"))
+            {
+                refreshGridPlayer();
+            }
         }
-    };
-    
-    MesGrilles.setOnMouseClicked(mousehandler);
+      });
   }
 
     
@@ -283,32 +360,65 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     myController.setScreen(SudukoIHM.fromFullGridID);
   }
   
+  @FXML
+  private void modifyUserInformation(ActionEvent event) {
+      //loggedUser = userManag.getLoggedUser(); Modifier l'utilisateur connecté
+      System.out.println("MODIFICO");
+      
+  }
+  
   private void refreshMyGrids(){
     // My Grids
-    gridList=new ListGridManager(instance);
+    gridList = new ListGridManager(instance);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer());
-    scpane.setPrefSize(800, 800);
+    scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
+    
+    //Current Grids
+    currentList = new ListGridManager(instance);
+    currentPane= new ScrollPane();
+    currentPane.setContent(currentList.getCurrentGridThumbnailContainer());
+    currentPane.setPrefSize(800,400);
+    currentGrid.getChildren().add(currentPane);
+    
+    //Finished Grids
+    finishedList = new ListGridManager(instance);
+    finishedPane = new ScrollPane();
+    finishedPane.setContent(finishedList.getFinishedGridThumbnailContainer());
+    finishedPane.setPrefSize(800, 400);
+    finishedGrid.getChildren().add(finishedPane);
+    
+    //Distant Grids
+    distantList = new ListGridManager(instance);
+    distantPane = new ScrollPane();
+    distantPane.setContent(distantList.getDistantGridThumbnailContainer());
+    distantPane.setPrefSize(800, 400);
+    distanteGrid.getChildren().add(distantPane);
+  }
+  
+  private void refreshGridPlayer(){
+      RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
+      if(instance.getCurrentGrid() != null)
+      {
+          if(instance.getCurrentGrid()!=null)
+          {
+            IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
+            GridPlayer.getChildren().add(GridP);
+          }
+      }
   }
     
-    private void showConnectedUsers(HashMap<String,ObservableList> observableData, int index) {
+    private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
+        String categorie = cat;
         groups.clear();
-        users.clear();        
-        Iterator it = observableData.entrySet().iterator();
-        int i = 1;
-        for (Map.Entry e : observableData.entrySet()) {
-            System.out.println("GR: "+e.getKey());
-            groups.add(e.getKey());
-            e = (Map.Entry)it.next();
-            if(i == index){
-                System.out.println("Index: "+i);
-                users = (ObservableList)e.getValue();
-            }
-            i++;
-        }
         listGroups.setItems(groups);
-        listUsersView.setItems(users);
+        users.clear();
+        ObservableList userL = observableData.get(categorie);
+        listUsersView.setItems(userL);
+        for (Map.Entry e : observableData.entrySet())
+            groups.add(e.getKey());            
+        listGroups.setItems(groups);
     }
 }
 

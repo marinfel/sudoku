@@ -43,7 +43,7 @@ public class IhmGridPreview extends IhmGridLayout {
 
     starsBox = getStarsBox();
     starsBox.setValue(gr.getMeanGrades());
-    getChildren().add(starsBox);
+    getChildren().add(starsBox); //à redimensionner
   }
 
 }
