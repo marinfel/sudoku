@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
@@ -18,9 +19,9 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <HBox layoutX="35.0" layoutY="318.0" prefHeight="185.0" prefWidth="1010.0">
+                                        <HBox layoutX="32.0" layoutY="388.0" prefHeight="185.0" prefWidth="1010.0">
                                             <children>
-                                                <HBox prefHeight="100.0" prefWidth="505.0">
+                                                <HBox prefHeight="185.0" prefWidth="354.0">
                                                     <children>
                                                         <Pane prefHeight="200.0" prefWidth="200.0">
                                                             <children>
@@ -31,7 +32,7 @@
                                                                 </ImageView>
                                                             </children>
                                                         </Pane>
-                                                        <VBox prefHeight="200.0" prefWidth="305.0">
+                                                        <VBox prefHeight="185.0" prefWidth="190.0">
                                                             <children>
                                                                 <Label id="userName" fx:id="userName1" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="69.0" text="Nom :" textAlignment="RIGHT">
                                                                     <font>
@@ -55,15 +56,25 @@
                                                 </HBox>
                                             </children>
                                         </HBox>
-                                        <Separator layoutX="32.0" layoutY="271.0" prefHeight="8.0" prefWidth="1017.0" />
-                              <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="35.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                                        <Separator layoutX="35.0" layoutY="328.0" prefHeight="8.0" prefWidth="1017.0" />
+                              <ImageView fx:id="avatar" fitHeight="200.0" fitWidth="200.0" layoutX="37.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@sudoku.jpg" />
                                  </image>
                               </ImageView>
-                              <VBox layoutX="279.0" layoutY="82.0">
+                              <VBox layoutX="281.0" layoutY="68.0">
                                  <children>
-                                    <HBox alignment="CENTER" layoutX="311.0" layoutY="48.0" spacing="10.0" />
+                                    <HBox>
+                                       <children>
+                                          <Label layoutX="281.0" layoutY="58.0" prefHeight="30.0" prefWidth="152.0" text="Utilisateur: ">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="userHome" editable="false" prefHeight="30.0" prefWidth="149.0" promptText="Utilisateur" />
+                                       </children>
+                                    </HBox>
+                                    <Pane prefHeight="10.0" prefWidth="301.0" />
                                     <HBox alignment="CENTER" layoutX="311.0" layoutY="73.0" spacing="10.0">
                                        <children>
                                           <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="142.0" text="Nom">
@@ -81,20 +92,20 @@
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="dateBornHome" promptText="Date de Naissance" />
+                                          <TextField fx:id="birthDateHome" promptText="Date de Naissance" />
                                        </children>
                                     </HBox>
                                     <HBox alignment="CENTER" spacing="10.0">
                                        <children>
-                                          <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="142.0" text="Date de Création">
+                                          <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="142.0" text="Adresse IP">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="dateCreatHome" promptText="Date de Création" />
+                                          <TextField fx:id="ipAddressHome" editable="false" promptText="Adresse IP" />
                                        </children>
                                     </HBox>
-                                    <Pane prefHeight="18.0" prefWidth="262.0" />
+                                    <Pane prefHeight="12.0" prefWidth="301.0" />
                                     <HBox alignment="CENTER" spacing="10.0">
                                        <children>
                                           <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="141.0" text="Mot de Passe">
@@ -127,12 +138,40 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <Label fx:id="userHome" layoutX="279.0" layoutY="51.0" prefHeight="17.0" prefWidth="258.0" text="Utilisateur: ">
+                              <Button layoutX="642.0" layoutY="283.0" mnemonicParsing="false" onAction="#modifyUserInformation" prefHeight="25.0" prefWidth="102.0" text="&gt; Modifier &lt;" />
+                              <HBox alignment="CENTER" layoutX="642.0" layoutY="55.0" spacing="10.0">
+                                 <children>
+                                    <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="142.0" text="Date de Création">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="creatDateHome" editable="false" prefHeight="25.0" prefWidth="109.0" promptText="Date de Création" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="642.0" layoutY="80.0" spacing="10.0">
+                                 <children>
+                                    <Label layoutX="23.0" layoutY="31.0" prefHeight="17.0" prefWidth="142.0" text="Dernière modification">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="updateDateHome" editable="false" prefHeight="25.0" prefWidth="109.0" promptText="Date de Modification" />
+                                 </children>
+                              </HBox>
+                              <Button layoutX="36.0" layoutY="283.0" mnemonicParsing="false" onAction="#selectPicturePath" prefHeight="25.0" prefWidth="203.0" text="&gt; Choisir Image &lt;" />
+                              <TextField fx:id="picturePathHome" editable="false" layoutX="240.0" layoutY="283.0" prefHeight="25.0" prefWidth="342.0" promptText="Image Path" />
+                              <Separator layoutX="35.0" layoutY="40.0" prefHeight="8.0" prefWidth="1017.0" />
+                              <Label fx:id="userHome1" layoutX="36.0" layoutY="14.0" prefHeight="17.0" prefWidth="258.0" text="PROFIL D'UTILISATEUR">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="624.0" layoutY="225.0" mnemonicParsing="false" onAction="#modifyUserInformation" prefHeight="25.0" prefWidth="102.0" text="&gt; Modifier &lt;" />
+                              <Label fx:id="textInfHome" layoutX="642.0" layoutY="196.0" prefHeight="73.0" prefWidth="322.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -289,7 +328,7 @@
                   </Tab>
                     </tabs>
                 </TabPane>
-                <ImageView fx:id="avatar" fitHeight="33.0" fitWidth="202.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="33.0" fitWidth="202.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                     </image>
                 </ImageView>
