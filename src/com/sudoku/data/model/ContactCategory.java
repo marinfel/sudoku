@@ -8,6 +8,8 @@ package com.sudoku.data.model;
 import java.util.HashSet;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class ContactCategory implements Ruleable {
 
   private String name;
@@ -58,11 +60,13 @@ public class ContactCategory implements Ruleable {
     this.contacts.remove(user);
   }
 
+  @JsonIgnore
   @Override
   public Boolean hasUser(User user) {
     return this.contacts.contains(user);
   }
 
+  @JsonIgnore
   @Override
   public Boolean isUser() {
     return false;
