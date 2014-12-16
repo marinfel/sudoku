@@ -10,19 +10,18 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.grid.gridcells.IhmGridLines;
 import com.sudoku.grid.gridcells.IhmGridLines.Flags;
-import com.sudoku.grid.preview.StarView;
 import com.sudoku.grid.preview.StarsBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.HBox;
-import java.util.Vector;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**
- * @author Mélie
+ * @author Mehdi Kane, Celine To, Laetitia Leichtnam, Amelie Groud Mother class
+ * of Grid View Common IHM : border pane including grid, title field
  */
 public abstract class IhmGridLayout extends StackPane {
 
@@ -53,22 +52,16 @@ public abstract class IhmGridLayout extends StackPane {
     VBox rightVBox = new VBox();
     VBox centerVBox = new VBox();
 
-    // center a faire
     border.setTop(topHBox);
     border.setLeft(leftVBox);
     border.setBottom(bottomHBox);
     border.setRight(rightVBox);
     border.setCenter(centerVBox);
 
-    //VBox centerLayout = (VBox)border.getCenter();
-    //centerLayout.getChildren().add(sudokuGrid);
     centerVBox.getChildren().add(gridLines);
 
   }
 
-  /**
-   * @return the title
-   */
   public String getTitle() {
     return title.getText();
   }
