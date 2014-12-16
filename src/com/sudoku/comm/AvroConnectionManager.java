@@ -10,19 +10,30 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.List;
 
-/* Class representing a connection to a remote user */
+/**
+ * Class representing a connection to a remote user
+ * @author Murat Cansiz
+ * @see com.sudoku.comm.ConnectionManager
+ */
 public class AvroConnectionManager extends ConnectionManager {
   private static final Long CONNECTION_TIME_OUT = 1000L;
 
   private NettyTransceiver client;
   private NodeExplorer explorer;
 
+  /**
+   * Class constructor
+   * @param ip ip of the connection
+   */
   public AvroConnectionManager(String ip) {
     super(ip);
     client = null;
   }
 
-  @Override
+  /**
+   * Opens a distant connection
+   * @throws OfflineUserException
+   */
   public void openConnection() throws OfflineUserException {
     if (client == null) {
       try {
@@ -38,7 +49,13 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
-  @Override
+  /**
+   * Gets the list of distant connected ips
+   * @param newConnectedIps connected ips to send to the distant connection
+   * @return a list of connected ips
+   * @throws ConnectionClosedException
+   * @throws OfflineUserException
+   */
   public List<String> getConnectedIps(List<String> newConnectedIps)
      throws ConnectionClosedException, OfflineUserException {
     super.getConnectedIps(newConnectedIps);
@@ -56,7 +73,12 @@ public class AvroConnectionManager extends ConnectionManager {
     return res;
   }
 
-  @Override
+  /**
+   * Publishes the current list of connected ips to the distant connection
+   * @param ips list of ips to be published
+   * @throws OfflineUserException
+   * @throws ConnectionClosedException
+   */
   public void publishIps(List<String> ips)
      throws OfflineUserException, ConnectionClosedException {
     super.publishIps(ips);
@@ -69,7 +91,11 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
-  @Override
+  /**
+   * Disconnects this peer to the distant peer
+   * @throws OfflineUserException
+   * @throws ConnectionClosedException
+   */
   public void disconnect() throws OfflineUserException,
      ConnectionClosedException {
     super.disconnect();
@@ -80,7 +106,10 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
-  @Override
+  /**
+   * Closes connection with the distant peer
+   * @throws OfflineUserException
+   */
   public void closeConnection() throws OfflineUserException {
     if (client != null) {
       client.close();
