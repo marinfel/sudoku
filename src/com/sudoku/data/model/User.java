@@ -57,9 +57,23 @@ public class User implements Ruleable {
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
   }
-  public void setpassword(String brutPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+
+  public boolean checkPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+    String toBeHashed = rawPassword + this.getSalt();
+    if (new String(Base64.encode(
+       mDigest.digest(toBeHashed.getBytes("UTF-8"))))
+       .equals(this.getPassword())){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  public void setpassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
       MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
-      String toBeHashed = brutPassword + this.salt;
+      String toBeHashed = rawPassword + this.salt;
       this.password = 
               new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
   }
@@ -202,12 +216,12 @@ public class User implements Ruleable {
     this.updateDate();
   }
 
-  public ContactCategory createContactCategory(String name){
+  public void createContactCategory(String name){
     ContactCategory newContactCategory = this.getContactCategory(name);
     if(newContactCategory == null){
-      return new ContactCategory(name);
+      newContactCategory = new ContactCategory(name);
+      this.contactCategories.add(newContactCategory);
     }
-    return newContactCategory;
   }
 
   public boolean hasContactCategory(String name){
@@ -217,6 +231,12 @@ public class User implements Ruleable {
       }
     }
     return false;
+  }
+
+  public boolean removeContactCategory(String name){
+    ContactCategory cc = this.getContactCategory(name);
+    if(cc == null) return false;
+    return contactCategories.remove(cc);
   }
 
   public ContactCategory getContactCategory(String name){
