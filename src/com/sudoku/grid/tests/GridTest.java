@@ -150,8 +150,7 @@ public class GridTest extends Application {
       @Override
       public void handle(WindowEvent t) {
         if (t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
-          System.out.println("handle(WINDOW_CLOSE_REQUEST)");
-//          IhmPopupsList.getInstance().finalize();
+          IhmPopupsList.getInstance().killAllTimers();
         }
       }
 

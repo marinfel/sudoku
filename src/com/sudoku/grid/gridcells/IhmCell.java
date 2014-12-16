@@ -18,7 +18,7 @@ public abstract class IhmCell extends GridPane {
    */
   protected boolean checkValue(int value) {
     //check the value
-    return (value > 0 && value < 10);
+    return value > 0 && value < 10;
   }
 
   public int getX() {

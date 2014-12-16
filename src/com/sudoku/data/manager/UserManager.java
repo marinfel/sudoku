@@ -54,9 +54,6 @@ public final class UserManager { // This is the manager for users.
     this.distantUsers = new ArrayList<>(); //
   }
 
-  public void save() { // Serialize and save localUsers, we do not keep track of distantUsers
-    // TO BE COMPLETED   
-  }
 
   public final static UserManager getInstance() {
     if (instance == null) {
@@ -137,7 +134,8 @@ public final class UserManager { // This is the manager for users.
   }
 
   public List<User> getConnectedUsers() {
-    return null; // Appeler com
+    return null;
+    // Met à jour la liste des distants users. Appel la com pour trouver les utilisateurs connectés
   }
 
   public boolean exportLoggedUserToFile(String path) {
