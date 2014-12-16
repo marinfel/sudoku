@@ -51,7 +51,8 @@ public final class CommunicationManager {
     return instance;
   }
 
-  public void init(String uuid, String login, List<String> localIps) {
+  public void init(String uuid, String login, List<String> localIps)
+      throws IOException {
     this.uuid = uuid;
     this.login = login;
     this.localIp = nodeExplorerServer.getInetAddress();
@@ -59,6 +60,7 @@ public final class CommunicationManager {
     this.ipsConnected = new ConcurrentHashMap<String, ConnectionManager>();
     this.ipsToConfirm = new ConcurrentHashMap<String, ConnectionManager>();
     startServer();
+    discoverNodes();
   }
 
   private void startServer() {
@@ -66,7 +68,7 @@ public final class CommunicationManager {
     dataRetrieverServer.startServer();
   }
 
-  public void discoverNodes() throws IOException {
+  private void discoverNodes() throws IOException {
     addIpToConfirm(localIps);
     if(timerDiscoverNodes == null) {
       timerDiscoverNodes = new Timer();
