@@ -10,14 +10,10 @@ import java.util.List;
  */
 public abstract class ConnectionManager {
   private static final String ERROR_MSG = "Must open connection first.";
-  
-  /* Remote user parameters */
+  // Remote user.
   protected String ipAddress;
   protected boolean isConnected;
-  
-  /* those parameters should be retrieved from the communication manager or
-   * another conf singleton
-   */
+  // should retrieve it from the communication manager or another conf singleton
   protected static final int NODEPORT = 11023;
 
   /**
