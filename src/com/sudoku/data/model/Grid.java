@@ -248,6 +248,7 @@ public class Grid {
     if (comment != null && comment.getComment() != null &&
         !comment.getComment().isEmpty()) {
       comments.add(comment);
+      // We also need to push this comment
     }
   }
 
