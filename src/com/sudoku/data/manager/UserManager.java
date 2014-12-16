@@ -6,6 +6,7 @@ package com.sudoku.data.manager;
  */
 import com.sudoku.data.model.ExportUser;
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.User;
 import java.io.File;
 import java.io.IOException;
@@ -157,10 +158,30 @@ public final class UserManager { // This is the manager for users.
 	  return true;
   }
 
-  public User importUser(String path) {
-        // TO BE COMPLETED
+  public boolean importUser(String path) {
     // Derialize from a file and add to local users
-    return null;
+	  ObjectMapper mapper= new ObjectMapper();
+	  try {
+		  File jsonFile = new File(path);
+		  ExportUser user = mapper.readValue(jsonFile, ExportUser.class);
+		  for(User u : localUsers){
+			  if((u.getPseudo()+u.getSalt()).equals(user.getUser().getPseudo()+user.getUser().getSalt())){
+				  System.err.println("utilisateur déjà présent");
+				  return false;
+			  }
+		  }
+		  addLocalUser(user.getUser());
+		  for(Grid g : user.getAvailableGrids()){
+			  GridManager.getInstance().addGrid(g);
+		  }
+		  for(PlayedGrid p : user.getPlayedGrids()){
+			  GridManager.getInstance().addPlayedGrid(p);
+		  }
+	  }catch (Exception ex) {
+		  ex.printStackTrace();
+		  return false;
+	  }
+	  return true;
   }
   public void SaveToJson(){
   ObjectMapper mapper = new ObjectMapper();
