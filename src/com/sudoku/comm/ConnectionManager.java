@@ -10,10 +10,10 @@ import java.util.List;
  */
 public abstract class ConnectionManager {
   private static final String ERROR_MSG = "Must open connection first.";
-  // Remote user.
+  /* Remote user */
   protected String ipAddress;
   protected boolean isConnected;
-  // should retrieve it from the communication manager or another conf singleton
+  /* should retrieve it from the communication manager or another conf singleton */
   protected static final int NODEPORT = 11023;
 
   /**
@@ -79,17 +79,38 @@ public abstract class ConnectionManager {
 
   /**
    * Exception class occurring when a connection closed unexpectedly
+   * @exception ConnectionClosedException
    */
   public class ConnectionClosedException extends Exception {
+
+    /**
+     *
+     */
     public ConnectionClosedException() {
       super();
     }
+
+    /**
+     *
+     * @param message
+     */
     public ConnectionClosedException(String message) {
       super(message);
     }
+
+    /**
+     *
+     * @param message
+     * @param cause
+     */
     public ConnectionClosedException(String message, Throwable cause) {
       super(message, cause);
     }
+
+    /**
+     *
+     * @param cause
+     */
     public ConnectionClosedException(Throwable cause) {
       super(cause);
     }
@@ -97,17 +118,38 @@ public abstract class ConnectionManager {
 
   /**
    * Exception class occurring when a user is unexpectedly offline
+   * @exception OfflineUserException
    */
   public class OfflineUserException extends Exception {
+
+    /**
+     *
+     */
     public OfflineUserException() {
       super();
     }
+
+    /**
+     *
+     * @param message
+     */
     public OfflineUserException(String message) {
       super(message);
     }
+
+    /**
+     *
+     * @param message
+     * @param cause
+     */
     public OfflineUserException(String message, Throwable cause) {
       super(message, cause);
     }
+
+    /**
+     *
+     * @param cause
+     */
     public OfflineUserException(Throwable cause) {
       super(cause);
     }
