@@ -52,7 +52,7 @@ public class UserCategoryManager {
         List<User> globalUsers = connUsers; // Liste des utilisateurs qui n'ont pas une catégorie définie
         List<User> usersWithCateg = new LinkedList<>(); // Liste des utilisateurs qui ont une catégorie définie
         List<User> categoryUsers; // Liste des utilisateurs à retourner pour chaque catégorie
-        HashMap<String,List<User>> retur = new HashMap<>(); // HashMap à retourner        
+        HashMap<String,List<User>> retur = new HashMap<>(); // HashMap à retourner
         Iterator<ContactCategory> itCat = contCat.iterator(); //Pour parcourir la liste de catégories
         retur.put("Global",globalUsers);
         while(itCat.hasNext()){ 
