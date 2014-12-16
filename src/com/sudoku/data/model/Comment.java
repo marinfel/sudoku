@@ -19,7 +19,7 @@ public class Comment {
   private final String pseudo;
   private final String userSalt; // We use the salt as an UUID to identify the poster
   private String comment;
-  private Integer grade;
+  private Integer grade; // Number of half stars. If some comment is graded 3 stars and a half, grade will be 7.
 
   /**
    * Méthode de la classe  Comment
@@ -36,9 +36,9 @@ public class Comment {
     this.pseudo = null;
     this.userSalt = null;
     }
-  public Comment(String comment, Integer grade, User u) {
+  public Comment(String comment, Double grade, User u) {
     this.comment = comment;
-    this.grade = grade;
+    this.setGrade(grade);
     this.author = u;
     this.pseudo = u.getPseudo();
     this.userSalt = u.getSalt();
@@ -66,12 +66,13 @@ public class Comment {
     this.comment = comment;
   }
 
-  public Integer getGrade() {
-    return grade;
+  public Double getGrade() { //Return the number of Stars (and not half stars)
+    return grade/2.0;
   }
 
-  public void setGrade(Integer grade) {
-    this.grade = grade;
+  public void setGrade(Double grade) {
+    Double halfStarGrade = grade * 2; //Set this number in halfstars
+    this.grade = halfStarGrade.intValue();
   }
   public String getUserSalt(){
       return this.userSalt;
