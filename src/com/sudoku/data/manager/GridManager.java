@@ -126,7 +126,7 @@ public final class GridManager {
   }
   
   public List<Grid> getUserGrids(User user) {
-      List usersGrids = new ArrayList<>();
+      List<Grid> usersGrids = new ArrayList<Grid>();
       
       for(Grid g : this.availableGrids){
           if(g.getCreateUser() == user){
@@ -136,6 +136,19 @@ public final class GridManager {
       
       return usersGrids;
   }
+  
+  public List<PlayedGrid> getUserPlayedGrids(User user) {
+	  List<PlayedGrid> usersPlayedGrids = new ArrayList<PlayedGrid>();
+      
+      for(PlayedGrid g : this.playedGrids){
+          if(g.getPlayer() == user){
+              usersPlayedGrids.add(g);
+          }
+      }
+      
+      return usersPlayedGrids;
+	}
+  
   //for deserialisation use only
   public List<PlayedGrid> getPlayedGrids(){
       return playedGrids;

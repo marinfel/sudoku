@@ -4,6 +4,8 @@ package com.sudoku.data.manager;
  *
  * @author clesaege
  */
+import com.sudoku.data.model.ExportUser;
+import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import java.io.File;
 import java.io.IOException;
@@ -139,9 +141,22 @@ public final class UserManager { // This is the manager for users.
   }
 
   public boolean exportLoggedUserToFile(String path) {
-        // TO BE COMPLETED
     // Serialize this.loggedUser and write in a file.
-    return true;
+	  ObjectMapper mapper = new ObjectMapper();
+	  mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+	  try {
+		  jsonFile = new File(path);
+		  ExportUser user = new ExportUser();
+		  user.setUser(getLoggedUser());
+		  user.setAvailableGrids(GridManager.getInstance().getUserGrids(getLoggedUser()));
+		  user.setPlayedGrids(GridManager.getInstance().getUserPlayedGrids(getLoggedUser()));
+		  mapper.writeValue(jsonFile, user);
+		  System.out.println(mapper.writeValueAsString(user));
+	  } catch (Exception ex) {
+		  ex.printStackTrace();
+		  return false;
+	  } 
+	  return true;
   }
 
   public User importUser(String path) {
