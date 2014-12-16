@@ -16,8 +16,9 @@ public class ContactCategory implements Ruleable {
   public ContactCategory() {
   }
 
-  public ContactCategory(String name) {
+  public ContactCategory(String name, List<User> contacts) {
       this.name = name;
+      this.contacts = contacts;
   }
 
   /**

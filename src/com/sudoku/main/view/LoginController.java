@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
  */
 public class LoginController implements Initializable, ControlledScreen {
 
-  // Partie JulianC
   ScreensController myController;
   @FXML
   private ImageView avatar;
