@@ -23,7 +23,7 @@
       "fields": [
         { "name": "author", "type": "User" },
         { "name": "comment", "type": "string" },
-        { "name": "grade", "type": "int" }
+        { "name": "grade", "type": "double" }
       ]
     },
     {

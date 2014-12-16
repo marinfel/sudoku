@@ -7,11 +7,11 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Comment extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"int\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"double\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public com.sudoku.comm.generated.User author;
   @Deprecated public java.lang.String comment;
-  @Deprecated public int grade;
+  @Deprecated public double grade;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -23,7 +23,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * All-args constructor.
    */
-  public Comment(com.sudoku.comm.generated.User author, java.lang.String comment, java.lang.Integer grade) {
+  public Comment(com.sudoku.comm.generated.User author, java.lang.String comment, java.lang.Double grade) {
     this.author = author;
     this.comment = comment;
     this.grade = grade;
@@ -45,7 +45,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     switch (field$) {
     case 0: author = (com.sudoku.comm.generated.User)value$; break;
     case 1: comment = (java.lang.String)value$; break;
-    case 2: grade = (java.lang.Integer)value$; break;
+    case 2: grade = (java.lang.Double)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -83,7 +83,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * Gets the value of the 'grade' field.
    */
-  public java.lang.Integer getGrade() {
+  public java.lang.Double getGrade() {
     return grade;
   }
 
@@ -91,7 +91,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
    * Sets the value of the 'grade' field.
    * @param value the value to set.
    */
-  public void setGrade(java.lang.Integer value) {
+  public void setGrade(java.lang.Double value) {
     this.grade = value;
   }
 
@@ -118,7 +118,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
 
     private com.sudoku.comm.generated.User author;
     private java.lang.String comment;
-    private int grade;
+    private double grade;
 
     /** Creates a new Builder */
     private Builder() {
@@ -210,12 +210,12 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     }
 
     /** Gets the value of the 'grade' field */
-    public java.lang.Integer getGrade() {
+    public java.lang.Double getGrade() {
       return grade;
     }
     
     /** Sets the value of the 'grade' field */
-    public com.sudoku.comm.generated.Comment.Builder setGrade(int value) {
+    public com.sudoku.comm.generated.Comment.Builder setGrade(double value) {
       validate(fields()[2], value);
       this.grade = value;
       fieldSetFlags()[2] = true;
@@ -239,7 +239,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
         Comment record = new Comment();
         record.author = fieldSetFlags()[0] ? this.author : (com.sudoku.comm.generated.User) defaultValue(fields()[0]);
         record.comment = fieldSetFlags()[1] ? this.comment : (java.lang.String) defaultValue(fields()[1]);
-        record.grade = fieldSetFlags()[2] ? this.grade : (java.lang.Integer) defaultValue(fields()[2]);
+        record.grade = fieldSetFlags()[2] ? this.grade : (java.lang.Double) defaultValue(fields()[2]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
