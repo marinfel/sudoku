@@ -5,7 +5,7 @@
  */
 package com.sudoku.data.model;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -13,12 +13,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class ContactCategory implements Ruleable {
 
   private String name;
-  private List<User> contacts = new ArrayList<>();
+  private HashSet<User> contacts = new HashSet<>();
 
-  public ContactCategory() {
-  }
+  public ContactCategory() {}
 
-  public ContactCategory(String name, List<User> contacts) {
+  public ContactCategory(String name){this.name = name;}
+
+  public ContactCategory(String name, HashSet<User> contacts) {
       this.name = name;
       this.contacts = contacts;
   }
@@ -40,14 +41,14 @@ public class ContactCategory implements Ruleable {
   /**
    * @return the contacts
    */
-  public List<User> getContacts() {
+  public HashSet<User> getContacts() {
     return contacts;
   }
 
   /**
    * @param contacts the contacts to set
    */
-  public void setContacts(List<User> contacts) {
+  public void setContacts(HashSet<User> contacts) {
     this.contacts = contacts;
   }
 
