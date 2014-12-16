@@ -179,6 +179,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private Tab Jouer;
   @FXML
   private AnchorPane GridPlayer;
+  @FXML
+  private ScrollPane GridPlayerContainer;
 
 
 
@@ -205,6 +207,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
           ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
           
+          assert GridPlayerContainer != null : "fx:id=\"GridPlayerContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -498,7 +501,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           if(instance.getCurrentGrid()!=null)
           {
             IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
-            GridPlayer.getChildren().add(GridP);
+            GridPlayerContainer.setContent(GridP);
+            //GridPlayer.getChildren().add(GridP);
           }
       }
   }

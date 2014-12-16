@@ -323,7 +323,14 @@
                         </Tab>
                   <Tab fx:id="Jouer" text="Jouer">
                     <content>
-                      <AnchorPane fx:id="GridPlayer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane fx:id="GridPlayer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ScrollPane fx:id="GridPlayerContainer" layoutX="3.0" layoutY="7.0" prefHeight="600.0" prefWidth="982.0">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                </content>
+                              </ScrollPane>
+                           </children></AnchorPane>
                     </content>
                   </Tab>
                     </tabs>
