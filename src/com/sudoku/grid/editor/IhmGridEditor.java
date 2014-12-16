@@ -45,6 +45,7 @@ public abstract class IhmGridEditor extends IhmGridView {
   protected Button cancelBtn; //Cancel edition
   private Flags flag; //Flag to know if the cells are editable or fixed
   final private ListView<String> tagsList;
+  final TextField tagField;
 
   /**
    *
@@ -78,7 +79,7 @@ public abstract class IhmGridEditor extends IhmGridView {
 
     //HBox that contains the text field to enter a new tag
     HBox secondHbox = new HBox();
-    final TextField tagField = new TextField();
+    tagField = new TextField();
     tagField.setPromptText("Type in a tag");
     secondHbox.getChildren().add(tagField);
     Button submit = new Button("+");
@@ -252,6 +253,7 @@ public abstract class IhmGridEditor extends IhmGridView {
     editTitle.clear();
     grid.setTitle("");
     tagsList.getItems().clear();
+    tagField.clear();
   }
 
 }
