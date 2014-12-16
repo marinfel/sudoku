@@ -13,7 +13,6 @@ import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.gridcells.IhmGridLines;
 import com.sudoku.grid.preview.StarsBox;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +22,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -32,7 +30,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -60,7 +57,7 @@ public class IhmGridPlayer extends IhmGridView {
 
   public IhmGridPlayer(Grid grid) {
     super(IhmGridLines.ALL_EDITABLE.add(IhmGridLines.FIT_GRID), grid, 500);
-    
+
     //ajout du titre
     HBox topLayout = (HBox) border.getTop();
     title = new Label(grid.getTitle());
@@ -68,32 +65,30 @@ public class IhmGridPlayer extends IhmGridView {
     topLayout.getChildren().add(title);
     topLayout.setPrefHeight(100);
     topLayout.setAlignment(Pos.CENTER);
-    
+
     //ajout de l'auteur
     VBox authorBox = (VBox) border.getLeft();
-     try{
-        author = grid.getCreateUser();
-        authorName = new Label(grid.getCreateUser().getPseudo());
-        if(author.getProfilePicturePath()!= null){
-            iAuthorPicture = new Image(new File(author.getProfilePicturePath()).toURI().toString());
-        }
-        else{
-            iAuthorPicture = new Image(new File("pictures/grid/inconnu.png").toURI().toString());
-        }
-    }
-    catch(Exception e){
-       authorName = new Label("Unknown");
-       iAuthorPicture = new Image(new File("pictures/grid/inconnu.png").toURI().toString());
+    try {
+      author = grid.getCreateUser();
+      authorName = new Label(grid.getCreateUser().getPseudo());
+      if (author.getProfilePicturePath() != null) {
+        iAuthorPicture = new Image(new File(author.getProfilePicturePath()).toURI().toString());
+      } else {
+        iAuthorPicture = new Image(new File("pictures/grid/inconnu.png").toURI().toString());
+      }
+    } catch (Exception e) {
+      authorName = new Label("Unknown");
+      iAuthorPicture = new Image(new File("pictures/grid/inconnu.png").toURI().toString());
     }
 
     ImageView authorPict = new ImageView();
     authorPict.setImage(iAuthorPicture);
-    authorBox.getChildren().addAll(authorPict,authorName);
+    authorBox.getChildren().addAll(authorPict, authorName);
     authorBox.setAlignment(Pos.TOP_LEFT);
 
     //Zone des commentaires
     final HBox bottomLayout = (HBox) border.getBottom();
-    
+
     // deux derniers commentaires
     VBox firstComm = new VBox();
     gridComments = grid.getComments();
@@ -107,7 +102,7 @@ public class IhmGridPlayer extends IhmGridView {
             firstComm.getChildren().add(commText);
         }
     }
-    
+
     //ajout des boutons ajout et affichage
     HBox commButton = new HBox();
     Button addComment = new Button("Ajouter un com");
@@ -173,7 +168,10 @@ public class IhmGridPlayer extends IhmGridView {
     buttonOk.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        grid.addComment(new Comment(textField.getText(),(int)Math.round(starsBox.getValueAtClick()),UserManager.getInstance().getLoggedUser()));
+        try {
+          gridComments.add(new Comment(textField.getText(), (int) Math.round(starsBox.getValueAtClick()), UserManager.getInstance().getLoggedUser()));
+        } catch (Exception e) {
+        }
         stage.hide();
       }
     });
@@ -195,44 +193,43 @@ public class IhmGridPlayer extends IhmGridView {
     final VBox vb = new VBox();
     final ScrollBar sc = new ScrollBar();
     DropShadow shadow = new DropShadow();
-     Group root = new Group();
-     Scene scene = new Scene(root, 300, 400);
-     stage.setScene(scene);
-     stage.setTitle("Show All Comments");
-     root.getChildren().addAll(vb, sc);
- 
-     shadow.setColor(Color.GREY);
-     shadow.setOffsetX(2);
-     shadow.setOffsetY(2);
- 
-     vb.setLayoutX(5);
-     vb.setSpacing(10);
-     sc.setLayoutX(scene.getWidth()-sc.getWidth());
-     sc.setMin(0);
-     sc.setOrientation(Orientation.VERTICAL);
-     sc.setPrefHeight(scene.getHeight());
-     sc.setMax(scene.getHeight()+50);
-    gridComments = grid.getComments();
-    if(gridComments != null && gridComments.size() > 0){
-        for (int i = 1; i < 10; i++) {
-            Comment comm = gridComments.get(gridComments.size() - i);
-            Label commAuthorAndDate = new Label(comm.getAuthor()+" - "/*+comm.getCreateDate*/);
-            vb.getChildren().add(commAuthorAndDate);
-            Text commText = new Text(comm.getComment());
-            vb.getChildren().add(commText);
-        }   
-    }
-    else{
-        Label emptyComm = new Label("No comments on this grid");
-        vb.getChildren().add(emptyComm);
+    Group root = new Group();
+    Scene scene = new Scene(root, 300, 400);
+    stage.setScene(scene);
+    stage.setTitle("Show All Comments");
+    root.getChildren().addAll(vb, sc);
+
+    shadow.setColor(Color.GREY);
+    shadow.setOffsetX(2);
+    shadow.setOffsetY(2);
+
+    vb.setLayoutX(5);
+    vb.setSpacing(10);
+    sc.setLayoutX(scene.getWidth() - sc.getWidth());
+    sc.setMin(0);
+    sc.setOrientation(Orientation.VERTICAL);
+    sc.setPrefHeight(scene.getHeight());
+    sc.setMax(scene.getHeight() + 50);
+
+    if (gridComments != null && gridComments.size() > 0) {
+      for (int i = 1; i < 10; i++) {
+        Comment comm = gridComments.get(gridComments.size() - i);
+        Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
+        vb.getChildren().add(commAuthorAndDate);
+        Text commText = new Text(comm.getComment());
+        vb.getChildren().add(commText);
+      }
+    } else {
+      Label emptyComm = new Label("No comments on this grid");
+      vb.getChildren().add(emptyComm);
     }
     sc.valueProperty().addListener(new ChangeListener<Number>() {
-        @Override
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    vb.setLayoutY(-new_val.doubleValue());
-            }
-        });
+      @Override
+      public void changed(ObservableValue<? extends Number> ov,
+        Number old_val, Number new_val) {
+        vb.setLayoutY(-new_val.doubleValue());
+      }
+    });
     stage.initModality(Modality.APPLICATION_MODAL);
     Button closeButton = new Button("Close");
     closeButton.setOnAction(new EventHandler<ActionEvent>() {

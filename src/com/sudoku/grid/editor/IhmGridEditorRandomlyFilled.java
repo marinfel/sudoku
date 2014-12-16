@@ -50,6 +50,19 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
     leftLayout.getChildren().addAll(deleteCellsField, deleteCells);
     leftLayout.setAlignment(Pos.TOP_CENTER);
 
+    /*
+     Handler that cancels the grid creation process and displays the editing
+     choice screen
+     */
+    cancelBtn.setOnAction(
+      new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+          resetIhmEditor(new IhmGridLines(generateRandomGrid(), 500,
+              IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE)));
+        }
+      });
+
     //Handler of the delete button
     deleteCells.setOnAction(new EventHandler<ActionEvent>() {
       @Override

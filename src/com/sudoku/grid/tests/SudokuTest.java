@@ -9,6 +9,7 @@ import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
+import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
 import com.sudoku.grid.player.IhmGridPlayer;
@@ -36,10 +37,10 @@ public class SudokuTest extends Application {
 
     IhmGridLayout ihm_test;
 
-    //ihm_test = new IhmGridEditorRandomlyFilled();
+    ihm_test = new IhmGridEditorRandomlyFilled();
     //ihm_test = new IhmGridEditorManuallyFilled();
-    ihm_test = new IhmGridPlayer(generateRandomGrid(20));
-    
+    //ihm_test = new IhmGridPlayer(generateRandomGrid(20));
+
     //ihm_test = new IhmGridPreview(2, new Grid("", UserManager.getInstance().getLoggedUser()), 100);
     Scene scene = new Scene(ihm_test, 800, 1000);
     //Scene scene = new Scene(ihm_test2, 800, 1000);
