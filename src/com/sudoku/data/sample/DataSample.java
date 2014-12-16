@@ -20,6 +20,7 @@ import com.sudoku.data.model.User;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +38,7 @@ import java.util.logging.Logger;
 public class DataSample {
 
     // User et grid sont accesibles directement, servez-vous
-    public User a, b, c;
+    public User a, b, c, d;
     public Grid g1,g2,g3;
     
     
@@ -51,16 +52,28 @@ public class DataSample {
         System.out.println(" Datasample started");
       try {
         a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
-        b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
-        c = new User("User3", "User3", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2011"), "");
+        b = new User("User2", "User2", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("02/01/2011"), "");
+        c = new User("User3", "User3", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("03/01/2011"), "");
+        d = new User("User4", "User4", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("04/01/2014"), "");
       } catch (Exception ex) {
         // to be handled
       }
+      List<ContactCategory> listCat = new LinkedList<>();
+      HashSet<User> listUs1 = new HashSet<User>();
+      HashSet<User> listUs2 = new HashSet<User>();
+      listUs1.add(b);
+      listUs2.add(d);
+      listUs2.add(c);
+      ContactCategory cat1 = new ContactCategory("Amis",listUs1);
+      ContactCategory cat2 = new ContactCategory("Famille",listUs2);
+      listCat.add(cat1);
+      listCat.add(cat2);
+      a.setContactCategories(listCat);
        // a.saveToJson();
        //création de Grid g1
        //Ajout de commentaires
-       g1.addComment(new Comment("texte du commentaire 1",1, a));
-       g1.addComment(new Comment("texte du commentaire 2",2, a));
+       g1.addComment(new Comment("texte du commentaire 1",1., a));
+       g1.addComment(new Comment("texte du commentaire 2",2., a));
 
        //Ajout de tags
        List<Tag> tags= new ArrayList<Tag>();
@@ -122,6 +135,7 @@ public class DataSample {
        
        userMgr.addLocalUser(a);
        userMgr.addLocalUser(b);
+       userMgr.addLocalUser(c);
        
         try {
             userMgr.authenticate("User1", "User1");
@@ -145,16 +159,19 @@ public class DataSample {
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);
        
        DataManager dataMgr = DataManager.getInstance();
-       
-       dataMgr.saveToJson();
+       //UserManager.getInstance();
+       //getLoggedUser().setContactCategories(listCat);
+       //dataMgr.saveToJson();
        
        System.out.println(" Datasample finished");
        
     }
      public List<User> getUserList(){
-        List<User> users= new LinkedList<User>();
+        List<User> users = new LinkedList<User>();
         users.add(a);
         users.add(b);
+        users.add(c);
+        users.add(d);
         return users;
      }
 

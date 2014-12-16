@@ -5,15 +5,15 @@
  */
 package com.sudoku.grid.tests;
 
+import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.editor.IhmGridEditorRandomlyFilled;
-import com.sudoku.grid.editor.IhmGridView;
-import com.sudoku.grid.preview.IhmGridPreview;
-import com.sudoku.grid.player.IhmGridPlayer;
+import com.sudoku.grid.editor.IhmGridEditorManuallyFilled;
 import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
+import com.sudoku.grid.player.IhmGridPlayer;
+import com.sudoku.grid.preview.IhmGridPreview;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -39,9 +39,9 @@ public class SudokuTest extends Application {
 
     ihm_test = new IhmGridEditorRandomlyFilled();
     //ihm_test = new IhmGridEditorManuallyFilled();
-    //ihm_test = new IhmGridPlayer(new Grid("", UserManager.getInstance().getLoggedUser()));
+    //ihm_test = new IhmGridPlayer(generateRandomGrid(20));
 
-    //ihm_test = new IhmGridPreview(2,new Grid("", UserManager.getInstance().getLoggedUser()),100):
+    //ihm_test = new IhmGridPreview(2, new Grid("", UserManager.getInstance().getLoggedUser()), 100);
     Scene scene = new Scene(ihm_test, 800, 1000);
     //Scene scene = new Scene(ihm_test2, 800, 1000);
     //Scene scene = new Scene(ihm_test3, 800, 1000);

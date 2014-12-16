@@ -20,15 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import javafx.event.EventType;
-import javafx.scene.Cursor;
+import java.util.List;
 
 /**
  * @author Marc-Antoine
  */
 public class IhmCellEditable extends IhmCell {
 
-  protected final static int ADDLES_MAX_NUNMBER = 3;
+  protected static final int ADDLES_MAX_NUNMBER = 3;
   private final IhmCellEditedEvent ihmCellEditedEvent;
   private final IhmCellEditedEvent ihmCellModifiedEvent;
   private final IhmCellEditedEvent ihmCellKeyUpTypedEvent;
@@ -42,7 +41,7 @@ public class IhmCellEditable extends IhmCell {
   protected double valueSizeX;
   protected double valueSizeY;
   protected HBox addlesLayout = new HBox();
-  protected ArrayList<TextField> addlesEditList = new ArrayList<TextField>();
+  protected List<TextField> addlesEditList = new ArrayList<>();
   protected Hyperlink addlesAddButton = new Hyperlink();
   protected TextField valueEdit = new TextField();
 
@@ -108,14 +107,15 @@ public class IhmCellEditable extends IhmCell {
 
         // Check if the handler has already been consumed
         if (t.isConsumed()) {
-          return; //then quit the handle function
+          //then quit the handle function
+          return;
         }
         // Check if we handled the event from the addles add-button
         if (t.getSource() == addlesAddButton) {
           addlesAddButtonHandler(t);
-        } // Otherwise
-        else {
-          return; //Quit the function without consume the event
+        } else {
+          // Otherwise quit the function without consume the event
+          return;
         }
         // Consume the event to not handle it once more
         t.consume();
@@ -138,7 +138,7 @@ public class IhmCellEditable extends IhmCell {
       }
 
     });
-    //valueEdit.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
     valueEdit.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
       @Override
@@ -198,7 +198,7 @@ public class IhmCellEditable extends IhmCell {
    */
   @Override
   public void setValue(int value) {
-    //System.out.println("setValue(" + value + "): " + checkValue(value));
+
     //first check the value
     if (checkValue(value)) {
       //set the value
@@ -227,8 +227,10 @@ public class IhmCellEditable extends IhmCell {
    * @throws Nothing
    */
   private void setAddlesAddButtonVisible(boolean visible) {
-    addlesAddButton.setVisible(visible);// Use to show/hide it
-    addlesAddButton.setManaged(visible);// Use to fix/unfix it on the layout
+    // Use to show/hide it
+    addlesAddButton.setVisible(visible);
+    // Use to fix/unfix it on the layout
+    addlesAddButton.setManaged(visible);
   }
 
   /**
@@ -242,6 +244,11 @@ public class IhmCellEditable extends IhmCell {
    * @throws Nothing
    */
   protected void addlesAddButtonHandler(ActionEvent t) {
+    if (t.isConsumed()) {
+      return;
+    }
+    t.consume();
+
     // Check if there is enough rooms on the top of the  layout
     if (addlesEditList.size() < ADDLES_MAX_NUNMBER) {
       // Add a new addles to the list and to the addlesLayout
@@ -339,7 +346,8 @@ public class IhmCellEditable extends IhmCell {
 
     // Limit the size of TextField
     if (text.length() > 1) {
-      tf.setText(t1.substring(t1.length() - 1)); //récupère le dernier caractère
+      //récupère le dernier caractère
+      tf.setText(t1.substring(t1.length() - 1));
       return;
     }
 
@@ -347,9 +355,8 @@ public class IhmCellEditable extends IhmCell {
     try {
       val = Integer.parseInt(text);
     } catch (NumberFormatException ex) {
-      //do nothing
-      val = 0; //just to be sure
-      //System.err.println("textFieldHandler(\"" + t1 + "\"): " + ex.getMessage());
+      //just to be sure
+      val = 0;
     }
 
     if (fireEditedEvent) {
@@ -359,9 +366,10 @@ public class IhmCellEditable extends IhmCell {
 
     // Check if the input value is correct
     if (!checkValue(val)) {
-      tf.clear(); //if not then clear it
-    } else if (fireEditedEvent)//fire an event that the value has been changed
-    {
+      //if not then clear it
+      tf.clear();
+    } else if (fireEditedEvent) {
+      //fire an event that the value has been changed
       fireEvent(ihmCellEditedEvent);
     }
   }
@@ -388,16 +396,16 @@ public class IhmCellEditable extends IhmCell {
       }
 
       // Set focus on the previous addle if possible or the next addle if possible otherwise on the button
-      if (addlesEditList.size() > 0) {
-        if (index - 1 >= 0 && index - 1 < addlesEditList.size()) // Focus on the previous addle
-        {
+      if (!addlesEditList.isEmpty()) {
+        if (index - 1 >= 0 && index - 1 < addlesEditList.size()) {
+          // Focus on the previous addle
           addlesEditList.get(index - 1).requestFocus();
-        } else if (index < addlesEditList.size()) // Focus on the next addle
-        {
+        } else if (index < addlesEditList.size()) {
+          // Focus on the next addle
           addlesEditList.get(index).requestFocus();
         }
-      } else //Focus on the button
-      {
+      } else {
+        //Focus on the button
         addlesAddButton.requestFocus();
       }
     } else {

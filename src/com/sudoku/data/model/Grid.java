@@ -191,6 +191,8 @@ public class Grid {
     return tags;
   }
 
+  public boolean hasTag(Tag tag){ return this.tags.contains(tag); }
+
   public void setTags(List<Tag> tags) {
     this.tags = tags;
   }
@@ -246,6 +248,7 @@ public class Grid {
     if (comment != null && comment.getComment() != null &&
         !comment.getComment().isEmpty()) {
       comments.add(comment);
+      // We also need to push this comment
     }
   }
 
@@ -260,6 +263,17 @@ public class Grid {
         }
       }
     }
+  }
+
+  @JsonIgnore
+  public double getAverageGrade(){
+    if(this.comments.size() == 0){return 0;}
+
+    double total = 0;
+    for(Comment c : this.comments){
+      total += c.getGrade();
+    }
+    return total / this.comments.size();
   }
 
   @Override

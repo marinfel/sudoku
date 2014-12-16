@@ -1,7 +1,5 @@
 package com.sudoku.comm;
 
-import com.sudoku.comm.ConnectionManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,21 +10,36 @@ import java.util.TimerTask;
 import java.util.Iterator;
 import java.util.Collection;
 
+/**
+ * Class handling node discovery as a task
+ * @author Karim El Aktaa
+ */
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
   private final CommunicationManager communicationManager;
   private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
+  /**
+   * Class constructor
+   */
   public DiscoverNodesTimerTask() {
     this.communicationManager = CommunicationManager.getInstance();
     this.localIp = communicationManager.getLocalIp();
   }
 
+  /**
+   * Updates ips in the communication manager
+   * @param ipToUpdate ip to be updated
+   * @param iterator iterator
+   */
   public void updateIpsInCommunicationManager(String ipToUpdate,
                                               Iterator<String> iterator) {
     communicationManager.syncIps(ipToUpdate, iterator);
   }
 
+  /**
+   * Method launching node discovery
+   */
   public void launchDiscovery() {
     Map<String, ConnectionManager> ipsToConfirm =
         communicationManager.getIpsToConfirm();
@@ -65,10 +78,10 @@ public class DiscoverNodesTimerTask extends TimerTask {
           ipsToPublish.add(ipToP);
         }
 
-        //update ipsConnected & ipsToConfirm
+        /* update ipsConnected & ipsToConfirm */
         updateIpsInCommunicationManager(currentIpToConfirm, itr);
 
-        //DEBUG
+        /* DEBUG */
         Iterator<String> itrRemote = ipFromRemoteNode.iterator();
         LOGGER.debug("[TimerTask] ip From Remote Node (from " +
             currentIpToConfirm + ") : ");
@@ -79,7 +92,7 @@ public class DiscoverNodesTimerTask extends TimerTask {
         communicationManager.addIpToConfirm(ipFromRemoteNode);
         LOGGER.debug("[END TimerTask]");
         LOGGER.debug("*********************");
-        // END DEBUG
+        /* END DEBUG */
 
         currentConnectionManager.closeConnection();
       } catch (ConnectionManager.OfflineUserException exc) {
@@ -88,7 +101,7 @@ public class DiscoverNodesTimerTask extends TimerTask {
         LOGGER.debug("Closed connection: " + currentIpToConfirm + "\n ", exc);
       }
 
-      // Publishing known nodes
+      /* Publishing known nodes */
       if (!ipsToPublish.isEmpty()) {
         Collection<ConnectionManager> connectedManagers = ipsConnected.values();
         for (ConnectionManager cm : connectedManagers) {
@@ -106,6 +119,9 @@ public class DiscoverNodesTimerTask extends TimerTask {
     }
   }
 
+  /**
+   * Method to run the task in a separate thread
+   */
   public void run() {
     launchDiscovery();
   }

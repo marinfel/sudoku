@@ -19,6 +19,9 @@
         <compiler-plugin.version>2.3.2</compiler-plugin.version>
         <avro.version>1.7.7</avro.version>
         <javafx.version>2.2.3</javafx.version>
+        <sonar.language>java</sonar.language>
+        <sonar.sources>src</sonar.sources>
+        <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
     </properties>
 	
 

@@ -6,10 +6,15 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.data.manager.UserManager;
+import com.sudoku.data.model.ContactCategory;
+import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import com.sudoku.grid.player.IhmGridPlayer;
 import com.sudoku.main.manager.ListGridManager;
+import com.sudoku.main.manager.UserCategoryManager;
 import com.sudoku.main.manager.RefreshGridPlayer;
+import java.io.File;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,23 +33,44 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.event.Event;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javax.swing.JScrollPane;
+import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * @author MOURAD
  */
 public class FXMLDocumentController implements Initializable, ControlledScreen {
 
-  public static final ObservableList groups = FXCollections.observableArrayList();
-  public static final ObservableList users = FXCollections.observableArrayList();
+  public static ObservableList groups = FXCollections.observableArrayList();
+  public static ObservableList users = FXCollections.observableArrayList();
+  public static ObservableList users_n = FXCollections.observableArrayList();
+  
+  public Stage dialogStage = new Stage();
+          
   //Data
   public DataSample instance;
   ListGridManager gridList;
@@ -57,6 +83,15 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   ScrollPane currentPane;
   ScrollPane finishedPane;
   
+  public User loggedUser;
+  public UserManager userManag;
+  public UserCategoryManager userCategoryManag;
+  public List<User> listUsers = new LinkedList<>();
+  public List<ContactCategory> userCategories = new LinkedList<>();
+  public HashMap<String,List<User>> categoryAndUsers;
+  public HashMap<String,ObservableList> observableData;
+  
+  // Partie JulianC
   ScreensController myController;
   @FXML
   private TitledPane mainContainer;
@@ -79,7 +114,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private ListView listGroups;
   @FXML
-  private ListView listUsers;
+  private ListView listUsersView;
   @FXML
   private Label user;
   @FXML
@@ -88,6 +123,29 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private Label birthD;
   @FXML
   private Label nombUsers;
+  @FXML
+  private TextField userHome;
+  @FXML
+  private TextField birthDateHome;
+  @FXML
+  private TextField creatDateHome;
+  @FXML
+  private TextField updateDateHome;
+  @FXML
+  private TextField nameHome;
+  @FXML
+  private PasswordField pass1Home;
+  @FXML
+  private PasswordField pass2Home;
+  @FXML
+  private PasswordField pass3Home;
+  @FXML
+  private TextField ipAddressHome;
+  @FXML
+  private TextField picturePathHome;
+  @FXML
+  private Label textInfHome;
+  
   @FXML
   private Button goToGrids;
   @FXML
@@ -126,8 +184,17 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   {
     instance = new DataSample();
     instance.exec();
+    
+    userManag = UserManager.getInstance();
+    userCategoryManag = UserCategoryManager.getInstance();
+    
+    dialogStage.initModality(Modality.WINDOW_MODAL);
+    dialogStage.setTitle("Message");
+    dialogStage.setHeight(100);
+    dialogStage.setWidth(200);
+    dialogStage.setResizable(false);
+    
     System.out.println("test data" + instance.a.getPseudo());
-    userName.setText("Utilisateur : " + instance.a.getPseudo());
     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
     mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
@@ -144,7 +211,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert paneUser != null : "fx:id=\"paneUser\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert paneGroup != null : "fx:id=\"paneGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert listGroups != null : "fx:id=\"listGroups\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert listUsers != null : "fx:id=\"listUsers\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert listUsersView != null : "fx:id=\"listUsersView\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert user != null : "fx:id=\"user\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert birthD != null : "fx:id=\"birthD\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -159,17 +226,46 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert mainContainer != null : "fx:id=\"mainContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
+    assert userHome != null : "fx:id=\"userHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert birthDateHome != null : "fx:id=\"birthDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert creatDateHome != null : "fx:id=\"creatDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert updateDateHome != null : "fx:id=\"updateDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert nameHome != null : "fx:id=\"nameHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert pass1Home != null : "fx:id=\"pass1Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert pass2Home != null : "fx:id=\"pass2Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert pass3Home != null : "fx:id=\"pass3Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert ipAddressHome != null : "fx:id=\"ipAddressHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert picturePathHome != null : "fx:id=\"picturePathHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
 
-    //Ajouter des éléments aux listes groupes et utilisateurs 
-    groups.addAll("Global", "Amis", "Camarades");
-    users.addAll("julian", "user2", "user3");
+    //Ajouter des éléments aux listes groupes et utilisateurs
+    groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
+    
+    //ListUsers = UserManager.getInstance().getConnectedUsers();
+    listUsers = instance.getUserList();    
+    //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
+    //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
+    //showConnectedUsers(observableData,"Global"); //Les afficher
+    //users.addAll("julian", "user2", "user3");
+    //users.addAll(UserManager.getInstance().getConnectedUsers());
+    //users.addAll(userCategoryManag.getUsersToShow(listUsers));
+    users = userCategoryManag.getUsersToShow(listUsers);
+    
     listGroups.setItems(groups);
-    listUsers.setItems(users);
+    listUsersView.setItems(users);
+    
+    //Charger données utilisateur
+    loggedUser = null;
+        
     //Méthode Bouton "Aller aux grilles"
     goToGrids.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
+          dialogStage.setScene(new Scene(VBoxBuilder.create()
+                  .children(new Text("Grilles chargées"))
+                  .alignment(Pos.CENTER).padding(new Insets(15)).build()));
+          dialogStage.show();
 //                Dialogs dialog = null;
 //                dialog.title("Message");
 //                dialog.masthead("Message d'information");
@@ -181,7 +277,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     //Méthode Bouton "Supprimer du groupe"
     delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
       @Override
-      public void handle(ActionEvent e) {
+      public void handle(ActionEvent e) {          
 //                dialog.owner(null);
 //                dialog.title("Confirm Dialog");
 //                dialog.message("Voulez-vous supprimer l'utilisateur '"+user.getText()+"' du groupe '"+nameGroup.getText()+"'?");
@@ -229,32 +325,30 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     listGroups.getSelectionModel().selectedItemProperty().addListener(
         new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {
-            nombUsers.setText(listUsers.getItems().size() + " utilisateurs connectés");
-            nameGroup.setText(new_val);
-            paneGroup.setVisible(true);
-            paneUser.setVisible(false);
-          }
-        });
-
-    //Méthode ListView Groupes -> OnClick
-    listGroups.getSelectionModel().selectedItemProperty().addListener(
-        new ChangeListener<String>() {
-          public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {
-            nombUsers.setText(listUsers.getItems().size() + " utilisateurs connectés");
-            nameGroup.setText(new_val);
+                              String old_val, String new_val) {            
+            //showConnectedUsers(observableData,new_val); //Les afficher
+            if(new_val.equals("Utilisateurs connectés"))
+                listUsersView.setItems(users);
+            else{
+                listUsersView.setItems(users_n);
+            }
+            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
+            //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
+            nameGroup.setText(new_val);            
             paneGroup.setVisible(true);
             paneUser.setVisible(false);
           }
         });
 
     //Méthode ListView Utilisateurs -> OnClick
-    listUsers.getSelectionModel().selectedItemProperty().addListener(
+    listUsersView.getSelectionModel().selectedItemProperty().addListener(
         new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> ov,
                               String old_val, String new_val) {
             user.setText(new_val);
+            User a = listUsers.get(listUsersView.getSelectionModel().getSelectedIndex());
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            birthD.setText("Date de Naissance: "+df.format(a.getBirthDate()));
             paneUser.setVisible(true);
             paneGroup.setVisible(false);
           }
@@ -279,10 +373,19 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
+        myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
+            @Override public void handle(WindowEvent e) {
+                if(loggedUser == null){
+                    loggedUser = userManag.getLoggedUser();
+                    getDataUser();
+                }
+            }
+      });
   }
 
   @FXML
   private void goToLogin(ActionEvent event) {
+    userManag.logoff();
     myController.setScreen(SudukoIHM.loginID);
   }
 
@@ -294,6 +397,61 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private void goToFromFullGrid(ActionEvent event) {
     myController.setScreen(SudukoIHM.fromFullGridID);
+  }
+  
+  @FXML
+  private void modifyUserInformation(ActionEvent event) throws ParseException {
+    textInfHome.setText(null);
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    Date dateB = formatter.parse(birthDateHome.getText());
+    //loggedUser = userManag.getLoggedUser(); Modifier l'utilisateur connecté
+    loggedUser.setBirthDate(dateB);
+    loggedUser.setProfilePicturePath(picturePathHome.getText());
+    System.out.println("PW: "+loggedUser.getPassword()); //Le mot de passe avec salt ??
+    if(!picturePathHome.getText().isEmpty())
+        avatar.setImage(new Image(new File(picturePathHome.getText()).toURI().toString()));    
+    textInfHome.setText("Enregistré correctement");
+    if(!pass2Home.getText().isEmpty() || !pass3Home.getText().isEmpty()){
+        if(!pass1Home.getText().isEmpty()){
+            if (pass1Home.getText().equals(loggedUser.getPassword())){
+                if(pass2Home.getText().equals(pass3Home.getText())){                    
+                    //loggedUser.setPassword(pass2Home.getText());
+                    System.out.println("Guardar contraseña");                    
+                    textInfHome.setText("Enregistré correctement");
+                    pass1Home.setText(null);
+                    pass2Home.setText(null);
+                    pass3Home.setText(null);
+                }else
+                    textInfHome.setText("Les deux mots de passe ne correspondent pas");
+            }else
+                textInfHome.setText("Mot de passe incorrect");            
+        }else
+            textInfHome.setText("Entrez le mot de passe actuel");        
+    }    
+  }
+  
+  @FXML
+  private void selectPicturePath(ActionEvent event) {
+    FileChooser chooser = new FileChooser();
+    chooser.setTitle("Choisir Image");
+    File file = chooser.showOpenDialog(new Stage());
+    picturePathHome.setText(file.toString());
+    avatar.setImage(new Image(new File(file.toString()).toURI().toString()));
+  }
+  
+  private void getDataUser() {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);     
+    //avatar.setImage(new Image(new File("pictures/grid/yellowStar.png").toURI().toString()));
+    avatar.setImage(new Image(new File(loggedUser.getProfilePicturePath()).toURI().toString()));
+    userHome.setText(loggedUser.getPseudo());
+    nameHome.setText(loggedUser.getPseudo()); // Mettre le nom quand la fonction sera créée
+    ipAddressHome.setText(loggedUser.getIpAddress());        
+    birthDateHome.setText(df.format(loggedUser.getBirthDate()));
+    creatDateHome.setText(df.format(loggedUser.getCreateDate()));
+    updateDateHome.setText(df.format(loggedUser.getUpdateDate()));
+    picturePathHome.setText(loggedUser.getProfilePicturePath());
+    userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
+    userName.setText(loggedUser.getPseudo());
   }
   
   private void refreshMyGrids(){
@@ -337,5 +495,18 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           }
       }
   }
+    
+  
+    private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
+        String categorie = cat;
+        groups.clear();
+        listGroups.setItems(groups);
+        users.clear();
+        ObservableList userL = observableData.get(categorie);
+        listUsersView.setItems(userL);
+        for (Map.Entry e : observableData.entrySet())
+            groups.add(e.getKey());            
+        listGroups.setItems(groups);
+    }
 }
 

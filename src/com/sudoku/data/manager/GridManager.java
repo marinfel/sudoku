@@ -2,6 +2,7 @@ package com.sudoku.data.manager;
 
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
+import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,21 +73,30 @@ public final class GridManager {
     return availableGrids.remove(grid);
   }
 
-  public List<Grid> searchGrid(List<String> keywords) {
-    //J'imagine qu'on recherche dans la description et pas dans les tags
-    List<Grid> result = new ArrayList<Grid>();
-    for (String str : keywords) {
-      for (Grid grid : availableGrids) {
-        if (grid.getDescription().contains(str))
-          result.add(grid);
+  public List<Grid> filterGridsByTags(List<Tag> tags){
+    List<Grid> grids = new ArrayList<>();
+    for(Grid g : this.availableGrids){
+      boolean filtered = false;
+      for(Tag t : tags){
+        if(g.hasTag(t)) filtered = true;
       }
+      if(!filtered) grids.add(g);
     }
-    return result;
+    return grids;
   }
 
-  public boolean updateGridList(List<String> keywords) {
-    // BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouv
-    // son existence dans le diag de squence
+  public List<Grid> filterGridsByGrade(int grade){
+    List<Grid> grids = new ArrayList<>();
+    for(Grid g : this.availableGrids){
+      if(g.getAverageGrade() == grade){
+        grids.add(g);
+      }
+    }
+    return grids;
+  }
+
+  public boolean updateGridList() {
+    // Appel Com pour mettre à jour la liste des grilles.
     return false;
   }
   @JsonIgnore
@@ -132,7 +142,7 @@ public final class GridManager {
   }
   
   public List<Grid> getUserGrids(User user) {
-      List usersGrids = new ArrayList<>();
+      List<Grid> usersGrids = new ArrayList<Grid>();
       
       for(Grid g : this.availableGrids){
           if(g.getCreateUser() == user){
@@ -142,6 +152,19 @@ public final class GridManager {
       
       return usersGrids;
   }
+  
+  public List<PlayedGrid> getUserPlayedGrids(User user) {
+	  List<PlayedGrid> usersPlayedGrids = new ArrayList<PlayedGrid>();
+      
+      for(PlayedGrid g : this.playedGrids){
+          if(g.getPlayer() == user){
+              usersPlayedGrids.add(g);
+          }
+      }
+      
+      return usersPlayedGrids;
+	}
+  
   //for deserialisation use only
   public List<PlayedGrid> getPlayedGrids(){
       return playedGrids;

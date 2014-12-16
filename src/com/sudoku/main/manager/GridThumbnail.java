@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -41,12 +42,12 @@ public class GridThumbnail extends AnchorPane {
         GridInfo = new GridPane();
         SeeMoreButton = new Button("Afficher");
         PlayButton = new Button("Charger");
-        gridInstance = new IhmGridPreview(instance.getDifficulty(),instance,100);
+        gridInstance = new IhmGridPreview(instance,100);
         initThumbnail();
         setPositions();
         setListener();
         setThisAnchorElements();
-        this.setStyle("-fx-background-color: #336699;");
+        //this.setStyle("-fx-background-color: #336699;");
         this.setPrefSize(800, 150);
     }
     
@@ -55,6 +56,9 @@ public class GridThumbnail extends AnchorPane {
         gridTitle = new Label("Titre : "+instance.getTitle());
         gridUserCreator = new Label("Créateur : "+instance.getCreateUser().getPseudo());
         gridDescription = new Label("Description : "+instance.getDescription());
+        gridTitle.setFont(Font.font("Verdana", 13));
+        gridUserCreator.setFont(Font.font("Verdana", 13));
+        gridDescription.setFont(Font.font("Verdana", 13));
     }
     
     public void setPositions()
