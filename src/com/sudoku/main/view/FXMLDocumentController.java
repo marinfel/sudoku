@@ -496,6 +496,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       }
   }
     
+  
     private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
         String categorie = cat;
         groups.clear();
