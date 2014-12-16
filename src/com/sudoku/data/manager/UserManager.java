@@ -260,7 +260,7 @@ public final class UserManager { // This is the manager for users.
         }
 
     }
-  }
+  
   public static UserManager BuildFromJson(){
   ObjectMapper mapper= new ObjectMapper();
         // To avoid any undeclared property error
