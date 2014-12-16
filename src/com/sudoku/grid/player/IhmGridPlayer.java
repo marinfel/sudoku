@@ -91,20 +91,16 @@ public class IhmGridPlayer extends IhmGridView {
 
     // deux derniers commentaires
     VBox firstComm = new VBox();
-    try {
-      gridComments = grid.getComments();
-    } catch (Exception e) {
-      gridComments = null;
-    }
+    gridComments = grid.getComments();
     int size = gridComments.size();
-    if (gridComments != null && size > 0) {
-      for (int i = 1; i < nbComm; i++) {
-        Comment comm = gridComments.get(size - i);
-        Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
-        firstComm.getChildren().add(commAuthorAndDate);
-        Text commText = new Text(comm.getComment());
-        firstComm.getChildren().add(commText);
-      }
+    if(size > 0){
+        for (int i = 1; i < nbComm; i++) {
+            Comment comm = gridComments.get(size - i);
+             Label commAuthorAndDate = new Label(comm.getAuthor()+" - "/*+comm.getCreateDate*/);
+            firstComm.getChildren().add(commAuthorAndDate);
+            Text commText = new Text(comm.getComment());
+            firstComm.getChildren().add(commText);
+        }
     }
 
     //ajout des boutons ajout et affichage

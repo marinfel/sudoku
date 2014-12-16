@@ -60,9 +60,8 @@ public class DataSample {
       List<ContactCategory> listCat = new LinkedList<>();
       List<User> listUs1 = new LinkedList<>();
       List<User> listUs2 = new LinkedList<>();
-      listUs1.add(a);
       listUs1.add(b);
-      listUs2.add(b);
+      listUs2.add(d);
       listUs2.add(c);
       ContactCategory cat1 = new ContactCategory("Amis",listUs1);
       ContactCategory cat2 = new ContactCategory("Famille",listUs2);
