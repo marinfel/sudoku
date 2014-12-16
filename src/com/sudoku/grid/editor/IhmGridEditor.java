@@ -5,8 +5,8 @@
  */
 package com.sudoku.grid.editor;
 
+import static com.sudoku.data.factory.GridFactory.generateRandomGrid;
 import com.sudoku.data.manager.GridManager;
-import com.sudoku.data.model.FixedCell;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.Tag;
 import com.sudoku.grid.gridcells.IhmCell;
@@ -16,7 +16,6 @@ import com.sudoku.grid.gridcells.IhmGridLines.Flags;
 import com.sudoku.grid.popups.IhmPopupsList;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -41,10 +40,11 @@ import javafx.scene.layout.VBox;
  */
 public abstract class IhmGridEditor extends IhmGridView {
 
-  private TextField editTitle; //Field to enter the grid title
+  protected TextField editTitle; //Field to enter the grid title
   private Button validBtn; //Button to valid the edited grid
-  private Button cancelBtn; //Cancel edition
+  protected Button cancelBtn; //Cancel edition
   private Flags flag; //Flag to know if the cells are editable or fixed
+  final private ListView<String> tagsList;
 
   /**
    *
@@ -69,7 +69,8 @@ public abstract class IhmGridEditor extends IhmGridView {
 
     //HBox that contains the list of tags (i.e. tagsList)
     HBox firstHbox = new HBox();
-    final ListView<String> tagsList = new ListView<String>();
+    //final ListView<String> tagsList = new ListView<String>();
+    tagsList = new ListView<String>();
     final ObservableList<String> tagsListValues = FXCollections.observableArrayList();
     tagsList.setItems(tagsListValues);
     tagsList.setOrientation(Orientation.HORIZONTAL);
@@ -121,7 +122,6 @@ public abstract class IhmGridEditor extends IhmGridView {
       public void handle(ActionEvent event) {
         //Checks that the grid title is not null and is not empty
         if (!(grid.getTitle() == null) && !grid.getTitle().isEmpty()) {
-
           IhmCell[][] cells = gridLines.getCells();
           int count = 0;
           int i = 0, j = 0;
@@ -180,19 +180,6 @@ public abstract class IhmGridEditor extends IhmGridView {
               }
             }
 
-            //Display values of the grid object (by column)
-            /*for (i = 0; i < cells.length; i++) {
-             System.out.println("\n");
-             for (j = 0; j < cells[i].length; j++) {
-             if (grid.getCell(j, i) instanceof FixedCell) {
-             System.out.print(((FixedCell) grid.getCell(j, i)).getValue());
-             } else {
-             System.out.print("0");
-             }
-             }
-             }
-             System.out.println("\n");
-             */
             //Saves creation date into data's grid object
             java.util.Date date = new java.util.Date();
             grid.setCreateDate(new Timestamp(date.getTime()));
@@ -212,20 +199,8 @@ public abstract class IhmGridEditor extends IhmGridView {
 
         }
       }
-    }
-    );
 
-    /*
-     Handler that cancels the grid creation process and displays the editing
-     choice screen
-     */
-    cancelBtn.setOnAction(
-      new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-
-        }
-      });
+    });
 
     //When the Enter key is pressed adds a tag to the tagList
     tagField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -244,7 +219,9 @@ public abstract class IhmGridEditor extends IhmGridView {
         @Override
         public void handle(ActionEvent event
         ) {
-          tagsListValues.add(tagField.getText());
+          if (!tagField.getText().trim().isEmpty()) {
+            tagsListValues.add(tagField.getText());
+          }
           tagField.clear();
         }
       }
@@ -262,9 +239,19 @@ public abstract class IhmGridEditor extends IhmGridView {
     );
   }
 
-  //Utilité concretement ??????
   public Button getValidBtn() {
     return validBtn;
+  }
+
+  public void resetIhmEditor(IhmGridLines newGridLines) {
+    gridLines = newGridLines;
+    VBox centerVBox = (VBox) border.getCenter();
+    centerVBox.getChildren().remove(0);
+    centerVBox.getChildren().add(gridLines);
+
+    editTitle.clear();
+    grid.setTitle("");
+    tagsList.getItems().clear();
   }
 
 }
