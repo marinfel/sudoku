@@ -195,6 +195,40 @@ public class User implements Ruleable {
     this.contactCategories = contactCategories;
     this.updateDate();
   }
+
+  public ContactCategory createContactCategory(String name){
+    ContactCategory newContactCategory = this.getContactCategory(name);
+    if(newContactCategory == null){
+      return new ContactCategory(name);
+    }
+    return newContactCategory;
+  }
+
+  public boolean hasContactCategory(String name){
+    for(ContactCategory cc : this.contactCategories){
+      if(cc.getName().equals(name)){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public ContactCategory getContactCategory(String name){
+    for(ContactCategory cc : this.contactCategories){
+      if(cc.getName().equals(name)){
+        return cc;
+      }
+    }
+    return null;
+  }
+
+  public boolean addUserToContactCategory(String name, User u){
+    ContactCategory cc = this.getContactCategory(name);
+    if(cc == null){return false;}
+    cc.addContact(u);
+    return true;
+  }
+
   @JsonIgnore
   @Override
   public Boolean hasUser(User user) {
