@@ -195,7 +195,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     dialogStage.setResizable(false);
     
     System.out.println("test data" + instance.a.getPseudo());
-    userName.setText("Utilisateur : "+userManag.getLoggedUser().getPseudo());
     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
     mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
@@ -452,6 +451,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     updateDateHome.setText(df.format(loggedUser.getUpdateDate()));
     picturePathHome.setText(loggedUser.getProfilePicturePath());
     userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
+    userName.setText(loggedUser.getPseudo());
   }
   
   private void refreshMyGrids(){
