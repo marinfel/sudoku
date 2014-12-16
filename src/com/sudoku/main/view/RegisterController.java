@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import com.sudoku.data.model.User;
 import com.sudoku.data.manager.UserManager;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -103,6 +104,8 @@ public class RegisterController implements Initializable, ControlledScreen {
            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, e);
            return; 
         } catch (UnknownHostException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

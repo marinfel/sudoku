@@ -70,8 +70,9 @@ public final class Comment {
 
   public static Comment buildFromAvroComment(
       com.sudoku.comm.generated.Comment comment) {
-    return new Comment(comment.getComment(), comment.getGrade(),
-        User.buildFromAvroUser(comment.getAuthor()),Timestamp.valueOf(comment.getCreateDate()));
+    /*return new Comment(comment.getComment(), comment.getGrade(),
+        User.buildFromAvroUser(comment.getAuthor()),Timestamp.valueOf(comment.getCreateDate()));*/
+      return null;
   }
 
   public User getAuthor() {
