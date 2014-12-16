@@ -5,10 +5,12 @@
  */
 package com.sudoku.grid.ihm_grid_preview;
 
-import com.sudoku.grid.ihm_grid_cells.IhmCell;
-import com.sudoku.grid.ihm_grid_cells.IhmCellView;
+import com.sudoku.grid.preview.StarsBox;
+//import com.sudoku.grid.ihm_grid_cells.IhmCell;
+//import com.sudoku.grid.ihm_grid_cells.IhmCellView;
 import com.sudoku.data.model.Grid;
-import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLines;
+//import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -40,7 +42,7 @@ public class IhmGridPreview extends IhmGridLayout {
     border.setCenter(centerVBox);
     topHBox.getChildren().add(new Label("Preview"));
     centerVBox.getChildren().add(gridLines);
-
+    
     starsBox = getStarsBox();
     starsBox.setValue(gr.getMeanGrades());
     getChildren().add(starsBox);
