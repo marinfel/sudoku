@@ -132,7 +132,8 @@ public final class UserManager { // This is the manager for users.
   }
 
   public List<User> getConnectedUsers() {
-    return null; // Appeler com
+    return null;
+    // Met à jour la liste des distants users. Appel la com pour trouver les utilisateurs connectés
   }
 
   public boolean exportLoggedUserToFile(String path) {
