@@ -52,9 +52,6 @@ public final class UserManager { // This is the manager for users.
     this.distantUsers = new ArrayList<>(); //
   }
 
-  public void save() { // Serialize and save localUsers, we do not keep track of distantUsers
-    // TO BE COMPLETED   
-  }
 
   public final static UserManager getInstance() {
     if (instance == null) {
