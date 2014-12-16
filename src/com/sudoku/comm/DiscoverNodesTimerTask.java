@@ -10,21 +10,36 @@ import java.util.TimerTask;
 import java.util.Iterator;
 import java.util.Collection;
 
+/**
+ * Class handling node discovery as a task
+ * @author Karim El Aktaa
+ */
 public class DiscoverNodesTimerTask extends TimerTask {
   private final String localIp;
   private final CommunicationManager communicationManager;
   private static final Logger LOGGER = LoggerFactory.getLogger(DiscoverNodesTimerTask.class);
 
+  /**
+   * Class constructor
+   */
   public DiscoverNodesTimerTask() {
     this.communicationManager = CommunicationManager.getInstance();
     this.localIp = communicationManager.getLocalIp();
   }
 
+  /**
+   * Updates ips in the communication manager
+   * @param ipToUpdate ip to be updated
+   * @param iterator iterator
+   */
   public void updateIpsInCommunicationManager(String ipToUpdate,
                                               Iterator<String> iterator) {
     communicationManager.syncIps(ipToUpdate, iterator);
   }
 
+  /**
+   * Method launching node discovery
+   */
   public void launchDiscovery() {
     Map<String, ConnectionManager> ipsToConfirm =
         communicationManager.getIpsToConfirm();
@@ -104,7 +119,9 @@ public class DiscoverNodesTimerTask extends TimerTask {
     }
   }
 
-  @Override
+  /**
+   * Method to run the task in a separate thread
+   */
   public void run() {
     launchDiscovery();
   }
