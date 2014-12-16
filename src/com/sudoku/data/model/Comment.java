@@ -1,5 +1,6 @@
 package com.sudoku.data.model;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,14 +35,15 @@ public final class Comment {
    */
   
   // Nécessaire pour la désérialisation
-     public Comment(){
+  public Comment(){
     this.comment = "";
     this.grade = 0;
     this.author = null;
     this.pseudo = null;
     this.userSalt = null;
     this.setCreationDateNow();
-    }
+  }
+
   public Comment(String comment, Double grade, User u) {
     this.comment = comment;
     this.setGrade(grade);
@@ -50,19 +52,30 @@ public final class Comment {
     this.userSalt = u.getSalt();
     this.setCreationDateNow();
   }
- public Comment(String comment, Integer grade, User u, Date d) {
+
+  public Comment(String comment, Double grade, User u, Date d) {
+    this.comment = comment;
+    this.setGrade(grade);
+    this.author = u;
+    this.pseudo = u.getPseudo();
+    this.userSalt = u.getSalt();
+    this.creationDate = d;
+  }
+
+  public Comment(String comment, Integer grade, User u, Date d) {
     this.comment = comment;
     this.grade=grade;
     this.author = u;
     this.pseudo = u.getPseudo();
     this.userSalt = u.getSalt();
-    this.creationDate=d; 
+    this.creationDate=d;
   }
 
   public static Comment buildFromAvroComment(
       com.sudoku.comm.generated.Comment comment) {
     return new Comment(comment.getComment(), comment.getGrade(),
-        User.buildFromAvroUser(comment.getAuthor()),comment.getCreationDate());
+        User.buildFromAvroUser(comment.getAuthor()),
+        Timestamp.valueOf(comment.getCreateDate()));
   }
 
   public User getAuthor() {
