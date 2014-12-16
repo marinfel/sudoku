@@ -3,13 +3,17 @@ package com.sudoku.comm;
 import java.util.ArrayList;
 import java.util.List;
 
-// Class representing a connection to a remote user
+  /* Class representing a connection to a remote user */
 public abstract class ConnectionManager {
   private static final String ERROR_MSG = "Must open connection first.";
-  // Remote user.
+  
+  /* Remote user parameters */
   protected String ipAddress;
   protected boolean isConnected;
-  // should retrieve it from the communication manager or another conf singleton
+  
+  /* those parameters should be retrieved from the communication manager or
+   * another conf singleton
+   */
   protected static final int NODEPORT = 11023;
 
   public ConnectionManager(String ip) {
@@ -47,7 +51,7 @@ public abstract class ConnectionManager {
 
   public abstract void closeConnection() throws OfflineUserException;
 
-  //Exceptions
+  /* Exceptions */
   public class ConnectionClosedException extends Exception {
     public ConnectionClosedException() {
       super();

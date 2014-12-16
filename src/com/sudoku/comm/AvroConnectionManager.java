@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.List;
 
-// Class representing a connection to a remote user
+/* Class representing a connection to a remote user */
 public class AvroConnectionManager extends ConnectionManager {
   private static final Long CONNECTION_TIME_OUT = 1000L;
 
@@ -22,7 +22,7 @@ public class AvroConnectionManager extends ConnectionManager {
     client = null;
   }
 
-
+  @Override
   public void openConnection() throws OfflineUserException {
     if (client == null) {
       try {
@@ -38,6 +38,7 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
+  @Override
   public List<String> getConnectedIps(List<String> newConnectedIps)
      throws ConnectionClosedException, OfflineUserException {
     super.getConnectedIps(newConnectedIps);
@@ -55,6 +56,7 @@ public class AvroConnectionManager extends ConnectionManager {
     return res;
   }
 
+  @Override
   public void publishIps(List<String> ips)
      throws OfflineUserException, ConnectionClosedException {
     super.publishIps(ips);
@@ -67,6 +69,7 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
+  @Override
   public void disconnect() throws OfflineUserException,
      ConnectionClosedException {
     super.disconnect();
@@ -77,6 +80,7 @@ public class AvroConnectionManager extends ConnectionManager {
     }
   }
 
+  @Override
   public void closeConnection() throws OfflineUserException {
     if (client != null) {
       client.close();

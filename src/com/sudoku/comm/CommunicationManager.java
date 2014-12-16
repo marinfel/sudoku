@@ -136,7 +136,7 @@ public final class CommunicationManager {
       try {
         cm.closeConnection();
       } catch(ConnectionManager.OfflineUserException exc) {
-        // Nothing to do, already closed
+        /* Nothing to do, already closed */
       }
       ipsConnected.remove(ip);
       ipsToConfirm.put(ip, cm);
