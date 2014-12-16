@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -88,6 +89,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   public UserManager userManag;
   public UserCategoryManager userCategoryManag;
   public List<User> listUsers = new LinkedList<>();
+  public List<User> listConnectedUsers = new LinkedList<>();
   public List<ContactCategory> userCategories = new LinkedList<>();
   public HashMap<String,List<User>> categoryAndUsers;
   public HashMap<String,ObservableList> observableData;
@@ -220,8 +222,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert goToGrids != null : "fx:id=\"goToGrids\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert delFromGroup != null : "fx:id=\"delFromGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+    assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
     assert currentGrid != null : "fx:id=\"currentGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert distanteGrid != null : "fx:id=\"distanteGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
     assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -242,22 +243,22 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
 
     //Ajouter des éléments aux listes groupes et utilisateurs
-    groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
+    //groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
     loggedUser = userManag.getLoggedUser();
     
     userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
     //ListUsers = UserManager.getInstance().getConnectedUsers();
     listUsers = instance.getUserList();    
-    //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
+    categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
     //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
-    //showConnectedUsers(observableData,"Global"); //Les afficher
+    showConnectedUsers2(categoryAndUsers,"Famille"); //Les afficher
     //users.addAll("julian", "user2", "user3");
     //users.addAll(UserManager.getInstance().getConnectedUsers());
     //users.addAll(userCategoryManag.getUsersToShow(listUsers));
-    users = userCategoryManag.getUsersToShow(listUsers);
-    
-    listGroups.setItems(groups);
-    listUsersView.setItems(users);
+//    users = userCategoryManag.getUsersToShow(listUsers);
+//    
+//    listGroups.setItems(groups);
+//    listUsersView.setItems(users);
     
     //Charger données utilisateur
     getDataUser();
@@ -278,71 +279,25 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       }
     });
 
-    //Méthode Bouton "Supprimer du groupe"
-    delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {          
-//                dialog.owner(null);
-//                dialog.title("Confirm Dialog");
-//                dialog.message("Voulez-vous supprimer l'utilisateur '"+user.getText()+"' du groupe '"+nameGroup.getText()+"'?");
-//                Action response = dialog.showConfirm();
-//                if (response == Dialog.ACTION_YES) {
-//                    dialog.title("Message");
-//                    dialog.message("L'utilisateur '"+user.getText()+"' sera supprimé");
-//                    dialog.showInformation();
-//                } else {
-//                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
-//                }
-      }
-    });
-
-    //Méthode Bouton "Nouveau Groupe"
-    newGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-//                dialog.title("Message");
-//                dialog.masthead("Message d'information");
-//                dialog.message("Créer un nouveau groupe");
-//                dialog.showInformation();
-      }
-    });
-
-    //Méthode Bouton "Supprimer Groupe"
-    delGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-//                dialog.owner(null);
-//                dialog.title("Confirm Dialog");
-//                dialog.message("Voulez-vous supprimer le groupe '"+nameGroup.getText()+"'?");
-//                Action response = dialog.showConfirm();
-//                if (response == Dialog.ACTION_YES) {
-//                    dialog.title("Message");
-//                    dialog.message("Le groupe '"+nameGroup.getText()+"' sera supprimé");
-//                    dialog.showInformation();
-//                } else {
-//                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
-//                }
-      }
-    });
-
     //Méthode ListView Groupes -> OnClick
     listGroups.getSelectionModel().selectedItemProperty().addListener(
         new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {            
-            //showConnectedUsers(observableData,new_val); //Les afficher
-            if(new_val.equals("Utilisateurs connectés"))
-                listUsersView.setItems(users);
-            else{
-                listUsersView.setItems(users_n);
-            }
-            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
-            //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
+                              String old_val, String new_val) {                      
+            showConnectedUsers2(categoryAndUsers,new_val); //Les afficher
+//            if(new_val.equals("Utilisateurs connectés"))
+//                listUsersView.setItems(users);
+//            else{
+//                listUsersView.setItems(users_n);
+//            }
+            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");                        
+            listGroups.setItems(users_n);
+            listUsersView.setItems(users_n);
             nameGroup.setText(new_val);            
             paneGroup.setVisible(true);
             paneUser.setVisible(false);
           }
-        });
+    });
 
     //Méthode ListView Utilisateurs -> OnClick
     listUsersView.getSelectionModel().selectedItemProperty().addListener(
@@ -435,6 +390,26 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     avatar.setImage(new Image(new File(file.toString()).toURI().toString()));
   }
   
+  @FXML
+  private void createNewGroup(ActionEvent event) {
+      ContactCategory newCategory = new ContactCategory();
+      newCategory.setName(nameGroup.getText());
+      // Ajouter droits du groupe
+      //Ajouter catégorie
+      //loggedUser.addCategory(newCategory);
+      
+  }
+  
+  @FXML
+  private void editGroup(ActionEvent event) {
+    
+  }
+  
+  @FXML
+  private void deleteGroup(ActionEvent event) {
+    
+  }
+  
   private void getDataUser() {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);     
     //avatar.setImage(new Image(new File("pictures/grid/yellowStar.png").toURI().toString()));
@@ -500,6 +475,22 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         for (Map.Entry e : observableData.entrySet())
             groups.add(e.getKey());            
         listGroups.setItems(groups);
+    }
+    
+    private void showConnectedUsers2(HashMap<String,List<User>> observableData, String cat) {
+        String categorie = cat;
+        ObservableList groups_show = FXCollections.observableArrayList();
+        ObservableList users_show = FXCollections.observableArrayList();
+        List<User> lll;
+        lll = observableData.get(categorie);
+        listConnectedUsers = observableData.get(categorie);
+        Iterator<User> it = lll.iterator(); 
+        while (it.hasNext())
+            users_show.add(it.next().getPseudo());
+        for (Map.Entry e : observableData.entrySet())
+            groups_show.add(e.getKey());            
+        listUsersView.setItems(users_show);
+        listGroups.setItems(groups_show);
     }
 }
 
