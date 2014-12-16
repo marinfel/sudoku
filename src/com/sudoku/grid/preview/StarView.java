@@ -1,52 +1,72 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * StarView est la classe representant l objet graphique etoile. Cet objet sert 
+ * a la représentation de la note d une grille.
+ * 
  */
+
 package com.sudoku.grid.preview;
 
-//import ihm_grid.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author groudame
+ * @author groudame, lleichtn
  */
 public final class StarView extends ImageView {
 
+  /**
+  * \enum StarTypes permet de definir le type d une etoile
+  */  
   public enum StarTypes {
 
-    FILLED,
-    HALF,
-    EMPTY;
-  };
+      /**
+       * FILLED etoile pleine (en jaune)
+       */
+      FILLED,
 
-  protected final Image starFilled;
-  protected final Image starHalf;
-  protected final Image starEmpty;
+      /**
+       * HALF etoile demi-pleine (jaune et blanc)
+       */
+      HALF,
 
-  public StarView() {
-    //yellow - com.sudoku.grid.ihm_grid_preview.
+      /**
+       * EMPTY etoile vide (blanc)
+       */
+      EMPTY;
+  }
+
+    protected final Image starFilled;
+    protected final Image starHalf;
+    protected final Image starEmpty;
+  
+    /**
+     * Constructeur par défaut de l objet StarView.
+     * Cette methode recupere les images etoiles 
+     */
+    public StarView() {
+      
     starFilled = new Image(new File("pictures/grid/yellowStar.png").toURI().toString());
-    //white and yellow
     starHalf = new Image(new File("pictures/grid/yellowWhiteStar.png").toURI().toString());
-    //white
-    //iStar = new Image(getClass().getResource("whiteStar.png").toExternalForm());
     starEmpty = new Image(new File("pictures/grid/whiteStar.png").toURI().toString());
 
     setType(StarTypes.EMPTY);
   }
 
-  public StarView(StarTypes typeOfStar) {
+    /**
+     * Constructeur de l objet StarView. 
+     * @param typeOfStar
+     */
+    public StarView(StarTypes typeOfStar) {
     this();
     setType(typeOfStar);
   }
 
-  public void setType(StarTypes type) {
+    /**
+     * Cette methode fixe le type de l'objet star  
+     * @param type
+     */
+    public void setType(StarTypes type) {
     switch (type) {
       case FILLED:
         setImage(starFilled);

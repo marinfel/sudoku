@@ -22,11 +22,28 @@ import javafx.scene.layout.VBox;
  */
 public class IhmGridPreview extends IhmGridLayout {
 
-  protected Text authorName;
-  protected StarsBox starsBox;
-  protected final BorderPane border;
+    /**
+     *
+     */
+    protected Text authorName;
 
-  public IhmGridPreview(double numberOfStars, Grid gr, int size) {
+    /**
+     *
+     */
+    protected StarsBox starsBox;
+
+    /**
+     *
+     */
+    protected final BorderPane border;
+
+    /**
+     *
+     * @param numberOfStars
+     * @param gr
+     * @param size
+     */
+    public IhmGridPreview(Grid gr, int size) {
     super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), gr, size);
 
     border = new BorderPane();

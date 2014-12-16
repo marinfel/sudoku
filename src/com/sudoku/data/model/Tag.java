@@ -40,4 +40,11 @@ public class Tag {
     this.name = name;
   }
 
+  @Override
+  public boolean equals(Object other){
+    if(other == null) return false;
+    if(other == this) return true;
+    if(!(other instanceof Tag)) return false;
+    return ((Tag)other).name.equals(this.name);
+  }
 }

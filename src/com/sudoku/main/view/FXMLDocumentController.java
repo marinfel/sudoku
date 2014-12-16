@@ -56,11 +56,11 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBoxBuilder;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * @author MOURAD
@@ -198,7 +198,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     dialogStage.setResizable(false);
     
     System.out.println("test data" + instance.a.getPseudo());
-    userName.setText("Utilisateur : "+userManag.getLoggedUser().getPseudo());
     Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
     mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
     mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
@@ -246,7 +245,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     //groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
     loggedUser = userManag.getLoggedUser();
     
-    userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
     //ListUsers = UserManager.getInstance().getConnectedUsers();
     listUsers = instance.getUserList();    
     categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
@@ -261,7 +259,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //    listUsersView.setItems(users);
     
     //Charger données utilisateur
-    getDataUser();
+    loggedUser = null;
         
     //Méthode Bouton "Aller aux grilles"
     goToGrids.setOnAction(new EventHandler<ActionEvent>() {
@@ -332,6 +330,14 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
+        myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
+            @Override public void handle(WindowEvent e) {
+                if(loggedUser == null){
+                    loggedUser = userManag.getLoggedUser();
+                    getDataUser();
+                }
+            }
+      });
   }
 
   @FXML
@@ -421,6 +427,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     creatDateHome.setText(df.format(loggedUser.getCreateDate()));
     updateDateHome.setText(df.format(loggedUser.getUpdateDate()));
     picturePathHome.setText(loggedUser.getProfilePicturePath());
+    userCategories = loggedUser.getContactCategories(); // J'obtiens les categories de l'utilisateur connecté
+    userName.setText(loggedUser.getPseudo());
   }
   
   private void refreshMyGrids(){
@@ -465,6 +473,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       }
   }
     
+  
     private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
         String categorie = cat;
         groups.clear();

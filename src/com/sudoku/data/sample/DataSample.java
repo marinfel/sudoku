@@ -20,6 +20,7 @@ import com.sudoku.data.model.User;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -58,11 +59,10 @@ public class DataSample {
         // to be handled
       }
       List<ContactCategory> listCat = new LinkedList<>();
-      List<User> listUs1 = new LinkedList<>();
-      List<User> listUs2 = new LinkedList<>();
-      listUs1.add(a);
+      HashSet<User> listUs1 = new HashSet<User>();
+      HashSet<User> listUs2 = new HashSet<User>();
       listUs1.add(b);
-      listUs2.add(b);
+      listUs2.add(d);
       listUs2.add(c);
       ContactCategory cat1 = new ContactCategory("Amis",listUs1);
       ContactCategory cat2 = new ContactCategory("Famille",listUs2);
@@ -72,8 +72,8 @@ public class DataSample {
        // a.saveToJson();
        //création de Grid g1
        //Ajout de commentaires
-       g1.addComment(new Comment("texte du commentaire 1",1, a));
-       g1.addComment(new Comment("texte du commentaire 2",2, a));
+       g1.addComment(new Comment("texte du commentaire 1",1., a));
+       g1.addComment(new Comment("texte du commentaire 2",2., a));
 
        //Ajout de tags
        List<Tag> tags= new ArrayList<Tag>();

@@ -12,9 +12,13 @@ import java.util.List;
 public class CommMain {
   private static final Logger LOGGER =
       LoggerFactory.getLogger(CommMain.class);
+
+  /** 
+   */
   public static final int SLEEP_TIMER = 10000;
   
   private CommMain() {
+    /* utility : prevent the usage of the default public constructor */
   }
 
   public static void main(String[] args) {
@@ -31,11 +35,10 @@ public class CommMain {
     connectedIps.add("172.26.25.26");
 
     CommunicationManager commManager = CommunicationManager.getInstance();
-    commManager.init(uuid, login, connectedIps);
 
     LOGGER.info("ip: " + commManager.getLocalIp());
     try {
-      commManager.discoverNodes();
+      commManager.init(uuid, login, connectedIps);
       Thread.sleep(SLEEP_TIMER);
       commManager.disconnect();
     } catch (Exception ex) {
