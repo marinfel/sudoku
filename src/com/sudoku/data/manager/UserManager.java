@@ -4,12 +4,15 @@ package com.sudoku.data.manager;
  *
  * @author clesaege
  */
+import com.sudoku.comm.CommunicationManager;
 import com.sudoku.data.model.ExportUser;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.User;
+
 import java.io.File;
 import java.io.IOException;
+
 import org.springframework.security.crypto.codec.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -18,12 +21,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -135,7 +138,14 @@ public final class UserManager { // This is the manager for users.
   }
 
   public List<User> getConnectedUsers() {
-    return null;
+	  CommunicationManager tmp = CommunicationManager.getInstance();
+	  try {
+		this.distantUsers=tmp.getAllProfiles();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    return distantUsers;
     // Met à jour la liste des distants users. Appel la com pour trouver les utilisateurs connectés
   }
 
