@@ -78,9 +78,8 @@ public final class GridManager {
     return result;
   }
 
-  public boolean updateGridList(List<String> keywords) {
-    // BESOIN D'EXPLICATIONS POUR CETTE FONCTION. Je n'ai pas trouv
-    // son existence dans le diag de squence
+  public boolean updateGridList() {
+    // Appel Com pour mettre à jour la liste des grilles.
     return false;
   }
   @JsonIgnore
