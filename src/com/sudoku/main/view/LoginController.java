@@ -6,6 +6,8 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.data.manager.UserManager;
+import java.io.UnsupportedEncodingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import javafx.scene.control.Label;
 
 /**
  * @author MOURAD
@@ -35,28 +39,56 @@ public class LoginController implements Initializable, ControlledScreen {
   private Button login;
   @FXML
   private Button register;
+  @FXML
+  private Label userName;
 
-
+  private UserManager userManag;
   @Override
   public void initialize(URL url, ResourceBundle rb) {
 //        image = new Image("sudoku.jpg");
 //        avatar = new ImageView();
 //        avatar.setImage(image);
+     //public User authenticate(String pseudo, String password)
+     userManag = UserManager.getInstance();
   }
 
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
   }
-
   @FXML
   private void goToProgram(ActionEvent event) {
-    myController.setScreen(SudukoIHM.programID);
+    if(UserManager.getInstance().getLoggedUser() != null)
+    {
+        myController.setScreen(SudukoIHM.programID);
+    }
   }
 
   @FXML
   private void goToRegister(ActionEvent event) {
     myController.setScreen(SudukoIHM.registerID);
   }
-
+  
+  @FXML
+  private void authenticate(ActionEvent event){
+    System.out.println("in authenticate");
+        try{
+            if(userManag.authenticate(user.getText(), passwd.getText()) == null){
+                userName.setText("Echec de connexion : vérifiez vos identifiants.");
+            }
+            else{
+                userName.setText("");
+                goToProgram(event);
+            }
+        }
+        catch(NoSuchAlgorithmException e){
+            userName.setText("Erreur lors de l'exécution : problème d'encryptage");
+           return; 
+        }
+        catch(UnsupportedEncodingException e){
+            userName.setText("Erreur lors de l'exécution : problème d'encodage");
+           return; 
+        }
+    }
+    
 }
