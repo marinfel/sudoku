@@ -12,6 +12,7 @@ import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -24,10 +25,13 @@ public class ListGridManager {
     private DataSample instance;
     private UserManager usrManager;
     private GridManager gridManager;
+    public ScrollPane preview;
+
     
-    public ListGridManager(DataSample i)
+    public ListGridManager(DataSample i,ScrollPane p)
     {
         instance=i;
+        preview = p;
         usrManager = UserManager.getInstance();
         gridManager= GridManager.getInstance();
     }
@@ -35,7 +39,7 @@ public class ListGridManager {
     public List<AnchorPane> AllGrid()
     {
         List GridList = new ArrayList<AnchorPane>();
-        GridList.add(new GridThumbnail(instance.g1));
+        GridList.add(new GridThumbnail(instance.g1,preview));
         /*GridList.add(new GridThumbnail(instance.g2));
         GridList.add(new GridThumbnail(instance.g3));*/
         return GridList;
@@ -46,7 +50,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i)));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview));
         }
         return container.getInstance();
     }
@@ -56,7 +60,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getFinishedGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid()));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid(),preview));
         }
         return container.getInstance();
     }
@@ -66,7 +70,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getIncompleteGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid()));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid(),preview));
         }
         return container.getInstance();
     }
@@ -81,7 +85,7 @@ public class ListGridManager {
             grids = gridManager.getUserGrids(DistantUser.get(i));
             for(int j=0; i<grids.size();j++)
             {
-                container.addGridThumbnail(new GridThumbnail(grids.get(j)));
+                container.addGridThumbnail(new GridThumbnail(grids.get(j),preview));
             }
         }
         return container.getInstance();

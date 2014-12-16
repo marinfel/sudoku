@@ -181,7 +181,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private AnchorPane GridPlayer;
   @FXML
   private ScrollPane GridPlayerContainer;
-
+  @FXML
+  public ScrollPane GridPreviewShow;
 
 
   @Override
@@ -206,7 +207,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
           ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
           ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
-          
+          assert GridPreviewShow != null : "fx:id=\"GridPreviewShow\" was not injected: check your FXML file 'FXMLDocument.fxml'.";  
           assert GridPlayerContainer != null : "fx:id=\"GridPlayerContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -466,28 +467,28 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   private void refreshMyGrids(){
     // My Grids
-    gridList = new ListGridManager(instance);
+    gridList = new ListGridManager(instance,GridPreviewShow);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer());
     scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
     
     //Current Grids
-    currentList = new ListGridManager(instance);
+    currentList = new ListGridManager(instance,GridPreviewShow);
     currentPane= new ScrollPane();
     currentPane.setContent(currentList.getCurrentGridThumbnailContainer());
     currentPane.setPrefSize(800,400);
     currentGrid.getChildren().add(currentPane);
     
     //Finished Grids
-    finishedList = new ListGridManager(instance);
+    finishedList = new ListGridManager(instance,GridPreviewShow);
     finishedPane = new ScrollPane();
     finishedPane.setContent(finishedList.getFinishedGridThumbnailContainer());
     finishedPane.setPrefSize(800, 400);
     finishedGrid.getChildren().add(finishedPane);
     
     //Distant Grids
-    distantList = new ListGridManager(instance);
+    distantList = new ListGridManager(instance,GridPreviewShow);
     distantPane = new ScrollPane();
     distantPane.setContent(distantList.getDistantGridThumbnailContainer());
     distantPane.setPrefSize(800, 400);
