@@ -57,6 +57,12 @@ public class User implements Ruleable {
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
   }
+  public void setpassword(String brutPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+      MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+      String toBeHashed = brutPassword + this.salt;
+      this.password = 
+              new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+  }
 
   public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
     User resultUser = new User();
