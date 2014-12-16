@@ -194,7 +194,7 @@ public final class UserManager { // This is the manager for users.
       File jsonFile = new File(path);
       ExportUser user = mapper.readValue(jsonFile, ExportUser.class);
       for(User u : localUsers){
-        if((u.getPseudo()+u.getSalt()).equals(user.getUser().getPseudo()+user.getUser().getSalt())){
+        if(u.equals(user.getUser())){
           System.err.println("utilisateur déjà présent");
           return false;
         }
