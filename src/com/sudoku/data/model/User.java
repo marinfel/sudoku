@@ -57,6 +57,12 @@ public class User implements Ruleable {
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
     contactCategories = null;
   }
+  public void setpassword(String brutPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+      MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+      String toBeHashed = brutPassword + this.salt;
+      this.password = 
+              new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+  }
 
   public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
     User resultUser = new User();
@@ -195,6 +201,49 @@ public class User implements Ruleable {
     this.contactCategories = contactCategories;
     this.updateDate();
   }
+
+  public ContactCategory createContactCategory(String name){
+    ContactCategory newContactCategory = this.getContactCategory(name);
+    if(newContactCategory == null){
+      return new ContactCategory(name);
+    }
+    return newContactCategory;
+  }
+
+  public boolean hasContactCategory(String name){
+    for(ContactCategory cc : this.contactCategories){
+      if(cc.getName().equals(name)){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public ContactCategory getContactCategory(String name){
+    for(ContactCategory cc : this.contactCategories){
+      if(cc.getName().equals(name)){
+        return cc;
+      }
+    }
+    return null;
+  }
+
+  public boolean addUserToContactCategory(String name, User u){
+    ContactCategory cc = this.getContactCategory(name);
+    if(cc == null){return false;}
+    cc.addContact(u);
+    return true;
+  }
+
+  public boolean equals(Object other){
+    if(other == null) return false;
+    if(other == this) return true;
+    if(!(other instanceof User)) return false;
+
+    User o = (User)other;
+    return o.getSalt().equals(this.getSalt()) && o.getPseudo().equals(this.getPseudo());
+  }
+
   @JsonIgnore
   @Override
   public Boolean hasUser(User user) {

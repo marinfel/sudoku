@@ -5,6 +5,7 @@
  */
 package com.sudoku.main.view;
 
+import com.sudoku.data.model.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -91,6 +92,9 @@ public class ScreensController extends StackPane {
           this.fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_SHOWING));
       }
       else if(name == SudukoIHM.fillGridID){
+          this.fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_SHOWING));
+      }
+      else if(name == SudukoIHM.programID){
           this.fireEvent(new WindowEvent(this.getScene().getWindow(), WindowEvent.WINDOW_SHOWING));
       }
       return true;
