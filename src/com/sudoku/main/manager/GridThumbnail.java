@@ -42,7 +42,7 @@ public class GridThumbnail extends AnchorPane {
         GridInfo = new GridPane();
         SeeMoreButton = new Button("Afficher");
         PlayButton = new Button("Charger");
-        gridInstance = new IhmGridPreview(instance.getDifficulty(),instance,100);
+        gridInstance = new IhmGridPreview(instance,100);
         initThumbnail();
         setPositions();
         setListener();
