@@ -15,6 +15,7 @@ import com.sudoku.main.manager.ListGridManager;
 import com.sudoku.main.manager.UserCategoryManager;
 import com.sudoku.main.manager.RefreshGridPlayer;
 import java.io.File;
+import java.io.IOException;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,6 +44,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -182,102 +185,103 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void initialize(URL url, ResourceBundle rb) 
   {
-    instance = new DataSample();
-    instance.exec();
-    
-    userManag = UserManager.getInstance();
-    userCategoryManag = UserCategoryManager.getInstance();
-    
-    dialogStage.initModality(Modality.WINDOW_MODAL);
-    dialogStage.setTitle("Message");
-    dialogStage.setHeight(100);
-    dialogStage.setWidth(200);
-    dialogStage.setResizable(false);
-    
-    System.out.println("test data" + instance.a.getPseudo());
-    Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-    mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
-    mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
-    ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
-    ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
-    
-    assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert ListGrille != null : "fx:id=\"ListGrille\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert paneUser != null : "fx:id=\"paneUser\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert paneGroup != null : "fx:id=\"paneGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert listGroups != null : "fx:id=\"listGroups\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert listUsersView != null : "fx:id=\"listUsersView\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert user != null : "fx:id=\"user\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert birthD != null : "fx:id=\"birthD\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert goToGrids != null : "fx:id=\"goToGrids\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert delFromGroup != null : "fx:id=\"delFromGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert currentGrid != null : "fx:id=\"currentGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert distanteGrid != null : "fx:id=\"distanteGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert mainContainer != null : "fx:id=\"mainContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
-    assert userHome != null : "fx:id=\"userHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert birthDateHome != null : "fx:id=\"birthDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert creatDateHome != null : "fx:id=\"creatDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert updateDateHome != null : "fx:id=\"updateDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert nameHome != null : "fx:id=\"nameHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert pass1Home != null : "fx:id=\"pass1Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert pass2Home != null : "fx:id=\"pass2Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert pass3Home != null : "fx:id=\"pass3Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert ipAddressHome != null : "fx:id=\"ipAddressHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert picturePathHome != null : "fx:id=\"picturePathHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-    assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";    
-
-    //Ajouter des éléments aux listes groupes et utilisateurs
-    groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
-    
-    //ListUsers = UserManager.getInstance().getConnectedUsers();
-    listUsers = instance.getUserList();    
-    //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
-    //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
-    //showConnectedUsers(observableData,"Global"); //Les afficher
-    //users.addAll("julian", "user2", "user3");
-    //users.addAll(UserManager.getInstance().getConnectedUsers());
-    //users.addAll(userCategoryManag.getUsersToShow(listUsers));
-    users = userCategoryManag.getUsersToShow(listUsers);
-    
-    listGroups.setItems(groups);
-    listUsersView.setItems(users);
-    
-    //Charger données utilisateur
-    loggedUser = null;
-        
-    //Méthode Bouton "Aller aux grilles"
-    goToGrids.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-          dialogStage.setScene(new Scene(VBoxBuilder.create()
-                  .children(new Text("Grilles chargées"))
-                  .alignment(Pos.CENTER).padding(new Insets(15)).build()));
-          dialogStage.show();
+      try {
+          instance = new DataSample();
+          instance.exec();
+          
+          userManag = UserManager.getInstance();
+          userCategoryManag = UserCategoryManager.getInstance();
+          
+          dialogStage.initModality(Modality.WINDOW_MODAL);
+          dialogStage.setTitle("Message");
+          dialogStage.setHeight(100);
+          dialogStage.setWidth(200);
+          dialogStage.setResizable(false);
+          
+          System.out.println("test data" + instance.a.getPseudo());
+          Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+          mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
+          mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
+          ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
+          ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
+          
+          assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert GridPlayer != null : "fx:id=\"GridPlayer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert TabP != null : "fx:id=\"TabP\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert ListGrille != null : "fx:id=\"ListGrille\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert panes != null : "fx:id=\"panes\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert fillGrid != null : "fx:id=\"fillGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert fromFullGrid != null : "fx:id=\"fromFullGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert paneUser != null : "fx:id=\"paneUser\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert paneGroup != null : "fx:id=\"paneGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert listGroups != null : "fx:id=\"listGroups\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert listUsersView != null : "fx:id=\"listUsersView\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert user != null : "fx:id=\"user\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert birthD != null : "fx:id=\"birthD\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert goToGrids != null : "fx:id=\"goToGrids\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert delFromGroup != null : "fx:id=\"delFromGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert newGroup != null : "fx:id=\"newGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert nameGroup != null : "fx:id=\"nameGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert delGroup != null : "fx:id=\"delGroup\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert currentGrid != null : "fx:id=\"currentGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert distanteGrid != null : "fx:id=\"distanteGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert finishedGrid != null : "fx:id=\"finishedGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert myGrid != null : "fx:id=\"myGrid\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert MesGrilles != null : "fx:id=\"MesGrilles\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert mainContainer != null : "fx:id=\"mainContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert ContentContainer != null : "fx:id=\"ContentContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert userHome != null : "fx:id=\"userHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert birthDateHome != null : "fx:id=\"birthDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert creatDateHome != null : "fx:id=\"creatDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert updateDateHome != null : "fx:id=\"updateDateHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert nameHome != null : "fx:id=\"nameHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert pass1Home != null : "fx:id=\"pass1Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert pass2Home != null : "fx:id=\"pass2Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert pass3Home != null : "fx:id=\"pass3Home\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert ipAddressHome != null : "fx:id=\"ipAddressHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert picturePathHome != null : "fx:id=\"picturePathHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
+          
+          //Ajouter des éléments aux listes groupes et utilisateurs
+          groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
+          
+          //ListUsers = UserManager.getInstance().getConnectedUsers();
+          listUsers = instance.getUserList();
+          //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
+          //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
+          //showConnectedUsers(observableData,"Global"); //Les afficher
+          //users.addAll("julian", "user2", "user3");
+          //users.addAll(UserManager.getInstance().getConnectedUsers());
+          //users.addAll(userCategoryManag.getUsersToShow(listUsers));
+          users = userCategoryManag.getUsersToShow(listUsers);
+          
+          listGroups.setItems(groups);
+          listUsersView.setItems(users);
+          
+          //Charger données utilisateur
+          loggedUser = null;
+          
+          //Méthode Bouton "Aller aux grilles"
+          goToGrids.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent e) {
+                  dialogStage.setScene(new Scene(VBoxBuilder.create()
+                          .children(new Text("Grilles chargées"))
+                          .alignment(Pos.CENTER).padding(new Insets(15)).build()));
+                  dialogStage.show();
 //                Dialogs dialog = null;
 //                dialog.title("Message");
 //                dialog.masthead("Message d'information");
 //                dialog.message("Vous allez aux grilles de l'utilisateur: "+user.getText());
 //                dialog.showInformation();
-      }
-    });
-
-    //Méthode Bouton "Supprimer du groupe"
-    delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {          
+              }
+          });
+          
+          //Méthode Bouton "Supprimer du groupe"
+          delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent e) {          
 //                dialog.owner(null);
 //                dialog.title("Confirm Dialog");
 //                dialog.message("Voulez-vous supprimer l'utilisateur '"+user.getText()+"' du groupe '"+nameGroup.getText()+"'?");
@@ -289,24 +293,24 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                } else {
 //                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
 //                }
-      }
-    });
-
-    //Méthode Bouton "Nouveau Groupe"
-    newGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
+              }
+          });
+          
+          //Méthode Bouton "Nouveau Groupe"
+          newGroup.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent e) {
 //                dialog.title("Message");
 //                dialog.masthead("Message d'information");
 //                dialog.message("Créer un nouveau groupe");
 //                dialog.showInformation();
-      }
-    });
-
-    //Méthode Bouton "Supprimer Groupe"
-    delGroup.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
+              }
+          });
+          
+          //Méthode Bouton "Supprimer Groupe"
+          delGroup.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent e) {
 //                dialog.owner(null);
 //                dialog.title("Confirm Dialog");
 //                dialog.message("Voulez-vous supprimer le groupe '"+nameGroup.getText()+"'?");
@@ -318,55 +322,58 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                } else {
 //                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
 //                }
-      }
-    });
-
-    //Méthode ListView Groupes -> OnClick
-    listGroups.getSelectionModel().selectedItemProperty().addListener(
-        new ChangeListener<String>() {
-          public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {            
-            //showConnectedUsers(observableData,new_val); //Les afficher
-            if(new_val.equals("Utilisateurs connectés"))
-                listUsersView.setItems(users);
-            else{
-                listUsersView.setItems(users_n);
-            }
-            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
-            //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
-            nameGroup.setText(new_val);            
-            paneGroup.setVisible(true);
-            paneUser.setVisible(false);
-          }
-        });
-
-    //Méthode ListView Utilisateurs -> OnClick
-    listUsersView.getSelectionModel().selectedItemProperty().addListener(
-        new ChangeListener<String>() {
-          public void changed(ObservableValue<? extends String> ov,
+              }
+          });
+          
+          //Méthode ListView Groupes -> OnClick
+          listGroups.getSelectionModel().selectedItemProperty().addListener(
+                  new ChangeListener<String>() {
+                      public void changed(ObservableValue<? extends String> ov,
                               String old_val, String new_val) {
-            user.setText(new_val);
-            User a = listUsers.get(listUsersView.getSelectionModel().getSelectedIndex());
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-            birthD.setText("Date de Naissance: "+df.format(a.getBirthDate()));
-            paneUser.setVisible(true);
-            paneGroup.setVisible(false);
-          }
-        });
-   
-    
-    TabP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-        @Override public void changed(ObservableValue<? extends Tab> tab, Tab oldTab, Tab newTab) {
-            if(newTab.getText().equalsIgnoreCase("Liste Grilles"))
-            {
-                refreshMyGrids();
-            }
-            else if(newTab.getText().equalsIgnoreCase("Jouer"))
-            {
-                refreshGridPlayer();
-            }
-        }
-      });
+                          //showConnectedUsers(observableData,new_val); //Les afficher
+                          if(new_val.equals("Utilisateurs connectés"))
+                              listUsersView.setItems(users);
+                          else{
+                              listUsersView.setItems(users_n);
+                          }
+                          nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
+                          //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
+                          nameGroup.setText(new_val);
+                          paneGroup.setVisible(true);
+                          paneUser.setVisible(false);
+                      }
+                  });
+          
+          //Méthode ListView Utilisateurs -> OnClick
+          listUsersView.getSelectionModel().selectedItemProperty().addListener(
+                  new ChangeListener<String>() {
+                      public void changed(ObservableValue<? extends String> ov,
+                              String old_val, String new_val) {
+                          user.setText(new_val);
+                          User a = listUsers.get(listUsersView.getSelectionModel().getSelectedIndex());
+                          DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+                          birthD.setText("Date de Naissance: "+df.format(a.getBirthDate()));
+                          paneUser.setVisible(true);
+                          paneGroup.setVisible(false);
+                      }
+                  });
+          
+          
+          TabP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+              @Override public void changed(ObservableValue<? extends Tab> tab, Tab oldTab, Tab newTab) {
+                  if(newTab.getText().equalsIgnoreCase("Liste Grilles"))
+                  {
+                      refreshMyGrids();
+                  }
+                  else if(newTab.getText().equalsIgnoreCase("Jouer"))
+                  {
+                      refreshGridPlayer();
+                  }
+              }
+          });
+      } catch (IOException ex) {
+          Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+      }
   }
 
     
