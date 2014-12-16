@@ -6,7 +6,11 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.comm.CommunicationManager;
 import com.sudoku.data.manager.UserManager;
+import com.sudoku.data.model.User;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,23 +76,30 @@ public class LoginController implements Initializable, ControlledScreen {
   @FXML
   private void authenticate(ActionEvent event){
     System.out.println("in authenticate");
-        try{
-            if(userManag.authenticate(user.getText(), passwd.getText()) == null){
-                userName.setText("Echec de connexion : vérifiez vos identifiants.");
-            }
-            else{
-                userName.setText("");
-                goToProgram(event);
-            }
-        }
-        catch(NoSuchAlgorithmException e){
-            userName.setText("Erreur lors de l'exécution : problème d'encryptage");
-           return; 
-        }
-        catch(UnsupportedEncodingException e){
-            userName.setText("Erreur lors de l'exécution : problème d'encodage");
-           return; 
-        }
+    try{
+      User authUser = userManag.authenticate(user.getText(), passwd.getText());
+      if(authUser == null){
+        userName.setText("Echec de connexion : vérifiez vos identifiants.");
+      }
+      else{
+        userName.setText("");
+
+        CommunicationManager cm = CommunicationManager.getInstance();
+        cm.init(authUser.getSalt(), authUser.getPseudo(), UserManager.getInstance().getKnownIpAdresses());
+
+        goToProgram(event);
+      }
     }
-    
+    catch(NoSuchAlgorithmException e){
+      userName.setText("Erreur lors de l'exécution : problème d'encryptage");
+      return;
+    }
+    catch(UnsupportedEncodingException e){
+      userName.setText("Erreur lors de l'exécution : problème d'encodage");
+      return;
+    }
+    catch(IOException e){
+      userName.setText("Erreur lors de l'exécution : problème de connexion");
+    }
+  }
 }

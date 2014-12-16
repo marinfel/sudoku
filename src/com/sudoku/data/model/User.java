@@ -235,6 +235,15 @@ public class User implements Ruleable {
     return true;
   }
 
+  public boolean equals(Object other){
+    if(other == null) return false;
+    if(other == this) return true;
+    if(!(other instanceof User)) return false;
+
+    User o = (User)other;
+    return o.getSalt().equals(this.getSalt()) && o.getPseudo().equals(this.getPseudo());
+  }
+
   @JsonIgnore
   @Override
   public Boolean hasUser(User user) {
