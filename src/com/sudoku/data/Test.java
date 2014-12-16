@@ -14,10 +14,10 @@ import com.sudoku.data.sample.DataSample;
  */
 public class Test {
   public static void main(String[] args) {
-    for (int i = 0; i < 500; i++) {
-      Grid c = GridFactory.generateRandomGrid();
-      System.out.println(c);
-    }
+   // for (int i = 0; i < 500; i++) {
+    //  Grid c = GridFactory.generateRandomGrid();
+     // System.out.println(c);
+   //}
     DataSample ds;
     System.out.println(" création data sample");
     ds = new DataSample();

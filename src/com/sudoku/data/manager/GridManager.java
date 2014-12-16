@@ -4,11 +4,15 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.User;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.filechooser.FileSystemView;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
@@ -25,11 +29,13 @@ public final class GridManager {
   @JsonIgnore
   private File jsonFile;
   @JsonIgnore
-  private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backupGridManager.json";
-    
+  private  String jsonFilePath;
+
   private GridManager() {
     this.availableGrids = new ArrayList<>();
     this.playedGrids = new ArrayList<>();
+    // path vers le fichier de sauvegarde
+    jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
   }
 
   public final static GridManager getInstance() {
@@ -148,22 +154,39 @@ public final class GridManager {
        //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
        //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
         
-        try {
-	            jsonFile = new File(jsonFilePath);
-	 
-	            mapper.writeValue(jsonFile, this);
+        try{  
+                System.out.println(jsonFilePath.concat("backupGridManager.json"));
+                jsonFile = new File(jsonFilePath.concat("backupGridManager.json"));
+           
+                mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	            System.out.println(mapper.writeValueAsString(this));
+	        System.out.println(mapper.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  
 	} catch (JsonMappingException ex) {
 	 
 	            ex.printStackTrace();
-        } catch (IOException ex) {
+        }
+        catch (FileNotFoundException e){
+      try {
+          
+          File tmpFile=new File(jsonFilePath);
+          
+          tmpFile.mkdirs();
+          jsonFile = new File(jsonFilePath.concat("backupGridManager.json"));
+          mapper.writeValue(jsonFile, this);
+          //Pour logger le processus de sauvegarde
+          System.out.println(mapper.writeValueAsString(this));
+      } catch (IOException ex) {
+          Logger.getLogger(GridManager.class.getName()).log(Level.SEVERE, null, ex);
+      }
+        }
+        catch (IOException ex) {
 	 
 	            ex.printStackTrace();
         }
+        
     }
   public static GridManager BuildFromJson(){
   ObjectMapper mapper= new ObjectMapper();
@@ -171,8 +194,10 @@ public final class GridManager {
         //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
             
         try {
-	 
-                File jsonFile = new File(jsonFilePath);
+	       String jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
+ 
+                File jsonFile = new File(jsonFilePath.concat("backupGridManager.json"));
+           
 	 
                 //DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
                 GridManager.instance = mapper.readValue(jsonFile, GridManager.class);
