@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marc-Antoine MARTIN
@@ -30,11 +31,11 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
   protected static final int SIMPLE_LINES_SIDE = 1;
   protected static final int DOUBLE_LINES_SIDE = 2 * SIMPLE_LINES_SIDE;
 
-  protected Rectangle lines[] = new Rectangle[(CELL_NUMBER_PER_SIDE - 1) * (CELL_NUMBER_PER_SIDE - 1)];
-  protected IhmCell cells[][] = new IhmCell[CELL_NUMBER_PER_SIDE][CELL_NUMBER_PER_SIDE];
+  protected Rectangle[] lines = new Rectangle[(CELL_NUMBER_PER_SIDE - 1) * (CELL_NUMBER_PER_SIDE - 1)];
+  protected IhmCell[][] cells = new IhmCell[CELL_NUMBER_PER_SIDE][CELL_NUMBER_PER_SIDE];
   protected int cellSide;
   protected int side;
-  private final ArrayList<IhmCellEditable> emtpyCellsEditable = new ArrayList<>();
+  private final List<IhmCellEditable> emtpyCellsEditable = new ArrayList<>();
   private IhmGridLinesCompleted ihmGridLinesCompleted;
 
   /**
@@ -70,15 +71,14 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
 
     //Draw Lines with cells
     for (int i = 0; i < gridSize; i++) {
-      int X = getColIndexFromArrayIndex(i, gridSide);
-      int Y = getRowIndexFromArrayIndex(i, gridSide);
+      int cellX = getColIndexFromArrayIndex(i, gridSide);
+      int cellY = getRowIndexFromArrayIndex(i, gridSide);
 
-      if (X % 2 == 0 && Y % 2 == 0) {
+      if (cellX % 2 == 0 && cellY % 2 == 0) {
         // Add a cell half a time
         IhmCell ihmCell = null;
 
-        //*
-        Cell cell = grid.getCell(X >> 1, Y >> 1);
+        Cell cell = grid.getCell(cellX >> 1, cellY >> 1);
         if (cell == null) {
           throw new NullPointerException();
         }
@@ -96,20 +96,17 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
         } else {
           ihmCell = new IhmCellEditable(cellSide);
         }
-        //*/
+
         if (ihmCell == null) {
           throw new NullPointerException();
         }
 
-        ihmCell.setX(X >> 1);
-        ihmCell.setY(Y >> 1);
+        ihmCell.setX(cellX >> 1);
+        ihmCell.setY(cellY >> 1);
 
-        add(ihmCell, X, Y);
-        cells[X >> 1][Y >> 1] = ihmCell;
+        add(ihmCell, cellX, cellY);
+        cells[cellX >> 1][cellY >> 1] = ihmCell;
 
-        //remove the 2 next lines and uncomment to previous lines
-        //ihm_cell = new IhmCellEditable(cellSide);
-        //ihm_cell.setValue(8);
         //set this list as a listener of a close request event on the pop-up
         if (ihmCell instanceof IhmCellEditable) {
           ihmCell.addEventHandler(IhmCellEditedEvent.CELL_EDITED, this);
@@ -120,48 +117,51 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
           ihmCell.addEventHandler(IhmCellEditedEvent.RIGHT_KEY_TYPED, this);
           emtpyCellsEditable.add((IhmCellEditable) ihmCell);
         }
-      } else if (X % 2 == 1 && Y % 2 == 0) {
+      } else if (cellX % 2 == 1 && cellY % 2 == 0) {
         // Add a VLine
         Rectangle vline = new Rectangle();
-        if (((X + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((X + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) // Double the size one in three to separate subsquares
-        {
+
+        // Double the size one in three to separate subsquares
+        if (((cellX + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((cellX + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) {
           vline.setWidth(DOUBLE_LINES_SIDE);
         } else {
           vline.setWidth(SIMPLE_LINES_SIDE);
         }
 
         vline.setHeight(cellSide);
-        add(vline, X, Y);
+        add(vline, cellX, cellY);
 
-      } else if (X % 2 == 0 && Y % 2 == 1) {
+      } else if (cellX % 2 == 0 && cellY % 2 == 1) {
         // Add a HLine
         Rectangle hline = new Rectangle();
-        if (((Y + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((Y + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) // Double the size one in three to separate subsquares
-        {
+
+        // Double the size one in three to separate subsquares
+        if (((cellY + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((cellY + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) {
           hline.setHeight(DOUBLE_LINES_SIDE);
         } else {
           hline.setHeight(SIMPLE_LINES_SIDE);
         }
 
         hline.setWidth(cellSide);
-        add(hline, X, Y);
+        add(hline, cellX, cellY);
       } else {
         Rectangle intersectionRect = new Rectangle();
-        if (((X + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((X + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) // Double the size one in three to separate subsquares
-        {
+
+        // Double the size one in three to separate subsquares
+        if (((cellX + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((cellX + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) {
           intersectionRect.setWidth(2);
         } else {
           intersectionRect.setWidth(1);
         }
 
-        if (((Y + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((Y + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) // Double the size one in three to separate subsquares
-        {
+        // Double the size one in three to separate subsquares
+        if (((cellY + 1) / 2) % CELL_NUMBER_PER_SUBSIDE == 0 && ((cellY + 1) / 2) % CELL_NUMBER_PER_SIDE > 0) {
           intersectionRect.setHeight(2);
         } else {
           intersectionRect.setHeight(1);
         }
 
-        add(intersectionRect, X, Y);
+        add(intersectionRect, cellX, cellY);
       }
     }
 
@@ -237,22 +237,15 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     int gridSide = 2 * CELL_NUMBER_PER_SIDE - 1;
 
     int index = this.getChildren().indexOf(cell);
-    int X = getColIndexFromArrayIndex(index, gridSide);
-    int Y = getRowIndexFromArrayIndex(index, gridSide);
-    /*System.out.println("cell(" + X + ", " + Y + "): " + getChildren().size());
-     for(int i = 0; i < getChildren().size(); i++)
-     System.out.println("(" + getRowIndexFromArrayIndex(i, gridSide) + ", " + getColIndexFromArrayIndex(i, gridSide) + "): " + getChildren().get(i).getClass().toString());
-     */
-    //System.out.println("checkCellValue(" + cell.getValue() + ")");
+    int cellX = getColIndexFromArrayIndex(index, gridSide);
+    int cellY = getRowIndexFromArrayIndex(index, gridSide);
 
-    //System.out.println("line:");
     //check row
     boolean foundInRow = false;
     for (int x = 0; x < gridSide; x += 2) {
-      if (x % 2 == 0 && x != X) {
-        //System.out.print("\t(" + x + ", " + Y + "): " + getArrayIndexFromColRowIndex(x, Y, gridSide) + ": ");
-        IhmCell c = (IhmCell) getChildren().get(getArrayIndexFromColRowIndex(x, Y, gridSide));
-        //System.out.println(c.getValue());
+      if (x % 2 == 0 && x != cellX) {
+        IhmCell c = (IhmCell) getChildren().get(getArrayIndexFromColRowIndex(x, cellY, gridSide));
+
         if (c.getValue() == cell.getValue()) {
           foundInRow = true;
           break;
@@ -261,13 +254,11 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     }
 
     //check column
-    //System.out.println("row:");
     boolean foundInColumn = false;
     for (int y = 0; y < gridSide; y += 2) {
-      if (y % 2 == 0 && y != Y) {
-        //System.out.print("\t(" + X + ", " + y + "): " + getArrayIndexFromColRowIndex(X, y, gridSide) + ": ");
-        IhmCell c = (IhmCell) getChildren().get(getArrayIndexFromColRowIndex(X, y, gridSide));
-        //System.out.println(c.getValue());
+      if (y % 2 == 0 && y != cellY) {
+        IhmCell c = (IhmCell) getChildren().get(getArrayIndexFromColRowIndex(cellX, y, gridSide));
+
         if (c.getValue() == cell.getValue()) {
           foundInColumn = true;
           break;
@@ -276,16 +267,15 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     }
 
     //check sub-square
-    int Xs = (int) ((double) X / (double) (2 * CELL_NUMBER_PER_SUBSIDE)) * 2 * CELL_NUMBER_PER_SUBSIDE;
-    int Ys = (int) ((double) Y / (double) (2 * CELL_NUMBER_PER_SUBSIDE)) * 2 * CELL_NUMBER_PER_SUBSIDE;
-    //System.out.println("sub-square (" + Xs + ", " + Ys + "):");
+    int cellXs = (int) ((double) cellX / (double) (2 * CELL_NUMBER_PER_SUBSIDE)) * 2 * CELL_NUMBER_PER_SUBSIDE;
+    int cellYs = (int) ((double) cellY / (double) (2 * CELL_NUMBER_PER_SUBSIDE)) * 2 * CELL_NUMBER_PER_SUBSIDE;
+
     boolean foundInSubSquare = false;
-    for (int x = Xs; x < Xs + 2 * CELL_NUMBER_PER_SUBSIDE; x += 2) {
-      for (int y = Ys; y < Ys + 2 * CELL_NUMBER_PER_SUBSIDE; y += 2) {
-        if (x % 2 == 0 && y % 2 == 0 && (x != X || y != Y)) {
-          //System.out.print("\t(" + x + ", " + y + "): ");
+    for (int x = cellXs; x < cellXs + 2 * CELL_NUMBER_PER_SUBSIDE; x += 2) {
+      for (int y = cellYs; y < cellYs + 2 * CELL_NUMBER_PER_SUBSIDE; y += 2) {
+        if (x % 2 == 0 && y % 2 == 0 && (x != cellX || y != cellY)) {
           IhmCell c = (IhmCell) getChildren().get(getArrayIndexFromColRowIndex(x, y, gridSide));
-          //System.out.println(c.getValue());
+
           if (c.getValue() == cell.getValue()) {
             foundInSubSquare = true;
             break;
@@ -356,7 +346,7 @@ public class IhmGridLines extends GridPane implements EventHandler<IhmCellEdited
     }
 
     public boolean contains(Flags flag) {
-      return ((flagValue & flag.flagValue) > 0);
+      return (flagValue & flag.flagValue) > 0;
     }
   }
 }
