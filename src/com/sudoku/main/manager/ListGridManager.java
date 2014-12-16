@@ -8,6 +8,7 @@ package com.sudoku.main.manager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import java.util.ArrayList;
@@ -45,12 +46,31 @@ public class ListGridManager {
         return GridList;
     }
     
-    public GridPane getGridThumbnailContainer()
+    public GridPane getGridThumbnailContainer(boolean filter, int type, List<Tag> tags,int grads)
     {
         GridThumbnailContainer container = new GridThumbnailContainer();
-        for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
+        if(!filter)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview));
+            for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
+            {
+                container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview));
+            }
+        }
+        else
+        {
+            if(type==0)
+            {
+                for(int i = 0; i<gridManager.filterGridsByTags(tags).size();i++)
+                {
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByTags(tags).get(i),preview));
+                }
+            }else if(type == 1)
+            {
+                for(int i = 0; i<gridManager.filterGridsByGrade(grads).size();i++)
+                {
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByGrade(grads).get(i),preview));
+                }
+            }
         }
         return container.getInstance();
     }

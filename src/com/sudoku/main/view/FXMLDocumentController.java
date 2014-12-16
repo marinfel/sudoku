@@ -8,6 +8,7 @@ package com.sudoku.main.view;
 
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.ContactCategory;
+import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import com.sudoku.grid.player.IhmGridPlayer;
@@ -37,6 +38,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -50,10 +52,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBoxBuilder;
@@ -85,6 +89,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   ScrollPane distantPane;
   ScrollPane currentPane;
   ScrollPane finishedPane;
+  int ResearchMode;
   
   public User loggedUser;
   public UserManager userManag;
@@ -183,6 +188,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private ScrollPane GridPlayerContainer;
   @FXML
   public ScrollPane GridPreviewShow;
+  @FXML
+  private ChoiceBox ResearchType;
+  @FXML
+  private TextField ResearchInput;
 
 
   @Override
@@ -200,6 +209,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           dialogStage.setHeight(100);
           dialogStage.setWidth(200);
           dialogStage.setResizable(false);
+          ResearchMode=0;
           
           System.out.println("test data" + instance.a.getPseudo());
           Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -207,6 +217,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
           ContentContainer.setPrefHeight(primaryScreenBounds.getHeight()*0.8);
           ContentContainer.setPrefWidth(primaryScreenBounds.getWidth()*0.8);
+          
+          assert ResearchInput != null : "fx:id=\"ResearchInput\" was not injected: check your FXML file 'FXMLDocument.fxml'.";  
+          assert ResearchType != null : "fx:id=\"ResearchType\" was not injected: check your FXML file 'FXMLDocument.fxml'.";  
           assert GridPreviewShow != null : "fx:id=\"GridPreviewShow\" was not injected: check your FXML file 'FXMLDocument.fxml'.";  
           assert GridPlayerContainer != null : "fx:id=\"GridPlayerContainer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert Jouer != null : "fx:id=\"Jouer\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
@@ -266,7 +279,33 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           //Charger données utilisateur
           loggedUser = null;
           
-          //Méthode Bouton "Aller aux grilles"
+          
+          
+          //Research methods
+          ResearchType.setItems(FXCollections.observableArrayList("Tag", "Note"));
+          ResearchType.setTooltip(new Tooltip("Selectionez le type de la recherche"));
+          ResearchType.getSelectionModel().selectedIndexProperty().addListener(
+                  new ChangeListener<Number>(){
+                      public void changed(ObservableValue ov, Number value, Number new_value)
+                      {
+                          if(new_value.intValue() == 0)
+                          {
+                              ResearchMode = 0;
+                              ResearchInput.setPromptText("Tapez un tag");
+                              
+                          }
+                          else  if(new_value.intValue() == 1)
+                          {
+                              ResearchMode = 1;
+                              ResearchInput.setPromptText("Tapez une note");
+                              
+                          }
+                      }
+                  }
+          
+          );
+
+            //Méthode Bouton "Aller aux grilles"
           goToGrids.setOnAction(new EventHandler<ActionEvent>() {
               @Override
               public void handle(ActionEvent e) {
@@ -450,6 +489,36 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     avatar.setImage(new Image(new File(file.toString()).toURI().toString()));
   }
   
+  @FXML
+  private void LetSearchGrid(ActionEvent event)
+  {
+      if(ResearchMode == 0)
+      {
+          List<Tag> tags = new ArrayList<Tag>();
+          String[] result = ResearchInput.getText().split(" ");
+          for(int i=0; i<result.length;i++)
+          {
+              tags.add(new Tag(result[i]));
+          }
+          gridList = new ListGridManager(instance,GridPreviewShow);
+          scpane = new ScrollPane();
+          scpane.setContent(gridList.getGridThumbnailContainer(true,0,tags,0));
+          scpane.setPrefSize(800, 400);
+          myGrid.getChildren().add(scpane);
+      }
+      else
+      {
+          int NoteValue = Integer.valueOf(ResearchInput.getText());
+          gridList = new ListGridManager(instance,GridPreviewShow);
+          scpane = new ScrollPane();
+          scpane.setContent(gridList.getGridThumbnailContainer(true,1,null,NoteValue));
+          scpane.setPrefSize(800, 400);
+          myGrid.getChildren().add(scpane);
+      }
+      
+      
+  }
+  
   private void getDataUser() {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);     
     //avatar.setImage(new Image(new File("pictures/grid/yellowStar.png").toURI().toString()));
@@ -469,7 +538,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     // My Grids
     gridList = new ListGridManager(instance,GridPreviewShow);
     scpane = new ScrollPane();
-    scpane.setContent(gridList.getGridThumbnailContainer());
+    scpane.setContent(gridList.getGridThumbnailContainer(false,0,null,0));
     scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
     
