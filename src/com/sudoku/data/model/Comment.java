@@ -40,6 +40,7 @@ public final class Comment {
     this.author = null;
     this.pseudo = null;
     this.userSalt = null;
+    this.setCreationDateNow();
     }
   public Comment(String comment, Double grade, User u) {
     this.comment = comment;
@@ -47,19 +48,21 @@ public final class Comment {
     this.author = u;
     this.pseudo = u.getPseudo();
     this.userSalt = u.getSalt();
+    this.setCreationDateNow();
   }
- public Comment(String comment, Integer grade, User u) {
+ public Comment(String comment, Integer grade, User u, Date d) {
     this.comment = comment;
     this.grade=grade;
     this.author = u;
     this.pseudo = u.getPseudo();
     this.userSalt = u.getSalt();
+    this.creationDate=d; 
   }
 
   public static Comment buildFromAvroComment(
       com.sudoku.comm.generated.Comment comment) {
     return new Comment(comment.getComment(), comment.getGrade(),
-        User.buildFromAvroUser(comment.getAuthor()));
+        User.buildFromAvroUser(comment.getAuthor()),comment.getCreationDate());
   }
 
   public User getAuthor() {
@@ -99,5 +102,8 @@ public final class Comment {
   public void setCreationDateNow(){
       Calendar cal = new GregorianCalendar();
       this.creationDate=cal.getTime();
+  }
+  public Date getCreationDate(){
+      return this.creationDate;
   }
 }
