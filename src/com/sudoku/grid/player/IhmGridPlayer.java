@@ -169,7 +169,7 @@ public class IhmGridPlayer extends IhmGridView {
       @Override
       public void handle(ActionEvent event) {
         try {
-          gridComments.add(new Comment(textField.getText(), (int) Math.round(starsBox.getValueAtClick()), UserManager.getInstance().getLoggedUser()));
+          gridComments.add(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
         } catch (Exception e) {
         }
         stage.hide();
