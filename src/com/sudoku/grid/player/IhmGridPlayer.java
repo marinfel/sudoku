@@ -96,14 +96,9 @@ public class IhmGridPlayer extends IhmGridView {
     
     // deux derniers commentaires
     VBox firstComm = new VBox();
-    try{
-        gridComments = grid.getComments();
-    }
-    catch(Exception e){
-        gridComments = null;
-    }
+    gridComments = grid.getComments();
     int size = gridComments.size();
-    if(gridComments != null && size > 0){
+    if(size > 0){
         for (int i = 1; i < nbComm; i++) {
             Comment comm = gridComments.get(size - i);
              Label commAuthorAndDate = new Label(comm.getAuthor()+" - "/*+comm.getCreateDate*/);
@@ -178,11 +173,7 @@ public class IhmGridPlayer extends IhmGridView {
     buttonOk.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
-        try{
-            gridComments.add(new Comment(textField.getText(),(int)Math.round(starsBox.getValueAtClick()),UserManager.getInstance().getLoggedUser()));
-         }
-         catch(Exception e){
-         }
+        grid.addComment(new Comment(textField.getText(),(int)Math.round(starsBox.getValueAtClick()),UserManager.getInstance().getLoggedUser()));
         stage.hide();
       }
     });
@@ -221,7 +212,7 @@ public class IhmGridPlayer extends IhmGridView {
      sc.setOrientation(Orientation.VERTICAL);
      sc.setPrefHeight(scene.getHeight());
      sc.setMax(scene.getHeight()+50);
-    
+    gridComments = grid.getComments();
     if(gridComments != null && gridComments.size() > 0){
         for (int i = 1; i < 10; i++) {
             Comment comm = gridComments.get(gridComments.size() - i);
