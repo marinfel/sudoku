@@ -105,6 +105,8 @@ public class RegisterController implements Initializable, ControlledScreen {
            return; 
         } catch (UnknownHostException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     else{

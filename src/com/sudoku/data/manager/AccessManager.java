@@ -7,16 +7,26 @@ package com.sudoku.data.manager;
 
 import com.sudoku.data.model.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.Version;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.module.SimpleModule;
+import com.sudoku.util.*;
+import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.map.type.MapType;
+import org.codehaus.jackson.map.type.TypeFactory;
+        
 
 /**
  * @author JE
@@ -29,10 +39,12 @@ public class AccessManager {
   @JsonIgnore
   private File jsonFile;
   @JsonIgnore
-  private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backupAccessManager.json";
+  private String jsonFilePath;
     
   private AccessManager() {
     this.rules = new HashMap<>();
+    jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
+ 
   }
 
   public static AccessManager getInstance() {
@@ -161,39 +173,66 @@ public class AccessManager {
   }
   
    public void SaveToJson(){
-       ObjectMapper mapper = new ObjectMapper();
+       //ObjectMapper mapper = new ObjectMapper();
        //Pour sérializer les champs publics comme privés
-       mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
        //pour ne pas planter sur une valeur null
        //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
        //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
+        SimpleModule module =  
+          new SimpleModule("MyMapKeySerializerModule",  
+          new Version(1, 0, 0, null));
+        module.addKeySerializer(AccessManager.class, new AccessGridSerializer2());
+        MapType myMapType;
+        myMapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, Grid.class,AccessRule.class);
         
+        ObjectWriter writer = new ObjectMapper().withModule(module).typedWriter(myMapType);
+       // mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+      try {
+          System.out.println(writer.writeValueAsString(rules));
+      } catch (IOException ex) {
+          Logger.getLogger(AccessManager.class.getName()).log(Level.SEVERE, null, ex);
+      }
         try {
-                 jsonFile = new File(jsonFilePath);
-	 
-	            mapper.writeValue(jsonFile, this);
+                System.out.println(jsonFilePath.concat("backupAccessManager.json"));
+                jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
+                
+                writer.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	            System.out.println(mapper.writeValueAsString(this));
+	        System.out.println(writer.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  
 	} catch (JsonMappingException ex) {
 	 
 	            ex.printStackTrace();
-        } catch (IOException ex) {
+        }  catch (FileNotFoundException e){
+            try {
+          
+                File tmpFile=new File(jsonFilePath);
+
+                tmpFile.mkdirs();
+                jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
+                writer.writeValue(jsonFile, this);
+                //Pour logger le processus de sauvegarde
+                System.out.println(writer.writeValueAsString(this));
+            } catch (IOException ex) {
+                Logger.getLogger(GridManager.class.getName()).log(Level.SEVERE, null, ex);
+            }    
+        }catch (IOException ex) {
 	 
 	            ex.printStackTrace();
         }
     }
-  public static UserManager BuildFromJson(){
+  public static AccessManager BuildFromJson(){
   ObjectMapper mapper= new ObjectMapper();
         // To avoid any undeclared property error
         //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
             
         try {
-	 
-                File jsonFile = new File(jsonFilePath);
-	 
+                String jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
+ 
+                File jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
+           
                 //DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
                 AccessManager.instance = mapper.readValue(jsonFile, AccessManager.class);
         }catch (JsonGenerationException ex) {
@@ -210,7 +249,7 @@ public class AccessManager {
 	            ex.printStackTrace();
 	 
 	}
-        return UserManager.getInstance();
+        return AccessManager.getInstance();
   
   }
 }

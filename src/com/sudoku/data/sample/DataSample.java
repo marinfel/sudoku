@@ -27,6 +27,7 @@ import java.util.Locale;
 import com.sudoku.data.manager.DataManager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -48,7 +49,7 @@ public class DataSample {
         g2= GridFactory.generateRandomGrid();
         g3= GridFactory.generateRandomGrid();
         }
-    public void exec(){
+    public void exec() throws IOException{
         System.out.println(" Datasample started");
       try {
         a = new User("User1", "User1", new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse("01/01/2001"), "");
@@ -137,13 +138,13 @@ public class DataSample {
        userMgr.addLocalUser(b);
        userMgr.addLocalUser(c);
        
-        try {
+        /*try {
             userMgr.authenticate("User1", "User1");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
        
        gridMgr.addGrid(g1);
        gridMgr.addGrid(g2);
@@ -161,7 +162,7 @@ public class DataSample {
        DataManager dataMgr = DataManager.getInstance();
        //UserManager.getInstance();
        //getLoggedUser().setContactCategories(listCat);
-       //dataMgr.saveToJson();
+      dataMgr.saveToJson();
        
        System.out.println(" Datasample finished");
        

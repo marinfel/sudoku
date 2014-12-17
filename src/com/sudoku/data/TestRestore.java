@@ -44,6 +44,6 @@ public class TestRestore {
     System.out.println(ul1.get(0).toString());
     System.out.println(gl1.toString());
     System.out.println("Au fait, je m'éxécute");
-    System.out.println(al1.toString());
+    //System.out.println(al1.get(GridManager.getInstance().getUserGrids(ul1.get(0))));
   }
 }

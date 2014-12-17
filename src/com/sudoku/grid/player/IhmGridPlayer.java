@@ -211,9 +211,9 @@ public class IhmGridPlayer extends IhmGridView {
     sc.setPrefHeight(scene.getHeight());
     sc.setMax(scene.getHeight() + 50);
 
-    if (gridComments != null && gridComments.size() > 0) {
-      for (int i = 1; i < 10; i++) {
-        Comment comm = gridComments.get(gridComments.size() - i);
+    if (gridComments.size() > 0) {
+      for (int i = 1; i < gridComments.size(); i++) {
+        Comment comm = gridComments.get(i);
         Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
         vb.getChildren().add(commAuthorAndDate);
         Text commText = new Text(comm.getComment());
