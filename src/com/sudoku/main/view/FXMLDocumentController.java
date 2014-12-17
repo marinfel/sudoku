@@ -11,6 +11,7 @@ import com.sudoku.data.model.ContactCategory;
 import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
 import com.sudoku.grid.player.IhmGridPlayer;
 import com.sudoku.main.manager.ListGridManager;
 import com.sudoku.main.manager.UserCategoryManager;
@@ -264,7 +265,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
           
           //ListUsers = UserManager.getInstance().getConnectedUsers();
-          listUsers = instance.getUserList();
+          listUsers = UserManager.getInstance().getDistantUsers();
           //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
           //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
           //showConnectedUsers(observableData,"Global"); //Les afficher
@@ -414,6 +415,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                   }
               }
           });
+          
       } catch (IOException ex) {
           Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -572,7 +574,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           {
             IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
             GridPlayerContainer.setContent(GridP);
-            //GridPlayer.getChildren().add(GridP);
           }
       }
   }

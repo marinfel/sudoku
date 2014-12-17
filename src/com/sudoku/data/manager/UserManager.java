@@ -132,8 +132,8 @@ public final class UserManager { // This is the manager for users.
            .equals(u.getPassword())) { //If the hash of pwd+salt is good
           loggedUser = u; // If the password is correct, log the user
 
-          /*CommunicationManager cm = CommunicationManager.getInstance();
-          cm.init(u.getSalt(), u.getPseudo(), this.knownIpAdresses);*/
+          CommunicationManager cm = CommunicationManager.getInstance();
+          cm.init(u.getSalt(), u.getPseudo(), this.knownIpAdresses);
 
           return u; // and return the identified user
         }
