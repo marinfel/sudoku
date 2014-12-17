@@ -18,6 +18,7 @@ import com.sudoku.main.manager.UserCategoryManager;
 import com.sudoku.main.manager.RefreshGridPlayer;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -410,7 +412,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   @FXML
-  private void modifyUserInformation(ActionEvent event) throws ParseException {
+  private void modifyUserInformation(ActionEvent event) throws ParseException, NoSuchAlgorithmException, UnsupportedEncodingException {
     textInfHome.setText(null);
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     Date dateB = formatter.parse(birthDateHome.getText());
@@ -423,9 +425,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     textInfHome.setText("Enregistré correctement");
     if(!pass2Home.getText().isEmpty() || !pass3Home.getText().isEmpty()){
         if(!pass1Home.getText().isEmpty()){
-            if (pass1Home.getText().equals(loggedUser.getPassword())){
+            if (loggedUser.checkPassword(pass1Home.getText())){
                 if(pass2Home.getText().equals(pass3Home.getText())){                    
-                    //loggedUser.setPassword(pass2Home.getText());
+                    loggedUser.setpassword(pass2Home.getText());
                     System.out.println("Guardar contraseña");                    
                     textInfHome.setText("Enregistré correctement");
                     pass1Home.setText(null);
@@ -451,22 +453,20 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   @FXML
   private void createNewGroup(ActionEvent event) {
-      ContactCategory newCategory = new ContactCategory();
-      newCategory.setName(nameGroup.getText());
+      loggedUser.createContactCategory(nameGroup.getText());
       // Ajouter droits du groupe
       //Ajouter catégorie
-      //loggedUser.addCategory(newCategory);
       
   }
   
   @FXML
   private void editGroup(ActionEvent event) {
-    
+      //loggedUser.createContactCategory(nameGroup.getText());
   }
   
   @FXML
   private void deleteGroup(ActionEvent event) {
-  
+      loggedUser.removeContactCategory(nameGroup.getText());
   }
     
   private void LetSearchGrid(ActionEvent event) {
