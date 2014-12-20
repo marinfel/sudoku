@@ -6,7 +6,9 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.grid.popups.IhmPopupsList;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
+import javafx.stage.WindowEvent;
 
 /**
  * @author MOURAD
@@ -30,6 +33,8 @@ public class SudukoIHM extends Application {
   public static String fillGridFile = "FillAndCreate.fxml";
   public static String fromFullGridID = "FromFullGrid";
   public static String fromFullGridFile = "FromFullGrid.fxml";
+  public static String gridPlayerGameID = "GridPlayerGame";
+  public static String gridPlayerGame = "GridPlayerGame.fxml";
 
   private ImageView avatar;
   private Image image;
@@ -54,6 +59,8 @@ public class SudukoIHM extends Application {
     mainContainer.loadScreen(SudukoIHM.programID, SudukoIHM.programFile);
     mainContainer.loadScreen(SudukoIHM.fillGridID, SudukoIHM.fillGridFile);
     mainContainer.loadScreen(SudukoIHM.fromFullGridID, SudukoIHM.fromFullGridFile);
+    mainContainer.loadScreen(SudukoIHM.fillGridID, SudukoIHM.fillGridFile);
+    mainContainer.loadScreen(SudukoIHM.gridPlayerGameID, SudukoIHM.gridPlayerGame);
     mainContainer.setScreen(SudukoIHM.loginID);
     Group root = new Group();
     root.getChildren().addAll(mainContainer);
@@ -64,6 +71,14 @@ public class SudukoIHM extends Application {
     primaryStage.setScene(scene);
     primaryStage.setHeight(primaryScreenBounds.getHeight()*0.8);
     primaryStage.setWidth(primaryScreenBounds.getWidth()*0.8);
+    primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>(){
+
+        @Override
+        public void handle(WindowEvent t) {
+            IhmPopupsList.getInstance().killAllTimers();
+        }
+        
+    });
     primaryStage.show();
   }
 }

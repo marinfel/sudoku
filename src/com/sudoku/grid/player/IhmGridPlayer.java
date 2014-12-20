@@ -11,6 +11,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
 import com.sudoku.grid.preview.StarsBox;
 import java.io.File;
 import java.util.List;
@@ -41,7 +42,7 @@ import javafx.stage.Stage;
 /**
  * @author Laetitia
  */
-public class IhmGridPlayer extends IhmGridView {
+public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLinesCompleted>  {
 
   private final int nbComm = 2;
 
@@ -57,7 +58,7 @@ public class IhmGridPlayer extends IhmGridView {
 
   public IhmGridPlayer(Grid grid) {
     super(IhmGridLines.ALL_EDITABLE.add(IhmGridLines.FIT_GRID), grid, 500);
-
+    
     //ajout du titre
     HBox topLayout = (HBox) border.getTop();
     title = new Label(grid.getTitle());
@@ -129,6 +130,8 @@ public class IhmGridPlayer extends IhmGridView {
     commBox.getChildren().addAll(firstComm, commButton);
     bottomLayout.getChildren().add(commBox);
 
+    
+    gridLines.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, this);
   }
 
   private void showAddCommentForm() {
@@ -241,4 +244,9 @@ public class IhmGridPlayer extends IhmGridView {
 
     stage.show();
   }
+  
+  @Override
+    public void handle(IhmGridLinesCompleted t) {
+        fireEvent(t);
+    }
 }

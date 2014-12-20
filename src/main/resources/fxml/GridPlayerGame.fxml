@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="1040.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.sudoku.main.view.GridPlayerGameController">
+   <children>
+      <ScrollPane fx:id="GridPlayerContainer" layoutX="6.0" layoutY="34.0" prefHeight="579.0" prefWidth="930.0" />
+      <Button fx:id="LeaveGame" layoutX="940.0" layoutY="45.0" mnemonicParsing="false" onAction="#goToProgram" text="Quitter" textFill="#1daee8">
+         <font>
+            <Font name="Candara" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="202.0" prefHeight="31.0" prefWidth="210.0" text="Jouer une partie" textAlignment="CENTER" textFill="#139ee4" textOverrun="CLIP">
+         <font>
+            <Font name="Candara" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
