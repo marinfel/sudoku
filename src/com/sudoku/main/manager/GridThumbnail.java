@@ -5,6 +5,7 @@
  */
 package com.sudoku.main.manager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.preview.IhmGridDetailledPreview;
 import com.sudoku.grid.preview.IhmGridPreview;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -99,7 +100,7 @@ public class GridThumbnail extends AnchorPane {
         SeeMoreButton.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-            preview.setContent(new IhmGridPreview(instance,200));
+            preview.setContent(new IhmGridDetailledPreview(instance,200));
         }
       });
     }
