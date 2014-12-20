@@ -12,9 +12,13 @@ import java.util.List;
 public class CommMain {
   private static final Logger LOGGER =
       LoggerFactory.getLogger(CommMain.class);
+
+  /** 
+   */
   public static final int SLEEP_TIMER = 10000;
   
   private CommMain() {
+    /* utility : prevent the usage of the default public constructor */
   }
 
   public static void main(String[] args) {

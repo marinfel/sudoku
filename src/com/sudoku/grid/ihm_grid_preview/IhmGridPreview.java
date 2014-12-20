@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sudoku.grid.preview;
+package com.sudoku.grid.ihm_grid_preview;
 
-import com.sudoku.grid.gridcells.IhmCell;
-import com.sudoku.grid.gridcells.IhmCellView;
+import com.sudoku.grid.preview.StarsBox;
+//import com.sudoku.grid.ihm_grid_cells.IhmCell;
+//import com.sudoku.grid.ihm_grid_cells.IhmCellView;
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.gridcells.IhmGridLines;
+//import com.sudoku.grid.ihm_grid_cells.IhmGridLines;
 import com.sudoku.grid.manager.IhmGridLayout;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -22,28 +24,11 @@ import javafx.scene.layout.VBox;
  */
 public class IhmGridPreview extends IhmGridLayout {
 
-    /**
-     *
-     */
-    protected Text authorName;
+  protected Text authorName;
+  protected StarsBox starsBox;
+  protected final BorderPane border;
 
-    /**
-     *
-     */
-    protected StarsBox starsBox;
-
-    /**
-     *
-     */
-    protected final BorderPane border;
-
-    /**
-     *
-     * @param numberOfStars
-     * @param gr
-     * @param size
-     */
-    public IhmGridPreview(Grid gr, int size) {
+  public IhmGridPreview(double numberOfStars, Grid gr, int size) {
     super(IhmGridLines.ALL_VIEW.add(IhmGridLines.FIT_GRID), gr, size);
 
     border = new BorderPane();
@@ -57,10 +42,10 @@ public class IhmGridPreview extends IhmGridLayout {
     border.setCenter(centerVBox);
     topHBox.getChildren().add(new Label("Preview"));
     centerVBox.getChildren().add(gridLines);
-
+    
     starsBox = getStarsBox();
     starsBox.setValue(gr.getMeanGrades());
-    getChildren().add(starsBox); //à redimensionner
+    getChildren().add(starsBox);
   }
 
 }

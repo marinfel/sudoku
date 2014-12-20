@@ -84,9 +84,6 @@ public class LoginController implements Initializable, ControlledScreen {
       else{
         userName.setText("");
 
-        CommunicationManager cm = CommunicationManager.getInstance();
-        cm.init(authUser.getSalt(), authUser.getPseudo(), UserManager.getInstance().getKnownIpAdresses());
-
         goToProgram(event);
       }
     }

@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import  javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -32,17 +33,19 @@ public class GridThumbnail extends AnchorPane {
     BorderPane border;
     IhmGridPreview gridInstance;
     GridPane GridInfo;
+    ScrollPane preview;
     
     
-    GridThumbnail(Grid g)
+    GridThumbnail(Grid g,ScrollPane p)
     {
         super();
         instance = g;
+        preview = p;
         border = new BorderPane();
         GridInfo = new GridPane();
         SeeMoreButton = new Button("Afficher");
         PlayButton = new Button("Charger");
-        gridInstance = new IhmGridPreview(instance.getDifficulty(),instance,100);
+        gridInstance = new IhmGridPreview(instance,100);
         initThumbnail();
         setPositions();
         setListener();
@@ -91,6 +94,12 @@ public class GridThumbnail extends AnchorPane {
         @Override
         public void handle(ActionEvent e) {
             RefreshGridPlayer.getInstance().setCurrentGrid(instance);
+        }
+      });
+        SeeMoreButton.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent e) {
+            preview.setContent(new IhmGridPreview(instance,200));
         }
       });
     }
