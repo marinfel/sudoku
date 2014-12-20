@@ -174,11 +174,7 @@ public class IhmGridPlayer extends IhmGridView {
       @Override
       public void handle(ActionEvent event) {
         try {
-<<<<<<< HEAD
-          grid.addComment(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
-=======
           gridComments.add(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
->>>>>>> 445723eb767b32b04409f7df53120d18529f2aac
         } catch (Exception e) {
         }
         stage.hide();
@@ -225,15 +221,9 @@ public class IhmGridPlayer extends IhmGridView {
     sc.setMax(scene.getHeight() + 50);
 
     if (gridComments.size() > 0) {
-<<<<<<< HEAD
-      for (int i = 0; i < gridComments.size(); i++) {
-        Comment comm = gridComments.get(i);
-        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - "/*+comm.getCreateDate*/);
-=======
       for (int i = 1; i < gridComments.size(); i++) {
         Comment comm = gridComments.get(i);
         Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
->>>>>>> 445723eb767b32b04409f7df53120d18529f2aac
         vb.getChildren().add(commAuthorAndDate);
         Text commText = new Text(comm.getComment());
         commText.setWrappingWidth(270);

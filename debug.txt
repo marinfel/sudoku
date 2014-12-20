@@ -1,0 +1,384 @@
+Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T22:58:10+02:00)
+Maven home: c:\apache-maven-3.2.3
+Java version: 1.7.0_51, vendor: Oracle Corporation
+Java home: c:\Program Files\Java\jdk1.7.0_51\jre
+Default locale: fr_FR, platform encoding: Cp1252
+OS name: "windows 8", version: "6.2", arch: "amd64", family: "windows"
+[INFO] Error stacktraces are turned on.
+[DEBUG] Reading global settings from c:\apache-maven-3.2.3\conf\settings.xml
+[DEBUG] Reading user settings from C:\Users\Marc-Antoine\.m2\settings.xml
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] Unrecognised tag: 'id' (position: START_TAG seen ...<profiles>\n\t\t<id>... @185:7)  @ c:\apache-maven-3.2.3\conf\settings.xml, line 185, column 7
+[WARNING] 
+[DEBUG] Using local repository at C:\Users\Marc-Antoine\.m2\repository
+[DEBUG] Using manager EnhancedLocalRepositoryManager with priority 10.0 for C:\Users\Marc-Antoine\.m2\repository
+[INFO] Scanning for projects...
+[DEBUG] Extension realms for project com.sudoku:lo23-sudoku:jar:1.0-SNAPSHOT: (none)
+[DEBUG] Looking up lifecyle mappings for packaging jar from ClassRealm[plexus.core, parent: null]
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.sudoku:lo23-sudoku:jar:1.0-SNAPSHOT
+[WARNING] 'dependencies.dependency.systemPath' for com.oracle:javafx:jar should not point at files within the project directory, ${project.basedir}/lib/jfxrt.jar will be unresolvable by dependent projects @ line 54, column 25
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[DEBUG] Resolving plugin prefix exec from [org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] Could not find metadata org.apache.maven.plugins/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.apache.maven.plugins/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.apache.maven.plugins/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Could not find metadata org.codehaus.mojo/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.codehaus.mojo/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.codehaus.mojo/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Resolved plugin prefix exec to org.codehaus.mojo:exec-maven-plugin from repository central
+[DEBUG] Resolving plugin version for org.codehaus.mojo:exec-maven-plugin
+[DEBUG] Could not find metadata org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Resolved plugin version for org.codehaus.mojo:exec-maven-plugin to 1.3.2 from repository central (https://repo.maven.apache.org/maven2, releases)
+[DEBUG] === REACTOR BUILD PLAN ================================================
+[DEBUG] Project: com.sudoku:lo23-sudoku:jar:1.0-SNAPSHOT
+[DEBUG] Tasks:   [exec:java]
+[DEBUG] Style:   Regular
+[DEBUG] =======================================================================
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building LO23 sudoku 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[DEBUG] Resolving plugin prefix exec from [org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] Could not find metadata org.apache.maven.plugins/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.apache.maven.plugins/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.apache.maven.plugins/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Could not find metadata org.codehaus.mojo/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.codehaus.mojo/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.codehaus.mojo/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Resolved plugin prefix exec to org.codehaus.mojo:exec-maven-plugin from repository central
+[DEBUG] Resolving plugin version for org.codehaus.mojo:exec-maven-plugin
+[DEBUG] Could not find metadata org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml in local (C:\Users\Marc-Antoine\.m2\repository)
+[DEBUG] Failure to find org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml in http://onejar-maven-plugin.googlecode.com/svn/mavenrepo was cached in the local repository, resolution will not be reattempted until the update interval of onejar-maven-plugin.googlecode.com has elapsed or updates are forced
+[DEBUG] Skipped remote update check for org.codehaus.mojo:exec-maven-plugin/maven-metadata.xml, locally cached metadata up-to-date.
+[DEBUG] Resolved plugin version for org.codehaus.mojo:exec-maven-plugin to 1.3.2 from repository central (https://repo.maven.apache.org/maven2, releases)
+[DEBUG] Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] === PROJECT BUILD PLAN ================================================
+[DEBUG] Project:       com.sudoku:lo23-sudoku:1.0-SNAPSHOT
+[DEBUG] Dependencies (collect): []
+[DEBUG] Dependencies (resolve): [test]
+[DEBUG] Repositories (dependencies): [choco.repos (http://www.emn.fr/z-info/choco-repo/mvn/repository/, releases+snapshots), central (https://repo.maven.apache.org/maven2, releases)]
+[DEBUG] Repositories (plugins)     : [onejar-maven-plugin.googlecode.com (http://onejar-maven-plugin.googlecode.com/svn/mavenrepo, releases+snapshots), central (https://repo.maven.apache.org/maven2, releases)]
+[DEBUG] -----------------------------------------------------------------------
+[DEBUG] Goal:          org.codehaus.mojo:exec-maven-plugin:1.3.2:java (default-cli)
+[DEBUG] Style:         Regular
+[DEBUG] Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <arguments>${exec.arguments}</arguments>
+  <classpathScope default-value="runtime">${exec.classpathScope}</classpathScope>
+  <cleanupDaemonThreads default-value="true">${exec.cleanupDaemonThreads}</cleanupDaemonThreads>
+  <commandlineArgs>${exec.args}</commandlineArgs>
+  <daemonThreadJoinTimeout default-value="15000">${exec.daemonThreadJoinTimeout}</daemonThreadJoinTimeout>
+  <includePluginDependencies default-value="false">${exec.includePluginsDependencies}</includePluginDependencies>
+  <includeProjectDependencies default-value="true">${exec.includeProjectDependencies}</includeProjectDependencies>
+  <keepAlive default-value="false">${exec.keepAlive}</keepAlive>
+  <killAfter default-value="1">${exec.killAfter}</killAfter>
+  <localRepository default-value="${localRepository}"/>
+  <mainClass>${exec.mainClass}</mainClass>
+  <pluginDependencies default-value="${plugin.artifacts}"/>
+  <project default-value="${project}"/>
+  <remoteRepositories default-value="${project.remoteArtifactRepositories}"/>
+  <skip default-value="false">${skip}</skip>
+  <sourceRoot>${sourceRoot}</sourceRoot>
+  <stopUnresponsiveDaemonThreads default-value="false">${exec.stopUnresponsiveDaemonThreads}</stopUnresponsiveDaemonThreads>
+  <testSourceRoot>${testSourceRoot}</testSourceRoot>
+</configuration>
+[DEBUG] =======================================================================
+[DEBUG] Dependency collection stats: {ConflictMarker.analyzeTime=0, ConflictMarker.markTime=0, ConflictMarker.nodeCount=53, ConflictIdSorter.graphTime=0, ConflictIdSorter.topsortTime=0, ConflictIdSorter.conflictIdCount=34, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=0, ConflictResolver.conflictItemCount=51, DefaultDependencyCollector.collectTime=439, DefaultDependencyCollector.transformTime=3}
+[DEBUG] com.sudoku:lo23-sudoku:jar:1.0-SNAPSHOT
+[DEBUG]    junit:junit:jar:4.10:test
+[DEBUG]       org.hamcrest:hamcrest-core:jar:1.1:test
+[DEBUG]    org.slf4j:slf4j-log4j12:jar:1.7.5:compile
+[DEBUG]       org.slf4j:slf4j-api:jar:1.7.5:compile
+[DEBUG]       log4j:log4j:jar:1.2.17:compile
+[DEBUG]    org.apache.avro:avro:jar:1.7.7:compile
+[DEBUG]       org.codehaus.jackson:jackson-core-asl:jar:1.9.13:compile
+[DEBUG]       org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13:compile
+[DEBUG]       com.thoughtworks.paranamer:paranamer:jar:2.3:compile
+[DEBUG]       org.xerial.snappy:snappy-java:jar:1.0.5:compile
+[DEBUG]       org.apache.commons:commons-compress:jar:1.4.1:compile
+[DEBUG]          org.tukaani:xz:jar:1.0:compile
+[DEBUG]    org.apache.avro:avro-ipc:jar:1.7.7:compile
+[DEBUG]       org.mortbay.jetty:jetty:jar:6.1.26:compile
+[DEBUG]       org.mortbay.jetty:jetty-util:jar:6.1.26:compile
+[DEBUG]       io.netty:netty:jar:3.4.0.Final:compile
+[DEBUG]       org.apache.velocity:velocity:jar:1.7:compile
+[DEBUG]          commons-collections:commons-collections:jar:3.2.1:compile
+[DEBUG]          commons-lang:commons-lang:jar:2.4:compile
+[DEBUG]       org.mortbay.jetty:servlet-api:jar:2.5-20081211:compile
+[DEBUG]    com.oracle:javafx:jar:2.2.3:system
+[DEBUG]    choco:choco-solver:jar:3.2.2:compile
+[DEBUG]       dk.brics.automaton:automaton:jar:1.11-8:compile
+[DEBUG]       jgrapht:jgrapht:jar:0.8.1:compile
+[DEBUG]       args4j:args4j:jar:2.0.29:compile
+[DEBUG]       net.sf.trove4j:trove4j:jar:3.0.3:compile
+[DEBUG]    org.springframework.security:spring-security-core:jar:3.2.5.RELEASE:compile
+[DEBUG]       aopalliance:aopalliance:jar:1.0:compile
+[DEBUG]       org.springframework:spring-aop:jar:3.2.8.RELEASE:compile
+[DEBUG]       org.springframework:spring-beans:jar:3.2.8.RELEASE:compile
+[DEBUG]       org.springframework:spring-context:jar:3.2.8.RELEASE:compile
+[DEBUG]       org.springframework:spring-core:jar:3.2.8.RELEASE:compile
+[DEBUG]       org.springframework:spring-expression:jar:3.2.8.RELEASE:compile
+[INFO] 
+[INFO] --- exec-maven-plugin:1.3.2:java (default-cli) @ lo23-sudoku ---
+[DEBUG] Created new class realm maven.api
+[DEBUG] Importing foreign packages into class realm maven.api
+[DEBUG]   Imported: org.apache.maven.wagon.events < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.impl < plexus.core
+[DEBUG]   Imported: org.apache.maven.exception < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.Xpp3Dom < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.version < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.metadata < plexus.core
+[DEBUG]   Imported: javax.enterprise.util.* < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.collection < plexus.core
+[DEBUG]   Imported: org.apache.maven.monitor < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.repository < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.resource < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.logging < plexus.core
+[DEBUG]   Imported: org.apache.maven.profiles < plexus.core
+[DEBUG]   Imported: org.apache.maven.classrealm < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution.scope < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.execution < plexus.core
+[DEBUG]   Imported: org.apache.maven.reporting < plexus.core
+[DEBUG]   Imported: org.apache.maven.usability < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.container < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.component < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.transfer < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authentication < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlSerializer < plexus.core
+[DEBUG]   Imported: org.apache.maven.lifecycle < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.* < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.graph < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.classworlds < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.internal.impl < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.repository < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.resolution < plexus.core
+[DEBUG]   Imported: javax.inject.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.settings < plexus.core
+[DEBUG]   Imported: org.codehaus.classworlds < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.toolchain < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.spi < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.observers < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParserException < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParser < plexus.core
+[DEBUG]   Imported: org.apache.maven.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.cli < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.context < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.authorization < plexus.core
+[DEBUG]   Imported: org.apache.maven.project < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.installation < plexus.core
+[DEBUG]   Imported: org.eclipse.aether.deployment < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.lifecycle < plexus.core
+[DEBUG]   Imported: org.apache.maven.rtinfo < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.configuration < plexus.core
+[DEBUG]   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG]   Imported: org.apache.maven.model < plexus.core
+[DEBUG]   Imported: org.slf4j.* < plexus.core
+[DEBUG]   Imported: javax.enterprise.inject.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.wagon.proxy < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.* < plexus.core
+[DEBUG]   Imported: org.apache.maven.plugin < plexus.core
+[DEBUG]   Imported: org.codehaus.plexus.personality < plexus.core
+[DEBUG] Populating class realm maven.api
+[DEBUG] Dependency collection stats: {ConflictMarker.analyzeTime=1, ConflictMarker.markTime=1, ConflictMarker.nodeCount=136, ConflictIdSorter.graphTime=0, ConflictIdSorter.topsortTime=0, ConflictIdSorter.conflictIdCount=35, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=5, ConflictResolver.conflictItemCount=78, DefaultDependencyCollector.collectTime=416, DefaultDependencyCollector.transformTime=7}
+[DEBUG] org.codehaus.mojo:exec-maven-plugin:jar:1.3.2:
+[DEBUG]    org.apache.maven:maven-toolchain:jar:1.0:compile
+[DEBUG]    org.apache.maven:maven-project:jar:2.2.1:compile
+[DEBUG]       org.apache.maven:maven-settings:jar:2.2.1:compile
+[DEBUG]       org.apache.maven:maven-profile:jar:2.2.1:compile
+[DEBUG]       org.apache.maven:maven-plugin-registry:jar:2.2.1:compile
+[DEBUG]       org.codehaus.plexus:plexus-interpolation:jar:1.11:compile
+[DEBUG]       org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile
+[DEBUG]          junit:junit:jar:4.11:test
+[DEBUG]             org.hamcrest:hamcrest-core:jar:1.3:test
+[DEBUG]    org.apache.maven:maven-model:jar:2.2.1:compile
+[DEBUG]    org.apache.maven:maven-artifact:jar:2.2.1:compile
+[DEBUG]    org.apache.maven:maven-artifact-manager:jar:2.2.1:compile
+[DEBUG]       org.apache.maven:maven-repository-metadata:jar:2.2.1:compile
+[DEBUG]       backport-util-concurrent:backport-util-concurrent:jar:3.1:compile
+[DEBUG]    org.apache.maven:maven-core:jar:2.2.1:compile
+[DEBUG]       org.apache.maven:maven-plugin-parameter-documenter:jar:2.2.1:compile
+[DEBUG]       org.slf4j:slf4j-jdk14:jar:1.5.6:runtime
+[DEBUG]          org.slf4j:slf4j-api:jar:1.5.6:runtime
+[DEBUG]       org.slf4j:jcl-over-slf4j:jar:1.5.6:runtime
+[DEBUG]       org.apache.maven.reporting:maven-reporting-api:jar:2.2.1:compile
+[DEBUG]          org.apache.maven.doxia:doxia-sink-api:jar:1.1:compile
+[DEBUG]          org.apache.maven.doxia:doxia-logging-api:jar:1.1:compile
+[DEBUG]       org.apache.maven:maven-error-diagnostics:jar:2.2.1:compile
+[DEBUG]       commons-cli:commons-cli:jar:1.2:compile
+[DEBUG]       org.apache.maven:maven-plugin-descriptor:jar:2.2.1:compile
+[DEBUG]       org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4:compile
+[DEBUG]       org.apache.maven:maven-monitor:jar:2.2.1:compile
+[DEBUG]       classworlds:classworlds:jar:1.1:compile
+[DEBUG]       org.sonatype.plexus:plexus-sec-dispatcher:jar:1.3:compile
+[DEBUG]          org.sonatype.plexus:plexus-cipher:jar:1.4:compile
+[DEBUG]    org.apache.maven:maven-plugin-api:jar:2.2.1:compile
+[DEBUG]    org.codehaus.plexus:plexus-utils:jar:3.0.15:compile
+[DEBUG]    org.apache.commons:commons-exec:jar:1.2:compile
+[DEBUG] Created new class realm plugin>org.codehaus.mojo:exec-maven-plugin:1.3.2
+[DEBUG] Importing foreign packages into class realm plugin>org.codehaus.mojo:exec-maven-plugin:1.3.2
+[DEBUG]   Imported:  < maven.api
+[DEBUG] Populating class realm plugin>org.codehaus.mojo:exec-maven-plugin:1.3.2
+[DEBUG]   Included: org.codehaus.mojo:exec-maven-plugin:jar:1.3.2
+[DEBUG]   Included: org.codehaus.plexus:plexus-interpolation:jar:1.11
+[DEBUG]   Included: backport-util-concurrent:backport-util-concurrent:jar:3.1
+[DEBUG]   Included: org.slf4j:slf4j-jdk14:jar:1.5.6
+[DEBUG]   Included: org.slf4j:slf4j-api:jar:1.5.6
+[DEBUG]   Included: org.slf4j:jcl-over-slf4j:jar:1.5.6
+[DEBUG]   Included: org.apache.maven.reporting:maven-reporting-api:jar:2.2.1
+[DEBUG]   Included: org.apache.maven.doxia:doxia-sink-api:jar:1.1
+[DEBUG]   Included: org.apache.maven.doxia:doxia-logging-api:jar:1.1
+[DEBUG]   Included: commons-cli:commons-cli:jar:1.2
+[DEBUG]   Included: org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4
+[DEBUG]   Included: org.sonatype.plexus:plexus-sec-dispatcher:jar:1.3
+[DEBUG]   Included: org.sonatype.plexus:plexus-cipher:jar:1.4
+[DEBUG]   Included: org.codehaus.plexus:plexus-utils:jar:3.0.15
+[DEBUG]   Included: org.apache.commons:commons-exec:jar:1.2
+[DEBUG]   Excluded: org.apache.maven:maven-toolchain:jar:1.0
+[DEBUG]   Excluded: org.apache.maven:maven-project:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-settings:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-profile:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-registry:jar:2.2.1
+[DEBUG]   Excluded: org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1
+[DEBUG]   Excluded: junit:junit:jar:4.11
+[DEBUG]   Excluded: org.hamcrest:hamcrest-core:jar:1.3
+[DEBUG]   Excluded: org.apache.maven:maven-model:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-artifact:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-artifact-manager:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-repository-metadata:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-core:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-parameter-documenter:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-error-diagnostics:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-descriptor:jar:2.2.1
+[DEBUG]   Excluded: org.apache.maven:maven-monitor:jar:2.2.1
+[DEBUG]   Excluded: classworlds:classworlds:jar:1.1
+[DEBUG]   Excluded: org.apache.maven:maven-plugin-api:jar:2.2.1
+[DEBUG] Configuring mojo org.codehaus.mojo:exec-maven-plugin:1.3.2:java from plugin realm ClassRealm[plugin>org.codehaus.mojo:exec-maven-plugin:1.3.2, parent: sun.misc.Launcher$AppClassLoader@631d75b9]
+[DEBUG] Configuring mojo 'org.codehaus.mojo:exec-maven-plugin:1.3.2:java' with basic configurator -->
+[DEBUG]   (f) arguments = []
+[DEBUG]   (f) classpathScope = runtime
+[DEBUG]   (f) cleanupDaemonThreads = true
+[DEBUG]   (f) daemonThreadJoinTimeout = 15000
+[DEBUG]   (f) includePluginDependencies = false
+[DEBUG]   (f) includeProjectDependencies = true
+[DEBUG]   (f) keepAlive = false
+[DEBUG]   (f) killAfter = 1
+[DEBUG]   (f) localRepository =       id: local
+      url: file:///C:/Users/Marc-Antoine/.m2/repository/
+   layout: default
+snapshots: [enabled => true, update => always]
+ releases: [enabled => true, update => always]
+
+[DEBUG]   (f) mainClass = com.sudoku.grid.tests.GridTest
+[DEBUG]   (f) pluginDependencies = [org.codehaus.mojo:exec-maven-plugin:maven-plugin:1.3.2:, org.codehaus.plexus:plexus-interpolation:jar:1.11:compile, backport-util-concurrent:backport-util-concurrent:jar:3.1:compile, org.slf4j:slf4j-jdk14:jar:1.5.6:runtime, org.slf4j:slf4j-api:jar:1.5.6:runtime, org.slf4j:jcl-over-slf4j:jar:1.5.6:runtime, org.apache.maven.reporting:maven-reporting-api:jar:2.2.1:compile, org.apache.maven.doxia:doxia-sink-api:jar:1.1:compile, org.apache.maven.doxia:doxia-logging-api:jar:1.1:compile, commons-cli:commons-cli:jar:1.2:compile, org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4:compile, org.sonatype.plexus:plexus-sec-dispatcher:jar:1.3:compile, org.sonatype.plexus:plexus-cipher:jar:1.4:compile, org.codehaus.plexus:plexus-utils:jar:3.0.15:compile, org.apache.commons:commons-exec:jar:1.2:compile]
+[DEBUG]   (f) project = MavenProject: com.sudoku:lo23-sudoku:1.0-SNAPSHOT @ C:\Users\Marc-Antoine\Developpement\LO23\SudokuMeaven\pom.xml
+[DEBUG]   (f) remoteRepositories = [      id: choco.repos
+      url: http://www.emn.fr/z-info/choco-repo/mvn/repository/
+   layout: default
+    proxy: proxyweb.utc.fr:3128
+snapshots: [enabled => true, update => daily]
+ releases: [enabled => true, update => daily]
+,       id: central
+      url: https://repo.maven.apache.org/maven2
+   layout: default
+    proxy: proxyweb.utc.fr:3128
+snapshots: [enabled => false, update => daily]
+ releases: [enabled => true, update => daily]
+]
+[DEBUG]   (f) skip = false
+[DEBUG]   (f) stopUnresponsiveDaemonThreads = false
+[DEBUG] -- end configuration --
+[WARNING] Warning: killAfter is now deprecated. Do you need it ? Please comment on MEXEC-6.
+[DEBUG] Invoking : com.sudoku.grid.tests.GridTest.main()
+[DEBUG] Plugin Dependencies will be excluded.
+[DEBUG] Project Dependencies will be included.
+[DEBUG] Collected project artifacts [org.slf4j:slf4j-log4j12:jar:1.7.5:compile, org.slf4j:slf4j-api:jar:1.7.5:compile, log4j:log4j:jar:1.2.17:compile, org.apache.avro:avro:jar:1.7.7:compile, org.codehaus.jackson:jackson-core-asl:jar:1.9.13:compile, org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13:compile, com.thoughtworks.paranamer:paranamer:jar:2.3:compile, org.xerial.snappy:snappy-java:jar:1.0.5:compile, org.apache.commons:commons-compress:jar:1.4.1:compile, org.tukaani:xz:jar:1.0:compile, org.apache.avro:avro-ipc:jar:1.7.7:compile, org.mortbay.jetty:jetty:jar:6.1.26:compile, org.mortbay.jetty:jetty-util:jar:6.1.26:compile, io.netty:netty:jar:3.4.0.Final:compile, org.apache.velocity:velocity:jar:1.7:compile, commons-collections:commons-collections:jar:3.2.1:compile, commons-lang:commons-lang:jar:2.4:compile, org.mortbay.jetty:servlet-api:jar:2.5-20081211:compile, choco:choco-solver:jar:3.2.2:compile, dk.brics.automaton:automaton:jar:1.11-8:compile, jgrapht:jgrapht:jar:0.8.1:compile, args4j:args4j:jar:2.0.29:compile, net.sf.trove4j:trove4j:jar:3.0.3:compile, org.springframework.security:spring-security-core:jar:3.2.5.RELEASE:compile, aopalliance:aopalliance:jar:1.0:compile, org.springframework:spring-aop:jar:3.2.8.RELEASE:compile, org.springframework:spring-beans:jar:3.2.8.RELEASE:compile, org.springframework:spring-context:jar:3.2.8.RELEASE:compile, org.springframework:spring-core:jar:3.2.8.RELEASE:compile, org.springframework:spring-expression:jar:3.2.8.RELEASE:compile]
+[DEBUG] Collected project classpath [C:\Users\Marc-Antoine\Developpement\LO23\SudokuMeaven\target\classes]
+[DEBUG] Adding to classpath : file:/C:/Users/Marc-Antoine/Developpement/LO23/SudokuMeaven/target/classes/
+[DEBUG] Adding project dependency artifact: slf4j-log4j12 to classpath
+[DEBUG] Adding project dependency artifact: slf4j-api to classpath
+[DEBUG] Adding project dependency artifact: log4j to classpath
+[DEBUG] Adding project dependency artifact: avro to classpath
+[DEBUG] Adding project dependency artifact: jackson-core-asl to classpath
+[DEBUG] Adding project dependency artifact: jackson-mapper-asl to classpath
+[DEBUG] Adding project dependency artifact: paranamer to classpath
+[DEBUG] Adding project dependency artifact: snappy-java to classpath
+[DEBUG] Adding project dependency artifact: commons-compress to classpath
+[DEBUG] Adding project dependency artifact: xz to classpath
+[DEBUG] Adding project dependency artifact: avro-ipc to classpath
+[DEBUG] Adding project dependency artifact: jetty to classpath
+[DEBUG] Adding project dependency artifact: jetty-util to classpath
+[DEBUG] Adding project dependency artifact: netty to classpath
+[DEBUG] Adding project dependency artifact: velocity to classpath
+[DEBUG] Adding project dependency artifact: commons-collections to classpath
+[DEBUG] Adding project dependency artifact: commons-lang to classpath
+[DEBUG] Adding project dependency artifact: servlet-api to classpath
+[DEBUG] Adding project dependency artifact: choco-solver to classpath
+[DEBUG] Adding project dependency artifact: automaton to classpath
+[DEBUG] Adding project dependency artifact: jgrapht to classpath
+[DEBUG] Adding project dependency artifact: args4j to classpath
+[DEBUG] Adding project dependency artifact: trove4j to classpath
+[DEBUG] Adding project dependency artifact: spring-security-core to classpath
+[DEBUG] Adding project dependency artifact: aopalliance to classpath
+[DEBUG] Adding project dependency artifact: spring-aop to classpath
+[DEBUG] Adding project dependency artifact: spring-beans to classpath
+[DEBUG] Adding project dependency artifact: spring-context to classpath
+[DEBUG] Adding project dependency artifact: spring-core to classpath
+[DEBUG] Adding project dependency artifact: spring-expression to classpath
+[DEBUG] joining on thread Thread[com.sudoku.grid.tests.GridTest.main(),5,com.sudoku.grid.tests.GridTest]
+[DEBUG] Setting accessibility to true in order to invoke main().
+[DEBUG] joining on thread Thread[JavaFX Application Thread,5,com.sudoku.grid.tests.GridTest]
+[DEBUG] interrupting thread Thread[QuantumRenderer-0,5,com.sudoku.grid.tests.GridTest]
+[DEBUG] interrupting thread Thread[Disposer,10,com.sudoku.grid.tests.GridTest]
+[DEBUG] interrupting thread Thread[Thread-3,5,com.sudoku.grid.tests.GridTest]
+[DEBUG] joining on thread Thread[QuantumRenderer-0,5,com.sudoku.grid.tests.GridTest]
+Exception while removing reference: java.lang.InterruptedException
+[DEBUG] joining on thread Thread[Disposer,10,com.sudoku.grid.tests.GridTest]
+[WARNING] thread Thread[Disposer,10,com.sudoku.grid.tests.GridTest] was interrupted but is still alive after waiting at least 14996msecs
+[WARNING] thread Thread[Disposer,10,com.sudoku.grid.tests.GridTest] will linger despite being asked to die via interruption
+[WARNING] NOTE: 1 thread(s) did not finish despite being asked to  via interruption. This is not a problem with exec:java, it is a problem with the running code. Although not serious, it should be remedied.
+[WARNING] Couldn't destroy threadgroup org.codehaus.mojo.exec.ExecJavaMojo$IsolatedThreadGroup[name=com.sudoku.grid.tests.GridTest,maxpri=10]
+java.lang.IllegalThreadStateException
+	at java.lang.ThreadGroup.destroy(ThreadGroup.java:775)
+	at org.codehaus.mojo.exec.ExecJavaMojo.execute(ExecJavaMojo.java:328)
+	at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:132)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:208)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
+	at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:116)
+	at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:80)
+	at org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:51)
+	at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:120)
+	at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:347)
+	at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:154)
+	at org.apache.maven.cli.MavenCli.execute(MavenCli.java:582)
+	at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:214)
+	at org.apache.maven.cli.MavenCli.main(MavenCli.java:158)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 22.193 s
+[INFO] Finished at: 2014-12-20T17:46:46+01:00
+[INFO] Final Memory: 17M/219M
+[INFO] ------------------------------------------------------------------------
