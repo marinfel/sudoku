@@ -11,7 +11,11 @@ import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.main.manager.RefreshGridPlayer;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.Cell;
+import com.sudoku.grid.gridcells.IhmCell;
+import java.math.BigInteger;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -68,6 +72,7 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
 
     @Override
     public void handle(IhmGridLinesCompleted t) {
+        IhmGridLinesCompleted instance = t;
         if(t.isConsumed())
         {
             return ;
@@ -77,9 +82,48 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
         {
             t.consume();
             Grid currentGrid = RefreshGridPlayer.getInstance().getCurrentGrid();
-            //currentGrid.setGrid(t.grid.get);
-            GridManager.getInstance().addPlayedGrid(currentGrid,currentGrid.getCreateUser());
+            Grid finishedGrid = copyGrid(currentGrid,instance);
+            GridManager.getInstance().addPlayedGrid(finishedGrid,finishedGrid.getCreateUser());
             myController.setScreen(SudukoIHM.programID);
         }
+    }
+    
+    public Cell[][] updateCells(IhmGridLinesCompleted t)
+    {
+        Cell[][] UpdatedCells=new Cell[9][9];
+        IhmCell[][] currentState=t.grid.getCells();
+        int X,Y,value;
+        byte xByte,yByte,valueByte;
+        int i2,y2;
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                UpdatedCells[i][j] = new Cell();
+                X=currentState[i][j].getX();
+                Y=currentState[i][j].getY();
+                value = currentState[i][j].getValue();
+                xByte = (byte) X;
+                yByte = (byte) Y;
+                valueByte= (byte) value;
+                UpdatedCells[i][j].setX( xByte);
+                UpdatedCells[i][j].setY( yByte);
+                UpdatedCells[i][j].setValue(valueByte);
+                /*i2 = UpdatedCells[i][j].getValue() & 0xFF;
+                System.out.println(valueByte);*/
+            }
+        }
+        return UpdatedCells;
+    }
+    
+    public Grid copyGrid(Grid g,IhmGridLinesCompleted completed)
+    {
+        Grid newInstance = new Grid(g.getTitle(), g.getCreateUser());
+        newInstance.setComments(g.getComments());
+        newInstance.setCreateDate((Timestamp) g.getCreateDate());
+        newInstance.setDifficulty(g.getDifficulty());
+        newInstance.setGrid(updateCells(completed));
+        newInstance.setTags(g.getTags());
+        return newInstance;
     }
 }
