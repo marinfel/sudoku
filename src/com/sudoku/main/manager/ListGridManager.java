@@ -8,10 +8,12 @@ package com.sudoku.main.manager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -21,13 +23,16 @@ import javafx.scene.layout.GridPane;
  * @author MOURAD
  */
 public class ListGridManager {
-    private DataSample instance;
+    //private DataSample instance;
     private UserManager usrManager;
     private GridManager gridManager;
+    public ScrollPane preview;
+
     
-    public ListGridManager(DataSample i)
+    public ListGridManager(ScrollPane p)
     {
-        instance=i;
+        //instance=i;
+        preview = p;
         usrManager = UserManager.getInstance();
         gridManager= GridManager.getInstance();
     }
@@ -35,18 +40,34 @@ public class ListGridManager {
     public List<AnchorPane> AllGrid()
     {
         List GridList = new ArrayList<AnchorPane>();
-        GridList.add(new GridThumbnail(instance.g1));
-        /*GridList.add(new GridThumbnail(instance.g2));
-        GridList.add(new GridThumbnail(instance.g3));*/
         return GridList;
     }
     
-    public GridPane getGridThumbnailContainer()
+    public GridPane getGridThumbnailContainer(boolean filter, int type, List<Tag> tags,int grads)
     {
         GridThumbnailContainer container = new GridThumbnailContainer();
-        for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
+        if(!filter)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i)));
+            for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
+            {
+                container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview));
+            }
+        }
+        else
+        {
+            if(type==0)
+            {
+                for(int i = 0; i<gridManager.filterGridsByTags(tags).size();i++)
+                {
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByTags(tags).get(i),preview));
+                }
+            }else if(type == 1)
+            {
+                for(int i = 0; i<gridManager.filterGridsByGrade(grads).size();i++)
+                {
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByGrade(grads).get(i),preview));
+                }
+            }
         }
         return container.getInstance();
     }
@@ -56,7 +77,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getFinishedGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid()));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid(),preview));
         }
         return container.getInstance();
     }
@@ -66,7 +87,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getIncompleteGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid()));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid(),preview));
         }
         return container.getInstance();
     }
@@ -81,7 +102,7 @@ public class ListGridManager {
             grids = gridManager.getUserGrids(DistantUser.get(i));
             for(int j=0; i<grids.size();j++)
             {
-                container.addGridThumbnail(new GridThumbnail(grids.get(j)));
+                container.addGridThumbnail(new GridThumbnail(grids.get(j),preview));
             }
         }
         return container.getInstance();

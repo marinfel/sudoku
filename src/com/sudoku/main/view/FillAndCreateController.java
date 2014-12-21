@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
 
@@ -26,11 +27,11 @@ public class FillAndCreateController implements Initializable, ControlledScreen 
   ScreensController myController;
   @FXML
   private Pane fillPane;
+  @FXML
+  private ScrollPane GridEditorEmpty;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-        IhmGridEditorManuallyFilled editor = new IhmGridEditorManuallyFilled() ; 
-        fillPane.getChildren().add((Node)editor);
   }
 
 
@@ -39,9 +40,7 @@ public class FillAndCreateController implements Initializable, ControlledScreen 
     myController = screenParent;
     myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
         @Override public void handle(WindowEvent e) {
-            System.out.println("event cought : "+e.getEventType().toString());
-            fillPane.getChildren().removeAll();
-            fillPane.getChildren().add((Node)new IhmGridEditorManuallyFilled());
+            GridEditorEmpty.setContent((Node)new IhmGridEditorManuallyFilled());
         }
     });
   }

@@ -80,7 +80,7 @@ public final class GridManager {
       for(Tag t : tags){
         if(g.hasTag(t)) filtered = true;
       }
-      if(!filtered) grids.add(g);
+      if(filtered) grids.add(g);
     }
     return grids;
   }

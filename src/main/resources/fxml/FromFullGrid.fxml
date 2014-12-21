@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.*?>
-<TitledPane xmlns:fx="http://javafx.com/fxml/1" animated="false" collapsible="false"
-            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="720.0"
-            prefWidth="1080.0"
-            xmlns="http://javafx.com/javafx/8"
-            fx:controller="com.sudoku.main.view.FromFullGridController">
+
+<TitledPane animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sudoku.main.view.FromFullGridController">
     <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0"
-                    prefWidth="689.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="689.0">
             <children>
-                <Pane fx:id="fromFullPane" prefHeight="694.0" prefWidth="1078.0"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                <Button layoutX="764.0" layoutY="517.0" mnemonicParsing="false"
-                        onAction="#goToProgram" prefHeight="25.0"
-                        prefWidth="115.0" text="Retourner"/>
+                <Pane fx:id="fromFullPane" prefHeight="694.0" prefWidth="1078.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fx:id="GridEditorAuto" layoutX="5.0" layoutY="7.0" prefHeight="660.0" prefWidth="909.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                  </ScrollPane>
+                      <Button layoutX="926.0" layoutY="54.0" mnemonicParsing="false" onAction="#goToProgram" prefHeight="25.0" prefWidth="115.0" text="Retourner" />
+               </children></Pane>
             </children>
         </AnchorPane>
     </content>

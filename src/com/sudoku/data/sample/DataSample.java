@@ -138,13 +138,13 @@ public class DataSample {
        userMgr.addLocalUser(b);
        userMgr.addLocalUser(c);
        
-        try {
+        /*try {
             userMgr.authenticate("User1", "User1");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(DataSample.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
        
        gridMgr.addGrid(g1);
        gridMgr.addGrid(g2);

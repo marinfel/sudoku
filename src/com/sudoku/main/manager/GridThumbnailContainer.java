@@ -6,6 +6,7 @@
 package com.sudoku.main.manager;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 
 /**
