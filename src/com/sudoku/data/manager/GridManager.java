@@ -183,7 +183,7 @@ public final class GridManager {
            
                 mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	        System.out.println(mapper.writeValueAsString(this));
+	        //System.out.println(mapper.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  

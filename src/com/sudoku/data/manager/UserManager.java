@@ -162,7 +162,7 @@ public final class UserManager { // This is the manager for users.
     }
     return u;
   }
-
+  @JsonIgnore
   public List<User> getConnectedUsers() {
     CommunicationManager tmp = CommunicationManager.getInstance();
     try {
@@ -234,7 +234,7 @@ public final class UserManager { // This is the manager for users.
            
                 mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	        System.out.println(mapper.writeValueAsString(this));
+	        //System.out.println(mapper.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  

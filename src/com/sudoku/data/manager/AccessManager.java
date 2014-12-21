@@ -23,7 +23,13 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
 import com.sudoku.util.*;
+import java.util.Map;
+import org.codehaus.jackson.JsonGenerator;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.ObjectWriter;
+import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.type.MapType;
 import org.codehaus.jackson.map.type.TypeFactory;
         
@@ -34,6 +40,7 @@ import org.codehaus.jackson.map.type.TypeFactory;
 public class AccessManager {
 
   private static AccessManager instance;
+  //@JsonSerialize(using = AccessGridSerializer2.class)
   private HashMap<Grid, ArrayList<AccessRule>> rules;
   
   @JsonIgnore
@@ -173,32 +180,35 @@ public class AccessManager {
   }
   
    public void SaveToJson(){
-       //ObjectMapper mapper = new ObjectMapper();
+       ObjectMapper mapper = new ObjectMapper();
        //Pour sérializer les champs publics comme privés
        //pour ne pas planter sur une valeur null
-       //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-       //mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
+       mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+       mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
         SimpleModule module =  
           new SimpleModule("MyMapKeySerializerModule",  
           new Version(1, 0, 0, null));
-        module.addKeySerializer(AccessManager.class, new AccessGridSerializer2());
-        MapType myMapType;
+        module.addSerializer(AccessManager.class,new AccessGridSerializer2());
+        mapper.registerModule(module);
+        /*MapType myMapType;
         myMapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, Grid.class,AccessRule.class);
         
         ObjectWriter writer = new ObjectMapper().withModule(module).typedWriter(myMapType);
-       // mapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-      try {
+        *///writer.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+         /*try {
           System.out.println(writer.writeValueAsString(rules));
       } catch (IOException ex) {
           Logger.getLogger(AccessManager.class.getName()).log(Level.SEVERE, null, ex);
-      }
-        try {
+        
+      }*/
+           
+            try {
                 System.out.println(jsonFilePath.concat("backupAccessManager.json"));
                 jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
                 
-                writer.writeValue(jsonFile, this);
+                 mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	        System.out.println(writer.writeValueAsString(this));
+	        System.out.println(mapper.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  
@@ -206,7 +216,7 @@ public class AccessManager {
 	 
 	            ex.printStackTrace();
         }  catch (FileNotFoundException e){
-            try {
+            /*  try {
           
                 File tmpFile=new File(jsonFilePath);
 
@@ -217,7 +227,8 @@ public class AccessManager {
                 System.out.println(writer.writeValueAsString(this));
             } catch (IOException ex) {
                 Logger.getLogger(GridManager.class.getName()).log(Level.SEVERE, null, ex);
-            }    
+            }
+         */
         }catch (IOException ex) {
 	 
 	            ex.printStackTrace();
@@ -252,4 +263,5 @@ public class AccessManager {
         return AccessManager.getInstance();
   
   }
+
 }
