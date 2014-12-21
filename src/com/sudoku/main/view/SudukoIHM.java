@@ -85,7 +85,11 @@ public class SudukoIHM extends Application {
     primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>(){
         @Override
         public void handle(WindowEvent t) {
-            System.out.println("Let's go");
+            /*DataManager.getInstance();
+            UserManager.getInstance();
+            GridManager.getInstance();
+            DataManager.buildFromJson();*/
+            System.out.println("Biiiiiiiiiiiiiiiinggggg");
         }
     });
     primaryStage.show();

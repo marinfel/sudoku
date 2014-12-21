@@ -23,15 +23,15 @@ import javafx.scene.layout.GridPane;
  * @author MOURAD
  */
 public class ListGridManager {
-    private DataSample instance;
+    //private DataSample instance;
     private UserManager usrManager;
     private GridManager gridManager;
     public ScrollPane preview;
 
     
-    public ListGridManager(DataSample i,ScrollPane p)
+    public ListGridManager(ScrollPane p)
     {
-        instance=i;
+        //instance=i;
         preview = p;
         usrManager = UserManager.getInstance();
         gridManager= GridManager.getInstance();
@@ -40,9 +40,6 @@ public class ListGridManager {
     public List<AnchorPane> AllGrid()
     {
         List GridList = new ArrayList<AnchorPane>();
-        GridList.add(new GridThumbnail(instance.g1,preview));
-        /*GridList.add(new GridThumbnail(instance.g2));
-        GridList.add(new GridThumbnail(instance.g3));*/
         return GridList;
     }
     

@@ -61,7 +61,8 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
     @FXML
     private void goToProgram(ActionEvent event) {
         Grid currentGrid = RefreshGridPlayer.getInstance().getCurrentGrid();
-        GridManager.getInstance().addPlayedGrid(currentGrid,currentGrid.getCreateUser());
+        if(currentGrid != null)
+            GridManager.getInstance().addPlayedGrid(currentGrid,currentGrid.getCreateUser());
         myController.setScreen(SudukoIHM.programID);
     }
 
