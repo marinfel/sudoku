@@ -53,7 +53,7 @@ public class LoginController implements Initializable, ControlledScreen {
 //        avatar = new ImageView();
 //        avatar.setImage(image);
      //public User authenticate(String pseudo, String password)
-     userManag = UserManager.getInstance();
+     
   }
 
   @Override
@@ -75,15 +75,16 @@ public class LoginController implements Initializable, ControlledScreen {
   
   @FXML
   private void authenticate(ActionEvent event){
-    System.out.println("in authenticate");
+    userManag = UserManager.getInstance();
+    System.out.println("in authenticate "+userManag.getLocalUsers().size());
     try{
       User authUser = userManag.authenticate(user.getText(), passwd.getText());
       if(authUser == null){
         userName.setText("Echec de connexion : vérifiez vos identifiants.");
       }
       else{
-        userName.setText("");
-
+        userName.setText("Veuillez patienté "+userManag.getLoggedUser());
+        System.out.println("Veuillez patienté "+authUser.getPseudo());
         goToProgram(event);
       }
     }

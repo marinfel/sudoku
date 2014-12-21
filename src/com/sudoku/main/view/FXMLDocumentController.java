@@ -6,6 +6,7 @@
 
 package com.sudoku.main.view;
 
+import com.sudoku.data.manager.DataManager;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.ContactCategory;
 import com.sudoku.data.model.Tag;
@@ -80,7 +81,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   public Stage dialogStage = new Stage();
           
   //Data
-  public DataSample instance;
+  //public DataSample instance;
   ListGridManager gridList;
   ListGridManager currentList;
   ListGridManager distantList;
@@ -198,9 +199,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void initialize(URL url, ResourceBundle rb) 
   {
-      try {
-          instance = new DataSample();
-          instance.exec();
+          /*instance = new DataSample();
+          instance.exec();*/
           
           userManag = UserManager.getInstance();
           userCategoryManag = UserCategoryManager.getInstance();
@@ -212,7 +212,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           dialogStage.setResizable(false);
           ResearchMode=0;
           
-          System.out.println("test data" + instance.a.getPseudo());
+          //System.out.println("test data" + instance.a.getPseudo());
           Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
           mainContainer.setPrefHeight(primaryScreenBounds.getHeight());
           mainContainer.setPrefWidth(primaryScreenBounds.getWidth());
@@ -278,7 +278,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           listUsersView.setItems(users);
           
           //Charger données utilisateur
-          loggedUser = null;
+          loggedUser = UserManager.getInstance().getLoggedUser();
           
           
           
@@ -415,10 +415,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                   }
               }
           });
-          
-      } catch (IOException ex) {
-          Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-      }
   }
 
     
@@ -429,6 +425,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             @Override public void handle(WindowEvent e) {
                 if(loggedUser == null){
                     loggedUser = userManag.getLoggedUser();
+                    System.out.println("Name --------------------------------"+loggedUser.getPseudo());
                     getDataUser();
                 }
             }
@@ -502,7 +499,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           {
               tags.add(new Tag(result[i]));
           }
-          gridList = new ListGridManager(instance,GridPreviewShow);
+          gridList = new ListGridManager(GridPreviewShow);
           scpane = new ScrollPane();
           scpane.setContent(gridList.getGridThumbnailContainer(true,0,tags,0));
           scpane.setPrefSize(800, 400);
@@ -511,7 +508,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       else
       {
           int NoteValue = Integer.valueOf(ResearchInput.getText());
-          gridList = new ListGridManager(instance,GridPreviewShow);
+          gridList = new ListGridManager(GridPreviewShow);
           scpane = new ScrollPane();
           scpane.setContent(gridList.getGridThumbnailContainer(true,1,null,NoteValue));
           scpane.setPrefSize(800, 400);
@@ -519,6 +516,16 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       }
       
       
+  }
+  
+  @FXML
+  private void saveDatas(ActionEvent event){
+      DataManager.getInstance().saveToJson();
+  }
+  
+  @FXML
+  private void refreshGrids(ActionEvent event){
+      refreshMyGrids();
   }
   
   private void getDataUser() {
@@ -538,28 +545,28 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   private void refreshMyGrids(){
     // My Grids
-    gridList = new ListGridManager(instance,GridPreviewShow);
+    gridList = new ListGridManager(GridPreviewShow);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer(false,0,null,0));
     scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
     
     //Current Grids
-    currentList = new ListGridManager(instance,GridPreviewShow);
+    currentList = new ListGridManager(GridPreviewShow);
     currentPane= new ScrollPane();
     currentPane.setContent(currentList.getCurrentGridThumbnailContainer());
     currentPane.setPrefSize(800,400);
     currentGrid.getChildren().add(currentPane);
     
     //Finished Grids
-    finishedList = new ListGridManager(instance,GridPreviewShow);
+    finishedList = new ListGridManager(GridPreviewShow);
     finishedPane = new ScrollPane();
     finishedPane.setContent(finishedList.getFinishedGridThumbnailContainer());
     finishedPane.setPrefSize(800, 400);
     finishedGrid.getChildren().add(finishedPane);
     
     //Distant Grids
-    distantList = new ListGridManager(instance,GridPreviewShow);
+    distantList = new ListGridManager(GridPreviewShow);
     distantPane = new ScrollPane();
     distantPane.setContent(distantList.getDistantGridThumbnailContainer());
     distantPane.setPrefSize(800, 400);
@@ -567,15 +574,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   private void refreshGridPlayer(){
-      /*RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
-      if(instance.getCurrentGrid() != null)
-      {
-          if(instance.getCurrentGrid()!=null)
-          {
-            IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
-            GridPlayerContainer.setContent(GridP);
-          }
-      }*/
       myController.setScreen(SudukoIHM.gridPlayerGameID);
   }
     
