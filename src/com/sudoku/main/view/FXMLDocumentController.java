@@ -567,15 +567,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   private void refreshGridPlayer(){
-      /*RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
-      if(instance.getCurrentGrid() != null)
-      {
-          if(instance.getCurrentGrid()!=null)
-          {
-            IhmGridPlayer GridP = new IhmGridPlayer(instance.getCurrentGrid());
-            GridPlayerContainer.setContent(GridP);
-          }
-      }*/
       myController.setScreen(SudukoIHM.gridPlayerGameID);
   }
     

@@ -7,6 +7,7 @@
 package com.sudoku.main.view;
 
 import com.sudoku.grid.popups.IhmPopupsList;
+import com.sudoku.data.manager.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
@@ -75,9 +76,17 @@ public class SudukoIHM extends Application {
 
         @Override
         public void handle(WindowEvent t) {
+            System.out.println("By by by");
             IhmPopupsList.getInstance().killAllTimers();
+            DataManager.getInstance().saveToJson();
         }
         
+    });
+    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>(){
+        @Override
+        public void handle(WindowEvent t) {
+            System.out.println("Let's go");
+        }
     });
     primaryStage.show();
   }
