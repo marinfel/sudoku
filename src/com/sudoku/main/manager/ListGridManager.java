@@ -5,6 +5,7 @@
  */
 package com.sudoku.main.manager;
 
+import com.sudoku.comm.CommunicationManager;
 import com.sudoku.data.manager.GridManager;
 import com.sudoku.data.manager.UserManager;
 import com.sudoku.data.model.Grid;
@@ -12,8 +13,11 @@ import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
 import com.sudoku.main.view.ScreensController;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -100,6 +104,18 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         List<User> DistantUser = usrManager.getDistantUsers();
         List<Grid> grids;
+
+       /* System.out.println("************************ DEBUG MOURAD *************************");
+        System.out.println("Utilisateur connectée : "+DistantUser.size());
+        
+        
+        CommunicationManager cm = CommunicationManager.getInstance();
+        try {
+            DistantUser = cm.getAllProfiles();
+        } catch (IOException ex) {
+            Logger.getLogger(ListGridManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Comm weeesh ma gueule : "+DistantUser.size());
         for(int i = 0; i<DistantUser.size();i++)
         {
             grids = gridManager.getUserGrids(DistantUser.get(i));
@@ -107,7 +123,7 @@ public class ListGridManager {
             {
                 container.addGridThumbnail(new GridThumbnail(grids.get(j),preview,myController));
             }
-        }
+        }*/
         return container.getInstance();
     }
 }
