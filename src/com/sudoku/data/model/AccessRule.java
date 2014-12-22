@@ -5,6 +5,16 @@
  */
 package com.sudoku.data.model;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class",defaultImpl = AccessRule.class)
 public class AccessRule {
 
   private AccessType accessType;
@@ -13,7 +23,7 @@ public class AccessRule {
 
   public AccessRule() {
   }
-
+  
   public AccessRule(AccessType accessType) {
     this.accessType = accessType;
   }
@@ -29,6 +39,27 @@ public class AccessRule {
     this.appliedTo = appliedTo;
   }
 
+  // For deserialization
+  public AccessRule(String jsonString){
+      ObjectMapper mapper = new ObjectMapper();
+     // mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S, false);
+      ArrayList<AccessRule> rules= null;
+      try {
+      rules = mapper.readValue(jsonString, mapper.getTypeFactory().constructCollectionType(ArrayList.class, AccessRule.class));
+    
+      System.out.println (rules);
+      
+      } catch (JsonParseException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (JsonMappingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+  }
   /**
    * @return the accessType
    */

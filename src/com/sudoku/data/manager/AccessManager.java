@@ -26,13 +26,17 @@ import com.sudoku.util.*;
 import java.util.Map;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.map.JsonSerializer;
+import org.codehaus.jackson.map.KeyDeserializer;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.codehaus.jackson.map.SerializerProvider;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.type.MapType;
 import org.codehaus.jackson.map.type.TypeFactory;
-        
+import org.codehaus.jackson.type.TypeReference;
 
 /**
  * @author JE
@@ -41,6 +45,7 @@ public class AccessManager {
 
   private static AccessManager instance;
   //@JsonSerialize(using = AccessGridSerializer2.class)
+  @JsonDeserialize(keyUsing = AccessGridDeserializer.class,as = HashMap.class, contentAs = ArrayList.class)
   private HashMap<Grid, ArrayList<AccessRule>> rules;
   
   @JsonIgnore
@@ -183,14 +188,15 @@ public class AccessManager {
        ObjectMapper mapper = new ObjectMapper();
        //Pour sérializer les champs publics comme privés
        //pour ne pas planter sur une valeur null
+       /* mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);       
        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
         SimpleModule module =  
-          new SimpleModule("MyMapKeySerializerModule",  
+          new SimpleModule("GridKeyModule",  
           new Version(1, 0, 0, null));
         module.addSerializer(AccessManager.class,new AccessGridSerializer2());
         mapper.registerModule(module);
-        /*MapType myMapType;
+        *//*MapType myMapType;
         myMapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, Grid.class,AccessRule.class);
         
         ObjectWriter writer = new ObjectMapper().withModule(module).typedWriter(myMapType);
@@ -205,7 +211,8 @@ public class AccessManager {
             try {
                 System.out.println(jsonFilePath.concat("backupAccessManager.json"));
                 jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
-                
+               // mapper.writerWithType(new TypeReference<AccessManager>() {
+               // }).writeValue(jsonFile, this);
                  mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
 	        System.out.println(mapper.writeValueAsString(this));
@@ -238,7 +245,16 @@ public class AccessManager {
   ObjectMapper mapper= new ObjectMapper();
         // To avoid any undeclared property error
         //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
-            
+       SimpleModule module =  
+          new SimpleModule("GridKeyDeseriaizer",  
+          new Version(1, 0, 0, null));
+        module.addKeyDeserializer(AccessManager.class,new AccessGridDeserializer());
+        mapper.registerModule(module);
+         SimpleModule module2 =  
+          new SimpleModule("AccessRuleDeserializerModule",  
+          new Version(1, 0, 0, null));
+        module.addDeserializer(AccessManager.class,new AccessRuleDeserializer2());
+        mapper.registerModule(module2);
         try {
                 String jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
  
