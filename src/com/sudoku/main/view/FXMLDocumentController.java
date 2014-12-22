@@ -499,7 +499,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           {
               tags.add(new Tag(result[i]));
           }
-          gridList = new ListGridManager(GridPreviewShow);
+          gridList = new ListGridManager(GridPreviewShow,myController);
           scpane = new ScrollPane();
           scpane.setContent(gridList.getGridThumbnailContainer(true,0,tags,0));
           scpane.setPrefSize(800, 400);
@@ -508,7 +508,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       else
       {
           int NoteValue = Integer.valueOf(ResearchInput.getText());
-          gridList = new ListGridManager(GridPreviewShow);
+          gridList = new ListGridManager(GridPreviewShow,myController);
           scpane = new ScrollPane();
           scpane.setContent(gridList.getGridThumbnailContainer(true,1,null,NoteValue));
           scpane.setPrefSize(800, 400);
@@ -545,28 +545,28 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   private void refreshMyGrids(){
     // My Grids
-    gridList = new ListGridManager(GridPreviewShow);
+    gridList = new ListGridManager(GridPreviewShow,myController);
     scpane = new ScrollPane();
     scpane.setContent(gridList.getGridThumbnailContainer(false,0,null,0));
     scpane.setPrefSize(800, 400);
     myGrid.getChildren().add(scpane);
     
     //Current Grids
-    currentList = new ListGridManager(GridPreviewShow);
+    currentList = new ListGridManager(GridPreviewShow,myController);
     currentPane= new ScrollPane();
     currentPane.setContent(currentList.getCurrentGridThumbnailContainer());
     currentPane.setPrefSize(800,400);
     currentGrid.getChildren().add(currentPane);
     
     //Finished Grids
-    finishedList = new ListGridManager(GridPreviewShow);
+    finishedList = new ListGridManager(GridPreviewShow,myController);
     finishedPane = new ScrollPane();
     finishedPane.setContent(finishedList.getFinishedGridThumbnailContainer());
     finishedPane.setPrefSize(800, 400);
     finishedGrid.getChildren().add(finishedPane);
     
     //Distant Grids
-    distantList = new ListGridManager(GridPreviewShow);
+    distantList = new ListGridManager(GridPreviewShow,myController);
     distantPane = new ScrollPane();
     distantPane.setContent(distantList.getDistantGridThumbnailContainer());
     distantPane.setPrefSize(800, 400);
