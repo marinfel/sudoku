@@ -11,6 +11,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.Tag;
 import com.sudoku.data.model.User;
 import com.sudoku.data.sample.DataSample;
+import com.sudoku.main.view.ScreensController;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.ScrollPane;
@@ -27,14 +28,16 @@ public class ListGridManager {
     private UserManager usrManager;
     private GridManager gridManager;
     public ScrollPane preview;
+    public ScreensController myController;
 
     
-    public ListGridManager(ScrollPane p)
+    public ListGridManager(ScrollPane p,ScreensController sc)
     {
         //instance=i;
         preview = p;
         usrManager = UserManager.getInstance();
         gridManager= GridManager.getInstance();
+        myController = sc;
     }
     
     public List<AnchorPane> AllGrid()
@@ -50,7 +53,7 @@ public class ListGridManager {
         {
             for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
             {
-                container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview));
+                container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview,myController));
             }
         }
         else
@@ -59,13 +62,13 @@ public class ListGridManager {
             {
                 for(int i = 0; i<gridManager.filterGridsByTags(tags).size();i++)
                 {
-                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByTags(tags).get(i),preview));
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByTags(tags).get(i),preview,myController));
                 }
             }else if(type == 1)
             {
                 for(int i = 0; i<gridManager.filterGridsByGrade(grads).size();i++)
                 {
-                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByGrade(grads).get(i),preview));
+                    container.addGridThumbnail(new GridThumbnail(gridManager.filterGridsByGrade(grads).get(i),preview,myController));
                 }
             }
         }
@@ -77,7 +80,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getFinishedGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid(),preview));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getFinishedGrid().get(i).getGrid(),preview,myController));
         }
         return container.getInstance();
     }
@@ -87,7 +90,7 @@ public class ListGridManager {
         GridThumbnailContainer container = new GridThumbnailContainer();
         for(int i = 0; i<gridManager.getIncompleteGrid().size();i++)
         {
-            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid(),preview));
+            container.addGridThumbnail(new GridThumbnail(gridManager.getIncompleteGrid().get(i).getGrid(),preview,myController));
         }
         return container.getInstance();
     }
@@ -102,7 +105,7 @@ public class ListGridManager {
             grids = gridManager.getUserGrids(DistantUser.get(i));
             for(int j=0; i<grids.size();j++)
             {
-                container.addGridThumbnail(new GridThumbnail(grids.get(j),preview));
+                container.addGridThumbnail(new GridThumbnail(grids.get(j),preview,myController));
             }
         }
         return container.getInstance();

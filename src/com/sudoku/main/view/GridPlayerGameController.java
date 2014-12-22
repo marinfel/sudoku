@@ -53,7 +53,7 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
                     RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
                     if(instance.getCurrentGrid() != null)
                     {
-                          IhmPopupsList.getInstance().killAllTimers();
+                          //IhmPopupsList.getInstance().killAllTimers();
                           GridP = new IhmGridPlayer(instance.getCurrentGrid());
                           GridPlayerContainer.setContent(GridP);
                           GridP.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, gridPlayerGameController);
