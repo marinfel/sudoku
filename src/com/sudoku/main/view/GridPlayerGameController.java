@@ -21,7 +21,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
@@ -53,7 +61,7 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
                     RefreshGridPlayer instance = RefreshGridPlayer.getInstance();
                     if(instance.getCurrentGrid() != null)
                     {
-                          //IhmPopupsList.getInstance().killAllTimers();
+                          IhmPopupsList.getInstance().killAllTimers();
                           GridP = new IhmGridPlayer(instance.getCurrentGrid());
                           GridPlayerContainer.setContent(GridP);
                           GridP.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, gridPlayerGameController);
@@ -84,7 +92,29 @@ public class GridPlayerGameController implements Initializable, ControlledScreen
             Grid currentGrid = RefreshGridPlayer.getInstance().getCurrentGrid();
             Grid finishedGrid = copyGrid(currentGrid,instance);
             GridManager.getInstance().addPlayedGrid(finishedGrid,finishedGrid.getCreateUser());
-            myController.setScreen(SudukoIHM.programID);
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            Window primaryStage = null;
+            dialog.initOwner(primaryStage);
+            VBox dialogVbox = new VBox(20);
+            Text newText = new Text("Felicitation vous avez gagner !!!!");
+            newText.setFont(Font.font("Candara", 20));
+            Button quitter=new Button("Quitter");
+            quitter.setOnAction(
+                      new EventHandler<ActionEvent>() {
+
+                      @Override
+                    public void handle(ActionEvent t) {
+                         dialog.close();
+                         myController.setScreen(SudukoIHM.programID);                    
+                    }
+                 });
+            dialogVbox.getChildren().add(newText);
+            dialogVbox.getChildren().add(quitter);
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+            
         }
     }
     
