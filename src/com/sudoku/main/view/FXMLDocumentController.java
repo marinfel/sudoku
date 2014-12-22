@@ -281,9 +281,11 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         //    
         //    listGroups.setItems(groups);
         //    listUsersView.setItems(users);
-    
+        listUsers = userManag.getConnectedUsers();
+        users = userCategoryManag.getUsersToShow(listUsers);
+        listUsersView.setItems(users);
         //Charger données utilisateur
-        loggedUser = null;
+        //loggedUser = null;
           
           
           
@@ -390,6 +392,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                 if(loggedUser == null){
                     loggedUser = userManag.getLoggedUser();
                     getDataUser();
+                    listUsers = userManag.getConnectedUsers();
+                    users = userCategoryManag.getUsersToShow(listUsers);
+                    listUsersView.setItems(users);
                 }
             }
       });
@@ -409,6 +414,13 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private void goToFromFullGrid(ActionEvent event) {
     myController.setScreen(SudukoIHM.fromFullGridID);
+  }
+  
+  @FXML
+  private void usersRefresh(ActionEvent event) {
+    listUsers = userManag.getConnectedUsers();
+    users = userCategoryManag.getUsersToShow(listUsers);
+    listUsersView.setItems(users);
   }
   
   @FXML
