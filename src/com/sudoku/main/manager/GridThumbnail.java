@@ -5,7 +5,10 @@
  */
 package com.sudoku.main.manager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.preview.IhmGridDetailledPreview;
 import com.sudoku.grid.preview.IhmGridPreview;
+import com.sudoku.main.view.ScreensController;
+import com.sudoku.main.view.SudukoIHM;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -34,9 +37,10 @@ public class GridThumbnail extends AnchorPane {
     IhmGridPreview gridInstance;
     GridPane GridInfo;
     ScrollPane preview;
+    ScreensController myController;
     
     
-    GridThumbnail(Grid g,ScrollPane p)
+    GridThumbnail(Grid g,ScrollPane p,ScreensController sc)
     {
         super();
         instance = g;
@@ -44,7 +48,7 @@ public class GridThumbnail extends AnchorPane {
         border = new BorderPane();
         GridInfo = new GridPane();
         SeeMoreButton = new Button("Afficher");
-        PlayButton = new Button("Charger");
+        PlayButton = new Button("Jouer");
         gridInstance = new IhmGridPreview(instance,100);
         initThumbnail();
         setPositions();
@@ -52,6 +56,7 @@ public class GridThumbnail extends AnchorPane {
         setThisAnchorElements();
         //this.setStyle("-fx-background-color: #336699;");
         this.setPrefSize(800, 150);
+        myController = sc;
     }
     
     public void initThumbnail()
@@ -94,12 +99,13 @@ public class GridThumbnail extends AnchorPane {
         @Override
         public void handle(ActionEvent e) {
             RefreshGridPlayer.getInstance().setCurrentGrid(instance);
+            myController.setScreen(SudukoIHM.gridPlayerGameID);
         }
       });
         SeeMoreButton.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent e) {
-            preview.setContent(new IhmGridPreview(instance,200));
+            preview.setContent(new IhmGridDetailledPreview(instance,200));
         }
       });
     }

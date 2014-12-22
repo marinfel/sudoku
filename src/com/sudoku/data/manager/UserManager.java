@@ -131,7 +131,7 @@ public final class UserManager { // This is the manager for users.
            mDigest.digest(toBeHashed.getBytes("UTF-8"))))
            .equals(u.getPassword())) { //If the hash of pwd+salt is good
           loggedUser = u; // If the password is correct, log the user
-
+          
           CommunicationManager cm = CommunicationManager.getInstance();
           cm.init(u.getSalt(), u.getPseudo(), this.knownIpAdresses);
 

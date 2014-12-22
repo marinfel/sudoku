@@ -132,9 +132,13 @@ public class IhmPopupsList extends VBox implements EventHandler<IhmPopupCloseReq
   private void deletePopup(IhmPopup popup) {
     //get the index of the popup in the layout
     int index = getChildren().indexOf(popup);
-
+    if(index<0 || index>= getChildren().size())
+    {
+        return;
+    }
     //remove the popup and it's above line-separator from the layout
     getChildren().remove(index, index + 2);
+    
 
     //remove popup from the list
     popups.remove(popup);

@@ -202,15 +202,16 @@
                             <content>
                                 <SplitPane prefHeight="587.0" prefWidth="962.0">
                                     <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="1273.0">
                                             <children>
                                                 <SplitPane dividerPositions="0.08443708609271523" orientation="VERTICAL" prefHeight="611.0" prefWidth="998.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0">
                                                     <items>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0">
                                                             <children>
-                                                                <ChoiceBox fx:id="ResearchType" layoutX="469.0" layoutY="14.0" prefWidth="150.0" />
+                                                                <ChoiceBox fx:id="ResearchType" layoutX="469.0" layoutY="10.0" prefWidth="150.0" />
                                                                 <TextField fx:id="ResearchInput" layoutX="111.0" layoutY="10.0" onAction="#LetSearchGrid" prefHeight="26.0" prefWidth="341.0" />
                                                                 <Label layoutX="17.0" layoutY="14.0" text="Rechercher :" />
+                                                <Button layoutX="641.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshGrids" text="Rafraîchir" />
                                                             </children>
                                                         </AnchorPane>
                                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="558.0" prefWidth="1071.0">
@@ -328,30 +329,19 @@
                                 </SplitPane>
                             </content>
                         </Tab>
-                  <Tab fx:id="Jouer" text="Jouer">
-                    <content>
-                      <AnchorPane fx:id="GridPlayer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <ScrollPane fx:id="GridPlayerContainer" layoutX="3.0" layoutY="7.0" prefHeight="600.0" prefWidth="982.0">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                                </content>
-                              </ScrollPane>
-                           </children></AnchorPane>
-                    </content>
-                  </Tab>
                     </tabs>
                 </TabPane>
                 <ImageView fitHeight="33.0" fitWidth="202.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                     </image>
                 </ImageView>
-                <Button fx:id="connexion" layoutX="905.0" layoutY="16.0" mnemonicParsing="false" onAction="#goToLogin" text="Déconnexion" />
-                <Label id="userName" fx:id="userName" alignment="CENTER_RIGHT" layoutX="680.0" layoutY="21.0" prefHeight="21.0" prefWidth="180.0" text="Utilisateur : " textAlignment="RIGHT">
+                <Button fx:id="connexion" layoutX="1067.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToLogin" text="Déconnexion" />
+                <Label id="userName" fx:id="userName" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="16.0" prefHeight="21.0" prefWidth="180.0" text="Utilisateur : " textAlignment="RIGHT">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Label>
+            <Button layoutX="975.0" layoutY="14.0" mnemonicParsing="false" onAction="#saveDatas" text="Enregistrer" />
             </children>
         </AnchorPane>
     </content>
