@@ -133,7 +133,7 @@ public class Grid {
     this.title = titre;
   }
 @JsonIgnore
-  public double getMeanGrades() { //Give the mean rounded to the nearest integer
+  public double getMeanGrades() { // Give the mean expressed in half stars
     int i = 0;
     double result=0;
     for (Comment comment : comments) {
@@ -145,7 +145,19 @@ public class Grid {
     else
       return 0;
   }
-
+@JsonIgnore
+  public double getMeanStarGrades() { //Give the mean expressed in stars
+    int i = 0;
+    double result=0;
+    for (Comment comment : comments) {
+      result += comment.getGrade();
+      i++;
+    }
+    if (i != 0)
+      return result / (2 * i);
+    else
+      return 0;
+  }
     
   public UUID getId() {
     return id;
@@ -264,7 +276,9 @@ public class Grid {
       }
     }
   }
-
+  
+  // Use getMeanGrade instead
+  @Deprecated
   @JsonIgnore
   public double getAverageGrade(){
     if(this.comments.size() == 0){return 0;}
