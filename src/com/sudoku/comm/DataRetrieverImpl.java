@@ -50,13 +50,13 @@ public class DataRetrieverImpl implements DataRetriever {
         List<List<Integer>> resultMatrix = new ArrayList<>();
         Cell[][] matrix = grid.getGrid();
         for (byte i = 0; i < matrix.length; i++) {
-          resultMatrix.add(i, new ArrayList<Integer>());
+          List<Integer> list = new ArrayList<>();
+          resultMatrix.add(i, list);
           for (byte j = 0; j < matrix[0].length; j++) {
             if (matrix[i][j] instanceof FixedCell) {
-              resultMatrix.get(i).add(j,
-                  (int) ((FixedCell) matrix[i][j]).getValue());
+              list.add(j, (int) ((FixedCell) matrix[i][j]).getValue());
             } else {
-              resultMatrix.get(i).add(j, null);
+              list.add(j, null);
             }
           }
         }

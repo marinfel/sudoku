@@ -166,6 +166,7 @@ public final class UserManager { // This is the manager for users.
   public List<User> getConnectedUsers() {
     CommunicationManager tmp = CommunicationManager.getInstance();
     try {
+    	System.out.println("toto");
       this.distantUsers=tmp.getAllProfiles();
     } catch (IOException e) {
       // TODO Auto-generated catch block
