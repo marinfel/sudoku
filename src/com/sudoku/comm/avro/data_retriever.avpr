@@ -53,6 +53,96 @@
           ]
         },
         {
+          "name": "line1",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line2",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line3",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line4",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line5",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line6",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line7",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line8",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
+          "name": "line9",
+          "type": [
+            "null",
+            {
+              "type": "array",
+              "items": "int"
+            }
+          ]
+        },
+        {
           "name": "matrix",
           "type": {
             "type": "array",

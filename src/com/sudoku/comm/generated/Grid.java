@@ -7,7 +7,7 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Grid extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Grid\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"difficulty\",\"type\":\"int\"},{\"name\":\"published\",\"type\":\"boolean\"},{\"name\":\"comments\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Comment\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"double\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}}]},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]},{\"name\":\"matrix\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]}},{\"name\":\"createUser\",\"type\":\"User\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Grid\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"description\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"difficulty\",\"type\":\"int\"},{\"name\":\"published\",\"type\":\"boolean\"},{\"name\":\"comments\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Comment\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"double\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}}]},{\"name\":\"tags\",\"type\":[\"null\",{\"type\":\"array\",\"items\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]},{\"name\":\"line1\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line2\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line3\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line4\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line5\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line6\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line7\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line8\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"line9\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]},{\"name\":\"matrix\",\"type\":{\"type\":\"array\",\"items\":[\"null\",{\"type\":\"array\",\"items\":\"int\"}]}},{\"name\":\"createUser\",\"type\":\"User\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String id;
   @Deprecated public java.lang.String title;
@@ -16,6 +16,15 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   @Deprecated public boolean published;
   @Deprecated public java.util.List<com.sudoku.comm.generated.Comment> comments;
   @Deprecated public java.util.List<java.lang.String> tags;
+  @Deprecated public java.util.List<java.lang.Integer> line1;
+  @Deprecated public java.util.List<java.lang.Integer> line2;
+  @Deprecated public java.util.List<java.lang.Integer> line3;
+  @Deprecated public java.util.List<java.lang.Integer> line4;
+  @Deprecated public java.util.List<java.lang.Integer> line5;
+  @Deprecated public java.util.List<java.lang.Integer> line6;
+  @Deprecated public java.util.List<java.lang.Integer> line7;
+  @Deprecated public java.util.List<java.lang.Integer> line8;
+  @Deprecated public java.util.List<java.lang.Integer> line9;
   @Deprecated public java.util.List<java.util.List<java.lang.Integer>> matrix;
   @Deprecated public com.sudoku.comm.generated.User createUser;
   @Deprecated public java.lang.String createDate;
@@ -31,7 +40,7 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * All-args constructor.
    */
-  public Grid(java.lang.String id, java.lang.String title, java.lang.String description, java.lang.Integer difficulty, java.lang.Boolean published, java.util.List<com.sudoku.comm.generated.Comment> comments, java.util.List<java.lang.String> tags, java.util.List<java.util.List<java.lang.Integer>> matrix, com.sudoku.comm.generated.User createUser, java.lang.String createDate, java.lang.String updateDate) {
+  public Grid(java.lang.String id, java.lang.String title, java.lang.String description, java.lang.Integer difficulty, java.lang.Boolean published, java.util.List<com.sudoku.comm.generated.Comment> comments, java.util.List<java.lang.String> tags, java.util.List<java.lang.Integer> line1, java.util.List<java.lang.Integer> line2, java.util.List<java.lang.Integer> line3, java.util.List<java.lang.Integer> line4, java.util.List<java.lang.Integer> line5, java.util.List<java.lang.Integer> line6, java.util.List<java.lang.Integer> line7, java.util.List<java.lang.Integer> line8, java.util.List<java.lang.Integer> line9, java.util.List<java.util.List<java.lang.Integer>> matrix, com.sudoku.comm.generated.User createUser, java.lang.String createDate, java.lang.String updateDate) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -39,6 +48,15 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     this.published = published;
     this.comments = comments;
     this.tags = tags;
+    this.line1 = line1;
+    this.line2 = line2;
+    this.line3 = line3;
+    this.line4 = line4;
+    this.line5 = line5;
+    this.line6 = line6;
+    this.line7 = line7;
+    this.line8 = line8;
+    this.line9 = line9;
     this.matrix = matrix;
     this.createUser = createUser;
     this.createDate = createDate;
@@ -56,10 +74,19 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     case 4: return published;
     case 5: return comments;
     case 6: return tags;
-    case 7: return matrix;
-    case 8: return createUser;
-    case 9: return createDate;
-    case 10: return updateDate;
+    case 7: return line1;
+    case 8: return line2;
+    case 9: return line3;
+    case 10: return line4;
+    case 11: return line5;
+    case 12: return line6;
+    case 13: return line7;
+    case 14: return line8;
+    case 15: return line9;
+    case 16: return matrix;
+    case 17: return createUser;
+    case 18: return createDate;
+    case 19: return updateDate;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -74,10 +101,19 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     case 4: published = (java.lang.Boolean)value$; break;
     case 5: comments = (java.util.List<com.sudoku.comm.generated.Comment>)value$; break;
     case 6: tags = (java.util.List<java.lang.String>)value$; break;
-    case 7: matrix = (java.util.List<java.util.List<java.lang.Integer>>)value$; break;
-    case 8: createUser = (com.sudoku.comm.generated.User)value$; break;
-    case 9: createDate = (java.lang.String)value$; break;
-    case 10: updateDate = (java.lang.String)value$; break;
+    case 7: line1 = (java.util.List<java.lang.Integer>)value$; break;
+    case 8: line2 = (java.util.List<java.lang.Integer>)value$; break;
+    case 9: line3 = (java.util.List<java.lang.Integer>)value$; break;
+    case 10: line4 = (java.util.List<java.lang.Integer>)value$; break;
+    case 11: line5 = (java.util.List<java.lang.Integer>)value$; break;
+    case 12: line6 = (java.util.List<java.lang.Integer>)value$; break;
+    case 13: line7 = (java.util.List<java.lang.Integer>)value$; break;
+    case 14: line8 = (java.util.List<java.lang.Integer>)value$; break;
+    case 15: line9 = (java.util.List<java.lang.Integer>)value$; break;
+    case 16: matrix = (java.util.List<java.util.List<java.lang.Integer>>)value$; break;
+    case 17: createUser = (com.sudoku.comm.generated.User)value$; break;
+    case 18: createDate = (java.lang.String)value$; break;
+    case 19: updateDate = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -188,6 +224,141 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
   }
 
   /**
+   * Gets the value of the 'line1' field.
+   */
+  public java.util.List<java.lang.Integer> getLine1() {
+    return line1;
+  }
+
+  /**
+   * Sets the value of the 'line1' field.
+   * @param value the value to set.
+   */
+  public void setLine1(java.util.List<java.lang.Integer> value) {
+    this.line1 = value;
+  }
+
+  /**
+   * Gets the value of the 'line2' field.
+   */
+  public java.util.List<java.lang.Integer> getLine2() {
+    return line2;
+  }
+
+  /**
+   * Sets the value of the 'line2' field.
+   * @param value the value to set.
+   */
+  public void setLine2(java.util.List<java.lang.Integer> value) {
+    this.line2 = value;
+  }
+
+  /**
+   * Gets the value of the 'line3' field.
+   */
+  public java.util.List<java.lang.Integer> getLine3() {
+    return line3;
+  }
+
+  /**
+   * Sets the value of the 'line3' field.
+   * @param value the value to set.
+   */
+  public void setLine3(java.util.List<java.lang.Integer> value) {
+    this.line3 = value;
+  }
+
+  /**
+   * Gets the value of the 'line4' field.
+   */
+  public java.util.List<java.lang.Integer> getLine4() {
+    return line4;
+  }
+
+  /**
+   * Sets the value of the 'line4' field.
+   * @param value the value to set.
+   */
+  public void setLine4(java.util.List<java.lang.Integer> value) {
+    this.line4 = value;
+  }
+
+  /**
+   * Gets the value of the 'line5' field.
+   */
+  public java.util.List<java.lang.Integer> getLine5() {
+    return line5;
+  }
+
+  /**
+   * Sets the value of the 'line5' field.
+   * @param value the value to set.
+   */
+  public void setLine5(java.util.List<java.lang.Integer> value) {
+    this.line5 = value;
+  }
+
+  /**
+   * Gets the value of the 'line6' field.
+   */
+  public java.util.List<java.lang.Integer> getLine6() {
+    return line6;
+  }
+
+  /**
+   * Sets the value of the 'line6' field.
+   * @param value the value to set.
+   */
+  public void setLine6(java.util.List<java.lang.Integer> value) {
+    this.line6 = value;
+  }
+
+  /**
+   * Gets the value of the 'line7' field.
+   */
+  public java.util.List<java.lang.Integer> getLine7() {
+    return line7;
+  }
+
+  /**
+   * Sets the value of the 'line7' field.
+   * @param value the value to set.
+   */
+  public void setLine7(java.util.List<java.lang.Integer> value) {
+    this.line7 = value;
+  }
+
+  /**
+   * Gets the value of the 'line8' field.
+   */
+  public java.util.List<java.lang.Integer> getLine8() {
+    return line8;
+  }
+
+  /**
+   * Sets the value of the 'line8' field.
+   * @param value the value to set.
+   */
+  public void setLine8(java.util.List<java.lang.Integer> value) {
+    this.line8 = value;
+  }
+
+  /**
+   * Gets the value of the 'line9' field.
+   */
+  public java.util.List<java.lang.Integer> getLine9() {
+    return line9;
+  }
+
+  /**
+   * Sets the value of the 'line9' field.
+   * @param value the value to set.
+   */
+  public void setLine9(java.util.List<java.lang.Integer> value) {
+    this.line9 = value;
+  }
+
+  /**
    * Gets the value of the 'matrix' field.
    */
   public java.util.List<java.util.List<java.lang.Integer>> getMatrix() {
@@ -275,6 +446,15 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     private boolean published;
     private java.util.List<com.sudoku.comm.generated.Comment> comments;
     private java.util.List<java.lang.String> tags;
+    private java.util.List<java.lang.Integer> line1;
+    private java.util.List<java.lang.Integer> line2;
+    private java.util.List<java.lang.Integer> line3;
+    private java.util.List<java.lang.Integer> line4;
+    private java.util.List<java.lang.Integer> line5;
+    private java.util.List<java.lang.Integer> line6;
+    private java.util.List<java.lang.Integer> line7;
+    private java.util.List<java.lang.Integer> line8;
+    private java.util.List<java.lang.Integer> line9;
     private java.util.List<java.util.List<java.lang.Integer>> matrix;
     private com.sudoku.comm.generated.User createUser;
     private java.lang.String createDate;
@@ -316,21 +496,57 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
         this.tags = data().deepCopy(fields()[6].schema(), other.tags);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.matrix)) {
-        this.matrix = data().deepCopy(fields()[7].schema(), other.matrix);
+      if (isValidValue(fields()[7], other.line1)) {
+        this.line1 = data().deepCopy(fields()[7].schema(), other.line1);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.createUser)) {
-        this.createUser = data().deepCopy(fields()[8].schema(), other.createUser);
+      if (isValidValue(fields()[8], other.line2)) {
+        this.line2 = data().deepCopy(fields()[8].schema(), other.line2);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.createDate)) {
-        this.createDate = data().deepCopy(fields()[9].schema(), other.createDate);
+      if (isValidValue(fields()[9], other.line3)) {
+        this.line3 = data().deepCopy(fields()[9].schema(), other.line3);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.updateDate)) {
-        this.updateDate = data().deepCopy(fields()[10].schema(), other.updateDate);
+      if (isValidValue(fields()[10], other.line4)) {
+        this.line4 = data().deepCopy(fields()[10].schema(), other.line4);
         fieldSetFlags()[10] = true;
+      }
+      if (isValidValue(fields()[11], other.line5)) {
+        this.line5 = data().deepCopy(fields()[11].schema(), other.line5);
+        fieldSetFlags()[11] = true;
+      }
+      if (isValidValue(fields()[12], other.line6)) {
+        this.line6 = data().deepCopy(fields()[12].schema(), other.line6);
+        fieldSetFlags()[12] = true;
+      }
+      if (isValidValue(fields()[13], other.line7)) {
+        this.line7 = data().deepCopy(fields()[13].schema(), other.line7);
+        fieldSetFlags()[13] = true;
+      }
+      if (isValidValue(fields()[14], other.line8)) {
+        this.line8 = data().deepCopy(fields()[14].schema(), other.line8);
+        fieldSetFlags()[14] = true;
+      }
+      if (isValidValue(fields()[15], other.line9)) {
+        this.line9 = data().deepCopy(fields()[15].schema(), other.line9);
+        fieldSetFlags()[15] = true;
+      }
+      if (isValidValue(fields()[16], other.matrix)) {
+        this.matrix = data().deepCopy(fields()[16].schema(), other.matrix);
+        fieldSetFlags()[16] = true;
+      }
+      if (isValidValue(fields()[17], other.createUser)) {
+        this.createUser = data().deepCopy(fields()[17].schema(), other.createUser);
+        fieldSetFlags()[17] = true;
+      }
+      if (isValidValue(fields()[18], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[18].schema(), other.createDate);
+        fieldSetFlags()[18] = true;
+      }
+      if (isValidValue(fields()[19], other.updateDate)) {
+        this.updateDate = data().deepCopy(fields()[19].schema(), other.updateDate);
+        fieldSetFlags()[19] = true;
       }
     }
     
@@ -365,21 +581,57 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
         this.tags = data().deepCopy(fields()[6].schema(), other.tags);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.matrix)) {
-        this.matrix = data().deepCopy(fields()[7].schema(), other.matrix);
+      if (isValidValue(fields()[7], other.line1)) {
+        this.line1 = data().deepCopy(fields()[7].schema(), other.line1);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.createUser)) {
-        this.createUser = data().deepCopy(fields()[8].schema(), other.createUser);
+      if (isValidValue(fields()[8], other.line2)) {
+        this.line2 = data().deepCopy(fields()[8].schema(), other.line2);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.createDate)) {
-        this.createDate = data().deepCopy(fields()[9].schema(), other.createDate);
+      if (isValidValue(fields()[9], other.line3)) {
+        this.line3 = data().deepCopy(fields()[9].schema(), other.line3);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.updateDate)) {
-        this.updateDate = data().deepCopy(fields()[10].schema(), other.updateDate);
+      if (isValidValue(fields()[10], other.line4)) {
+        this.line4 = data().deepCopy(fields()[10].schema(), other.line4);
         fieldSetFlags()[10] = true;
+      }
+      if (isValidValue(fields()[11], other.line5)) {
+        this.line5 = data().deepCopy(fields()[11].schema(), other.line5);
+        fieldSetFlags()[11] = true;
+      }
+      if (isValidValue(fields()[12], other.line6)) {
+        this.line6 = data().deepCopy(fields()[12].schema(), other.line6);
+        fieldSetFlags()[12] = true;
+      }
+      if (isValidValue(fields()[13], other.line7)) {
+        this.line7 = data().deepCopy(fields()[13].schema(), other.line7);
+        fieldSetFlags()[13] = true;
+      }
+      if (isValidValue(fields()[14], other.line8)) {
+        this.line8 = data().deepCopy(fields()[14].schema(), other.line8);
+        fieldSetFlags()[14] = true;
+      }
+      if (isValidValue(fields()[15], other.line9)) {
+        this.line9 = data().deepCopy(fields()[15].schema(), other.line9);
+        fieldSetFlags()[15] = true;
+      }
+      if (isValidValue(fields()[16], other.matrix)) {
+        this.matrix = data().deepCopy(fields()[16].schema(), other.matrix);
+        fieldSetFlags()[16] = true;
+      }
+      if (isValidValue(fields()[17], other.createUser)) {
+        this.createUser = data().deepCopy(fields()[17].schema(), other.createUser);
+        fieldSetFlags()[17] = true;
+      }
+      if (isValidValue(fields()[18], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[18].schema(), other.createDate);
+        fieldSetFlags()[18] = true;
+      }
+      if (isValidValue(fields()[19], other.updateDate)) {
+        this.updateDate = data().deepCopy(fields()[19].schema(), other.updateDate);
+        fieldSetFlags()[19] = true;
       }
     }
 
@@ -556,6 +808,231 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
       return this;
     }
 
+    /** Gets the value of the 'line1' field */
+    public java.util.List<java.lang.Integer> getLine1() {
+      return line1;
+    }
+    
+    /** Sets the value of the 'line1' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine1(java.util.List<java.lang.Integer> value) {
+      validate(fields()[7], value);
+      this.line1 = value;
+      fieldSetFlags()[7] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line1' field has been set */
+    public boolean hasLine1() {
+      return fieldSetFlags()[7];
+    }
+    
+    /** Clears the value of the 'line1' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine1() {
+      line1 = null;
+      fieldSetFlags()[7] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line2' field */
+    public java.util.List<java.lang.Integer> getLine2() {
+      return line2;
+    }
+    
+    /** Sets the value of the 'line2' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine2(java.util.List<java.lang.Integer> value) {
+      validate(fields()[8], value);
+      this.line2 = value;
+      fieldSetFlags()[8] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line2' field has been set */
+    public boolean hasLine2() {
+      return fieldSetFlags()[8];
+    }
+    
+    /** Clears the value of the 'line2' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine2() {
+      line2 = null;
+      fieldSetFlags()[8] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line3' field */
+    public java.util.List<java.lang.Integer> getLine3() {
+      return line3;
+    }
+    
+    /** Sets the value of the 'line3' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine3(java.util.List<java.lang.Integer> value) {
+      validate(fields()[9], value);
+      this.line3 = value;
+      fieldSetFlags()[9] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line3' field has been set */
+    public boolean hasLine3() {
+      return fieldSetFlags()[9];
+    }
+    
+    /** Clears the value of the 'line3' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine3() {
+      line3 = null;
+      fieldSetFlags()[9] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line4' field */
+    public java.util.List<java.lang.Integer> getLine4() {
+      return line4;
+    }
+    
+    /** Sets the value of the 'line4' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine4(java.util.List<java.lang.Integer> value) {
+      validate(fields()[10], value);
+      this.line4 = value;
+      fieldSetFlags()[10] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line4' field has been set */
+    public boolean hasLine4() {
+      return fieldSetFlags()[10];
+    }
+    
+    /** Clears the value of the 'line4' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine4() {
+      line4 = null;
+      fieldSetFlags()[10] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line5' field */
+    public java.util.List<java.lang.Integer> getLine5() {
+      return line5;
+    }
+    
+    /** Sets the value of the 'line5' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine5(java.util.List<java.lang.Integer> value) {
+      validate(fields()[11], value);
+      this.line5 = value;
+      fieldSetFlags()[11] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line5' field has been set */
+    public boolean hasLine5() {
+      return fieldSetFlags()[11];
+    }
+    
+    /** Clears the value of the 'line5' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine5() {
+      line5 = null;
+      fieldSetFlags()[11] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line6' field */
+    public java.util.List<java.lang.Integer> getLine6() {
+      return line6;
+    }
+    
+    /** Sets the value of the 'line6' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine6(java.util.List<java.lang.Integer> value) {
+      validate(fields()[12], value);
+      this.line6 = value;
+      fieldSetFlags()[12] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line6' field has been set */
+    public boolean hasLine6() {
+      return fieldSetFlags()[12];
+    }
+    
+    /** Clears the value of the 'line6' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine6() {
+      line6 = null;
+      fieldSetFlags()[12] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line7' field */
+    public java.util.List<java.lang.Integer> getLine7() {
+      return line7;
+    }
+    
+    /** Sets the value of the 'line7' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine7(java.util.List<java.lang.Integer> value) {
+      validate(fields()[13], value);
+      this.line7 = value;
+      fieldSetFlags()[13] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line7' field has been set */
+    public boolean hasLine7() {
+      return fieldSetFlags()[13];
+    }
+    
+    /** Clears the value of the 'line7' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine7() {
+      line7 = null;
+      fieldSetFlags()[13] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line8' field */
+    public java.util.List<java.lang.Integer> getLine8() {
+      return line8;
+    }
+    
+    /** Sets the value of the 'line8' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine8(java.util.List<java.lang.Integer> value) {
+      validate(fields()[14], value);
+      this.line8 = value;
+      fieldSetFlags()[14] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line8' field has been set */
+    public boolean hasLine8() {
+      return fieldSetFlags()[14];
+    }
+    
+    /** Clears the value of the 'line8' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine8() {
+      line8 = null;
+      fieldSetFlags()[14] = false;
+      return this;
+    }
+
+    /** Gets the value of the 'line9' field */
+    public java.util.List<java.lang.Integer> getLine9() {
+      return line9;
+    }
+    
+    /** Sets the value of the 'line9' field */
+    public com.sudoku.comm.generated.Grid.Builder setLine9(java.util.List<java.lang.Integer> value) {
+      validate(fields()[15], value);
+      this.line9 = value;
+      fieldSetFlags()[15] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'line9' field has been set */
+    public boolean hasLine9() {
+      return fieldSetFlags()[15];
+    }
+    
+    /** Clears the value of the 'line9' field */
+    public com.sudoku.comm.generated.Grid.Builder clearLine9() {
+      line9 = null;
+      fieldSetFlags()[15] = false;
+      return this;
+    }
+
     /** Gets the value of the 'matrix' field */
     public java.util.List<java.util.List<java.lang.Integer>> getMatrix() {
       return matrix;
@@ -563,21 +1040,21 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'matrix' field */
     public com.sudoku.comm.generated.Grid.Builder setMatrix(java.util.List<java.util.List<java.lang.Integer>> value) {
-      validate(fields()[7], value);
+      validate(fields()[16], value);
       this.matrix = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[16] = true;
       return this; 
     }
     
     /** Checks whether the 'matrix' field has been set */
     public boolean hasMatrix() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[16];
     }
     
     /** Clears the value of the 'matrix' field */
     public com.sudoku.comm.generated.Grid.Builder clearMatrix() {
       matrix = null;
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[16] = false;
       return this;
     }
 
@@ -588,21 +1065,21 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'createUser' field */
     public com.sudoku.comm.generated.Grid.Builder setCreateUser(com.sudoku.comm.generated.User value) {
-      validate(fields()[8], value);
+      validate(fields()[17], value);
       this.createUser = value;
-      fieldSetFlags()[8] = true;
+      fieldSetFlags()[17] = true;
       return this; 
     }
     
     /** Checks whether the 'createUser' field has been set */
     public boolean hasCreateUser() {
-      return fieldSetFlags()[8];
+      return fieldSetFlags()[17];
     }
     
     /** Clears the value of the 'createUser' field */
     public com.sudoku.comm.generated.Grid.Builder clearCreateUser() {
       createUser = null;
-      fieldSetFlags()[8] = false;
+      fieldSetFlags()[17] = false;
       return this;
     }
 
@@ -613,21 +1090,21 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'createDate' field */
     public com.sudoku.comm.generated.Grid.Builder setCreateDate(java.lang.String value) {
-      validate(fields()[9], value);
+      validate(fields()[18], value);
       this.createDate = value;
-      fieldSetFlags()[9] = true;
+      fieldSetFlags()[18] = true;
       return this; 
     }
     
     /** Checks whether the 'createDate' field has been set */
     public boolean hasCreateDate() {
-      return fieldSetFlags()[9];
+      return fieldSetFlags()[18];
     }
     
     /** Clears the value of the 'createDate' field */
     public com.sudoku.comm.generated.Grid.Builder clearCreateDate() {
       createDate = null;
-      fieldSetFlags()[9] = false;
+      fieldSetFlags()[18] = false;
       return this;
     }
 
@@ -638,21 +1115,21 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
     
     /** Sets the value of the 'updateDate' field */
     public com.sudoku.comm.generated.Grid.Builder setUpdateDate(java.lang.String value) {
-      validate(fields()[10], value);
+      validate(fields()[19], value);
       this.updateDate = value;
-      fieldSetFlags()[10] = true;
+      fieldSetFlags()[19] = true;
       return this; 
     }
     
     /** Checks whether the 'updateDate' field has been set */
     public boolean hasUpdateDate() {
-      return fieldSetFlags()[10];
+      return fieldSetFlags()[19];
     }
     
     /** Clears the value of the 'updateDate' field */
     public com.sudoku.comm.generated.Grid.Builder clearUpdateDate() {
       updateDate = null;
-      fieldSetFlags()[10] = false;
+      fieldSetFlags()[19] = false;
       return this;
     }
 
@@ -667,10 +1144,19 @@ public class Grid extends org.apache.avro.specific.SpecificRecordBase implements
         record.published = fieldSetFlags()[4] ? this.published : (java.lang.Boolean) defaultValue(fields()[4]);
         record.comments = fieldSetFlags()[5] ? this.comments : (java.util.List<com.sudoku.comm.generated.Comment>) defaultValue(fields()[5]);
         record.tags = fieldSetFlags()[6] ? this.tags : (java.util.List<java.lang.String>) defaultValue(fields()[6]);
-        record.matrix = fieldSetFlags()[7] ? this.matrix : (java.util.List<java.util.List<java.lang.Integer>>) defaultValue(fields()[7]);
-        record.createUser = fieldSetFlags()[8] ? this.createUser : (com.sudoku.comm.generated.User) defaultValue(fields()[8]);
-        record.createDate = fieldSetFlags()[9] ? this.createDate : (java.lang.String) defaultValue(fields()[9]);
-        record.updateDate = fieldSetFlags()[10] ? this.updateDate : (java.lang.String) defaultValue(fields()[10]);
+        record.line1 = fieldSetFlags()[7] ? this.line1 : (java.util.List<java.lang.Integer>) defaultValue(fields()[7]);
+        record.line2 = fieldSetFlags()[8] ? this.line2 : (java.util.List<java.lang.Integer>) defaultValue(fields()[8]);
+        record.line3 = fieldSetFlags()[9] ? this.line3 : (java.util.List<java.lang.Integer>) defaultValue(fields()[9]);
+        record.line4 = fieldSetFlags()[10] ? this.line4 : (java.util.List<java.lang.Integer>) defaultValue(fields()[10]);
+        record.line5 = fieldSetFlags()[11] ? this.line5 : (java.util.List<java.lang.Integer>) defaultValue(fields()[11]);
+        record.line6 = fieldSetFlags()[12] ? this.line6 : (java.util.List<java.lang.Integer>) defaultValue(fields()[12]);
+        record.line7 = fieldSetFlags()[13] ? this.line7 : (java.util.List<java.lang.Integer>) defaultValue(fields()[13]);
+        record.line8 = fieldSetFlags()[14] ? this.line8 : (java.util.List<java.lang.Integer>) defaultValue(fields()[14]);
+        record.line9 = fieldSetFlags()[15] ? this.line9 : (java.util.List<java.lang.Integer>) defaultValue(fields()[15]);
+        record.matrix = fieldSetFlags()[16] ? this.matrix : (java.util.List<java.util.List<java.lang.Integer>>) defaultValue(fields()[16]);
+        record.createUser = fieldSetFlags()[17] ? this.createUser : (com.sudoku.comm.generated.User) defaultValue(fields()[17]);
+        record.createDate = fieldSetFlags()[18] ? this.createDate : (java.lang.String) defaultValue(fields()[18]);
+        record.updateDate = fieldSetFlags()[19] ? this.updateDate : (java.lang.String) defaultValue(fields()[19]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
