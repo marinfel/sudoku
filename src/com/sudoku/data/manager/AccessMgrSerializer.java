@@ -26,7 +26,7 @@ class AccessMgrSerializer extends JsonSerializer<HashMap>  {
     public void serialize(HashMap t, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     
-        Set<Grid> keySet =AccessManager.getInstance().getRules().keySet();
+        /*Set<Grid> keySet =AccessManager.getInstance().getRules().keySet();
         
         Iterator<Grid> it=keySet.iterator();
           //  jg.writeStartArray();
@@ -37,7 +37,7 @@ class AccessMgrSerializer extends JsonSerializer<HashMap>  {
             jg.writeArrayFieldStart(g.getId().toString());
            // jg.writeStringField("rules",(AccessManager.getInstance().getAllAccessRulesForGrid(g).toString()));
             
-        }
+        }*/
     
     }
     

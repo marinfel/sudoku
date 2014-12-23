@@ -36,7 +36,7 @@ public class AccessGridSerializer2 extends JsonSerializer<AccessManager>
     public void serialize(AccessManager t, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
-        jg.writeFieldName(String.valueOf(t.getRules()));
+        //jg.writeFieldName(String.valueOf(t.getRules()));
         //jg.write
     }
 }

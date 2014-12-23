@@ -60,8 +60,8 @@ public class DataSample {
         // to be handled
       }
       List<ContactCategory> listCat = new LinkedList<>();
-      HashSet<User> listUs1 = new HashSet<User>();
-      HashSet<User> listUs2 = new HashSet<User>();
+      LinkedList<User> listUs1 = new LinkedList<>();
+      LinkedList<User> listUs2 = new LinkedList<>();
       listUs1.add(b);
       listUs2.add(d);
       listUs2.add(c);
@@ -151,13 +151,13 @@ public class DataSample {
        gridMgr.addGrid(g3);
        gridMgr.addPlayedGrid(g2,b);
        
-       AccessManager accessMgr = AccessManager.getInstance();
+       /*AccessManager accessMgr = AccessManager.getInstance();
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.display, a);
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, a);
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, a);
        
        accessMgr.addAccessRule(g2, AccessType.revoked, AccessAction.comment, b);
-       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);
+       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);*/
        
        DataManager dataMgr = DataManager.getInstance();
        //UserManager.getInstance();
