@@ -12,10 +12,14 @@ import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.gridcells.IhmGridLines;
 import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
 import com.sudoku.grid.preview.StarsBox;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
@@ -37,6 +41,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  * @author Laetitia & Melie
@@ -78,11 +83,19 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     } catch (Exception e) {
       authorName = new Label("Unknown");
       iAuthorPicture = new Image(new File("pictures/grid/inconnu.png").toURI().toString());
+      
     }
 
-    ImageView authorPict = new ImageView();
-    authorPict.setImage(iAuthorPicture);
-    authorBox.getChildren().addAll(authorPict, authorName);
+    //affichage, resize image
+    BufferedImage authorPictB = SwingFXUtils.fromFXImage(iAuthorPicture, null);
+    BufferedImage iAuthorPictureResized=resize(authorPictB,165,165);
+    Image authImage = SwingFXUtils.toFXImage(iAuthorPictureResized, null);
+    //authorPict.setImage(authImage);  
+    
+    ImageView authorPict = new ImageView(authImage);
+    
+    authorBox.getChildren().add(authorPict);
+    authorBox.getChildren().add(authorName);
     authorBox.setAlignment(Pos.TOP_LEFT);
 
     //ajout de la moyenne
@@ -269,4 +282,30 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
   public void handle(IhmGridLinesCompleted t) {
     fireEvent(t);
   }
+  
+  public static BufferedImage resize(BufferedImage image, int width, int height) 
+  {
+    BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
+    Graphics2D g2d = (Graphics2D) bi.createGraphics();
+    g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+    g2d.drawImage(image, 0, 0, width, height, null);
+    g2d.dispose();
+    return bi;
+  }
+  
 }
+
+
+/*File imgFile=new File(image);
+		BufferedImage img = null;
+		try 
+		{
+			img = ImageIO.read(imgFile);
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedImage resizedImage=resize(img,this.getWidth(),this.getHeight());
+*/
+

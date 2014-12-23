@@ -32,6 +32,7 @@ public class AccessManager {
     if(group == null || action == null){return;}
 
     HashSet<AccessAction> actions = this.accessRules.get(group);
+
     if(actions == null){
       actions = new HashSet<AccessAction>();
       actions.add(action);

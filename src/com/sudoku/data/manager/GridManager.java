@@ -142,7 +142,7 @@ public final class GridManager {
   }
   
   public List<Grid> getUserGrids(User user) {
-      List<Grid> usersGrids = new ArrayList<Grid>();
+      List<Grid> usersGrids = new ArrayList<>();
       
       for(Grid g : this.availableGrids){
           if(g.getCreateUser() == user){
