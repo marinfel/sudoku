@@ -229,13 +229,20 @@ public final class CommunicationManager {
    * @param gridUuid uuid of the grid owning the comment
    * @throws IOException
    */
-  public void pushComment(Comment comment, UUID gridUuid) throws IOException {
+  public void pushComment(com.sudoku.data.model.Comment comment, UUID gridUuid)
+      throws IOException {
     for (String ip : ipsConnected.keySet()) {
       NettyTransceiver client = new NettyTransceiver(
           new InetSocketAddress(ip, dataRetrieverServer.getPort()));
       DataRetriever retriever = (DataRetriever)
           SpecificRequestor.getClient(DataRetriever.class, client);
-      retriever.commentGrid(comment, gridUuid.toString());
+      retriever.commentGrid(Comment.newBuilder()
+          .setComment(comment.getComment())
+          .setGrade(comment.getGrade())
+          .setAuthor(com.sudoku.data.model.User
+              .buildAvroUser(comment.getAuthor()))
+          .setCreateDate(comment.getCreationDate().toString())
+          .build(), gridUuid.toString());
     }
   }
 
