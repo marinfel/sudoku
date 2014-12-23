@@ -1,5 +1,6 @@
 package com.sudoku.data.model;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -262,7 +263,11 @@ public class Grid {
     if (comment != null && comment.getComment() != null &&
         !comment.getComment().isEmpty()) {
       comments.add(comment);
-      CommunicationManager.getInstance().pushComment(comment, getId());
+      try {
+		CommunicationManager.getInstance().pushComment(comment, getId());
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
     }
   }
 
