@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.sudoku.data.manager;
 
-import com.sudoku.data.model.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import java.util.ArrayList;
+import com.sudoku.data.model.AccessAction;
+import com.sudoku.data.model.AccessRule;
+import com.sudoku.data.model.ContactCategory;
+
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,257 +33,34 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.type.MapType;
 import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.type.TypeReference;
+import java.util.HashSet;
 
-/**
- * @author JE
- */
+
 public class AccessManager {
 
   private static AccessManager instance;
- // @JsonKeySerialize(using = AccessGridSerializer2.class)
-  @JsonSerialize(using = AccessMgrSerializer.class)
-  private HashMap<Grid, ArrayList<AccessRule>> rules;
-  
-  @JsonIgnore
-  private File jsonFile;
-  @JsonIgnore
-  private String jsonFilePath;
-    
-  private AccessManager() {
-    this.rules = new HashMap<>();
-    jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
- 
-  }
 
-  public static AccessManager getInstance() {
-    if (instance == null) {
+
+  private HashMap<ContactCategory, HashSet<AccessAction>> accessRules = new HashMap<>();
+
+  private AccessManager(){}
+
+  public static AccessManager getInstance(){
+    if(instance == null){
       instance = new AccessManager();
     }
     return instance;
   }
 
-  /**
-   * @return the rules
-   */
-  public HashMap<Grid, ArrayList<AccessRule>> getRules() {
-    return rules;
+  public void setAccessRulesForGroup(ContactCategory group, HashSet<AccessAction> allowedActions){
+    if(group == null){return;}
+    this.accessRules.put(group, allowedActions);
   }
 
-  //jsonignore
-  @JsonIgnore
-  public ArrayList<AccessRule> getAllAccessRulesForGrid(Grid grid) {
-    return this.rules.get(grid);
-  }
+  public void addAccessRuleForGroup(ContactCategory group, AccessAction action){
+    HashSet<AccessAction> actions = this.accessRules.get(group);
+    if(actions = null){
 
-  //jsonignore
-  @JsonIgnore
-  private AccessRule getAccessRule(Grid grid, AccessAction accessAction, Ruleable appliedTo) {
-
-    ArrayList<AccessRule> rulesList = this.rules.get(grid);
-    if (rulesList == null) {
-      return null;
-    }
-
-    for (AccessRule ar : rulesList) {
-      if (ar.getAccessAction() == accessAction && ar.getAppliedTo().equals(appliedTo)) {
-        return ar;
-      }
-    }
-    return null;
-  }
-
-  /**
-   * @param rules the rules to set
-   */
-  public void setRules(HashMap<Grid, ArrayList<AccessRule>> rules) {
-    this.rules = rules;
-  }
-
-  public void setAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo) {
-    AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
-    if (oldAccessRule == null) {
-      this.addAccessRule(grid, accessType, accessAction, appliedTo);
-    } else {
-      oldAccessRule.setAccessType(accessType);
     }
   }
-
-  public void setAccessRule(Grid grid, AccessRule accessRule) {
-    setAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
-  }
-
-  public void addAccessRule(Grid grid, AccessType accessType, AccessAction accessAction, Ruleable appliedTo) {
-    if (this.rules.containsKey(grid)) {
-      AccessRule oldAccessRule = this.getAccessRule(grid, accessAction, appliedTo);
-      if (oldAccessRule != null) {
-        oldAccessRule.setAccessType(accessType);
-      } else {
-        this.rules.get(grid).add(new AccessRule(accessType, accessAction, appliedTo));
-      }
-    } else {
-      ArrayList<AccessRule> newRuleList = new ArrayList<>();
-      newRuleList.add(new AccessRule(accessType, accessAction, appliedTo));
-      this.rules.put(grid, newRuleList);
-    }
-  }
-
-  public void addAccessRule(Grid grid, AccessRule accessRule) {
-    addAccessRule(grid, accessRule.getAccessType(), accessRule.getAccessAction(), accessRule.getAppliedTo());
-  }
-
-  public void removeAllAccessRules() {
-    this.rules.clear();
-  }
-
-  public void removeAllAccessRulesForGrid(Grid grid) {
-    ArrayList<AccessRule> rulesList = this.rules.get(grid);
-    if (rulesList != null) {
-      rulesList.clear();
-    }
-  }
-
-  public AccessType verifyAccess(User user, Grid grid, AccessAction accessAction) {
-
-    // Retrouve les regles d'access pour la grille de Sudoku donnee
-    ArrayList<AccessRule> rulesList = this.rules.get(grid);
-
-    // Pas de regle pour cette grille: L'acces est permit
-    if (rulesList == null) {
-      return AccessType.granted;
-    }
-
-    AccessType userLevelAccessType = null;
-    AccessType groupLevelAccessType = null;
-
-    for (AccessRule ar : rulesList) {
-      // On recupere les droits d'access au niveau utilisateur et groupe
-      if (ar.getAccessAction() == accessAction && ar.getAppliedTo().hasUser(user)) {
-        if (ar.getAppliedTo().isUser()) {
-          userLevelAccessType = ar.getAccessType();
-        } else {
-          groupLevelAccessType = ar.getAccessType();
-        }
-      }
-    }
-
-    // Pas de regle indiquee pour cet utilisateur: L'acces est permit
-    if (userLevelAccessType == null && groupLevelAccessType == null) {
-      return AccessType.granted;
-    }
-
-    // Si pas de regle au niveau de l'utilisateur, on utilise la regle s'appliquant a son groupe
-    if (userLevelAccessType == null) {
-      return groupLevelAccessType;
-    }
-
-    // Sinon, la regle indiquee au niveau de l'utilisateur est prioritaire
-    return userLevelAccessType;
-  }
-  
-   public void SaveToJson(){
-       ObjectMapper mapper = new ObjectMapper();
-       //Pour sérializer les champs publics comme privés
-       //pour ne pas planter sur une valeur null
-       mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);       
-       mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-       mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_EMPTY);
-      /*  SimpleModule module =  
-          new SimpleModule("GridKeyModule",  
-          new Version(1, 0, 0, null));
-        module.addSerializer(new AccessGridSerializer2());
-        mapper.registerModule(module);
-       */// MapType myMapType;
-       // myMapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, Grid.class,AccessRule.class);
-        
-        //ObjectWriter writer = new ObjectMapper().withModule(module).writerWithType(myMapType);
-        //writer.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-        // try {
-          //System.out.println(writer.writeValueAsString(rules));
-      //} catch (IOException ex) {
-        //  Logger.getLogger(AccessManager.class.getName()).log(Level.SEVERE, null, ex);
-        
-      //}
-           
-            try {
-                System.out.println(jsonFilePath.concat("backupAccessManager.json"));
-                jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
-               // mapper.writerWithType(new TypeReference<AccessManager>() {
-               // }).writeValue(jsonFile, this);
-                 mapper.writeValue(jsonFile,this);
-                    //Pour logger le processus de sauvegarde
-	        System.out.println(mapper.writeValueAsString(this));
-        } catch (JsonGenerationException ex) {
-                   ex.printStackTrace();
- 
-	} catch (JsonMappingException ex) {
-	 
-	            ex.printStackTrace();
-        }  catch (FileNotFoundException e){
-            /*  try {
-          
-                File tmpFile=new File(jsonFilePath);
-
-                tmpFile.mkdirs();
-                jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
-                writer.writeValue(jsonFile, this);
-                //Pour logger le processus de sauvegarde
-                System.out.println(writer.writeValueAsString(this));
-            } catch (IOException ex) {
-                Logger.getLogger(GridManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         */
-        }catch (IOException ex) {
-	 
-	            ex.printStackTrace();
-        }
-    }
-  public static AccessManager BuildFromJson(){
-  ObjectMapper mapper= new ObjectMapper();
-        // To avoid any undeclared property error
-        //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
-        SimpleModule module =  
-          new SimpleModule("GridKeyDeseriaizer",  
-          new Version(1, 0, 0, null));
-        module.addKeyDeserializer(Grid.class,new AccessGridDeserializer());
-        mapper.registerModule(module);
-        /* SimpleModule module2 =  
-          new SimpleModule("AccessRuleDeserializerModule",  
-          new Version(1, 0, 0, null));
-        module.addDeserializer(AccessManager.class,new AccessRuleDeserializer2());
-        mapper.registerModule(module2);
-   */     try {
-                String jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
- 
-                File jsonFile = new File(jsonFilePath.concat("backupAccessManager.json"));
-                MapType myMapType;
-                myMapType = TypeFactory.defaultInstance().constructMapType(HashMap.class, Grid.class,AccessRule.class);
-               //mapper.(myMapType);
-            //ObjectReader reader =  mapper.readValue(jsonFile,myMapType);
-           
-            
-        //writer.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
-                //DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
-                List l= mapper.readValue(jsonFile,List.class);
-                l.get(1);
-                System.out.println(l.get(2).toString());
-                
-                
-        }catch (JsonGenerationException ex) {
-         
-	 
-	            ex.printStackTrace();
- 
-	} catch (JsonMappingException ex) {
-	 
-	            ex.printStackTrace();
-	 
-	} catch (IOException ex) {
-	 
-	            ex.printStackTrace();
-	 
-	}
-        return AccessManager.getInstance();
-  
-  }
-
 }
