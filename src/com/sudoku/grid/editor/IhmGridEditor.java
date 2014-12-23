@@ -147,6 +147,8 @@ public abstract class IhmGridEditor extends IhmGridView {
             String title = new String("Not enough filled cells");
             String text = new String(
               "You need to fill at least 17 cells to validate your grid");
+            ((VBox) border.getRight()).getChildren().clear();
+            ((VBox) border.getRight()).getChildren().add(IhmPopupsList.getInstance());
             IhmPopupsList.getInstance().addPopup(title, text, 10);
           } else {
             //Saves the tags in data's grid object
@@ -196,6 +198,8 @@ public abstract class IhmGridEditor extends IhmGridView {
           String title = new String("No Title");
           String text = new String(
             "You have to provide a title for your grid");
+          ((VBox) border.getRight()).getChildren().clear();
+          ((VBox) border.getRight()).getChildren().add(IhmPopupsList.getInstance());
           IhmPopupsList.getInstance().addPopup(title, text, 10);
 
         }

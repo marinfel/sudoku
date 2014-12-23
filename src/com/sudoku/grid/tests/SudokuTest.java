@@ -48,8 +48,8 @@ public class SudokuTest extends Application {
     IhmGridLayout ihm_test5;
 
     ihm_test1 = new IhmGridEditorRandomlyFilled();
-    ihm_test2 = new IhmGridEditorManuallyFilled();
-    ihm_test3 = new IhmGridPlayer(generateRandomGrid(20));
+    //ihm_test2 = new IhmGridEditorManuallyFilled();
+    //ihm_test3 = new IhmGridPlayer(generateRandomGrid(20));
     //ihm_test4 = new IhmGridPreview(2, new Grid("", UserManager.getInstance().getLoggedUser()), 100);
 
     Grid g = generateRandomGrid();
@@ -68,11 +68,11 @@ public class SudokuTest extends Application {
     User user = UserManager.getInstance().getLoggedUser();
     g.setCreateUser(user);
     g.setTitle("test title");
-    ihm_test5 = new IhmGridDetailledPreview(g, 200);
+    //ihm_test5 = new IhmGridDetailledPreview(g, 200);
 
-    //Scene scene = new Scene(ihm_test1 800, 1000);
+    Scene scene = new Scene(ihm_test1, 800, 1000);
     //Scene scene = new Scene(ihm_test2, 800, 1000);
-    Scene scene = new Scene(ihm_test3, 800, 1000);
+    //Scene scene = new Scene(ihm_test3, 800, 1000);
     //Scene scene = new Scene(ihm_test4, 800, 1000);
     //Scene scene = new Scene(ihm_test5, 300, 300);
 
