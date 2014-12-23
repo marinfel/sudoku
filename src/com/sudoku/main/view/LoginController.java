@@ -83,8 +83,8 @@ public class LoginController implements Initializable, ControlledScreen {
         userName.setText("Echec de connexion : vérifiez vos identifiants.");
       }
       else{
-        userName.setText("Veuillez patienté "+userManag.getLoggedUser());
-        System.out.println("Veuillez patienté "+authUser.getPseudo());
+        userName.setText("Veuillez patienter "+userManag.getLoggedUser().getPseudo());
+        System.out.println("Veuillez patienter "+authUser.getPseudo());
         goToProgram(event);
       }
     }

@@ -19,6 +19,7 @@ import com.sudoku.main.manager.UserCategoryManager;
 import com.sudoku.main.manager.RefreshGridPlayer;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import javafx.scene.control.ScrollPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,12 +38,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -97,6 +101,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   public UserManager userManag;
   public UserCategoryManager userCategoryManag;
   public List<User> listUsers = new LinkedList<>();
+  public List<User> listConnectedUsers = new LinkedList<>();
   public List<ContactCategory> userCategories = new LinkedList<>();
   public HashMap<String,List<User>> categoryAndUsers;
   public HashMap<String,ObservableList> observableData;
@@ -260,25 +265,25 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           assert ipAddressHome != null : "fx:id=\"ipAddressHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert picturePathHome != null : "fx:id=\"picturePathHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
-          
+                     
           //Ajouter des éléments aux listes groupes et utilisateurs
-          groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
-          
-          //ListUsers = UserManager.getInstance().getConnectedUsers();
-          listUsers = UserManager.getInstance().getDistantUsers();
-          //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
-          //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
-          //showConnectedUsers(observableData,"Global"); //Les afficher
-          //users.addAll("julian", "user2", "user3");
-          //users.addAll(UserManager.getInstance().getConnectedUsers());
-          //users.addAll(userCategoryManag.getUsersToShow(listUsers));
-          users = userCategoryManag.getUsersToShow(listUsers);
-          
-          listGroups.setItems(groups);
-          listUsersView.setItems(users);
-          
-          //Charger données utilisateur
-          loggedUser = UserManager.getInstance().getLoggedUser();
+          //groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
+          loggedUser = userManag.getLoggedUser();
+    
+        //ListUsers = UserManager.getInstance().getConnectedUsers();
+        //listUsers = instance.getUserList();    
+        //categoryAndUsers = userCategoryManag.getUsersCategories(userCategories,listUsers);  // J'obtiens les utilisateurs de chaque catégorie
+        //observableData = userCategoryManag.changeToObservableData(categoryAndUsers); //Changer au format Observable (pour afficher dans la listView)
+        //showConnectedUsers2(categoryAndUsers,"Famille"); //Les afficher
+        //users.addAll("julian", "user2", "user3");
+        //users.addAll(UserManager.getInstance().getConnectedUsers());
+        //users.addAll(userCategoryManag.getUsersToShow(listUsers));
+        //    users = userCategoryManag.getUsersToShow(listUsers);
+        //    
+        //    listGroups.setItems(groups);
+        //    listUsersView.setItems(users);        
+        //Charger données utilisateur
+        //loggedUser = null;
           
           
           
@@ -319,74 +324,29 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
 //                dialog.masthead("Message d'information");
 //                dialog.message("Vous allez aux grilles de l'utilisateur: "+user.getText());
 //                dialog.showInformation();
-              }
-          });
+      }
+    });
+
+    //Méthode ListView Groupes -> OnClick
+    listGroups.getSelectionModel().selectedItemProperty().addListener(
+        new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> ov,
+                              String old_val, String new_val) {                      
+            showConnectedUsers2(categoryAndUsers,new_val); //Les afficher
+//            if(new_val.equals("Utilisateurs connectés"))
+//                listUsersView.setItems(users);
+//            else{
+//                listUsersView.setItems(users_n);
+//            }
+            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");                        
+            listGroups.setItems(users_n);
+            listUsersView.setItems(users_n);
+            nameGroup.setText(new_val);            
+            paneGroup.setVisible(true);
+            paneUser.setVisible(false);
+          }
+    });          
           
-          //Méthode Bouton "Supprimer du groupe"
-          delFromGroup.setOnAction(new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent e) {          
-//                dialog.owner(null);
-//                dialog.title("Confirm Dialog");
-//                dialog.message("Voulez-vous supprimer l'utilisateur '"+user.getText()+"' du groupe '"+nameGroup.getText()+"'?");
-//                Action response = dialog.showConfirm();
-//                if (response == Dialog.ACTION_YES) {
-//                    dialog.title("Message");
-//                    dialog.message("L'utilisateur '"+user.getText()+"' sera supprimé");
-//                    dialog.showInformation();
-//                } else {
-//                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
-//                }
-              }
-          });
-          
-          //Méthode Bouton "Nouveau Groupe"
-          newGroup.setOnAction(new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent e) {
-//                dialog.title("Message");
-//                dialog.masthead("Message d'information");
-//                dialog.message("Créer un nouveau groupe");
-//                dialog.showInformation();
-              }
-          });
-          
-          //Méthode Bouton "Supprimer Groupe"
-          delGroup.setOnAction(new EventHandler<ActionEvent>() {
-              @Override
-              public void handle(ActionEvent e) {
-//                dialog.owner(null);
-//                dialog.title("Confirm Dialog");
-//                dialog.message("Voulez-vous supprimer le groupe '"+nameGroup.getText()+"'?");
-//                Action response = dialog.showConfirm();
-//                if (response == Dialog.ACTION_YES) {
-//                    dialog.title("Message");
-//                    dialog.message("Le groupe '"+nameGroup.getText()+"' sera supprimé");
-//                    dialog.showInformation();
-//                } else {
-//                    // ... utilisateur choisit NO, CANCEL, ou ferme le dialog
-//                }
-              }
-          });
-          
-          //Méthode ListView Groupes -> OnClick
-          listGroups.getSelectionModel().selectedItemProperty().addListener(
-                  new ChangeListener<String>() {
-                      public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {
-                          //showConnectedUsers(observableData,new_val); //Les afficher
-                          if(new_val.equals("Utilisateurs connectés"))
-                              listUsersView.setItems(users);
-                          else{
-                              listUsersView.setItems(users_n);
-                          }
-                          nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");
-                          //showConnectedUsers(observableData, listGroups.getSelectionModel().getSelectedIndex());
-                          nameGroup.setText(new_val);
-                          paneGroup.setVisible(true);
-                          paneUser.setVisible(false);
-                      }
-                  });
           
           //Méthode ListView Utilisateurs -> OnClick
           listUsersView.getSelectionModel().selectedItemProperty().addListener(
@@ -427,6 +387,15 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                     loggedUser = userManag.getLoggedUser();
                     System.out.println("Name --------------------------------"+loggedUser.getPseudo());
                     getDataUser();
+                    listUsers = userManag.getConnectedUsers();
+                    userCategoryManag = UserCategoryManager.getInstance();
+                    userCategories = loggedUser.getContactCategories();
+                    groups = userCategoryManag.getCategoriesToShow(userCategories);
+                    listGroups.setItems(groups);
+                    if(!listUsers.isEmpty()){
+                        users = userCategoryManag.getUsersToShow(listUsers);
+                        listUsersView.setItems(users);
+                    }
                 }
             }
       });
@@ -449,7 +418,14 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   @FXML
-  private void modifyUserInformation(ActionEvent event) throws ParseException {
+  private void usersRefresh(ActionEvent event) {
+    listUsers = userManag.getConnectedUsers();
+    users = userCategoryManag.getUsersToShow(listUsers);
+    listUsersView.setItems(users);
+  }
+  
+  @FXML
+  private void modifyUserInformation(ActionEvent event) throws ParseException, NoSuchAlgorithmException, UnsupportedEncodingException {
     textInfHome.setText(null);
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     Date dateB = formatter.parse(birthDateHome.getText());
@@ -462,10 +438,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     textInfHome.setText("Enregistré correctement");
     if(!pass2Home.getText().isEmpty() || !pass3Home.getText().isEmpty()){
         if(!pass1Home.getText().isEmpty()){
-            if (pass1Home.getText().equals(loggedUser.getPassword())){
+            if (loggedUser.checkPassword(pass1Home.getText())){
                 if(pass2Home.getText().equals(pass3Home.getText())){                    
-                    //loggedUser.setPassword(pass2Home.getText());
-                    System.out.println("Guardar contraseña");                    
+                    loggedUser.setpassword(pass2Home.getText());
+                    System.out.println("Guardar contraseña");
                     textInfHome.setText("Enregistré correctement");
                     pass1Home.setText(null);
                     pass2Home.setText(null);
@@ -489,8 +465,24 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   @FXML
-  private void LetSearchGrid(ActionEvent event)
-  {
+  private void createNewGroup(ActionEvent event) {
+      loggedUser.createContactCategory(nameGroup.getText());
+      refreshGroups();
+      // Ajouter droits du groupe      
+  }
+  
+  @FXML
+  private void editGroup(ActionEvent event) {
+      //loggedUser.createContactCategory(nameGroup.getText());
+  }
+  
+  @FXML
+  private void deleteGroup(ActionEvent event) {
+      loggedUser.removeContactCategory(nameGroup.getText());
+      refreshGroups();
+  }
+    
+  private void LetSearchGrid(ActionEvent event) {
       if(ResearchMode == 0)
       {
           List<Tag> tags = new ArrayList<Tag>();
@@ -514,8 +506,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           scpane.setPrefSize(800, 400);
           myGrid.getChildren().add(scpane);
       }
-      
-      
   }
   
   @FXML
@@ -587,6 +577,28 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         listUsersView.setItems(userL);
         for (Map.Entry e : observableData.entrySet())
             groups.add(e.getKey());            
+        listGroups.setItems(groups);
+    }
+    
+    private void showConnectedUsers2(HashMap<String,List<User>> observableData, String cat) {
+        String categorie = cat;
+        ObservableList groups_show = FXCollections.observableArrayList();
+        ObservableList users_show = FXCollections.observableArrayList();
+        List<User> lll;
+        lll = observableData.get(categorie);
+        listConnectedUsers = observableData.get(categorie);
+        Iterator<User> it = lll.iterator(); 
+        while (it.hasNext())
+            users_show.add(it.next().getPseudo());
+        for (Map.Entry e : observableData.entrySet())
+            groups_show.add(e.getKey());            
+        listUsersView.setItems(users_show);
+        listGroups.setItems(groups_show);
+    }
+
+    private void refreshGroups() {
+        userCategories = loggedUser.getContactCategories();
+        groups = userCategoryManag.getCategoriesToShow(userCategories);
         listGroups.setItems(groups);
     }
 }

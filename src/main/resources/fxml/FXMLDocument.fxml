@@ -257,27 +257,27 @@
                         </Tab>
                         <Tab text="Utilisateurs">
                             <content>
-                                <SplitPane dividerPositions="0.24, 0.5" prefHeight="594.0" prefWidth="976.0">
+                                <SplitPane dividerPositions="0.24, 0.5" prefHeight="589.0" prefWidth="1261.0">
                                     <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="423.0" prefWidth="184.0">
                                             <children>
-                                                <ListView fx:id="listGroups" layoutX="-47.0" layoutY="56.0" prefHeight="268.0" prefWidth="141.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0" />
+                                                <ListView fx:id="listGroups" layoutX="-47.0" layoutY="56.0" prefHeight="550.0" prefWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0" />
                                                 <Label layoutX="47.0" layoutY="18.0" text="Groupes" AnchorPane.leftAnchor="46.5" AnchorPane.rightAnchor="46.5">
                                                     <font>
                                                         <Font name="System Bold" size="12.0" />
                                                     </font>
                                                 </Label>
-                                                <Button fx:id="newGroup" layoutX="14.0" layoutY="332.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Nouveau Groupe" AnchorPane.bottomAnchor="12.5" />
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="140.0">
                                             <children>
-                                                <ListView fx:id="listUsersView" layoutY="56.0" prefHeight="315.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0" />
-                                                <Label layoutX="43.0" layoutY="20.0" prefHeight="17.0" prefWidth="65.0" text="Utilisateurs" textAlignment="CENTER" AnchorPane.leftAnchor="42.5" AnchorPane.rightAnchor="42.5">
+                                                <ListView fx:id="listUsersView" layoutY="56.0" prefHeight="506.0" prefWidth="327.0" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0" />
+                                                <Label layoutX="42.0" layoutY="20.0" prefHeight="17.0" prefWidth="65.0" text="Utilisateurs" textAlignment="CENTER" AnchorPane.leftAnchor="46.5" AnchorPane.rightAnchor="46.5">
                                                     <font>
                                                         <Font name="System Bold" size="12.0" />
                                                     </font>
                                                 </Label>
+                                    <Button layoutX="8.0" layoutY="568.0" mnemonicParsing="false" onAction="#usersRefresh" prefHeight="25.0" prefWidth="308.0" text="Mettre à jour" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="571.0" />
                                             </children>
                                         </AnchorPane>
                                         <StackPane fx:id="panes" prefHeight="150.0" prefWidth="200.0">
@@ -298,7 +298,7 @@
                                                 </Pane>
                                                 <Pane fx:id="paneGroup" prefHeight="200.0" prefWidth="200.0">
                                                     <children>
-                                                        <Button fx:id="delGroup" layoutX="83.0" layoutY="295.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Supprimer le groupe" />
+                                                        <Button layoutX="83.0" layoutY="295.0" mnemonicParsing="false" onAction="#deleteGroup" prefHeight="25.0" prefWidth="131.0" text="Supprimer le groupe" />
                                                         <HBox alignment="CENTER" layoutX="29.0" layoutY="66.0" spacing="10.0">
                                                             <children>
                                                                 <Label layoutX="23.0" layoutY="31.0" text="Nom du groupe">
@@ -319,6 +319,8 @@
                                                         </VBox>
                                                         <Label layoutX="29.0" layoutY="134.0" text="Droits du groupe" />
                                                         <Label fx:id="nombUsers" layoutX="29.0" layoutY="102.0" prefHeight="17.0" prefWidth="238.0" text="N. utilisateurs connectés" />
+                                                      <Button layoutX="295.0" layoutY="66.0" mnemonicParsing="false" onAction="#createNewGroup" prefHeight="25.0" prefWidth="151.0" text="Créer nouveau groupe" />
+                                          <Button layoutX="83.0" layoutY="262.0" mnemonicParsing="false" onAction="#editGroup" prefHeight="25.0" prefWidth="131.0" text="Modifier le groupe" />
                                                     </children>
                                                 </Pane>
                                             </children>

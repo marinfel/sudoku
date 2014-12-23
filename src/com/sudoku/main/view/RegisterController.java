@@ -68,7 +68,7 @@ public class RegisterController implements Initializable, ControlledScreen {
     myController = screenParent;
   }
   @FXML
-  private void createUserAndLog(ActionEvent event){
+  private void createUserAndLog(ActionEvent event) throws IOException{
     System.out.println("in createUser");
     if(!user.getText().isEmpty() && !passwd.getText().isEmpty()&& !birthDate.getText().isEmpty()){
         Pattern datePattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
