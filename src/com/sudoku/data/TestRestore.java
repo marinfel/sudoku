@@ -42,9 +42,9 @@ public class TestRestore {
     List<Grid> gl1= GridManager.getInstance().getAvailableGrids();
   
     HashMap<Grid, ArrayList<AccessRule>> al1 = AccessManager.getInstance().getRules();
-    //System.out.println(ul1.toString());
-    //System.out.println(gl1.toString());
-    System.out.println(al1.toString());
+    System.out.println(ul1.get(0).getIpAddress());
+    System.out.println(gl1.get(0).getCreateUser().getPseudo());
+    //System.out.println(al1.toString());
     System.out.println("Au fait, je m'éxécute");
     //System.out.println(al1.get(GridManager.getInstance().getUserGrids(ul1.get(0))));
   }
