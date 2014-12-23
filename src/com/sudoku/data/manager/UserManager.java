@@ -80,8 +80,16 @@ public final class UserManager { // This is the manager for users.
     this.knownIpAdresses = knownIpAdresses;
   }
 
-  public void addKnownIpAddress(String ipAddress){
-    this.knownIpAdresses.add(ipAddress);
+  public boolean addKnownIpAddress(String ipAddress){
+    Pattern pattern;
+    Matcher matcher;
+    pattern= Pattern.compile("[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}");
+    matcher = pattern.matcher(ipAddress);
+      if (matcher.find()){
+         this.knownIpAdresses.add(ipAddress); 
+         return true;
+      }else
+        return false;
   }
 
   public boolean hasKnownIpAddress(String ipAddress){
