@@ -56,7 +56,7 @@ public class DataRetrieverImpl implements DataRetriever {
             if (matrix[i][j] instanceof FixedCell) {
               list.add(j, (int) ((FixedCell) matrix[i][j]).getValue());
             } else {
-              list.add(j, null);
+              list.add(j, -1);
             }
           }
         }
@@ -72,16 +72,7 @@ public class DataRetrieverImpl implements DataRetriever {
               com.sudoku.data.model.User.buildAvroUser(grid.getCreateUser()));
         toAddGrid.setComments(comments);
         toAddGrid.setTags(tags);
-        toAddGrid.setLine1(resultMatrix.get(0));
-        toAddGrid.setLine2(resultMatrix.get(1));
-        toAddGrid.setLine3(resultMatrix.get(2));
-        toAddGrid.setLine4(resultMatrix.get(3));
-        toAddGrid.setLine5(resultMatrix.get(4));
-        toAddGrid.setLine6(resultMatrix.get(5));
-        toAddGrid.setLine7(resultMatrix.get(6));
-        toAddGrid.setLine8(resultMatrix.get(7));
-        toAddGrid.setLine9(resultMatrix.get(8));
-        //toAddGrid.setMatrix(resultMatrix);
+        toAddGrid.setMatrix(resultMatrix);
 
         grids.add(toAddGrid);
 
