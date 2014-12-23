@@ -56,49 +56,24 @@ public class DataRetrieverImpl implements DataRetriever {
             if (matrix[i][j] instanceof FixedCell) {
               list.add(j, (int) ((FixedCell) matrix[i][j]).getValue());
             } else {
-              list.add(j, null);
+              list.add(j, -1);
             }
           }
         }
 
-        Grid toAddGrid = new Grid();
-        toAddGrid.setCreateDate(grid.getCreateDate().toString());
-        toAddGrid.setUpdateDate(grid.getUpdateDate().toString());
-        toAddGrid.setId(grid.getId().toString());
-        toAddGrid.setTitle(grid.getTitle());
-        toAddGrid.setDescription(grid.getDescription());
-        toAddGrid.setDifficulty(grid.getDifficulty());
-        toAddGrid.setCreateUser(
-              com.sudoku.data.model.User.buildAvroUser(grid.getCreateUser()));
-        toAddGrid.setComments(comments);
-        toAddGrid.setTags(tags);
-        toAddGrid.setLine1(resultMatrix.get(0));
-        toAddGrid.setLine2(resultMatrix.get(1));
-        toAddGrid.setLine3(resultMatrix.get(2));
-        toAddGrid.setLine4(resultMatrix.get(3));
-        toAddGrid.setLine5(resultMatrix.get(4));
-        toAddGrid.setLine6(resultMatrix.get(5));
-        toAddGrid.setLine7(resultMatrix.get(6));
-        toAddGrid.setLine8(resultMatrix.get(7));
-        toAddGrid.setLine9(resultMatrix.get(8));
-        //toAddGrid.setMatrix(resultMatrix);
-
-        grids.add(toAddGrid);
-
-//        grids.add(Grid.newBuilder()
-//            .setCreateDate(toAddGrid.getCreateDate().toString())
-//            .setUpdateDate(toAddGrid.getUpdateDate().toString())
-//            .setId(toAddGrid.getId().toString())
-//            .setTitle(toAddGrid.getTitle())
-//            .setDescription(toAddGrid.getDescription())
-//            .setDifficulty(toAddGrid.getDifficulty())
-//            .setCreateUser(
-//                com.sudoku.data.model.User.buildAvroUser(toAddGrid.getCreateUser()))
-//            .setComments(comments)
-//            .setTags(tags)
-//            .setMatrix(resultMatrix)
-//            .build());
-        grids.add(toAddGrid);
+        grids.add(Grid.newBuilder()
+            .setCreateDate(grid.getCreateDate().toString())
+            .setUpdateDate(grid.getUpdateDate().toString())
+            .setId(grid.getId().toString())
+            .setTitle(grid.getTitle())
+            .setDescription(grid.getDescription())
+            .setDifficulty(grid.getDifficulty())
+            .setCreateUser(
+                com.sudoku.data.model.User.buildAvroUser(grid.getCreateUser()))
+            .setComments(comments)
+            .setTags(tags)
+            .setMatrix(resultMatrix)
+            .build());
       }
     }
     return grids;

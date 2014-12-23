@@ -23,7 +23,7 @@ import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class User {
-  private static Logger logger = LoggerFactory.getLogger(User.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
   private String pseudo;
   private String salt;
   private String password;
@@ -93,7 +93,7 @@ public class User {
       resultUser.createDate = df.parse(user.getCreateDate());
       resultUser.updateDate = df.parse(user.getUpdateDate());
     } catch (ParseException ex) {
-      logger.error(ex.toString());
+      LOGGER.error(ex.toString());
     }
     return resultUser;
   }
