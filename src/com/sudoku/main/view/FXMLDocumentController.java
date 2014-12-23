@@ -385,7 +385,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             @Override public void handle(WindowEvent e) {
                 if(loggedUser == null){
                     loggedUser = userManag.getLoggedUser();
-                    System.out.println("Name --------------------------------"+loggedUser.getPseudo());
+                    //System.out.println("Name --------------------------------"+loggedUser.getPseudo());
                     getDataUser();
                     listUsers = userManag.getConnectedUsers();
                     userCategoryManag = UserCategoryManager.getInstance();
