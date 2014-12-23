@@ -158,7 +158,7 @@ public final class GridManager {
   }
   
   public List<Grid> getUserGrids(User user) {
-      List<Grid> usersGrids = new ArrayList<Grid>();
+      List<Grid> usersGrids = new ArrayList<>();
       
       for(Grid g : this.availableGrids){
           if(g.getCreateUser() == user){
@@ -199,7 +199,7 @@ public final class GridManager {
            
                 mapper.writeValue(jsonFile, this);
                     //Pour logger le processus de sauvegarde
-	        System.out.println(mapper.writeValueAsString(this));
+	        //System.out.println(mapper.writeValueAsString(this));
         } catch (JsonGenerationException ex) {
                    ex.printStackTrace();
  
