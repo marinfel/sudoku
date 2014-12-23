@@ -32,7 +32,7 @@ public class User {
   private Date createDate;
   private Date updateDate;
   private String ipAddress;
-  private List<ContactCategory> contactCategories;
+  private List<ContactCategory> contactCategories = new LinkedList<>();
 
   private User() {
   }
@@ -55,7 +55,6 @@ public class User {
     this.createDate = cal.getTime();
     this.updateDate = this.createDate;
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
-    contactCategories = null;
   }
 
   public boolean checkPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
