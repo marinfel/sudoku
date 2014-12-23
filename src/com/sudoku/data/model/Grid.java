@@ -2,13 +2,19 @@ package com.sudoku.data.model;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.sudoku.comm.CommunicationManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Grid {
+  private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
   private UUID id;
   private String title;
   private String description;
@@ -55,14 +61,19 @@ public class Grid {
   }
 
   public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
     Grid resultGrid = new Grid();
     resultGrid.id = UUID.fromString(grid.getId());
     resultGrid.title = grid.getTitle();
     resultGrid.description = grid.getDescription();
     resultGrid.difficulty = grid.getDifficulty();
     resultGrid.published = grid.getPublished();
-    resultGrid.createDate = Timestamp.valueOf(grid.getCreateDate());
-    resultGrid.updateDate = Timestamp.valueOf(grid.getUpdateDate());
+    try {
+      resultGrid.createDate = df.parse(grid.getCreateDate());
+      resultGrid.updateDate = df.parse(grid.getUpdateDate());
+    } catch (ParseException ex) {
+      LOGGER.error(ex.toString());
+    }
     resultGrid.createUser = User.buildFromAvroUser(grid.getCreateUser());
     for (com.sudoku.comm.generated.Comment comment : grid.getComments()) {
       resultGrid.comments.add(Comment.buildFromAvroComment(comment));
@@ -70,17 +81,17 @@ public class Grid {
     for (String tag : grid.getTags()) {
       resultGrid.tags.add(new Tag(tag));
     }
-//    List<List<Integer>> matrix = grid.getMatrix();
-//    for (byte i = 0; i < matrix.size(); i++) {
-//      List<Integer> row = matrix.get(i);
-//      for (byte j = 0; j < row.size(); j++) {
-//        if (row.get(j) != null) {
-//          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
-//        } else {
-//          resultGrid.grid[i][j] = new EmptyCell(i, j);
-//        }
-//      }
-//    }
+    List<List<Integer>> matrix = grid.getMatrix();
+    for (byte i = 0; i < matrix.size(); i++) {
+      List<Integer> row = matrix.get(i);
+      for (byte j = 0; j < row.size(); j++) {
+        if (row.get(j) != -1) {
+          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
+        } else {
+          resultGrid.grid[i][j] = new EmptyCell(i, j);
+        }
+      }
+    }
     return resultGrid;
   }
 
