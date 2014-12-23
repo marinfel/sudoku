@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sudoku.main.view;
 
 import com.sudoku.grid.popups.IhmPopupsList;
@@ -70,27 +69,31 @@ public class SudukoIHM extends Application {
     primaryStage.setResizable(true);
     primaryStage.sizeToScene();
     primaryStage.setScene(scene);
-    primaryStage.setHeight(primaryScreenBounds.getHeight()*0.8);
-    primaryStage.setWidth(primaryScreenBounds.getWidth()*0.8);
-    primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>(){
+    primaryStage.setHeight(primaryScreenBounds.getHeight() * 0.8);
+    primaryStage.setWidth(primaryScreenBounds.getWidth() * 0.8);
+    primaryStage.addEventHandler(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
 
-        @Override
-        public void handle(WindowEvent t) {
-            System.out.println("By by by");
-            IhmPopupsList.getInstance().killAllTimers();
-            DataManager.getInstance().saveToJson();
+      @Override
+      public void handle(WindowEvent t) {
+        System.out.println("By by by");
+        if (IhmPopupsList.getInstance() != null) {
+          IhmPopupsList.getInstance().killAllTimers();
         }
-        
+        if (DataManager.getInstance() != null) {
+          DataManager.getInstance().saveToJson();
+        }
+      }
+
     });
-    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>(){
-        @Override
-        public void handle(WindowEvent t) {
-            DataManager datamng = DataManager.getInstance();
-            UserManager usrManag = UserManager.getInstance();
-            GridManager grdMang = GridManager.getInstance();
-            //DataManager.buildFromJson();
-            System.out.println("Biiiiiiiiiiiiiiiinggggg");
-        }
+    primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
+      @Override
+      public void handle(WindowEvent t) {
+        DataManager datamng = DataManager.getInstance();
+        UserManager usrManag = UserManager.getInstance();
+        GridManager grdMang = GridManager.getInstance();
+        //DataManager.buildFromJson();
+        System.out.println("Biiiiiiiiiiiiiiiinggggg");
+      }
     });
     primaryStage.show();
   }

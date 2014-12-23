@@ -43,12 +43,12 @@ import javafx.stage.WindowEvent;
  * @author Marc-Antoine
  */
 public class GridTest extends Application {
-
+  
   @Override
   public void start(Stage primaryStage) {
     HBox root = new HBox();
     Scene scene = new Scene(root, 700, 500);
-
+    
     primaryStage.setTitle("Sudoku Tests");
     primaryStage.setScene(scene);
 
@@ -129,16 +129,16 @@ public class GridTest extends Application {
     g.setFixedCell((byte) 8, (byte) 6, (byte) 7);
     g.setFixedCell((byte) 8, (byte) 7, (byte) 4);
     g.setFixedCell((byte) 8, (byte) 8, (byte) 6);
-
-    IhmGridLines glines = new IhmGridLines(g, 500, IhmGridLines.ALL_VIEW);
+    
+    IhmGridLines glines = new IhmGridLines(g, 500, IhmGridLines.ALL_VIEW.add(IhmGridLines.FIXED_HIDABLE));
     glines.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, new EventHandler<IhmGridLinesCompleted>() {
-
+      
       @Override
       public void handle(IhmGridLinesCompleted t) {
         //Grid completed
         System.out.println("\n########## Grid Completed! ##########");
       }
-
+      
     });
     root.getChildren().add(glines);
 
@@ -146,14 +146,14 @@ public class GridTest extends Application {
     IhmPopupsList.init(200, 700, 6);
     IhmPopupsList plist = IhmPopupsList.getInstance();
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-
+      
       @Override
       public void handle(WindowEvent t) {
         if (t.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
           IhmPopupsList.getInstance().killAllTimers();
         }
       }
-
+      
     });
     root.getChildren().add(plist);
     //*/

@@ -41,7 +41,7 @@ import javafx.stage.Stage;
 /**
  * @author Laetitia & Melie
  */
-public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLinesCompleted>  {
+public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLinesCompleted> {
 
   //nombre de commentaires à afficher sous la grille
   private final int nbComm = 2;
@@ -54,8 +54,8 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
 
   public IhmGridPlayer(Grid grid) {
     //ajout d'une grille (cellules editables ET non éditables)
-    super(IhmGridLines.ALL_EDITABLE.add(IhmGridLines.FIT_GRID), grid, 500);
-    
+    super(IhmGridLines.FIT_GRID, grid, 500);
+
     //ajout du titre
     HBox topLayout = (HBox) border.getTop();
     title = new Label(grid.getTitle());
@@ -85,9 +85,13 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     authorBox.getChildren().addAll(authorPict, authorName);
     authorBox.setAlignment(Pos.TOP_LEFT);
 
-    //Zone des commentaires
+    //ajout de la moyenne
     final HBox bottomLayout = (HBox) border.getBottom();
+    starsBox = getStarsBox();
+    starsBox.setValue(grid.getMeanGrades());
+    bottomLayout.getChildren().add(starsBox); //à redimensionner
 
+    //Zone des commentaires
     // les deux derniers commentaires sont affichés au bas de la grille
     VBox firstComm = new VBox();
     gridComments = grid.getComments();
@@ -95,7 +99,7 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     if (size > 0) {
       for (int i = 1; i < nbComm; i++) {
         Comment comm = gridComments.get(size - i);
-        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - "/*+comm.getCreateDate*/);
+        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - " + comm.getCreationDate().toString());
         firstComm.getChildren().add(commAuthorAndDate);
         Text commText = new Text(comm.getComment());
         firstComm.getChildren().add(commText);
@@ -124,16 +128,18 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     });
     VBox commBox = new VBox();
     //l'ajout de commentaire est possible seulement si l'auteur de la grille est connecté
-    if (UserManager.getInstance().getConnectedUsers().contains(grid.getCreateUser()) == false) {
-      addComment.setVisible(false);
+
+    boolean showOrNotShow = UserManager.getInstance().getConnectedUsers().contains(grid.getCreateUser());
+    if (!showOrNotShow) {
+      showOrNotShow = (grid.getCreateUser().getSalt() == UserManager.getInstance().getLoggedUser().getSalt());
     }
+    addComment.setVisible(showOrNotShow);
 
     commButton.getChildren().add(addComment);
     commButton.getChildren().add(showAllComments);
     commBox.getChildren().addAll(firstComm, commButton);
     bottomLayout.getChildren().add(commBox);
 
-    
     gridLines.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, this);
   }
 
@@ -163,7 +169,7 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     //gradeFormBox = getStarsBox(3);
     gridPane.add(labelNote, 0, 3);
 
-    starsBox = getStarsBox();
+    final StarsBox starsBox = getStarsBox();
     starsBox.setHoverable(true);
     gridPane.add(starsBox, 1, 3);
 
@@ -172,12 +178,14 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     Button buttonOk = new Button("Ok");
     Button buttonCancel = new Button("Cancel");
 
+    final IhmGridPlayer ihmGridPlayer = this;
     buttonOk.setOnAction(new EventHandler<ActionEvent>() {
       //ajout du commentaire et fermeture de la fenêtre
       @Override
       public void handle(ActionEvent event) {
         try {
-          gridComments.add(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
+          grid.addComment(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
+          ihmGridPlayer.starsBox.setValue(grid.getMeanGrades());
         } catch (Exception e) {
         }
         stage.hide();
@@ -222,11 +230,11 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
     sc.setOrientation(Orientation.VERTICAL);
     sc.setPrefHeight(scene.getHeight());
     sc.setMax(scene.getHeight() + 50);
-
+    gridComments = grid.getComments();
     if (gridComments.size() > 0) {
-      for (int i = 1; i < gridComments.size(); i++) {
+      for (int i = 0; i < gridComments.size(); i++) {
         Comment comm = gridComments.get(i);
-        Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
+        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - " + comm.getCreationDate());
         vb.getChildren().add(commAuthorAndDate);
         Text commText = new Text(comm.getComment());
         commText.setWrappingWidth(270);
@@ -256,9 +264,9 @@ public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLi
 
     stage.show();
   }
-  
+
   @Override
-    public void handle(IhmGridLinesCompleted t) {
-        fireEvent(t);
-    }
+  public void handle(IhmGridLinesCompleted t) {
+    fireEvent(t);
+  }
 }

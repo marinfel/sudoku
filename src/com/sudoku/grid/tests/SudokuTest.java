@@ -72,9 +72,9 @@ public class SudokuTest extends Application {
 
     //Scene scene = new Scene(ihm_test1 800, 1000);
     //Scene scene = new Scene(ihm_test2, 800, 1000);
-    //Scene scene = new Scene(ihm_test3, 800, 1000);
+    Scene scene = new Scene(ihm_test3, 800, 1000);
     //Scene scene = new Scene(ihm_test4, 800, 1000);
-    Scene scene = new Scene(ihm_test5, 300, 300);
+    //Scene scene = new Scene(ihm_test5, 300, 300);
 
     primaryStage.setTitle("Sudoku preview");
     primaryStage.setScene(scene);
