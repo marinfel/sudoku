@@ -29,7 +29,9 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  public Grid() {}
+  public Grid() {
+    grid = new Cell[9][9];
+  }
 
   public Grid(String t, User u) {
     id = UUID.randomUUID();
