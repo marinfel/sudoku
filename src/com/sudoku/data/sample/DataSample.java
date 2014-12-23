@@ -156,7 +156,7 @@ public class DataSample {
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, a);
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, a);
        
-       accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.comment, b);
+       accessMgr.addAccessRule(g2, AccessType.revoked, AccessAction.comment, b);
        accessMgr.addAccessRule(g1, AccessType.revoked, AccessAction.play, b);
        
        DataManager dataMgr = DataManager.getInstance();

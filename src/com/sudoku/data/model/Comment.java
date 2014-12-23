@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -90,18 +91,18 @@ public final class Comment {
   public void setComment(String comment) {
     this.comment = comment;
   }
-
+  @JsonIgnore
   public Double getStarGrade() { //Return the number of Stars (and not half stars)
     return this.grade/2.0;
   }
   public Integer getGrade() { //Return the number of half stars
     return this.grade;
   }
-
+/*
  public void setGrade(Integer grade){
       this.grade=grade;
   }
-  
+  */
   public void setGrade(Double grade) {
     Double halfStarGrade = grade * 2; //Set this number in halfstars
     this.grade = halfStarGrade.intValue();
