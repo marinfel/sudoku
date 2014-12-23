@@ -26,8 +26,6 @@ public class DataManager {
     public UserManager userMgr;
     public GridManager gridMgr;
     private AccessManager accMgr;
-    private File jsonFile;
-    private static final String jsonFilePath= "C:\\Sudoku\\Backup\\backup.json";
     
     private DataManager(){
         //Problème à la serialisation de grid manager au niveau de la fonction get lastplayed grid
@@ -79,7 +77,7 @@ public class DataManager {
                 */
         userMgr.SaveToJson();
         gridMgr.SaveToJson();
-      //  accMgr.SaveToJson();
+        accMgr.SaveToJson();
     }
     public static void buildFromJson(){
         /* ObjectMapper mapper= new ObjectMapper();
@@ -111,7 +109,7 @@ public class DataManager {
         
        UserManager.BuildFromJson();
        GridManager.BuildFromJson();
-      // AccessManager.BuildFromJson();
+       AccessManager.BuildFromJson();
        
     } 
 }
