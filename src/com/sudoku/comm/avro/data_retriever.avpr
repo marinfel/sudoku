@@ -142,19 +142,6 @@
             }
           ]
         },
-        {
-          "name": "matrix",
-          "type": {
-            "type": "array",
-            "items": [
-              "null",
-              {
-                "type": "array",
-                "items": "int"
-              }
-            ]
-          }
-        },
         { "name": "createUser", "type": "User" },
         { "name": "createDate", "type": "string" },
         { "name": "updateDate", "type": "string" }
