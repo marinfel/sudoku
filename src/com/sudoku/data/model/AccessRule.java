@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class",defaultImpl = AccessRule.class)
+//JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class",defaultImpl = AccessRule.class)
 public class AccessRule {
 
   private AccessType accessType;
@@ -40,7 +40,7 @@ public class AccessRule {
   }
 
   // For deserialization
-  public AccessRule(String jsonString){
+  /*public AccessRule(String jsonString){
       ObjectMapper mapper = new ObjectMapper();
      // mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S, false);
       ArrayList<AccessRule> rules= null;
@@ -59,7 +59,7 @@ public class AccessRule {
         // TODO Auto-generated catch block
         e.printStackTrace();
     }
-  }
+  }*/
   /**
    * @return the accessType
    */
