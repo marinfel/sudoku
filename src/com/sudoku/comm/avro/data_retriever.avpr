@@ -54,19 +54,16 @@
         },
         {
           "name": "matrix",
-          "type": [
-            "null",
-            {
-              "type": "array",
-              "items": [
-                "null",
-                {
-                  "type": "array",
-                  "items": "int"
-                }
-              ]
-            }
-          ]
+          "type": {
+            "type": "array",
+            "items": [
+              "null",
+              {
+                "type": "array",
+                "items": "int"
+              }
+            ]
+          }
         },
         { "name": "createUser", "type": "User" },
         { "name": "createDate", "type": "string" },
