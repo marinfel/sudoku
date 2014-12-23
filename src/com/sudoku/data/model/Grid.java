@@ -70,17 +70,17 @@ public class Grid {
     for (String tag : grid.getTags()) {
       resultGrid.tags.add(new Tag(tag));
     }
-    List<List<Integer>> matrix = grid.getMatrix();
-    for (byte i = 0; i < matrix.size(); i++) {
-      List<Integer> row = matrix.get(i);
-      for (byte j = 0; j < row.size(); j++) {
-        if (row.get(j) != null) {
-          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
-        } else {
-          resultGrid.grid[i][j] = new EmptyCell(i, j);
-        }
-      }
-    }
+//    List<List<Integer>> matrix = grid.getMatrix();
+//    for (byte i = 0; i < matrix.size(); i++) {
+//      List<Integer> row = matrix.get(i);
+//      for (byte j = 0; j < row.size(); j++) {
+//        if (row.get(j) != null) {
+//          resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
+//        } else {
+//          resultGrid.grid[i][j] = new EmptyCell(i, j);
+//        }
+//      }
+//    }
     return resultGrid;
   }
 
