@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.sudoku.comm.CommunicationManager;
+
 
 public class Grid {
   private UUID id;
@@ -248,7 +250,7 @@ public class Grid {
     if (comment != null && comment.getComment() != null &&
         !comment.getComment().isEmpty()) {
       comments.add(comment);
-      // We also need to push this comment
+      CommunicationManager.getInstance().pushComment(comment, getId());
     }
   }
 
@@ -299,4 +301,13 @@ public class Grid {
   public String getCreateSalt(){
       return createSalt;
   }
+  
+  public boolean equals(Object other){
+	    if(other == null) return false;
+	    if(other == this) return true;
+	    if(!(other instanceof Grid)) return false;
+	    
+	    Grid o = (Grid)other;
+	    return o.getId().equals(getId());
+	  }
 }

@@ -1,5 +1,6 @@
 package com.sudoku.data.manager;
 
+import com.sudoku.comm.CommunicationManager;
 import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.PlayedGrid;
 import com.sudoku.data.model.Tag;
@@ -96,7 +97,22 @@ public final class GridManager {
   }
 
   public boolean updateGridList() {
-    // Appel Com pour mettre à jour la liste des grilles.
+    try {
+		for(Grid g : CommunicationManager.getInstance().getAllGrids()){
+			if(!availableGrids.contains(g)){
+				availableGrids.add(g);
+			} else {
+				for(Grid grid : availableGrids){
+					if(g.equals(grid)){
+						grid.setComments(g.getComments());
+					}
+				}
+			}
+		}
+		return true;
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
     return false;
   }
   @JsonIgnore
