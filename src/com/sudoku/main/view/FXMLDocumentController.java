@@ -388,7 +388,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                     System.out.println("Name --------------------------------"+loggedUser.getPseudo());
                     getDataUser();
                     listUsers = userManag.getConnectedUsers();
+                    userCategoryManag = UserCategoryManager.getInstance();
                     userCategories = loggedUser.getContactCategories();
+                    groups = userCategoryManag.getCategoriesToShow(userCategories);
+                    listGroups.setItems(groups);
                     if(!listUsers.isEmpty()){
                         users = userCategoryManag.getUsersToShow(listUsers);
                         listUsersView.setItems(users);
@@ -465,9 +468,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private void createNewGroup(ActionEvent event) {
       loggedUser.createContactCategory(nameGroup.getText());
       refreshGroups();
-      // Ajouter droits du groupe
-      //Ajouter catégorie
-      
+      // Ajouter droits du groupe      
   }
   
   @FXML
@@ -478,6 +479,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private void deleteGroup(ActionEvent event) {
       loggedUser.removeContactCategory(nameGroup.getText());
+      refreshGroups();
   }
     
   private void LetSearchGrid(ActionEvent event) {
@@ -595,7 +597,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     }
 
     private void refreshGroups() {
-        
+        userCategories = loggedUser.getContactCategories();
+        groups = userCategoryManag.getCategoriesToShow(userCategories);
+        listGroups.setItems(groups);
     }
 }
 

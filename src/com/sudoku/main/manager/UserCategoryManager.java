@@ -40,6 +40,14 @@ public class UserCategoryManager {
         return ObsList;
     }
     
+    public ObservableList getCategoriesToShow(List<ContactCategory> ListCat){
+        ObservableList ObsList  = FXCollections.observableArrayList();
+        Iterator<ContactCategory> i = ListCat.iterator();
+        while(i.hasNext())
+            ObsList.add(i.next().getName());
+        return ObsList;
+    }
+    
     /**
      * @param contCat Liste de catégories à l'utilisateur connecté
      * @param connUsers LIste des utilisateurs qui sont connectés
