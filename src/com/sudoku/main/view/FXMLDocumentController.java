@@ -266,9 +266,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           assert picturePathHome != null : "fx:id=\"picturePathHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert textInfHome != null : "fx:id=\"textInfHome\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
                      
-          //Ajouter des éléments aux listes groupes et utilisateurs
+          //Ajouter des éléments aux listes groupes et utilisateurss
           //groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
-          loggedUser = userManag.getLoggedUser();
+          //loggedUser = userManag.getLoggedUser();
     
         //ListUsers = UserManager.getInstance().getConnectedUsers();
         //listUsers = instance.getUserList();    
@@ -381,11 +381,12 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
+   
         myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
             @Override public void handle(WindowEvent e) {
-                if(loggedUser == null){
-                    loggedUser = userManag.getLoggedUser();
-                    //System.out.println("Name --------------------------------"+loggedUser.getPseudo());
+                userManag = UserManager.getInstance();
+                loggedUser = userManag.getLoggedUser();
+                if(loggedUser != null){
                     getDataUser();
                     listUsers = userManag.getConnectedUsers();
                     userCategoryManag = UserCategoryManager.getInstance();
@@ -396,6 +397,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                         users = userCategoryManag.getUsersToShow(listUsers);
                         listUsersView.setItems(users);
                     }
+                }
+                else{
+                    System.out.println("User is null");
                 }
             }
       });

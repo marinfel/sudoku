@@ -84,7 +84,7 @@ public class LoginController implements Initializable, ControlledScreen {
       }
       else{
         userName.setText("Veuillez patienter "+userManag.getLoggedUser().getPseudo());
-        System.out.println("Veuillez patienter "+authUser.getPseudo());
+        System.out.println("Veuillez patienter "+userManag.getLoggedUser().getPseudo());
         goToProgram(event);
       }
     }
