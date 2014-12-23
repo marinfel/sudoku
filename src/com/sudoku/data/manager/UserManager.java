@@ -17,14 +17,11 @@ import java.io.IOException;
 import org.springframework.security.crypto.codec.Base64;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +32,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 public final class UserManager { // This is the manager for users.
   /*
@@ -127,9 +123,8 @@ public final class UserManager { // This is the manager for users.
       if (u.getPseudo().equals(pseudo)) //For all correspoding pseudos
       {
         String toBeHashed = password + u.getSalt();
-        if (new String(Base64.encode(
-           mDigest.digest(toBeHashed.getBytes("UTF-8"))))
-           .equals(u.getPassword())) { //If the hash of pwd+salt is good
+        String hashed = new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+        if (hashed.equals(u.getPassword())) { //If the hash of pwd+salt is good
           loggedUser = u; // If the password is correct, log the user
           
           CommunicationManager cm = CommunicationManager.getInstance();
@@ -166,7 +161,6 @@ public final class UserManager { // This is the manager for users.
   public List<User> getConnectedUsers() {
     CommunicationManager tmp = CommunicationManager.getInstance();
     try {
-    	System.out.println("toto");
       this.distantUsers=tmp.getAllProfiles();
     } catch (IOException e) {
       // TODO Auto-generated catch block
@@ -268,11 +262,10 @@ public final class UserManager { // This is the manager for users.
         //mapper.configure(org.codehaus.jackson.map.DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIE‌​S , false);
             
         try {
-	 
                String jsonFilePath = System.getProperty("user.home").concat("\\LO23Sudoku\\Backup\\");
  
                File jsonFile = new File(jsonFilePath.concat("backupUserManager.json"));
-	 
+               
                 //DataManager.instance = mapper.readValue(jsonFile, DataManager.class);
                 UserManager.instance = mapper.readValue(jsonFile, UserManager.class);
         }catch (JsonGenerationException ex) {

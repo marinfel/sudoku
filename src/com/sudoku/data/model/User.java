@@ -46,15 +46,15 @@ public class User {
 
     this.pseudo = pseudo;
     this.salt = this.randomSalt();
-    String toBeHashed = brutPassword + this.salt;
-    // hash of pwd+salt
-    this.password =
-        new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+    String toBeHashed = brutPassword + this.getSalt();
+    String hashed = new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+    this.password = hashed;
     this.birthDate = birthDate;
     this.profilePicturePath = profilePicturePath;
     this.createDate = cal.getTime();
     this.updateDate = this.createDate;
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
+    System.out.println(this.getPassword());
   }
 
   public boolean checkPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
@@ -69,12 +69,16 @@ public class User {
       return false;
     }
   }
-
-  public void setpassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+  
+  public void modifyPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
       MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
       String toBeHashed = rawPassword + this.salt;
       this.password = 
               new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+  }
+
+  public void setPassword(String password){
+      this.password = password;
   }
 
   public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {

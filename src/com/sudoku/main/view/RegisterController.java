@@ -88,9 +88,8 @@ public class RegisterController implements Initializable, ControlledScreen {
                 User newUser;           
                 newUser = UserManager.getInstance().createUser(user.getText(),
                     passwd.getText(), dob, "");
-                UserManager.getInstance().authenticate(newUser.getPseudo(), newUser.getPassword());
-            userName.setText("");
-            goToLogin(event);
+	            userName.setText("");
+	            goToLogin(event);
             }
             else{
                 userName.setText("L'utilisateur existe déjà !");

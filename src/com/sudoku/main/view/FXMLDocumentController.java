@@ -440,7 +440,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         if(!pass1Home.getText().isEmpty()){
             if (loggedUser.checkPassword(pass1Home.getText())){
                 if(pass2Home.getText().equals(pass3Home.getText())){                    
-                    loggedUser.setpassword(pass2Home.getText());
+                    loggedUser.modifyPassword(pass2Home.getText());
                     System.out.println("Guardar contraseña");
                     textInfHome.setText("Enregistré correctement");
                     pass1Home.setText(null);
