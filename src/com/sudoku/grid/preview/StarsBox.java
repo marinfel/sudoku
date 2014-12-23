@@ -1,9 +1,8 @@
 /**
- * StarsBox est la classe representant l objet graphique Liste d etoiles. 
- * Elle peut etre dynamique ou statique selon l utilisation
- * 
+ * StarsBox est la classe representant l objet graphique Liste d etoiles. Elle
+ * peut etre dynamique ou statique selon l utilisation
+ *
  */
-
 package com.sudoku.grid.preview;
 
 import java.util.ArrayList;
@@ -17,26 +16,27 @@ import javafx.scene.layout.HBox;
  */
 public class StarsBox extends HBox implements EventHandler<MouseEvent> {
 
-    protected final int maxNumberOfStars;
+  protected final int maxNumberOfStars;
 
-    protected List<StarView> stars = new ArrayList<>();
+  protected List<StarView> stars = new ArrayList<>();
 
-    protected double valueAtClick = 0;
+  protected double valueAtClick = 0;
 
-    /**
-     * Constructeur de l'objet liste d etoile pour l' affichage de
-     * la note moyenne d' une grille ou pour faire une notation
-     * @param numberOfStars
-     */
-    public StarsBox(int numberOfStars) {
-        
-      maxNumberOfStars = numberOfStars;
+  /**
+   * Constructeur de l'objet liste d etoile pour l' affichage de la note moyenne
+   * d' une grille ou pour faire une notation
+   *
+   * @param numberOfStars
+   */
+  public StarsBox(int numberOfStars) {
 
-      for (int i = 0; i < maxNumberOfStars; i++) {
-        stars.add(new StarView());
-        getChildren().add(stars.get(i));
-      }
+    maxNumberOfStars = numberOfStars;
+
+    for (int i = 0; i < maxNumberOfStars; i++) {
+      stars.add(new StarView());
+      getChildren().add(stars.get(i));
     }
+  }
 
   @Override
   public void handle(MouseEvent t) {
@@ -55,14 +55,13 @@ public class StarsBox extends HBox implements EventHandler<MouseEvent> {
   }
 
   /**
-   * Cette fonction permet de 
+   * Cette fonction permet de
+   *
    * @param value
    */
-    
   public void setValue(double value) {
-      
     double newValue = value;
-    
+
     if (value < 0) {
       newValue = 0;
     }
@@ -72,7 +71,7 @@ public class StarsBox extends HBox implements EventHandler<MouseEvent> {
     }
 
     int i = 0;
-   
+
     for (; i < Math.floor(newValue); i++) {
       stars.get(i).setType(StarView.StarTypes.FILLED);
     }
@@ -105,6 +104,7 @@ public class StarsBox extends HBox implements EventHandler<MouseEvent> {
 
   /**
    * Retourne la valeur selectionne lors du clic de souris
+   *
    * @return valueAtClick
    */
   public double getValueAtClick() {

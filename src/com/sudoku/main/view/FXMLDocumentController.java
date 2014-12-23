@@ -281,10 +281,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         //    users = userCategoryManag.getUsersToShow(listUsers);
         //    
         //    listGroups.setItems(groups);
-        //    listUsersView.setItems(users);
-        listUsers = userManag.getConnectedUsers();
-        users = userCategoryManag.getUsersToShow(listUsers);
-        listUsersView.setItems(users);
+        //    listUsersView.setItems(users);        
         //Charger données utilisateur
         //loggedUser = null;
           
@@ -391,8 +388,11 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                     System.out.println("Name --------------------------------"+loggedUser.getPseudo());
                     getDataUser();
                     listUsers = userManag.getConnectedUsers();
-                    users = userCategoryManag.getUsersToShow(listUsers);
-                    listUsersView.setItems(users);
+                    userCategories = loggedUser.getContactCategories();
+                    if(!listUsers.isEmpty()){
+                        users = userCategoryManag.getUsersToShow(listUsers);
+                        listUsersView.setItems(users);
+                    }
                 }
             }
       });
@@ -464,6 +464,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @FXML
   private void createNewGroup(ActionEvent event) {
       loggedUser.createContactCategory(nameGroup.getText());
+      refreshGroups();
       // Ajouter droits du groupe
       //Ajouter catégorie
       
@@ -591,6 +592,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
             groups_show.add(e.getKey());            
         listUsersView.setItems(users_show);
         listGroups.setItems(groups_show);
+    }
+
+    private void refreshGroups() {
+        
     }
 }
 
