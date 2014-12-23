@@ -7,11 +7,12 @@ package com.sudoku.comm.generated;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Comment extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"double\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Comment\",\"namespace\":\"com.sudoku.comm.generated\",\"fields\":[{\"name\":\"author\",\"type\":{\"type\":\"record\",\"name\":\"User\",\"fields\":[{\"name\":\"pseudo\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"salt\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"profilePicturePath\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"updateDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"ipAddress\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"comment\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"grade\",\"type\":\"double\"},{\"name\":\"createDate\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public com.sudoku.comm.generated.User author;
   @Deprecated public java.lang.String comment;
   @Deprecated public double grade;
+  @Deprecated public java.lang.String createDate;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -23,10 +24,11 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
   /**
    * All-args constructor.
    */
-  public Comment(com.sudoku.comm.generated.User author, java.lang.String comment, java.lang.Double grade) {
+  public Comment(com.sudoku.comm.generated.User author, java.lang.String comment, java.lang.Double grade, java.lang.String createDate) {
     this.author = author;
     this.comment = comment;
     this.grade = grade;
+    this.createDate = createDate;
   }
 
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
@@ -36,6 +38,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     case 0: return author;
     case 1: return comment;
     case 2: return grade;
+    case 3: return createDate;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -46,6 +49,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     case 0: author = (com.sudoku.comm.generated.User)value$; break;
     case 1: comment = (java.lang.String)value$; break;
     case 2: grade = (java.lang.Double)value$; break;
+    case 3: createDate = (java.lang.String)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -95,6 +99,21 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     this.grade = value;
   }
 
+  /**
+   * Gets the value of the 'createDate' field.
+   */
+  public java.lang.String getCreateDate() {
+    return createDate;
+  }
+
+  /**
+   * Sets the value of the 'createDate' field.
+   * @param value the value to set.
+   */
+  public void setCreateDate(java.lang.String value) {
+    this.createDate = value;
+  }
+
   /** Creates a new Comment RecordBuilder */
   public static com.sudoku.comm.generated.Comment.Builder newBuilder() {
     return new com.sudoku.comm.generated.Comment.Builder();
@@ -119,6 +138,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
     private com.sudoku.comm.generated.User author;
     private java.lang.String comment;
     private double grade;
+    private java.lang.String createDate;
 
     /** Creates a new Builder */
     private Builder() {
@@ -140,6 +160,10 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
         this.grade = data().deepCopy(fields()[2].schema(), other.grade);
         fieldSetFlags()[2] = true;
       }
+      if (isValidValue(fields()[3], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[3].schema(), other.createDate);
+        fieldSetFlags()[3] = true;
+      }
     }
     
     /** Creates a Builder by copying an existing Comment instance */
@@ -156,6 +180,10 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
       if (isValidValue(fields()[2], other.grade)) {
         this.grade = data().deepCopy(fields()[2].schema(), other.grade);
         fieldSetFlags()[2] = true;
+      }
+      if (isValidValue(fields()[3], other.createDate)) {
+        this.createDate = data().deepCopy(fields()[3].schema(), other.createDate);
+        fieldSetFlags()[3] = true;
       }
     }
 
@@ -233,6 +261,31 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
       return this;
     }
 
+    /** Gets the value of the 'createDate' field */
+    public java.lang.String getCreateDate() {
+      return createDate;
+    }
+    
+    /** Sets the value of the 'createDate' field */
+    public com.sudoku.comm.generated.Comment.Builder setCreateDate(java.lang.String value) {
+      validate(fields()[3], value);
+      this.createDate = value;
+      fieldSetFlags()[3] = true;
+      return this; 
+    }
+    
+    /** Checks whether the 'createDate' field has been set */
+    public boolean hasCreateDate() {
+      return fieldSetFlags()[3];
+    }
+    
+    /** Clears the value of the 'createDate' field */
+    public com.sudoku.comm.generated.Comment.Builder clearCreateDate() {
+      createDate = null;
+      fieldSetFlags()[3] = false;
+      return this;
+    }
+
     @Override
     public Comment build() {
       try {
@@ -240,6 +293,7 @@ public class Comment extends org.apache.avro.specific.SpecificRecordBase impleme
         record.author = fieldSetFlags()[0] ? this.author : (com.sudoku.comm.generated.User) defaultValue(fields()[0]);
         record.comment = fieldSetFlags()[1] ? this.comment : (java.lang.String) defaultValue(fields()[1]);
         record.grade = fieldSetFlags()[2] ? this.grade : (java.lang.Double) defaultValue(fields()[2]);
+        record.createDate = fieldSetFlags()[3] ? this.createDate : (java.lang.String) defaultValue(fields()[3]);
         return record;
       } catch (Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

@@ -7,8 +7,10 @@ package com.sudoku.grid.editor;
 
 import com.sudoku.data.model.Grid;
 import com.sudoku.grid.gridcells.IhmGridLines.Flags;
+import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
 import com.sudoku.grid.popups.IhmPopupsList;
 import com.sudoku.grid.manager.IhmGridLayout;
+import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 
 /**
@@ -25,5 +27,6 @@ public abstract class IhmGridView extends IhmGridLayout {
 
     ((VBox) border.getRight()).getChildren().add(popupList);
     popupList.addPopup("test", "texte de test", 10);
+    
   }
 }

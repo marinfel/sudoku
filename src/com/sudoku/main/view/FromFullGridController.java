@@ -18,6 +18,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.WindowEvent;
 
 /**
@@ -28,11 +29,11 @@ public class FromFullGridController implements Initializable, ControlledScreen {
   ScreensController myController;
   @FXML
   private Pane fromFullPane;
+  @FXML
+  private ScrollPane GridEditorAuto;
   
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-        IhmGridEditorRandomlyFilled editor = new IhmGridEditorRandomlyFilled(); 
-        fromFullPane.getChildren().add((Node)editor);
   }
 
 
@@ -41,9 +42,7 @@ public class FromFullGridController implements Initializable, ControlledScreen {
     myController = screenParent;
     myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
             @Override public void handle(WindowEvent e) {
-                System.out.println("event cought : "+e.getEventType().toString());
-                fromFullPane.getChildren().removeAll();
-                fromFullPane.getChildren().add((Node)new IhmGridEditorRandomlyFilled());
+                GridEditorAuto.setContent((Node)new IhmGridEditorRandomlyFilled());
             }
       });
   }        

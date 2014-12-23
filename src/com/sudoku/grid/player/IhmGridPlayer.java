@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * IHM d'une grille de sudoku
+ * possibilite de jouer la grille, afficher les commentaires, ajouter un commentaires
  */
 package com.sudoku.grid.player;
 
@@ -11,6 +10,7 @@ import com.sudoku.data.model.Grid;
 import com.sudoku.data.model.User;
 import com.sudoku.grid.editor.IhmGridView;
 import com.sudoku.grid.gridcells.IhmGridLines;
+import com.sudoku.grid.gridcells.IhmGridLinesCompleted;
 import com.sudoku.grid.preview.StarsBox;
 import java.io.File;
 import java.util.List;
@@ -39,24 +39,22 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * @author Laetitia
+ * @author Laetitia & Melie
  */
-public class IhmGridPlayer extends IhmGridView {
+public class IhmGridPlayer extends IhmGridView implements EventHandler<IhmGridLinesCompleted> {
 
+  //nombre de commentaires à afficher sous la grille
   private final int nbComm = 2;
-
-  private StarsBox starsBox;
-  //private User author;
-  //private List<Comment> gridComments;
-
-  private User author;
-  private List<Comment> gridComments;
+  private StarsBox starsBox; //moyenne de la grille
+  private User author; //auteur de la grille
+  private List<Comment> gridComments; // liste des commentaires associés à la grille
   private Label title;
-  Label authorName;
-  Image iAuthorPicture;
+  Label authorName; //pseudo de l'auteur
+  Image iAuthorPicture; // image de l'auteur
 
   public IhmGridPlayer(Grid grid) {
-    super(IhmGridLines.ALL_EDITABLE.add(IhmGridLines.FIT_GRID), grid, 500);
+    //ajout d'une grille (cellules editables ET non éditables)
+    super(IhmGridLines.FIT_GRID, grid, 500);
 
     //ajout du titre
     HBox topLayout = (HBox) border.getTop();
@@ -67,6 +65,7 @@ public class IhmGridPlayer extends IhmGridView {
     topLayout.setAlignment(Pos.CENTER);
 
     //ajout de l'auteur
+    //une image par défaut et le pseudo "Unknown" est affiché
     VBox authorBox = (VBox) border.getLeft();
     try {
       author = grid.getCreateUser();
@@ -86,24 +85,28 @@ public class IhmGridPlayer extends IhmGridView {
     authorBox.getChildren().addAll(authorPict, authorName);
     authorBox.setAlignment(Pos.TOP_LEFT);
 
-    //Zone des commentaires
+    //ajout de la moyenne
     final HBox bottomLayout = (HBox) border.getBottom();
+    starsBox = getStarsBox();
+    starsBox.setValue(grid.getMeanGrades());
+    bottomLayout.getChildren().add(starsBox); //à redimensionner
 
-    // deux derniers commentaires
+    //Zone des commentaires
+    // les deux derniers commentaires sont affichés au bas de la grille
     VBox firstComm = new VBox();
     gridComments = grid.getComments();
     int size = gridComments.size();
-    if(size > 0){
-        for (int i = 1; i < nbComm; i++) {
-            Comment comm = gridComments.get(size - i);
-             Label commAuthorAndDate = new Label(comm.getAuthor()+" - "/*+comm.getCreateDate*/);
-            firstComm.getChildren().add(commAuthorAndDate);
-            Text commText = new Text(comm.getComment());
-            firstComm.getChildren().add(commText);
-        }
+    if (size > 0) {
+      for (int i = 1; i < nbComm; i++) {
+        Comment comm = gridComments.get(size - i);
+        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - " + comm.getCreationDate().toString());
+        firstComm.getChildren().add(commAuthorAndDate);
+        Text commText = new Text(comm.getComment());
+        firstComm.getChildren().add(commText);
+      }
     }
 
-    //ajout des boutons ajout et affichage
+    //ajout des boutons "ajout" et "affichage" des commentaires
     HBox commButton = new HBox();
     Button addComment = new Button("Ajouter un com");
     addComment.setOnAction(new EventHandler<ActionEvent>() {
@@ -124,11 +127,20 @@ public class IhmGridPlayer extends IhmGridView {
 
     });
     VBox commBox = new VBox();
+    //l'ajout de commentaire est possible seulement si l'auteur de la grille est connecté
+
+    boolean showOrNotShow = UserManager.getInstance().getConnectedUsers().contains(grid.getCreateUser());
+    if (!showOrNotShow) {
+      showOrNotShow = (grid.getCreateUser().getSalt() == UserManager.getInstance().getLoggedUser().getSalt());
+    }
+    addComment.setVisible(showOrNotShow);
+
     commButton.getChildren().add(addComment);
     commButton.getChildren().add(showAllComments);
     commBox.getChildren().addAll(firstComm, commButton);
     bottomLayout.getChildren().add(commBox);
 
+    gridLines.addEventHandler(IhmGridLinesCompleted.GRID_COMPLETED, this);
   }
 
   private void showAddCommentForm() {
@@ -143,10 +155,11 @@ public class IhmGridPlayer extends IhmGridView {
     Scene scene = new Scene(gridPane, 300, 150);
     stage.setScene(scene);
     stage.setTitle("Add Comments");
-    stage.initModality(Modality.APPLICATION_MODAL);
 
+    stage.initModality(Modality.APPLICATION_MODAL); // impossible de jouer à la grille sans fermer cette fenêtre
+
+    //formulaire
     Label labelText = new Label("Text");
-    //textField.setPrefSize(50, 50);
     gridPane.add(labelText, 0, 2);
     final TextField textField = new TextField();
     gridPane.add(textField, 1, 2);
@@ -156,7 +169,7 @@ public class IhmGridPlayer extends IhmGridView {
     //gradeFormBox = getStarsBox(3);
     gridPane.add(labelNote, 0, 3);
 
-    starsBox = getStarsBox();
+    final StarsBox starsBox = getStarsBox();
     starsBox.setHoverable(true);
     gridPane.add(starsBox, 1, 3);
 
@@ -165,11 +178,14 @@ public class IhmGridPlayer extends IhmGridView {
     Button buttonOk = new Button("Ok");
     Button buttonCancel = new Button("Cancel");
 
+    final IhmGridPlayer ihmGridPlayer = this;
     buttonOk.setOnAction(new EventHandler<ActionEvent>() {
+      //ajout du commentaire et fermeture de la fenêtre
       @Override
       public void handle(ActionEvent event) {
         try {
-          gridComments.add(new Comment(textField.getText(), (int) Math.round(starsBox.getValueAtClick()), UserManager.getInstance().getLoggedUser()));
+          grid.addComment(new Comment(textField.getText(), starsBox.getValueAtClick(), UserManager.getInstance().getLoggedUser()));
+          ihmGridPlayer.starsBox.setValue(grid.getMeanGrades());
         } catch (Exception e) {
         }
         stage.hide();
@@ -177,6 +193,7 @@ public class IhmGridPlayer extends IhmGridView {
     });
 
     buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+      //fermeture de la fenêtre
       @Override
       public void handle(ActionEvent event) {
         stage.hide();
@@ -188,6 +205,7 @@ public class IhmGridPlayer extends IhmGridView {
 
   }
 
+  //affichage de tous les commentaires associés à la grille
   private void showAllComments() {
     final Stage stage = new Stage();
     final VBox vb = new VBox();
@@ -205,18 +223,21 @@ public class IhmGridPlayer extends IhmGridView {
 
     vb.setLayoutX(5);
     vb.setSpacing(10);
+
+    //ajout de la scroll bar
     sc.setLayoutX(scene.getWidth() - sc.getWidth());
     sc.setMin(0);
     sc.setOrientation(Orientation.VERTICAL);
     sc.setPrefHeight(scene.getHeight());
     sc.setMax(scene.getHeight() + 50);
-
-    if (gridComments != null && gridComments.size() > 0) {
-      for (int i = 1; i < 10; i++) {
-        Comment comm = gridComments.get(gridComments.size() - i);
-        Label commAuthorAndDate = new Label(comm.getAuthor() + " - "/*+comm.getCreateDate*/);
+    gridComments = grid.getComments();
+    if (gridComments.size() > 0) {
+      for (int i = 0; i < gridComments.size(); i++) {
+        Comment comm = gridComments.get(i);
+        Label commAuthorAndDate = new Label(comm.getAuthor().getPseudo() + " - " + comm.getCreationDate());
         vb.getChildren().add(commAuthorAndDate);
         Text commText = new Text(comm.getComment());
+        commText.setWrappingWidth(270);
         vb.getChildren().add(commText);
       }
     } else {
@@ -230,7 +251,9 @@ public class IhmGridPlayer extends IhmGridView {
         vb.setLayoutY(-new_val.doubleValue());
       }
     });
-    stage.initModality(Modality.APPLICATION_MODAL);
+
+    stage.initModality(Modality.APPLICATION_MODAL); // impossible de kouer la grille sans fermer cette fenêtre
+
     Button closeButton = new Button("Close");
     closeButton.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -240,5 +263,10 @@ public class IhmGridPlayer extends IhmGridView {
     });
 
     stage.show();
+  }
+
+  @Override
+  public void handle(IhmGridLinesCompleted t) {
+    fireEvent(t);
   }
 }

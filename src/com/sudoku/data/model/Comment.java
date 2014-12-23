@@ -1,5 +1,6 @@
 package com.sudoku.data.model;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,6 +51,14 @@ public final class Comment {
     this.userSalt = u.getSalt();
     this.setCreationDateNow();
   }
+ public Comment(String comment, Integer grade, User u) {
+    this.comment = comment;
+    this.grade=grade;
+    this.author = u;
+    this.pseudo = u.getPseudo();
+    this.userSalt = u.getSalt();
+    this.setCreationDateNow();
+  }
  public Comment(String comment, Integer grade, User u, Date d) {
     this.comment = comment;
     this.grade=grade;
@@ -61,8 +70,9 @@ public final class Comment {
 
   public static Comment buildFromAvroComment(
       com.sudoku.comm.generated.Comment comment) {
-    return new Comment(comment.getComment(), comment.getGrade(),
-        User.buildFromAvroUser(comment.getAuthor()),comment.getCreationDate());
+    /*return new Comment(comment.getComment(), comment.getGrade(),
+        User.buildFromAvroUser(comment.getAuthor()),Timestamp.valueOf(comment.getCreateDate()));*/
+      return null;
   }
 
   public User getAuthor() {

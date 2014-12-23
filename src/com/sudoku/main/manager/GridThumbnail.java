@@ -5,12 +5,16 @@
  */
 package com.sudoku.main.manager;
 import com.sudoku.data.model.Grid;
+import com.sudoku.grid.preview.IhmGridDetailledPreview;
 import com.sudoku.grid.preview.IhmGridPreview;
+import com.sudoku.main.view.ScreensController;
+import com.sudoku.main.view.SudukoIHM;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import  javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -32,23 +36,27 @@ public class GridThumbnail extends AnchorPane {
     BorderPane border;
     IhmGridPreview gridInstance;
     GridPane GridInfo;
+    ScrollPane preview;
+    ScreensController myController;
     
     
-    GridThumbnail(Grid g)
+    GridThumbnail(Grid g,ScrollPane p,ScreensController sc)
     {
         super();
         instance = g;
+        preview = p;
         border = new BorderPane();
         GridInfo = new GridPane();
         SeeMoreButton = new Button("Afficher");
-        PlayButton = new Button("Charger");
-        gridInstance = new IhmGridPreview(instance.getDifficulty(),instance,100);
+        PlayButton = new Button("Jouer");
+        gridInstance = new IhmGridPreview(instance,100);
         initThumbnail();
         setPositions();
         setListener();
         setThisAnchorElements();
         //this.setStyle("-fx-background-color: #336699;");
         this.setPrefSize(800, 150);
+        myController = sc;
     }
     
     public void initThumbnail()
@@ -91,6 +99,13 @@ public class GridThumbnail extends AnchorPane {
         @Override
         public void handle(ActionEvent e) {
             RefreshGridPlayer.getInstance().setCurrentGrid(instance);
+            myController.setScreen(SudukoIHM.gridPlayerGameID);
+        }
+      });
+        SeeMoreButton.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent e) {
+            preview.setContent(new IhmGridDetailledPreview(instance,200));
         }
       });
     }
