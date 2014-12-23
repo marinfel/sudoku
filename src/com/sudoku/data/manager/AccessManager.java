@@ -30,7 +30,7 @@ public class AccessManager {
 
   public void addAccessRuleForGroup(ContactCategory group, AccessAction action){
     HashSet<AccessAction> actions = this.accessRules.get(group);
-    if(actions = null){
+    if(actions == null){
 
     }
   }
