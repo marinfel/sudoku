@@ -47,49 +47,33 @@ public class DataRetrieverImpl implements DataRetriever {
           tags.add(tag.getName());
         }
 
-        List<List<Integer>> resultMatrix = new ArrayList<>();
         Cell[][] matrix = grid.getGrid();
+        List<List<Integer>> resultMatrix = new ArrayList<>();
         for (byte i = 0; i < matrix.length; i++) {
-          resultMatrix.add(i, new ArrayList<Integer>());
+          List<Integer> list = new ArrayList<>();
+          resultMatrix.add(i, list);
           for (byte j = 0; j < matrix[0].length; j++) {
             if (matrix[i][j] instanceof FixedCell) {
-              resultMatrix.get(i).add(j,
-                  (int) ((FixedCell) matrix[i][j]).getValue());
+              list.add(j, (int) ((FixedCell) matrix[i][j]).getValue());
             } else {
-              resultMatrix.get(i).add(j, null);
+              list.add(j, -1);
             }
           }
         }
 
-        Grid toAddGrid = new Grid();
-        toAddGrid.setCreateDate(grid.getCreateDate().toString());
-        toAddGrid.setUpdateDate(grid.getUpdateDate().toString());
-        toAddGrid.setId(grid.getId().toString());
-        toAddGrid.setTitle(grid.getTitle());
-        toAddGrid.setDescription(grid.getDescription());
-        toAddGrid.setDifficulty(grid.getDifficulty());
-        toAddGrid.setCreateUser(
-              com.sudoku.data.model.User.buildAvroUser(grid.getCreateUser()));
-        toAddGrid.setComments(comments);
-        toAddGrid.setTags(tags);
-        toAddGrid.setMatrix(resultMatrix);
-
-        grids.add(toAddGrid);
-
-//        grids.add(Grid.newBuilder()
-//            .setCreateDate(toAddGrid.getCreateDate().toString())
-//            .setUpdateDate(toAddGrid.getUpdateDate().toString())
-//            .setId(toAddGrid.getId().toString())
-//            .setTitle(toAddGrid.getTitle())
-//            .setDescription(toAddGrid.getDescription())
-//            .setDifficulty(toAddGrid.getDifficulty())
-//            .setCreateUser(
-//                com.sudoku.data.model.User.buildAvroUser(toAddGrid.getCreateUser()))
-//            .setComments(comments)
-//            .setTags(tags)
-//            .setMatrix(resultMatrix)
-//            .build());
-        grids.add(toAddGrid);
+        grids.add(Grid.newBuilder()
+            .setCreateDate(grid.getCreateDate().toString())
+            .setUpdateDate(grid.getUpdateDate().toString())
+            .setId(grid.getId().toString())
+            .setTitle(grid.getTitle())
+            .setDescription(grid.getDescription())
+            .setDifficulty(grid.getDifficulty())
+            .setCreateUser(
+                com.sudoku.data.model.User.buildAvroUser(grid.getCreateUser()))
+            .setComments(comments)
+            .setTags(tags)
+            .setMatrix(resultMatrix)
+            .build());
       }
     }
     return grids;

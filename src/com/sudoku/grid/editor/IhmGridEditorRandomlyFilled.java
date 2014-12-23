@@ -103,11 +103,15 @@ public class IhmGridEditorRandomlyFilled extends IhmGridEditor {
       String title = new String("Not Enough Filled Cells");
       String text = new String(
         "You can't hide that many cells");
+      ((VBox) border.getRight()).getChildren().clear();
+      ((VBox) border.getRight()).getChildren().add(IhmPopupsList.getInstance());
       IhmPopupsList.getInstance().addPopup(title, text, 10);
     } else if (number < 0) { //Checks if the number of cells to delete is positive
       String title = new String("Negative Value");
       String text = new String(
         "Enter a positive number");
+      ((VBox) border.getRight()).getChildren().clear();
+      ((VBox) border.getRight()).getChildren().add(IhmPopupsList.getInstance());
       IhmPopupsList.getInstance().addPopup(title, text, 10);
     } else { //Hides the desired number of cells
       LinkedList<IhmCellView> notHiddenCells = new LinkedList<IhmCellView>();

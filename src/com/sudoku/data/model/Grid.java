@@ -1,11 +1,20 @@
 package com.sudoku.data.model;
 
+import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.sudoku.comm.CommunicationManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class Grid {
+  private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
   private UUID id;
   private String title;
   private String description;
@@ -20,7 +29,9 @@ public class Grid {
   private Date createDate;
   private Date updateDate;
 
-  public Grid() {}
+  public Grid() {
+    grid = new Cell[9][9];
+  }
 
   public Grid(String t, User u) {
     id = UUID.randomUUID();
@@ -52,14 +63,19 @@ public class Grid {
   }
 
   public static Grid buildFromAvroGrid(com.sudoku.comm.generated.Grid grid) {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
     Grid resultGrid = new Grid();
     resultGrid.id = UUID.fromString(grid.getId());
     resultGrid.title = grid.getTitle();
     resultGrid.description = grid.getDescription();
     resultGrid.difficulty = grid.getDifficulty();
     resultGrid.published = grid.getPublished();
-    resultGrid.createDate = Timestamp.valueOf(grid.getCreateDate());
-    resultGrid.updateDate = Timestamp.valueOf(grid.getUpdateDate());
+    try {
+      resultGrid.createDate = df.parse(grid.getCreateDate());
+      resultGrid.updateDate = df.parse(grid.getUpdateDate());
+    } catch (ParseException ex) {
+      LOGGER.error(ex.toString());
+    }
     resultGrid.createUser = User.buildFromAvroUser(grid.getCreateUser());
     for (com.sudoku.comm.generated.Comment comment : grid.getComments()) {
       resultGrid.comments.add(Comment.buildFromAvroComment(comment));
@@ -71,7 +87,7 @@ public class Grid {
     for (byte i = 0; i < matrix.size(); i++) {
       List<Integer> row = matrix.get(i);
       for (byte j = 0; j < row.size(); j++) {
-        if (row.get(j) != null) {
+        if (row.get(j) != -1) {
           resultGrid.grid[i][j] = new FixedCell(i, j, row.get(j).byteValue());
         } else {
           resultGrid.grid[i][j] = new EmptyCell(i, j);
@@ -260,7 +276,11 @@ public class Grid {
     if (comment != null && comment.getComment() != null &&
         !comment.getComment().isEmpty()) {
       comments.add(comment);
-      // We also need to push this comment
+      try {
+		CommunicationManager.getInstance().pushComment(comment, getId());
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
     }
   }
 
@@ -313,4 +333,13 @@ public class Grid {
   public String getCreateSalt(){
       return createSalt;
   }
+  
+  public boolean equals(Object other){
+	    if(other == null) return false;
+	    if(other == this) return true;
+	    if(!(other instanceof Grid)) return false;
+	    
+	    Grid o = (Grid)other;
+	    return o.getId().equals(getId());
+	  }
 }

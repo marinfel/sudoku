@@ -284,9 +284,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           assert chBox3 != null : "fx:id=\"chBox3\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
           assert newIPAddress != null : "fx:id=\"newIPAddress\" was not injected: check your FXML file 'FXMLDocument.fxml'.";
                      
-          //Ajouter des éléments aux listes groupes et utilisateurs
+          //Ajouter des éléments aux listes groupes et utilisateurss
           //groups.addAll("Utilisateurs connectés", "Amis", "Camarades");
-          loggedUser = userManag.getLoggedUser();
+          //loggedUser = userManag.getLoggedUser();
     
         //ListUsers = UserManager.getInstance().getConnectedUsers();
         //listUsers = instance.getUserList();    
@@ -402,11 +402,12 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   @Override
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
+   
         myController.addEventHandler(WindowEvent.WINDOW_SHOWING ,new EventHandler<WindowEvent>() {
             @Override public void handle(WindowEvent e) {
-                if(loggedUser == null){
-                    loggedUser = userManag.getLoggedUser();
-                    System.out.println("Name --------------------------------"+loggedUser.getPseudo());
+                userManag = UserManager.getInstance();
+                loggedUser = userManag.getLoggedUser();
+                if(loggedUser != null){
                     getDataUser();
                     listUsers = userManag.getConnectedUsers();
                     userCategoryManag = UserCategoryManager.getInstance();
@@ -432,6 +433,9 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                         users = userCategoryManag.getUsersToShow(listCategoryUsers);
                         listUsersView.setItems(users);
                     }
+                }
+                else{
+                    System.out.println("User is null");
                 }
             }
       });
@@ -482,7 +486,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
         if(!pass1Home.getText().isEmpty()){
             if (loggedUser.checkPassword(pass1Home.getText())){
                 if(pass2Home.getText().equals(pass3Home.getText())){                    
-                    loggedUser.setpassword(pass2Home.getText());
+                    loggedUser.modifyPassword(pass2Home.getText());
                     System.out.println("Guardar contraseña");
                     textInfHome.setText("Enregistré correctement");
                     pass1Home.setText(null);

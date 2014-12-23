@@ -26,7 +26,6 @@ public abstract class IhmGridView extends IhmGridLayout {
     final IhmPopupsList popupList = IhmPopupsList.getInstance();
 
     ((VBox) border.getRight()).getChildren().add(popupList);
-    popupList.addPopup("test", "texte de test", 10);
-    
+
   }
 }

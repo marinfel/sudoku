@@ -23,7 +23,7 @@ import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class User {
-  private static Logger logger = LoggerFactory.getLogger(User.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(User.class);
   private String pseudo;
   private String salt;
   private String password;
@@ -46,15 +46,15 @@ public class User {
 
     this.pseudo = pseudo;
     this.salt = this.randomSalt();
-    String toBeHashed = brutPassword + this.salt;
-    // hash of pwd+salt
-    this.password =
-        new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+    String toBeHashed = brutPassword + this.getSalt();
+    String hashed = new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+    this.password = hashed;
     this.birthDate = birthDate;
     this.profilePicturePath = profilePicturePath;
     this.createDate = cal.getTime();
     this.updateDate = this.createDate;
     this.ipAddress = InetAddress.getLocalHost().getHostAddress();
+    System.out.println(this.getPassword());
   }
 
   public boolean checkPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
@@ -69,12 +69,16 @@ public class User {
       return false;
     }
   }
-
-  public void setpassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+  
+  public void modifyPassword(String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException{
       MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
       String toBeHashed = rawPassword + this.salt;
       this.password = 
               new String(Base64.encode(mDigest.digest(toBeHashed.getBytes("UTF-8"))));
+  }
+
+  public void setPassword(String password){
+      this.password = password;
   }
 
   public static User buildFromAvroUser(com.sudoku.comm.generated.User user) {
@@ -89,7 +93,7 @@ public class User {
       resultUser.createDate = df.parse(user.getCreateDate());
       resultUser.updateDate = df.parse(user.getUpdateDate());
     } catch (ParseException ex) {
-      logger.error(ex.toString());
+      LOGGER.error(ex.toString());
     }
     return resultUser;
   }
