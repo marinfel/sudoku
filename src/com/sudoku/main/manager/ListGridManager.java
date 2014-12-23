@@ -53,11 +53,16 @@ public class ListGridManager {
     public GridPane getGridThumbnailContainer(boolean filter, int type, List<Tag> tags,int grads)
     {
         GridThumbnailContainer container = new GridThumbnailContainer();
+        List<Grid> listGridsToShow=null;
+        User connectedUser = null;
         if(!filter)
         {
-            for(int i = 0; i<gridManager.getUserGrids(usrManager.getLoggedUser()).size();i++)
+            listGridsToShow = gridManager.getAvailableGrids();
+            connectedUser=UserManager.getInstance().getLoggedUser();
+            for(int i = 0; i<listGridsToShow.size();i++)
             {
-                container.addGridThumbnail(new GridThumbnail(gridManager.getUserGrids(usrManager.getLoggedUser()).get(i),preview,myController));
+                if(listGridsToShow.get(i).getCreateUser().equals((User)connectedUser))
+                    container.addGridThumbnail(new GridThumbnail(gridManager.getAvailableGrids().get(i),preview,myController));
             }
         }
         else

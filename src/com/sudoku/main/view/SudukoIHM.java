@@ -78,7 +78,7 @@ public class SudukoIHM extends Application {
       public void handle(WindowEvent t) {
         System.out.println("By by by");
         if (IhmPopupsList.getInstance() != null) {
-          IhmPopupsList.getInstance().killAllTimers();
+          //IhmPopupsList.getInstance().killAllTimers();
         }
         if (DataManager.getInstance() != null) {
           DataManager.getInstance().saveToJson();
@@ -92,7 +92,7 @@ public class SudukoIHM extends Application {
         DataManager datamng = DataManager.getInstance();
         UserManager usrManag = UserManager.getInstance();
         GridManager grdMang = GridManager.getInstance();
-        //DataManager.buildFromJson();
+        DataManager.buildFromJson();
         System.out.println("Biiiiiiiiiiiiiiiinggggg");
       }
     });
