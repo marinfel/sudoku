@@ -6,6 +6,7 @@
 package com.sudoku.data.model;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -13,13 +14,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class ContactCategory {
 
   private String name;
-  private HashSet<User> contacts = new HashSet<>();
+  private LinkedList<User> contacts = new LinkedList<>();
 
   public ContactCategory() {}
 
   public ContactCategory(String name){this.name = name;}
 
-  public ContactCategory(String name, HashSet<User> contacts) {
+  public ContactCategory(String name, LinkedList<User> contacts) {
       this.name = name;
       this.contacts = contacts;
   }
@@ -41,14 +42,14 @@ public class ContactCategory {
   /**
    * @return the contacts
    */
-  public HashSet<User> getContacts() {
+  public LinkedList<User> getContacts() {
     return contacts;
   }
 
   /**
    * @param contacts the contacts to set
    */
-  public void setContacts(HashSet<User> contacts) {
+  public void setContacts(LinkedList<User> contacts) {
     this.contacts = contacts;
   }
 
@@ -62,4 +63,12 @@ public class ContactCategory {
 
   public boolean hasUser(User user){return this.contacts.contains(user);}
 
+  @Override
+  public boolean equals(Object other){
+    if(other == null){return false;}
+    if(other == this){return true;}
+    if(!(other instanceof  ContactCategory)){return false;}
+    ContactCategory o = (ContactCategory)other;
+    return o.getName().equals(this.getName());
+  }
 }

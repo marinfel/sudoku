@@ -29,11 +29,8 @@ class AccessGridDeserializer extends KeyDeserializer{
     public AccessGridDeserializer() {
         AccessManager accMgr =AccessManager.getInstance();
         //on récupère toutes les clés
-        Set<Grid> sKey= accMgr.getRules().keySet();
-        Iterator<Grid> it= sKey.iterator();
-      
-        
-       
+        /*Set<Grid> sKey= accMgr.getRules().keySet();
+        Iterator<Grid> it= sKey.iterator();*/
         }
 
     
