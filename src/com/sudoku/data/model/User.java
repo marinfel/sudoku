@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-public class User implements Ruleable {
+public class User {
   private static Logger logger = LoggerFactory.getLogger(User.class);
   private String pseudo;
   private String salt;
@@ -248,9 +248,21 @@ public class User implements Ruleable {
     return null;
   }
 
+  @JsonIgnore
+  public ContactCategory getUserCategory(User u){
+    for(ContactCategory c : this.contactCategories){
+      if(c.hasUser(u)){return c;}
+    }
+    return null;
+  }
+
   public boolean addUserToContactCategory(String name, User u){
     ContactCategory cc = this.getContactCategory(name);
     if(cc == null){return false;}
+
+    ContactCategory userCategory = this.getUserCategory(u);
+    if(userCategory != null){userCategory.removeContact(u);}
+
     cc.addContact(u);
     return true;
   }
@@ -262,17 +274,5 @@ public class User implements Ruleable {
 
     User o = (User)other;
     return o.getSalt().equals(this.getSalt()) && o.getPseudo().equals(this.getPseudo());
-  }
-
-  @JsonIgnore
-  @Override
-  public Boolean hasUser(User user) {
-    return this.equals(user);
-  }
-  
-  @JsonIgnore
-  @Override
-  public Boolean isUser() {
-    return true;
   }
 }
