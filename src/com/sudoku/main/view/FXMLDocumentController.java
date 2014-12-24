@@ -103,7 +103,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   
   public User loggedUser;
   public UserManager userManag;
-  public UserCategoryManager userCategoryManag;
+  public UserCategoryManager userCategoryManag = UserCategoryManager.getInstance();            ;
   public List<User> listUsers = new LinkedList<>();
   public List<User> listCategoryUsers = new LinkedList<>();
   public List<User> listConnectedUsers = new LinkedList<>();
@@ -222,7 +222,6 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           instance.exec();*/
           
           userManag = UserManager.getInstance();
-          userCategoryManag = UserCategoryManager.getInstance();
           
           dialogStage.initModality(Modality.WINDOW_MODAL);
           dialogStage.setTitle("Message");
@@ -349,19 +348,11 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     listGroups.getSelectionModel().selectedItemProperty().addListener(
         new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {                      
-            //*******showConnectedUsers2(categoryAndUsers,new_val); //Les afficher
-//            if(new_val.equals("Utilisateurs connectés"))
-//                listUsersView.setItems(users);
-//            else{
-//                listUsersView.setItems(users_n);
-//            }
-            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");                                    
-            //listGroups.setItems(users_n);
-            //listUsersView.setItems(users_n);
-            nameGroup.setText(new_val);            
+                              String old_val, String new_val) {
             showCategoryRights(new_val);            
             showUsersCategory(new_val);
+            nombUsers.setText(listUsersView.getItems().size() + " utilisateurs connectés");                                    
+            nameGroup.setText(new_val);                        
             paneGroup.setVisible(true);
             paneUser.setVisible(false);
           }
@@ -372,7 +363,7 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
           listUsersView.getSelectionModel().selectedItemProperty().addListener(
                   new ChangeListener<String>() {
                       public void changed(ObservableValue<? extends String> ov,
-                              String old_val, String new_val) {
+                              String old_val, String new_val) {                          
                           user.setText(new_val);
                           name.setText(new_val);                          
                           User a = listUsers.get(listUsersView.getSelectionModel().getSelectedIndex());
@@ -408,29 +399,29 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
                 userManag = UserManager.getInstance();
                 loggedUser = userManag.getLoggedUser();
                 if(loggedUser != null){
-                    getDataUser();
-                    listUsers = userManag.getConnectedUsers();
-                    userCategoryManag = UserCategoryManager.getInstance();
-                    userCategories = loggedUser.getContactCategories();
-                    groups = userCategoryManag.getCategoriesToShow(userCategories);
-                    listGroups.setItems(groups);
-                    if(!listUsers.isEmpty()){
-                        users = userCategoryManag.getUsersToShow(listUsers);
+                    getDataUser(); //Charger donnés de l'utilisateur connecté
+                    listUsers = userManag.getConnectedUsers(); //liste de tous les utilisateurs connectés                    
+                    if(!listUsers.isEmpty()){ //Si la liste n'est pas vide -> afficher les utilisateurs
+                        users = userCategoryManag.getUsersToShow(listUsers); //Convertir en ObservableList
                         listUsersView.setItems(users);
-                    }                    
+                    }                                        
                     // A FAIRE DANS LA PARTIE CREATION COMPTE **
-                    loggedUser.createContactCategory("Global");
-                    ContactCategory cat = loggedUser.getContactCategory("Global");
-                    HashSet<AccessAction> allowedAct = new HashSet<>();
-                    allowedAct.add(AccessAction.display);
+                    loggedUser.createContactCategory("Global");  // Créer catégorie "Global" par défaut à tous les utilisateurs
+                    ContactCategory cat = loggedUser.getContactCategory("Global"); //Obtenir catégorie Global
+                    HashSet<AccessAction> allowedAct = new HashSet<>(); //Liste des droits "Allowed Actions"
+                    allowedAct.add(AccessAction.display); //Ajouter les 3 droits à la catégorie "Global"
                     allowedAct.add(AccessAction.play);
                     allowedAct.add(AccessAction.comment);
-                    accesMan.setAccessRulesForGroup(cat, allowedAct);
-                    refreshGroups();
+                    accesMan.setAccessRulesForGroup(cat, allowedAct); //Associer la liste de droits à la catégorie
+                    //refreshGroups(); //Actualiser listView de catégories
                     // ****
-                    listCategoryUsers = userCategories.get(0).getContacts(); //Global d'abord
-                    if(!listCategoryUsers.isEmpty()){
-                        users = userCategoryManag.getUsersToShow(listCategoryUsers);
+                    userCategories = loggedUser.getContactCategories(); //Obtenir liste de catégories de l'utilisateur connecté
+                    groups = userCategoryManag.getCategoriesToShow(userCategories); //Convertir en ObservableList                    
+                    listGroups.setItems(groups);
+                    
+                    listCategoryUsers = userCategories.get(0).getContacts(); //Liste d'utilisateurs de la catégorie choisie ("Global" au début)
+                    if(!listCategoryUsers.isEmpty()){ //Si la liste n'est pas vide -> afficher les utilisateurs
+                        users = userCategoryManag.getUsersToShow(listCategoryUsers);//Convertir en ObservableList
                         listUsersView.setItems(users);
                     }
                 }
@@ -461,13 +452,17 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   private void usersRefresh(ActionEvent event) {
     listUsers = userManag.getConnectedUsers();
     users = userCategoryManag.getUsersToShow(listUsers);
+    listUsersView.getItems().clear();
     listUsersView.setItems(users);
   }
   
   @FXML
   private void addIPAddress(ActionEvent event) {
-    userManag.addKnownIpAddress(newIPAddress.getText());
-    textInfHome.setText("Adresse IP ajoutée");
+    if(userManag.addKnownIpAddress(newIPAddress.getText())){
+        newIPAddress.setText(null);
+        textInfHome.setText("Adresse IP ajoutée");
+    }else 
+        textInfHome.setText("Adresse IP non valide");
   }
   
   @FXML
@@ -522,7 +517,8 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
       if(chBox3.isSelected())
           allowedAct.add(AccessAction.comment);
       accesMan.setAccessRulesForGroup(cat, allowedAct);
-      refreshGroups();    
+      groups.add(cat.getName());
+//      refreshGroups();    
   }
   
   @FXML
@@ -534,9 +530,11 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
   
   @FXML
-  private void deleteGroup(ActionEvent event) {
-      loggedUser.removeContactCategory(nameGroup.getText());
-      refreshGroups();
+  private void deleteGroup(ActionEvent event) {      
+      if(!nameGroup.getText().equals("Global")){
+        loggedUser.removeContactCategory(nameGroup.getText());
+        groups.remove(nameGroup.getText());
+      }
   }
     
   private void LetSearchGrid(ActionEvent event) {
@@ -625,39 +623,33 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
   }
     
   
-    private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
-        String categorie = cat;
-        groups.clear();
-        listGroups.setItems(groups);
-        users.clear();
-        ObservableList userL = observableData.get(categorie);
-        listUsersView.setItems(userL);
-        for (Map.Entry e : observableData.entrySet())
-            groups.add(e.getKey());            
-        listGroups.setItems(groups);
-    }
-    
-    private void showConnectedUsers2(HashMap<String,List<User>> observableData, String cat) {
-        String categorie = cat;
-        ObservableList groups_show = FXCollections.observableArrayList();
-        ObservableList users_show = FXCollections.observableArrayList();
-        List<User> lll;
-        lll = observableData.get(categorie);
-        listConnectedUsers = observableData.get(categorie);
-        Iterator<User> it = lll.iterator(); 
-        while (it.hasNext())
-            users_show.add(it.next().getPseudo());
-        for (Map.Entry e : observableData.entrySet())
-            groups_show.add(e.getKey());            
-        listUsersView.setItems(users_show);
-        listGroups.setItems(groups_show);
-    }
-
-    private void refreshGroups() {
-        userCategories = loggedUser.getContactCategories();
-        groups = userCategoryManag.getCategoriesToShow(userCategories);
-        listGroups.setItems(groups);
-    }
+//    private void showConnectedUsers(HashMap<String,ObservableList> observableData, String cat) {
+//        String categorie = cat;
+//        groups.clear();
+//        listGroups.setItems(groups);
+//        users.clear();
+//        ObservableList userL = observableData.get(categorie);
+//        listUsersView.setItems(userL);
+//        for (Map.Entry e : observableData.entrySet())
+//            groups.add(e.getKey());            
+//        listGroups.setItems(groups);
+//    }
+//    
+//    private void showConnectedUsers2(HashMap<String,List<User>> observableData, String cat) {
+//        String categorie = cat;
+//        ObservableList groups_show = FXCollections.observableArrayList();
+//        ObservableList users_show = FXCollections.observableArrayList();
+//        List<User> lll;
+//        lll = observableData.get(categorie);
+//        listConnectedUsers = observableData.get(categorie);
+//        Iterator<User> it = lll.iterator(); 
+//        while (it.hasNext())
+//            users_show.add(it.next().getPseudo());
+//        for (Map.Entry e : observableData.entrySet())
+//            groups_show.add(e.getKey());            
+//        listUsersView.setItems(users_show);
+//        listGroups.setItems(groups_show);
+//    }
     
     private void showCategoryRights(String nomCat) {
         ContactCategory cat = loggedUser.getContactCategory(nomCat);
@@ -678,10 +670,10 @@ public class FXMLDocumentController implements Initializable, ControlledScreen {
     
     private void showUsersCategory(String nomCat) {
         ContactCategory cat = loggedUser.getContactCategory(nomCat);
-        listCategoryUsers = cat.getContacts();
-        if(!listCategoryUsers.isEmpty()){
-            users = userCategoryManag.getUsersToShow(listCategoryUsers);
-            listUsersView.setItems(users);
+        listCategoryUsers = cat.getContacts();//Liste d'utilisateurs de la catégorie choisie
+        if(!listCategoryUsers.isEmpty()){//Si la liste n'est pas vide -> afficher les utilisateurs
+            users.removeAll(users);
+            users.addAll(userCategoryManag.getUsersToShow(listCategoryUsers));//Convertir en ObservableList
         }
     }
 }
