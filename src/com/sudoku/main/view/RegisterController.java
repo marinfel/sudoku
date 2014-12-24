@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.sudoku.main.view;
 
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
 import java.util.regex.*;
+
 /**
  * @author MOURAD
  */
@@ -33,6 +33,8 @@ public class RegisterController implements Initializable, ControlledScreen {
   // Partie JulianC
   ScreensController myController;
   private UserManager userManag;
+  @FXML
+  private PasswordField confirmPasswd;
   @FXML
   private Label userName;
   @FXML
@@ -54,7 +56,7 @@ public class RegisterController implements Initializable, ControlledScreen {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
-      userManag = UserManager.getInstance();
+    userManag = UserManager.getInstance();
   }
 
   private void clean() {
@@ -67,53 +69,55 @@ public class RegisterController implements Initializable, ControlledScreen {
   public void setScreenParents(ScreensController screenParent) {
     myController = screenParent;
   }
+
   @FXML
-  private void createUserAndLog(ActionEvent event) throws IOException{
-    System.out.println("in createUser");
-    if(!user.getText().isEmpty() && !passwd.getText().isEmpty()&& !birthDate.getText().isEmpty()){
-        Pattern datePattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
-        Matcher matcher = datePattern.matcher(birthDate.getText());
-        if(!matcher.matches())
-        {
-            userName.setText("Format de date invalide. Entrez la date de naissance au format DD/MM/AAAA.");
-            return;
-        }
-        try{
-            String[] dateComp = birthDate.getText().split("/");
-            //if(userManag.getLocalUsers() && userManag.getDistantUsers())
-            Date dob = new Date(Integer.parseInt(dateComp[2])-1900, 
-                Integer.parseInt(dateComp[1])-1, Integer.parseInt(dateComp[0]));
-            User temp = new User(user.getText(), passwd.getText(), dob, "");
-            if(!userManag.getDistantUsers().contains(temp) && !userManag.getLocalUsers().contains(temp)){
-                User newUser;           
-                newUser = UserManager.getInstance().createUser(user.getText(),
-                    passwd.getText(), dob, "");
-	            userName.setText("");
-	            goToLogin(event);
-            }
-            else{
-                userName.setText("L'utilisateur existe déjà !");
-            }
-        }    
-        catch(NoSuchAlgorithmException e){
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, e);
-           return; 
-        }
-        catch(UnsupportedEncodingException e){
-           Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, e);
-           return; 
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    else{
-        userName.setText("Veuillez entrer des informations valides.");
+  private void createUserAndLog(ActionEvent event) {
+    System.out.println("in createUser ");
+    if (!user.getText().isEmpty() && !passwd.getText().isEmpty()
+      && !birthDate.getText().isEmpty() && (passwd.getText().equals(confirmPasswd.getText()))) {
+      Pattern datePattern = Pattern.compile("(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)");
+      Matcher matcher = datePattern.matcher(birthDate.getText());
+      if (!matcher.matches()) {
+        userName.setText("Format de date invalide. Entrez la date de naissance au format DD/MM/AAAA.");
         return;
+      }
+      try {
+        String[] dateComp = birthDate.getText().split("/");
+        //if(userManag.getLocalUsers() && userManag.getDistantUsers())
+        Date dob = new Date(Integer.parseInt(dateComp[2]) - 1900,
+          Integer.parseInt(dateComp[1]) - 1, Integer.parseInt(dateComp[0]));
+        if (dob.getYear() > 2013) {
+          userName.setText("La date de naissance est invalide");
+          return;
+        }
+        User temp = new User(user.getText(), passwd.getText(), dob, "");
+        if (!userManag.getDistantUsers().contains(temp) && !userManag.getLocalUsers().contains(temp)) {
+          User newUser;
+          newUser = UserManager.getInstance().createUser(user.getText(),
+            passwd.getText(), dob, "");
+          UserManager.getInstance().authenticate(newUser.getPseudo(), newUser.getPassword());
+          userName.setText("");
+          goToLogin(event);
+        } else {
+          userName.setText("L'utilisateur existe déjà !");
+        }
+      } catch (NoSuchAlgorithmException e) {
+        Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, e);
+        return;
+      } catch (UnsupportedEncodingException e) {
+        Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, e);
+        return;
+      } catch (UnknownHostException ex) {
+        Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (IOException ex) {
+        Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    } else {
+      userName.setText("Veuillez entrer des informations valides.");
+      return;
     }
   }
-  
+
   @FXML
   private void goToProgram(ActionEvent event) {
     clean();

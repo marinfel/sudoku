@@ -23,11 +23,12 @@
                     <children>
                         <TextField fx:id="user" layoutX="260.0" layoutY="123.0" promptText="Utilisateur" />
                         <PasswordField fx:id="passwd" layoutX="260.0" layoutY="159.0" promptText="Mot de passe" />
+                  <PasswordField promptText="Confirmer le mot de passe" />
                   <TextField fx:id="birthDate" promptText="Naissance (DD/MM/AAAA)" />
                     </children>
                 </VBox>
                 <Button layoutX="764.0" layoutY="517.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="25.0" prefWidth="115.0" text="Retourner" />
-                <Button layoutX="419.0" layoutY="322.0" mnemonicParsing="false" onAction="#createUserAndLog" text="Créer Compte" />
+                <Button layoutX="427.0" layoutY="335.0" mnemonicParsing="false" onAction="#createUserAndLog" text="Créer Compte" />
                 <Label layoutX="381.0" layoutY="187.0" text="Créer Nouveau Compte">
                     <font>
                         <Font size="28.0" />
