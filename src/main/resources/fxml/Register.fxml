@@ -23,7 +23,7 @@
                     <children>
                         <TextField fx:id="user" layoutX="260.0" layoutY="123.0" promptText="Utilisateur" />
                         <PasswordField fx:id="passwd" layoutX="260.0" layoutY="159.0" promptText="Mot de passe" />
-                  <PasswordField promptText="Confirmer le mot de passe" />
+                  <PasswordField fx:id="confirmPasswd" promptText="Confirmer le mot de passe" />
                   <TextField fx:id="birthDate" promptText="Naissance (DD/MM/AAAA)" />
                     </children>
                 </VBox>
